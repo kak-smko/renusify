@@ -1,0 +1,47 @@
+@import "../../style/include";
+
+$ripple-animation-transition-in: transform .25s map-get($transition, 'fast-in-slow-out'),
+opacity .1s map-get($transition, 'fast-in-slow-out') !default;
+$ripple-animation-transition-out: opacity .3s map-get($transition, 'fast-in-slow-out') !default;
+
+.ripple {
+  &-container {
+    color: inherit;
+    border-radius: inherit;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+    contain: strict
+  }
+
+  &-animation {
+    color: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+    will-change: transform, opacity;
+
+    &-enter {
+      transition: none
+    }
+
+    &-in {
+      transition: $ripple-animation-transition-in
+    }
+
+    &-out {
+      transition: $ripple-animation-transition-out
+    }
+  }
+
+}

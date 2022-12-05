@@ -1,0 +1,53 @@
+@import "../../style/include";
+
+
+.#{$prefix}breadcrumbs {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  flex: 0 1 auto;
+  list-style-type: none;
+  margin: 0 !important;
+  padding: 0 14px;
+
+
+  @include light() {
+    .breadcrumb-divider, .breadcrumb-item-disabled, .#{$prefix}icon {
+      color: var(--color-text-disabled-light)
+    }
+  }
+  @include dark() {
+    .breadcrumb-divider, .breadcrumb-item-disabled, .#{$prefix}icon {
+      color: var(--color-text-disabled-dark)
+    }
+  }
+
+  li {
+    align-items: center;
+    display: inline-flex;
+    font-size: 1rem;
+
+    &:nth-child(even) {
+      padding: 0 12px
+    }
+
+    @include media-breakpoint-down('md') {
+      &:nth-child(even) {
+        padding: 0 4px
+      }
+    }
+
+  }
+
+  .breadcrumb-item {
+    align-items: center;
+    display: inline-flex;
+    text-decoration: none;
+    transition: 0.3s $primary-transition;
+    cursor: pointer;
+
+    &-disabled {
+      pointer-events: none
+    }
+  }
+}

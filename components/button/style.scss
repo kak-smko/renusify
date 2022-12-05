@@ -1,0 +1,441 @@
+@import "renusify/style/_include.scss";
+
+$btn-active-opacity: 0.18 !default;
+$btn-border-radius: 4px !default;
+$btn-focus-opacity: 0.24 !default;
+$btn-font-size: .875rem !default;
+$btn-font-weight: 500 !default;
+$btn-hover-opacity: 0.08 !default;
+$btn-letter-spacing: .07em !default;
+$btn-icon-font-size: 18px !default;
+$btn-icon-padding: 12px !default;
+$btn-outline-border-width: thin !default;
+$btn-rounded-border-radius: 28px !default;
+$btn-sizes: (
+        'x-small': 20,
+        'small': 30,
+        'default': 40,
+        'large': 50,
+        'x-large': 60
+) !default;
+$fab-sizes: (
+        'x-small': 32,
+        'small': 40,
+        'default': 56,
+        'large': 64,
+        'x-large': 72
+) !default;
+$fab-icon-sizes: (
+        'x-small': 18,
+        'small': 24,
+        'default': 24,
+        'large': 28,
+        'x-large': 32
+) !default;
+$btn-transition-duration: 0.28s !default;
+$btn-transition-fn: map-get($transition, 'fast-out-slow-in') !default;
+$btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
+
+.#{$prefix}btn {
+  cursor: pointer;
+  color: inherit;
+  align-items: center;
+  border-radius: $btn-border-radius;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: $btn-font-size;
+  font-weight: $btn-font-weight;
+  justify-content: center;
+  max-width: 100%;
+  outline: 0;
+  position: relative;
+  text-decoration: none;
+  text-indent: $btn-letter-spacing;
+  text-transform: uppercase;
+  transition-duration: $btn-transition-duration;
+  transition-property: box-shadow, transform, opacity;
+  transition-timing-function: $btn-transition-fn;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+
+  @include light() {
+    &.btn-disabled {
+      color: var(--color-disabled-light) !important;
+
+      .btn-loading {
+        color: var(--color-disabled-light) !important
+      }
+
+      &:not(.btn-text):not(.btn-outlined) {
+        background-color: var(--color-focused-light) !important
+      }
+    }
+
+    &:not(.btn-text):not(.btn-outlined) {
+      background-color: var(--color-cards-light)
+    }
+
+    &.btn-outlined.btn-text {
+      border-color: var(--color-divider-light)
+    }
+  }
+  @include dark() {
+    &.btn-disabled {
+      color: var(--color-disabled-dark) !important;
+
+      .btn-loading {
+        color: var(--color-disabled-dark) !important
+      }
+
+      &:not(.btn-text):not(.btn-outlined) {
+        background-color: var(--color-focused-dark) !important
+      }
+    }
+
+    &:not(.btn-text):not(.btn-outlined) {
+      background-color: var(--color-cards-dark)
+    }
+
+    &.btn-outlined.btn-text {
+      border-color: var(--color-divider-dark)
+    }
+  }
+  @include states();
+
+  @include ltr() {
+    letter-spacing: $btn-letter-spacing;
+  }
+
+  &.btn-disabled {
+    pointer-events: none;
+  }
+
+  &.btn-readonly {
+    pointer-events: none;
+  }
+
+  &:before {
+    border-radius: inherit;
+    bottom: 0;
+    color: inherit;
+    content: '';
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: $btn-transition;
+    background-color: currentColor
+  }
+
+  &:not(.btn-disabled) {
+    will-change: box-shadow
+  }
+
+  &:not(.btn-round) {
+    @each $name, $size in $btn-sizes {
+      $p: div($size, 2.25);
+      &.size-#{$name} {
+        height: #{$size}px;
+        min-width: #{round($size * 1.7)}px;
+        padding: 0 #{$p}px;
+      }
+    }
+  }
+
+  > .btn-content .#{$prefix}icon {
+    color: inherit
+  }
+
+  &.vertical {
+    .btn-content {
+      writing-mode: tb-rl;
+    }
+  }
+}
+
+.btn-content {
+  align-items: center;
+  color: inherit;
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: inherit;
+  line-height: normal;
+
+  .label {
+    position: absolute;
+    flex-wrap: nowrap;
+    top: -10px;
+    right: 0;
+    border-radius: 10px 10px 10px 0;
+    height: 21px;
+    min-width: 20px;
+  }
+}
+
+.btn-loader {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.#{$prefix}btn:not(.btn-text):not(.btn-outlined) {
+  &.btn-active:before {
+    opacity: $btn-active-opacity
+  }
+
+  &:hover:before {
+    opacity: $btn-hover-opacity
+  }
+
+  &:focus:before {
+    opacity: $btn-focus-opacity
+  }
+}
+
+.btn-absolute,
+.btn-fixed {
+  position: absolute;
+
+  &.btn-right {
+    right: map-get($grid-gutters, 'lg')
+  }
+
+  &.btn-left {
+    left: map-get($grid-gutters, 'lg')
+  }
+
+  &.btn-top {
+    top: map-get($grid-gutters, 'lg')
+  }
+
+  &.btn-bottom {
+    bottom: map-get($grid-gutters, 'lg')
+  }
+}
+
+.btn-block {
+  display: flex;
+  flex: 1 0 auto;
+  min-width: 100% !important;
+  width: auto;
+}
+
+.btn-contained {
+  @include elevation('sm');
+
+  &:after {
+    @include elevation('md')
+  }
+
+  &:active {
+    @include elevation('lg')
+  }
+}
+
+.btn-depressed {
+  box-shadow: none !important
+}
+
+.btn-disabled {
+  box-shadow: none;
+  pointer-events: none
+}
+
+.btn-icon,
+.btn-fab {
+  min-height: 0;
+  min-width: 0;
+  padding: 0;
+  @each $name, $size in $fab-icon-sizes {
+    &.size-#{$name} {
+      .#{$prefix}icon {
+        height: #{$size}px;
+        font-size: #{$size}px;
+        width: #{$size}px;
+      }
+    }
+  }
+}
+
+
+.btn-icon {
+  @each $name, $size in $btn-sizes {
+    &.size-#{$name} {
+      height: #{$size}px;
+      width: #{$size}px
+    }
+  }
+}
+
+.btn-fab {
+  &.btn-contained {
+    @include elevation('md') ;
+
+    &:after {
+      @include elevation('lg')
+    }
+
+    &:active {
+      @include elevation('xl')
+    }
+  }
+
+  &.btn-fixed,
+  &.btn-absolute {
+    z-index: 4
+  }
+
+  @each $name, $size in $fab-sizes {
+    &.size-#{$name} {
+      height: #{$size}px;
+      width: #{$size}px;
+
+      &.btn-absolute {
+        &.btn-bottom {
+          bottom: #{div($size,-2)}px
+        }
+
+        &.btn-top {
+          top: #{div($size,-2)}px
+        }
+      }
+
+    }
+
+  }
+}
+
+
+.btn-fixed {
+  position: fixed
+}
+
+.btn-loading {
+  pointer-events: none;
+  transition: none;
+  cursor: none;
+
+  .btn-content {
+    opacity: 0
+  }
+}
+
+.btn-outlined {
+  border: $btn-outline-border-width solid currentColor;
+
+  &:before {
+    border-radius: 0
+  }
+}
+
+.btn-outlined,
+.btn-round {
+  .btn-content {
+    .#{$prefix}icon {
+      color: currentColor
+    }
+  }
+}
+
+.btn-outlined,
+.btn-text {
+  background-color: transparent
+}
+
+.btn-round,
+.btn-rounded {
+  &:before {
+    border-radius: inherit
+  }
+}
+
+.btn-round {
+  border-radius: 50%
+}
+
+.btn-rounded {
+  border-radius: $btn-rounded-border-radius
+}
+
+.btn-tile {
+  border-radius: 0
+}
+
+
+.#{$prefix}button-group {
+  position: relative;
+  color: inherit;
+  @include light() {
+    background-color: var(--color-cards-light);
+  }
+  @include dark() {
+    background-color: var(--color-cards-dark);
+  }
+  @include states();
+
+  .btn-container {
+    display: inline-flex;
+    flex: 0 0 auto;
+    font-size: $btn-font-size;
+    font-weight: $btn-font-weight;
+    align-items: center;
+    border-radius: $btn-border-radius;
+    justify-content: center;
+    max-width: 100%;
+    outline: 0;
+    position: relative;
+    text-decoration: none;
+    text-indent: $btn-letter-spacing;
+    text-transform: uppercase;
+    transition-duration: $btn-transition-duration;
+    transition-property: box-shadow, transform, opacity;
+    transition-timing-function: $btn-transition-fn;
+    user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+
+    .#{$prefix}btn {
+      border-radius: 0;
+    }
+
+    @include rtl() {
+      .#{$prefix}btn:not(:first-child):not(:last-child) {
+        border-left: currentColor 1px solid;
+      }
+
+      .#{$prefix}btn:first-child {
+        border-left: currentColor 1px solid;
+      }
+    }
+    @include ltr() {
+      .#{$prefix}btn:not(:first-child):not(:last-child) {
+        border-right: currentColor 1px solid;
+      }
+
+      .#{$prefix}btn:first-child {
+        border-right: currentColor 1px solid;
+      }
+    }
+  }
+
+  .button-group-select {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: map_get($z-index, 'default');
+    height: 300px;
+    overflow: auto;
+
+    .list-item {
+      justify-content: center;
+    }
+  }
+}

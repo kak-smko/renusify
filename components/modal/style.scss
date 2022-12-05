@@ -1,0 +1,120 @@
+@import "../../style/include";
+
+.#{$prefix}modal {
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+  left: 0;
+  width: 100vw;
+  justify-content: center;
+  position: fixed;
+  z-index: map_get($z-index, 'important');
+  outline: none;
+  bottom: 0;
+  height: 100vh;
+
+  @include light() {
+    &:not(.modal-no-overlay) {
+      background-color: var(--color-overlay-light);
+    }
+    .modal-content {
+      border: 1px solid var(--color-border-light);
+    }
+  }
+  @include dark() {
+    &:not(.modal-no-overlay) {
+      background-color: var(--color-overlay-dark);
+    }
+    .modal-content {
+      border: 1px solid var(--color-border-dark);
+    }
+  }
+
+  &:not(.modal-no-overlay) {
+    backdrop-filter: blur(3px) grayscale(30%);
+  }
+
+  .modal-btn {
+    width: 100%;
+    position: relative;
+
+    .#{$prefix}btn {
+      position: absolute;
+      bottom: -40px;
+      z-index: map_get($z-index, 'important')+1;
+      @include rtl() {
+        left: 5px;
+      }
+      @include ltr() {
+        right: 5px;
+      }
+    }
+  }
+
+  .modal-container {
+    width: 95%;
+    max-width: 95%;
+    max-height: 90%;
+    z-index: map_get($z-index, 'important');
+  }
+
+  .modal-content {
+    position: relative;
+    border-radius: $border-modal;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
+  }
+
+  @include media-breakpoint-up('md') {
+    .modal-container {
+      width: 75%;
+      max-width: 75%;
+    }
+  }
+
+  .modal-mini {
+    max-width: 500px;
+  }
+
+  .modal-flat {
+    border-radius: 0;
+  }
+
+  .modal-full-width {
+    width: 100%;
+    max-width: 100% !important;
+  }
+
+  .modal-full-height {
+    height: 100%;
+  }
+
+  .modal-bottom {
+    border-radius: $border-modal $border-modal 0 0;
+
+    &:not(.modal-full-width) {
+      max-width: map_get($container-max-widths, 'lg');
+    }
+  }
+}
+
+.animate-modal-vibrate {
+  animation-duration: .15s !important;
+  animation-name: animate-modal-vibrate !important;
+  animation-timing-function: map-get($transition, 'fast-in-fast-out') !important;
+  @keyframes animate-modal-vibrate {
+    0% {
+      transform: scale(1)
+    }
+    50% {
+      transform: scale(1.03)
+    }
+    100% {
+      transform: scale(1)
+    }
+  }
+}
+
+
+

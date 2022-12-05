@@ -1,0 +1,98 @@
+@import "../../style/include";
+
+.#{$prefix}card {
+  display: block;
+  position: relative;
+  color: inherit;
+  max-width: 100%;
+  outline: none;
+  text-decoration: none;
+  transition-property: box-shadow, opacity;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+
+   &.card-outlined {
+    @include light() {
+      border: 1px solid var(--color-border-light)
+    }
+    @include dark() {
+      border: 1px solid var(--color-border-dark)
+    }
+  }
+  @include states();
+
+  &.card-hover {
+    cursor: pointer;
+    transition: box-shadow .4s cubic-bezier(.25, .8, .25, 1);
+
+    &:hover {
+      @include elevation('xl', true)
+    }
+  }
+
+  > *:first-child:not(.#{$prefix}btn):not(.#{$prefix}chip) {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit
+  }
+
+  > *:last-child:not(.#{$prefix}btn):not(.#{$prefix}chip) {
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit
+  }
+
+  &.card-link {
+    cursor: pointer;
+
+    &:focus:before {
+      opacity: 0.08
+    }
+
+    &:before {
+      background: currentColor;
+      bottom: 0;
+      content: '';
+      left: 0;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: .2s opacity map-get($transition, 'fast-in-slow-out');
+    }
+  }
+
+  &.card-outlined, &.card-flat {
+    background-color: transparent;
+    box-shadow: none
+  }
+}
+
+//sheet
+
+.sheet {
+  display: block;
+  transition: box-shadow .3s cubic-bezier(0.4, 0, 0.2, 1);
+  @include elevation('md');
+  border-radius: map_get($borders, 'md');
+
+  @include light() {
+    background-color: var(--color-cards-light);
+    border-color: var(--color-cards-light);
+    color: var(--color-text-primary-light);
+  }
+  @include dark() {
+    background-color: var(--color-cards-dark);
+    border-color: var(--color-cards-dark);
+    color: var(--color-text-primary-dark);
+  }
+
+  &-tile {
+    border-radius: 0;
+    @include elevation('none');
+  }
+}
+
+
+
+

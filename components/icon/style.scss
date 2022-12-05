@@ -1,0 +1,23 @@
+@import "../../style/include";
+
+.#{$prefix}icon {
+  display: inline-flex;
+  vertical-align: -.5rem;
+
+  &.icon-disabled {
+    pointer-events: none;
+    opacity: .6;
+    @include light() {
+      color: var(--color-disabled-light) !important
+    }
+    @include dark() {
+      color: var(--color-disabled-dark) !important
+    }
+  }
+
+  @include rtl() {
+    &:not(.exact-icon) {
+      transform: scale(-1, 1);
+    }
+  }
+}

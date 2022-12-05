@@ -1,0 +1,135 @@
+@import "./_include";
+
+$colorsList: (
+        'one': ( l: #00acc1, d: #028595 ),
+          'one_l': ( l: #5ddef4, d: #03a7c2 ),
+          'one_d': ( l: #007c91, d: #015866 ),
+          'two': ( l: #e8098f, d: #b80671 ),
+        'three':('l':#43cea2, 'd':#06553c),
+        'error':('l':#D50000, 'd':#9e0404),
+        'info':('l':#0878f6, 'd':#0a50a1),
+        'warning':('l':#fbc02d, 'd':#d29806),
+        'success':('l':#04c40d, 'd':#049e0b),
+        'link':('l':#4f98ec, 'd':#3773b8),
+        'background-one':('l':#fafafa, 'd':#303030),
+        'background-two':('l':#e0e0e0, 'd':#505050),
+        'divider':('l':rgba(#444, 0.2), 'd':rgba(#fff, 0.2)),
+        'text-primary':('l':#515151, 'd':#fff),
+        'text-secondary':('l':#888, 'd':#ddd),
+        'text-disabled':('l':rgba(#000, 0.26), 'd':rgba(#fff, 0.3)),
+        'disabled':('l':rgba(#000, 0.26), 'd':rgba(#fff, 0.3)),
+        'focused':('l':rgba(#000, 0.12), 'd':rgba(#fff, 0.12)),
+        'pressed':('l':rgba(#999, 0.4), 'd':rgba(#ccc, 0.25)),
+        'border': ('l':rgba(#000, 0.24), 'd':rgba(#fff, 0.3)),
+        'border-hover': ('l':rgba(#000, 0.86), 'd':rgba(#fff, 0.86)),
+        'cards': ('l':#fff, 'd':#424242),
+        'chips': ('l':#e0e0e0, 'd':#555),
+        'table-active': ('l':#f5f5f5, 'd':#505050),
+        'table-hover': ('l':#eeeeee, 'd':#616161),
+        'overlay': ('l':rgba(225, 225, 225, 0.5), 'd':rgba(80, 80, 80, 0.5)),
+) !default;
+
+:root {
+  @each $color_name, $color_value in $colorsList {
+    --color-#{$color_name}-light: #{map_get($color_value, 'l')};
+    --color-#{$color_name}-dark: #{map_get($color_value, 'd')}
+  }
+  @each $color_name, $color_value in $colorMain {
+    --color-#{$color_name}-text-light: #{map_get($color_value, 'l')};
+    --color-#{$color_name}-text-dark: #{map_get($color_value, 'd')};
+  }
+}
+
+@each $color_name, $color_value in $gradient {
+  .#{$prefix}app .color-gradient-#{$color_name} {
+    background: linear-gradient(map_get($color_value, '0'), map_get($color_value, '1')) !important;
+    color: white !important;
+  }
+  .#{$prefix}app .color-gradient-#{$color_name}-45 {
+    background: linear-gradient(45deg, map_get($color_value, '0'), map_get($color_value, '1')) !important;
+    color: white !important;
+  }
+  .#{$prefix}app .color-gradient-#{$color_name}-90 {
+    background: linear-gradient(90deg, map_get($color_value, '0'), map_get($color_value, '1')) !important;
+    color: white !important;
+  }
+}
+
+@each $color_name, $color_value in $shades {
+  .#{$prefix}app .color-#{$color_name} {
+    @include background-color($color_value, true);
+  }
+
+  .#{$prefix}app .color-#{$color_name}-text {
+    @include text-color($color_value, true);
+  }
+}
+
+@each $color_name, $color_value in $grey {
+  .#{$prefix}app .color-grey-#{$color_name} {
+    @include background-color($color_value, true);
+  }
+
+  .#{$prefix}app .color-grey-#{$color_name}-text {
+    @include text-color($color_value, true);
+  }
+}
+
+@each $color_name, $color_value in $colorMain {
+  .app-light .color-#{$color_name} {
+    @include background-color(var(--color-#{$color_name}-light), true);
+    @include text-color(var(--color-#{$color_name}-text-light));
+  }
+  .app-light .color-#{$color_name}-text {
+    @include text-color(var(--color-#{$color_name}-light), true);
+  }
+  .app-dark .color-#{$color_name} {
+    @include background-color(var(--color-#{$color_name}-dark), true);
+    @include text-color(var(--color-#{$color_name}-text-dark));
+  }
+  .app-dark .color-#{$color_name}-text {
+    @include text-color(var(--color-#{$color_name}-dark), true);
+  }
+}
+.shadow-info{
+    --box-shadow: rgba(10, 150, 250, 0.2)
+}
+.shadow-success{
+    --box-shadow: rgba(50, 250, 10, 0.2)
+}
+.shadow-error{
+    --box-shadow: rgba(255, 10, 30, 0.2)
+}
+.shadow-warning{
+    --box-shadow: rgba(250, 150, 10, 0.2)
+}
+
+.app-light {
+  .color-primary-text {
+    @include text-color(var(--color-text-primary-light), true);
+  }
+
+  .color-secondary-text {
+    @include text-color(var(--color-text-secondary-light), true);
+  }
+
+  .color-disabled-text {
+    @include text-color(var(--color-text-disabled-light), true);
+  }
+}
+
+.app-dark {
+  .color-primary-text {
+    @include text-color(var(--color-text-primary-dark), true);
+  }
+
+  .color-secondary-text {
+    @include text-color(var(--color-text-secondary-dark), true);
+  }
+
+  .color-disabled-text {
+    @include text-color(var(--color-text-disabled-dark), true);
+  }
+}
+
+

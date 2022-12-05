@@ -1,0 +1,24 @@
+@import "../../style/include";
+
+.#{$prefix}sortable {
+  position: relative;
+  .dragable{
+    .grab{
+      cursor: grab;
+    }
+    &.grab{
+      cursor: grab;
+    }
+  }
+  .sortable-holder{
+    background-color: rgba(20, 200, 255, 0.5);
+  }
+  .on-drag {
+    position: fixed;
+    z-index: 100;
+    @include elevation('xl');
+    border-radius: map_get($borders, 'md');
+    user-select: none;
+    cursor: grabbing;
+  }
+}

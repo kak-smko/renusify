@@ -1,0 +1,119 @@
+@mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
+  $min: breakpoint-min-width($name, $breakpoints) ;
+  @if $min {
+    @media (min-width: $min) {
+      @content
+    }
+  } @else {
+    @content
+  }
+}
+
+@mixin media-breakpoint-down($name, $breakpoints: $grid-breakpoints) {
+  $min: breakpoint-min-width($name, $breakpoints) ;
+  @if $min {
+    @media (max-width: $min) {
+      @content
+    }
+  } @else {
+    @content
+  }
+}
+
+@mixin make-container-max-widths($max-widths: $container-max-widths, $breakpoints: $grid-breakpoints) {
+  @each $breakpoint, $container-max-width in $max-widths {
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      max-width: $container-max-width
+    }
+  }
+}
+
+@mixin make-row($gutter: $grid-gutter) {
+  display: flex;
+  margin-right: div($gutter, -2);
+  margin-left: div($gutter , -2);
+  flex-wrap: wrap;
+  flex: 1 1 auto;
+}
+
+@mixin make-col($size, $columns: $grid-columns) {
+  max-width: percentage(div($size , $columns));
+  flex: 0 0 percentage(div($size , $columns));
+}
+
+
+@mixin make-grid-columns($columns: $grid-columns, $gutter: $grid-gutter, $breakpoints: $grid-breakpoints) {
+  @each $breakpoint in map-keys($breakpoints) {
+    $bName: breakpoint-min-name($breakpoint, $breakpoints);
+    $bNameClear: breakpoint-min-name($breakpoint, $breakpoints, '');
+
+    @for $i from 1 through $columns {
+      @if ($bName=='') {
+        .col.col-#{$i} {
+          width: 100%;
+          padding: div($gutter , 2);
+        }
+      } @else {
+        .col.#{$bNameClear}-#{$i} {
+          width: 100%;
+          padding: div($gutter , 2);
+        }
+      }
+
+    }
+
+    @if ($bName=='') {
+      .col,
+      .col-auto {
+        width: 100%;
+        padding: div($gutter, 2);
+      }
+    } @else {
+      .col.#{$bNameClear},
+      .col.#{$bNameClear}-auto {
+        width: 100%;
+        padding: div($gutter, 2);
+      }
+    }
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      @if ($bName=='') {
+        .col {
+          max-width: 100%;
+          flex-grow: 1;
+          flex-basis: 0;
+        }
+        .col-auto {
+          max-width: 100%;
+          width: auto;
+          flex: 0 0 auto;
+        }
+      } @else {
+        .col.#{$bNameClear} {
+          max-width: 100%;
+          flex-grow: 1;
+          flex-basis: 0;
+        }
+        .col.#{$bNameClear}-auto {
+          max-width: 100%;
+          width: auto;
+          flex: 0 0 auto;
+        }
+      }
+
+      @for $i from 1 through $columns {
+        @if ($bName=='') {
+          .col.col-#{$i} {
+            @include make-col($i, $columns)
+          }
+        } @else {
+          .col.#{$bNameClear}-#{$i} {
+            @include make-col($i, $columns)
+          }
+        }
+
+      }
+    }
+
+  }
+
+}

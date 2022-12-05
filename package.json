@@ -1,0 +1,27 @@
+{
+  "name": "renusify",
+  "version": "1.0.1",
+  "description": "Vue3 Framework",
+  "keywords": [
+    "vuejs",
+    "vue framework",
+    "ui framework",
+    "component framework",
+    "ui library",
+    "component library",
+    "material components",
+    "renusify"
+  ],
+  "homepage": "https://github.com/smkoBa/renusify",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smkoBa/renusify.git"
+  },
+  "author": "Smko Bayazidi ba.smko@gmail.com",
+  "license": "BSD",
+  "private": false
+}

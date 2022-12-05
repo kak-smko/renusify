@@ -1,0 +1,259 @@
+$prefix: 'r-' !default;
+$body-font-family: IRANSans, 'Roboto', sans-serif !default;
+$font-size-root: 16px !default;
+$font-size-root-mobile: 14px !default;
+$line-height-root: 1.5rem !default;
+
+$spacer: 4px !default;
+$spacers: ();
+@for $i from 0 through 24 {
+  $spacers: map-merge($spacers, ($i: $spacer * $i))
+}
+
+$negative-spacers: ();
+@for $i from 1 through 24 {
+  $negative-spacers: map-merge($negative-spacers, ("n" + $i: -$spacer * $i))
+}
+
+$borders: (
+        'none': 0,
+        'xs': 2px,
+        'sm': 5px,
+        'md': 7px,
+        'lg': 12px,
+        'xl': 19px,
+        'pill': 9999px,
+        'circle': 50%
+) !default;
+
+$cursor:('pointer','auto','grab','grabbing')!default;
+
+$widths: (
+        'full': 100%,
+        '90': 90%,
+        '80': 80%,
+        '70': 70%,
+        '60': 60%,
+        '50': 50%,
+        '40': 40%,
+        '30': 30%,
+        '20': 20%,
+        '10': 10%
+) !default;
+$heights: (
+        'full': 100%,
+        '90': 90%,
+        '80': 80%,
+        '70': 70%,
+        '60': 60%,
+        '50': 50%,
+        '40': 40%,
+        '30': 30%,
+        '20': 20%,
+        '10': 10%
+) !default;
+
+$grid-breakpoints: (
+        'xs': 0,
+        'sm': 600px,
+        'md': 960px,
+        'lg': 1280px,
+        'xl': 1620px
+) !default;
+
+$grid-gutter: $spacer * 6 !default;
+$form-grid-gutter: $spacer * 2 !default;
+$grid-columns: 12 !default;
+
+$container-padding-x: div($grid-gutter, 2) !default;
+
+$grid-gutters: (
+        'xs': div($grid-gutter, 12),
+        'sm': div($grid-gutter, 6),
+        'md': div($grid-gutter, 3),
+        'lg': div($grid-gutter * 2, 3),
+        'xl': $grid-gutter
+) !default;
+
+$box-shadows: (
+        'none': none,
+        'xs': var(--box-shadow,rgb(0 0 0 / 0.05)) 0 .06rem .125rem,
+        'sm': var(--box-shadow,rgb(0 0 0 / 0.05)) 0 .125rem .25rem,
+        'md': var(--box-shadow,rgb(0 0 0 / 0.1)) 0 .25rem .5rem ,
+        'lg': var(--box-shadow,rgb(0 0 0 / 0.1)) 0 .5rem 1rem,
+        'xl': var(--box-shadow,rgb(0 0 0 / 0.1)) 0 .75rem 2rem ,
+        '2xl': var(--box-shadow,rgb(0 0 0 / 0.2)) 0 1.5rem 4rem,
+) !default;
+
+$container-max-widths: (
+        'md': map-get($grid-breakpoints, 'md')-60,
+        'lg': map-get($grid-breakpoints, 'lg')-80,
+        'xl': map-get($grid-breakpoints, 'xl')-120
+) !default;
+
+$display-breakpoints: (
+        'print-only': 'only print',
+        'screen-only': 'only screen',
+        'xs-only': 'only screen and (max-width: #{map-get($grid-breakpoints, 'sm') - 1})',
+        'sm-only': 'only screen and (min-width: #{map-get($grid-breakpoints, 'sm')}) and (max-width: #{map-get($grid-breakpoints, 'md') - 1})',
+        'sm-and-down': 'only screen and (max-width: #{map-get($grid-breakpoints, 'md') - 1})',
+        'sm-and-up': 'only screen and (min-width: #{map-get($grid-breakpoints, 'sm')})',
+        'md-only': 'only screen and (min-width: #{map-get($grid-breakpoints, 'md')}) and (max-width: #{map-get($grid-breakpoints, 'lg') - 1})',
+        'md-and-down': 'only screen and (max-width: #{map-get($grid-breakpoints, 'lg') - 1})',
+        'md-and-up': 'only screen and (min-width: #{map-get($grid-breakpoints, 'md')})',
+        'lg-only': 'only screen and (min-width: #{map-get($grid-breakpoints, 'lg')}) and (max-width: #{map-get($grid-breakpoints, 'xl') - 1})',
+        'lg-and-down': 'only screen and (max-width: #{map-get($grid-breakpoints, 'xl') - 1})',
+        'lg-and-up': 'only screen and (min-width: #{map-get($grid-breakpoints, 'lg')})',
+        'xl-only': 'only screen and (min-width: #{map-get($grid-breakpoints, 'xl')})'
+) !default;
+
+$font-weights: (
+        'thin': 100,
+        'light': 300,
+        'regular': 400,
+        'medium': 500,
+        'bold': 700,
+        'black': 900
+) !default;
+
+
+$headings: (
+        'h1': (
+                'size': 6rem,
+                'weight': 300,
+                'line-height': 7rem,
+                'letter-spacing': -.015625em,
+                'text-transform': false
+        ),
+        'h2': (
+                'size': 3.75rem,
+                'weight': 300,
+                'line-height': 4.25rem,
+                'letter-spacing': -.0083333333em,
+                'text-transform': false
+        ),
+        'h3': (
+                'size': 3rem,
+                'weight': 400,
+                'line-height': 3.75rem,
+                'letter-spacing': normal,
+                'text-transform': false
+        ),
+        'h4': (
+                'size': 2.125rem,
+                'weight': 400,
+                'line-height': 2.75rem,
+                'letter-spacing': .0073529412em,
+                'text-transform': false
+        ),
+        'h5': (
+                'size': 1.5rem,
+                'weight': 400,
+                'line-height': 2rem,
+                'letter-spacing': normal,
+                'text-transform': false
+        ),
+        'h6': (
+                'size': 1.25rem,
+                'weight': 500,
+                'line-height': 2rem,
+                'letter-spacing': .0125em,
+                'text-transform': false
+        ),
+        'subtitle-1': (
+                'size': 1rem,
+                'weight': normal,
+                'line-height': 1.75rem,
+                'letter-spacing': .009375em,
+                'text-transform': false
+        ),
+        'subtitle-2': (
+                'size': .875rem,
+                'weight': 500,
+                'line-height': 1.375rem,
+                'letter-spacing': .0071428571em,
+                'text-transform': false
+        ),
+        'body-1': (
+                'size': 1rem,
+                'weight': 400,
+                'line-height': 1.5rem,
+                'letter-spacing': .03125em,
+                'text-transform': false
+        ),
+        'body-2': (
+                'size': .875rem,
+                'weight': 400,
+                'line-height': 1.25rem,
+                'letter-spacing': .0178571429em,
+                'text-transform': false
+        ),
+        'button': (
+                'size': .875rem,
+                'weight': 500,
+                'line-height': 2.25rem,
+                'letter-spacing': .0892857143em,
+                'text-transform': uppercase
+        ),
+        'caption': (
+                'size': .75rem,
+                'weight': 400,
+                'line-height': 1.25rem,
+                'letter-spacing': .0333333333em,
+                'text-transform': false
+        ),
+        'overline': (
+                'size': .75rem,
+                'weight': 500,
+                'line-height': 2rem,
+                'letter-spacing': .1666666667em,
+                'text-transform': uppercase
+        )
+) !default;
+
+$transition: (
+        'fast-out-slow-in': cubic-bezier(0.4, 0, 0.2, 1),
+        'linear-out-slow-in': cubic-bezier(0, 0, 0.2, 1),
+        'fast-out-linear-in': cubic-bezier(0.4, 0, 1, 1),
+        'ease-in-out': cubic-bezier(0.4, 0, 0.6, 1),
+        'fast-in-fast-out': cubic-bezier(0.25, 0.8, 0.25, 1),
+        'swing': cubic-bezier(0.25, 0.8, 0.5, 1),
+        'wave': cubic-bezier(.175, .885, .275, 1.275)
+) !default;
+$primary-transition: 0.3s map-get($transition, 'swing') !default;
+$secondary-transition: 0.2s map-get($transition, 'ease-in-out') !default;
+
+$z-index: (
+        'low':1,
+        'default':5,
+        'medium':10,
+        'high':20,
+        'important':50,
+        'veryImportant':100,
+) !default;
+
+//bar
+//toolbar
+$toolbar-content-padding-y: 4px !default;
+$toolbar-content-padding-x: 16px !default;
+$toolbar-height: 80px !default;
+
+//modal
+$border-modal: 7px !default;
+
+//bottom navigation
+$bottom-nav-btn-min-width: 56px !default;
+$bottom-nav-btn-max-width: 168px !default;
+$bottom-nav-height: 56px !default;
+
+//navbar
+$navbar-width: 300px !default;
+
+$states: (
+        'hover': 0.04,
+        'focus': 0.12,
+        'selected': 0.08,
+        'activated': 0.12,
+        'pressed': 0.16,
+        'dragged': 0.08
+)!default;

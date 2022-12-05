@@ -1,0 +1,74 @@
+@import "../../../style/include";
+
+$bottom-nav-btn-font-size: map-metro-get($headings, 'caption', 'size') !default;
+
+.#{$prefix}bottom-navigation {
+  bottom: 0;
+  display: flex;
+  left: 0;
+  justify-content: center;
+  width: 100%;
+  height: $bottom-nav-height;
+
+  @include light() {
+    background-color: var(--color-cards-light);
+    color: var(--color-text-primary-light);
+
+    .#{$prefix}btn.router-link-exact-active {
+      color: var(--color-one-light) !important
+    }
+  }
+  @include dark() {
+    background-color: var(--color-cards-dark);
+    color: var(--color-text-primary-dark);
+
+    .#{$prefix}btn.router-link-exact-active {
+      color: var(--color-one-dark) !important
+    }
+  }
+
+  .#{$prefix}btn {
+    border-radius: 0;
+    box-shadow: none;
+    flex: 0 1 auto;
+    font-size: $bottom-nav-btn-font-size;;
+    height: inherit !important;
+    max-width: $bottom-nav-btn-max-width;
+    min-width: $bottom-nav-btn-min-width;
+    position: relative;
+    text-transform: none;
+
+    &:after {
+      content: none
+    }
+
+    .btn-content {
+      flex-direction: column-reverse;
+      height: inherit;
+    }
+
+    .#{$prefix}icon {
+      margin-bottom: 4px
+    }
+
+    > *:not(.#{$prefix}icon) {
+      line-height: 1.2
+    }
+
+    &.router-link-exact-active {
+      color: inherit
+    }
+  }
+
+  &.bottom-navigation-fixed {
+    position: fixed;
+    z-index: map_get($z-index, 'default')
+  }
+
+  &.bottom-navigation-grow {
+    .#{$prefix}btn {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}

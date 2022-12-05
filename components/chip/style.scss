@@ -1,0 +1,187 @@
+@import "renusify/style/_include.scss";
+$chip-avatar-size: 24px !default;
+$chip-close-size: 18px !default;
+$chip-icon-margin-after: 8px !default;
+$chip-icon-margin-before: -6px !default;
+$chip-icon-right-margin-after: -4px !default;
+$chip-icon-right-margin-before: 8px !default;
+$chip-icon-size: 24px !default;
+$chip-label-border-radius: 4px !default;
+$chip-link-focus-opacity: 0.32 !default;
+$chip-pill-avatar-margin-after: 8px !default;
+$chip-pill-avatar-margin-before: -12px !default;
+$chip-pill-avatar-size: 32px !default;
+$chip-pill-filter-margin: 0 16px 0 0 !default;
+$chip-transition-duration: 0.28s !default;
+$chip-transition-fn: map-get($transition, 'fast-out-slow-in') !default;
+$icon-outlined-border-width: thin !default;
+$icon-sizes: (
+  'x-small': (
+    'font-size': 10,
+    'height': 16
+  ),
+  'small': (
+    'font-size': 12,
+    'height': 24
+  ),
+  'default': (
+    'font-size': 14,
+    'height': 32
+  ),
+  'large': (
+    'font-size': 16,
+    'height': 54
+  ),
+  'x-large': (
+    'font-size': 18,
+    'height': 66
+  )
+) !default;
+
+
+.#{$prefix}chip {
+  align-items: center;
+  cursor: default;
+  white-space: nowrap;
+  display: inline-flex;
+  line-height: 20px;
+  outline: none;
+  padding: 0;
+  position: relative;
+  text-decoration: none;
+  transition-duration: $chip-transition-duration;
+  transition-timing-function: $chip-transition-fn;
+  vertical-align: middle;
+
+  @include light() {
+    border-color: var(--color-divider-light);
+    color:var(--color-text-primary-light);
+    &:not(.chip-active) {
+    background:var(--color-chips-light);
+  }
+  }
+  @include dark() {
+    border-color: var(--color-divider-dark);
+    color:var(--color-text-primary-dark);
+    &:not(.chip-active) {
+    background:var(--color-chips-dark);
+  }
+  }
+
+  @include states();
+
+  &:before {
+    background-color: currentColor;
+    bottom: 0;
+    border-radius: inherit;
+    content: '';
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  &.chip-selectable {
+    cursor: pointer;
+  }
+
+  .#{$prefix}icon {
+    font-size: $chip-icon-size;
+    transition: none;
+  }
+
+  .chip-close {
+    .#{$prefix}icon {
+      font-size: $chip-close-size;
+      max-height: $chip-close-size;
+      max-width: $chip-close-size;
+      user-select: none;
+
+      &:hover,
+      &:focus,
+      &:active {
+        opacity: .72
+      }
+    }
+  }
+
+  .chip-content {
+    transition: $secondary-transition;
+    transition-duration: 0.05s;
+    align-items: center;
+    display: inline-flex;
+    height: 100%
+  }
+
+  &.chip-active {
+    .#{$prefix}icon {
+      color: inherit;
+      padding: 0 3px;
+    }
+  }
+
+  &.chip-disabled {
+    opacity: .4;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  &.chip-label {
+    border-radius: $chip-label-border-radius !important
+  }
+
+  &.chip-outlined {
+    border-width: $icon-outlined-border-width;
+    border-style: solid;
+    background-color: transparent !important;
+
+    &:not(.chip-active):before {
+      opacity: 0
+    }
+
+    &.chip-active:before {
+      opacity: 0.08
+    }
+
+    .#{$prefix}icon {
+      color: inherit
+    }
+
+  }
+
+  &.chip-text {
+    border: none;
+    background-color: transparent !important;
+
+    &:not(.chip-active):before {
+      opacity: 0
+    }
+
+    &.chip-active:before {
+      opacity: 0.08
+    }
+
+    .#{$prefix}icon {
+      color: inherit
+    }
+
+  }
+
+  &.chip-selected {
+    background: transparent;
+
+    &:after {
+      opacity: .28
+    }
+  }
+
+  @each $name, $size in $icon-sizes {
+    &.chip-size-#{$name} {
+      border-radius: #{div(map-get($size, 'height') , 2)}px;
+      font-size: #{map-get($size, 'font-size')}px;
+      min-height: #{map-get($size, 'height')}px;
+    }
+  }
+}
+

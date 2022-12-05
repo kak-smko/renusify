@@ -1,0 +1,61 @@
+@mixin build-utility($utility, $breakpointName) {
+  $values: map-get($utility, values);
+
+  @if type-of($values) == "string" or type-of(nth($values, 1)) != "list" {
+    $values: zip($values, $values)
+  }
+
+  @each $value in $values {
+    $properties: map-get($utility, property);
+
+    @if type-of($properties) == 'string' {
+      $properties: append((), $properties)
+    }
+
+    @if type-of($properties) == 'map' {
+      @each $dir in $properties {
+        $mixin: nth($dir, 1);
+
+        @if $mixin == 'ltr' {
+          .app-ltr {
+            @include build-utility-body($utility, nth($dir, 2), $value, $breakpointName)
+          }
+        } @else if $mixin == 'rtl' {
+          .app-rtl {
+            @include build-utility-body($utility, nth($dir, 2), $value, $breakpointName)
+          }
+        } @else {
+          @error 'Only RTL and LTR are supported'
+        }
+      }
+
+    } @else {
+      .#{$prefix}app {
+        @include build-utility-body($utility, $properties, $value, $breakpointName)
+      }
+    }
+  }
+}
+
+@mixin build-utility-body($utility, $properties, $value, $breakpointName) {
+  $property-class: map-get($utility, class);
+  $property-class: if($property-class, $property-class, nth($properties, 1));
+
+  $property-class-modifier: if(nth($value, 1), "-" + nth($value, 1), "");
+
+  $value: nth($value, 2);
+
+  .#{$property-class + $breakpointName + $property-class-modifier} {
+    @for $i from 1 through length($properties) {
+      $property: nth($properties, $i);
+      $val: $value;
+      @if type-of($value) == 'list' and length($properties) == length($value) {
+        $val: nth($value, $i)
+      }
+      @if ($val != false) {
+        $unimportant: map-get($utility, unimportant);
+        #{$property}: $val if(index($unimportant, $property), null, !important)
+      }
+    }
+  }
+}

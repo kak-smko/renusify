@@ -1,0 +1,429 @@
+@import "./_include";
+
+html {
+  font-size: $font-size-root;
+  @include media-breakpoint-down('md') {
+    font-size: $font-size-root-mobile;
+  }
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  box-sizing: border-box;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  overscroll-behavior: none;
+}
+
+
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track:hover {
+  border: 1px solid rgba(100, 100, 100, 0.4);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 100, 0.4);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 100, 100, 0.6);
+}
+
+$color: var(--color-two-light);
+$color-text: var(--color-two-text-light);
+
+::-moz-selection {
+  color: $color-text;
+  background: $color;
+}
+
+::selection {
+  color: $color-text;
+  background: $color;
+}
+
+.app-dark {
+  ::-webkit-scrollbar-track:hover {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  $color: var(--color-two-dark);
+  $color-text: var(--color-two-text-dark);
+
+  ::-moz-selection {
+    color: $color-text;
+    background: $color;
+  }
+
+  ::selection {
+    color: $color-text;
+    background: $color;
+  }
+}
+
+.#{$prefix}app {
+  font-family: $body-font-family;
+  line-height: $line-height-root;
+
+
+  ::-ms-clear,
+  ::-ms-reveal {
+    display: none
+  }
+
+  .ltr {
+    text-align: left;
+    direction: ltr;
+  }
+
+  .rtl {
+    text-align: right;
+    direction: rtl;
+  }
+
+  a {
+    color: currentColor;
+    text-decoration: none;
+  }
+
+}
+
+.router-link-exact-active {
+  @include dark() {
+    color: var(--color-link-dark);
+  }
+  @include light() {
+    color: var(--color-link-light)
+  }
+}
+
+//curser
+.#{$prefix}app {
+  @each $name in $cursor {
+    .cursor-#{$name} {
+      cursor: #{$name};
+    }
+  }
+}
+
+//display
+.#{$prefix}app {
+  @each $size, $media_query in $display-breakpoints {
+    .hidden {
+      &-#{$size} {
+        @media #{$media_query}{
+          display: none !important
+        }
+      }
+    }
+  }
+}
+
+//text
+.#{$prefix}app {
+  @each $name, $weight in $font-weights {
+    .font-weight {
+      &-#{$name} {
+        font-weight: $weight !important
+      }
+    }
+  }
+
+  .font-italic {
+    font-style: italic !important
+  }
+}
+
+//typography
+.#{$prefix}app {
+  @include typography($headings, 'body-1');
+
+  .display-1 {
+    @include typography($headings, 'h1')
+  }
+
+  .display-2 {
+    @include typography($headings, 'h2')
+  }
+
+  .display-3 {
+    @include typography($headings, 'h3')
+  }
+
+  .display-4 {
+    @include typography($headings, 'h4')
+  }
+
+  .display-5 {
+    @include typography($headings, 'h5')
+  }
+
+  .title {
+    @include typography($headings, 'h6')
+  }
+
+  .subtitle-1 {
+    @include typography($headings, 'subtitle-1');
+  }
+
+  .subtitle-2 {
+    @include typography($headings, 'subtitle-2');
+  }
+
+  .body-2 {
+    @include typography($headings, 'body-2');
+  }
+
+  .body-1 {
+    @include typography($headings, 'body-1');
+  }
+
+  .caption {
+    @include typography($headings, 'caption')
+  }
+
+  .overline {
+    @include typography($headings, 'overline');
+    text-transform: uppercase
+  }
+
+  p {
+    margin-bottom: $spacer * 4
+  }
+
+}
+
+.subtitle-1, .subtitle-2, .body-2, .caption, .overline {
+  @include light() {
+    @include text-color(var(--color-text-secondary-light));
+  }
+
+  @include dark() {
+    @include text-color(var(--color-text-secondary-dark));
+  }
+}
+
+//width
+.#{$prefix}app {
+  @each $name, $value in $widths {
+    .w-#{$name} {
+      width: $value !important
+    }
+  }
+  @each $name, $value in $heights {
+    .h-#{$name} {
+      height: $value !important
+    }
+  }
+}
+
+//transition
+.#{$prefix}app {
+  @each $name, $bezier in $transition {
+    .timing-#{$name} {
+      transition-timing-function: $bezier !important
+    }
+  }
+}
+
+//z-index
+.#{$prefix}app {
+  @each $name, $value in $z-index {
+    .z-#{$name} {
+      z-index: $value !important;
+    }
+  }
+}
+
+// Utilities
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-min-name($breakpoint, $grid-breakpoints);
+    @each $key, $utility in $utilities {
+      @if type-of($utility) == "map" and (map-get($utility, responsive) or $infix == "") {
+        @include build-utility($utility, $infix)
+      }
+    }
+  }
+
+
+}
+
+// Print utilities
+@media print {
+  @each $key, $utility in $utilities {
+    @if type-of($utility) == "map" and map-get($utility, print) == true {
+      @include build-utility($utility, "-print")
+    }
+
+  }
+}
+
+.#{$prefix}app {
+  @each $name, $value in $box-shadows {
+    .elevation-#{$name} {
+      @include elevation($name, $important: true);
+    }
+  }
+}
+
+.#{$prefix}app {
+  ol, ul {
+    margin: 0 15px;
+  }
+
+  @include light() {
+    $color: var(--color-one-light);
+    pre {
+      border-left: 5px solid $color;
+    }
+  }
+  @include dark() {
+    $color: var(--color-one-dark);
+    pre {
+      border-left: 5px solid $color;
+    }
+  }
+
+  pre {
+    direction: ltr;
+    counter-reset: line-numbering;
+    text-align: left;
+    font-size: 17px;
+    line-height: 22px;
+    border: 2px solid grey;
+    border-radius: 2px;
+    background-color: #283739;
+    color: white;
+    padding: 0em 1em;
+    margin: 0.5em 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  pre .line::before {
+    content: counter(line-numbering);
+    counter-increment: line-numbering;
+    padding-right: 1em;
+    /* space after numbers */
+    padding-left: 8px;
+    width: 1.5em;
+    text-align: right;
+    opacity: 0.5;
+    color: white;
+  }
+
+  @include light() {
+    $background: #e2ece2;
+    blockquote {
+      background-color: $background;
+      border: 5px solid var(--color-one-light);
+
+      &::before {
+        background-color: $background;
+      }
+
+      &::after {
+        color: var(--color-one-light);
+      }
+    }
+  }
+  @include dark() {
+    $background: #3a3e3a;
+    blockquote {
+      background-color: $background;
+      border: 5px solid var(--color-one-dark);
+
+      &::before {
+        background-color: $background;
+      }
+
+      &::after {
+        color: var(--color-one-dark);
+      }
+    }
+  }
+
+  blockquote {
+    font-family: Georgia, Times, "Times New Roman", serif;
+    font-size: 1.25em;
+    font-style: italic;
+    line-height: 1.8em;
+    margin: 1.1em;
+    padding: 1em 2em;
+    position: relative;
+    transition: .2s border ease-in-out;
+    z-index: 0;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      height: 2em;
+      width: 7px;
+      margin-top: -1em
+    }
+
+    &::after {
+      content: "\F27E";
+      display: inline-block;
+      font: normal normal normal 24px/1 "Material Design Icons";
+      font-size: 40px;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      position: absolute;
+      top: 50%;
+      font-style: normal;
+      line-height: 1em;
+      text-align: center;
+      text-indent: -2px;
+      width: 1em;
+      margin-top: -0.5em;
+      transition: .2s all ease-in-out, .4s transform ease-in-out;
+    }
+
+    @include ltr() {
+      border-right-width: 0;
+      border-bottom-width: 0;
+      border-top-width: 0;
+      &::before {
+        left: -5px;
+      }
+      &::after {
+        left: -0.5em;
+      }
+    }
+    @include rtl() {
+      border-bottom-width: 0;
+      border-left-width: 0;
+      border-top-width: 0;
+      &::before {
+        right: -5px;
+      }
+      &::after {
+        right: -0.5em;
+      }
+    }
+  }
+}
+

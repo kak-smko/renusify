@@ -1,0 +1,64 @@
+@import '../../style/style.scss';
+
+.#{$prefix}app {
+  display: flex;
+
+  &.app-light {
+    background: var(--color-background-one-light);
+    color: var(--color-text-primary-light);
+    .background-one{
+      background: var(--color-background-one-light);
+    }
+    .background-two{
+      background: var(--color-background-two-light);
+    }
+  }
+
+  &.app-dark {
+    background: var(--color-background-one-dark);
+    color: var(--color-text-primary-dark);
+    .background-one{
+      background: var(--color-background-one-dark);
+    }
+    .background-two{
+      background: var(--color-background-two-dark);
+    }
+  }
+
+
+  &.app-rtl {
+    direction: rtl;
+    text-align: right;
+  }
+
+  &.app-ltr {
+    direction: ltr;
+    text-align: left;
+  }
+
+  .app-wrap {
+    flex: 1 1 auto;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: 100%;
+    width: 100%;
+    position: relative;
+  }
+
+}
+
+// Firefox overrides
+@include firefox() {
+  @media print {
+    .#{$prefix}app {
+      display: block;
+
+      &-wrap {
+        display: block
+      }
+    }
+  }
+}
+

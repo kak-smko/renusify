@@ -1,0 +1,204 @@
+<template>
+    <div :class="{
+        [$r.prefix+'img']:true,
+        'img-hoverZoom':hoverZoom,'img-hoverDark':hoverDark,'img-hoverTitle':hoverTitle}"
+         ref="rImg">
+        <div v-if="hoverTitle" class="title color-white-text img-title w-full"
+             :class="{
+            'title-hs':titleHs,
+            'title-hc':titleHc,
+            'title-he':titleHe,
+            'title-vs':titleVs,
+            'title-vc':titleVc,
+            'title-ve':titleVe
+        }"
+        >{{alt}}
+        </div>
+        <img v-if="load" ref="img" :src="link" :alt="alt" draggable="false" :width="size.width" :height="size.height"/>
+    </div>
+</template>
+<script>
+    export default {
+        name: 'r-img',
+        props: {
+            src: {
+                type: String,
+                required: true
+            },
+            alt: {
+                type: String,
+                required: true
+            },
+            width: {
+                type: [String, Number]
+            },
+            height: {
+                type: [String, Number]
+            },
+            query: String,
+            autoSize: Boolean,
+            hoverZoom: Boolean,
+            hoverDark: Boolean,
+            hoverTitle: Boolean,
+            titleHs: Boolean,
+            titleHc: Boolean,
+            titleHe: Boolean,
+            titleVs: Boolean,
+            titleVc: Boolean,
+            titleVe: Boolean,
+            wPH: {
+                type: Number,
+                default: 1
+            },
+        },
+        data() {
+            return {
+                load: false,
+                time_id: null,
+                size:{width:0,height:0}
+            }
+        },
+        created() {
+            this.activate()
+        },
+        computed: {
+            link() {
+              let res = this.src
+              if (!(res.startsWith('/') || res.startsWith('http://') || res.startsWith('https://'))) {
+                res = '/' + res
+              }
+              if (this.src.search('[?]') === -1) {
+                res += '?'
+              }
+              if (this.query) {
+                res += this.query
+              }
+              if ((this.autoSize && this.size.width > 0) || this.width) {
+                res += `&w=${this.size.width}&h=${this.size.height}`
+              }
+              return res
+            }
+        },
+        methods: {
+            getSize() {
+                let res = {width: 0, height: 0}
+                if (this.width) {
+                    res["width"] = this.width
+                }
+                if (this.height) {
+                    res["height"] = this.height
+                }
+                if (res['width'] !== 0 && res['height'] === 0) {
+                    res['height'] = res['width'] / this.wPH
+                }
+                if (res['width'] === 0 && res['height'] !== 0) {
+                    res['width'] = res['height'] * this.wPH
+                }
+                if (res['width'] !== 0) {
+                    return this.size=res
+                }
+
+                if (this.$refs.rImg && this.$refs.rImg.parentElement && this.$refs.rImg.parentElement.clientWidth > 0) {
+                    let cs=window.getComputedStyle(this.$refs.rImg.parentElement)
+                    let paddingX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+                    let borderX = parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
+                    let w = parseFloat((parseFloat(cs.getPropertyValue('width'))-paddingX-borderX).toFixed(2));
+                    return this.size= {
+                        width: w,
+                        height: w / this.wPH
+                    }
+                }
+                return false
+
+            },
+            activate() {
+                this.getSize()
+                if (this.size.width!==0) {
+                    this.load = true
+                } else {
+                    clearTimeout(this.time_id)
+                    this.time_id=setTimeout(() => {
+                        this.activate()
+                    }, 100)
+                }
+
+            }
+        },
+        beforeUnmount(){
+            clearTimeout(this.time_id)
+        }
+    }
+</script>
+<style lang="scss">
+    @import "../../style/include";
+
+    .#{$prefix}img {
+        position: relative;
+        display: inline-flex;
+        max-width: 100%;
+        overflow: hidden;
+        z-index: 0;
+
+        img {
+            transition: 0.3s all ease-in-out;
+        }
+
+        &.img-hoverZoom {
+            &:hover {
+                img {
+                    transform: scale(1.1);
+                }
+            }
+        }
+
+        &.img-hoverDark {
+            &:hover {
+                background-color: black;
+
+                img {
+                    opacity: 0.5;
+                }
+            }
+        }
+
+        &.img-hoverTitle {
+            &:hover {
+                .img-title {
+                    max-width: 100%;
+                }
+            }
+        }
+
+        .img-title {
+            position: absolute;
+            z-index: 1;
+            max-width: 0;
+            overflow: hidden;
+
+            &.title-hs {
+                text-align: start;
+            }
+
+            &.title-hc {
+                text-align: center;
+            }
+
+            &.title-he {
+                text-align: end;
+            }
+
+            &.title-vs {
+                top: 10px
+            }
+
+            &.title-vc {
+                top: 50%
+            }
+
+            &.title-ve {
+                bottom: 10px
+            }
+
+        }
+    }
+</style>

@@ -1,0 +1,85 @@
+@import "../../style/include";
+
+$item-height: 48px;
+
+.#{$prefix}list {
+  border-radius: 4px;
+  display: block;
+  padding: 8px 0;
+  will-change: box-shadow;
+  flex: 0 1 auto;
+  position: relative;
+  max-width: 100%;
+
+  @include light() {
+    .list-item {
+      &.list-item-active {
+        background-color: var(--color-table-active-light)
+      }
+
+      &:hover {
+        background-color: var(--color-table-hover-light)
+      }
+    }
+  }
+
+  @include dark() {
+    .list-item {
+      &.list-item-active {
+        background-color: var(--color-table-active-dark)
+      }
+
+      &:hover {
+        background-color: var(--color-table-hover-dark)
+      }
+    }
+  }
+
+  &.list-subheader {
+    align-items: center;
+    display: flex;
+    height: 48px;
+    font-size: 0.875rem;
+    font-weight: 400;
+    padding: 0 16px 0 16px;
+  }
+
+  &.list-disabled {
+    pointer-events: none;
+  }
+
+  .list-item {
+    align-items: center;
+    display: flex;
+    flex: 1 1 100%;
+    letter-spacing: normal;
+    min-height: $item-height;
+    outline: none;
+    padding: 0 16px;
+    position: relative;
+    text-decoration: none;
+    margin-bottom: 4px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.list-item-active {
+      .#{$prefix}icon {
+        color: inherit;
+      }
+    }
+  }
+
+  &.list-flat {
+    .list-item {
+      border-radius: 0;
+    }
+  }
+
+  &.list-rounded {
+    .list-item {
+      border-radius: 30px;
+    }
+  }
+}

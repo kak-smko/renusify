@@ -1,0 +1,72 @@
+<template>
+    <component v-bind="att"
+               :is="isClickable?route.tag:'div'"
+               v-ripple="isClickable&&isRipple">
+        <slot></slot>
+    </component>
+</template>
+
+<script>
+    import {roots} from '../../tools/rootable';
+    import Ripple from '../../directive/ripple/index';
+    import './style.scss';
+
+    export default {
+        name: 'r-card',
+        mixins: [roots],
+        directives: {ripple: Ripple},
+        props: {
+            flat: Boolean,
+            hover: Boolean,
+            tile: Boolean,
+            outlined: Boolean,
+            isRipple: {
+                type:Boolean,
+                default:true
+            },
+            draggable:{
+                type:Boolean,
+                default:false
+            }
+        },
+        computed: {
+            att(){
+                let res={'class':this.genClass}
+                if(this.href){
+                    res['href']=this.route.data.attrs.href
+                }
+
+                if(this.target){
+                    res['rel']='noreferrer'
+                    res['target']=this.route.data.attrs.target
+                }
+                if(this.to){
+                    res['to']=this.route.data.props.to
+                }
+                return res
+            },
+            genClass() {
+                let c = this.$r.prefix+'card';
+                if (this.flat) {
+                    c += ' card-flat';
+                }else{
+                    c += ' sheet';
+                }
+                if (this.hover) {
+                    c += ' card-hover';
+                }
+                if (this.outlined) {
+                    c += ' card-outlined';
+                }
+                if (this.tile) {
+                    c += ' sheet-tile';
+                }
+                if (this.isClickable) {
+                    c += ' card-link';
+                }
+                return c;
+            },
+        },
+
+    };
+</script>
