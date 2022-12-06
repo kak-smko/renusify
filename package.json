@@ -1,6 +1,6 @@
 {
   "name": "renusify",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Vue3 Framework",
   "keywords": [
     "vuejs",
@@ -14,14 +14,14 @@
   ],
   "homepage": "https://github.com/smkoBa/renusify",
   "main": "index.js",
-  "scripts": {
-    "test": "mocha"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/smkoBa/renusify.git"
   },
-  "author": "Smko Bayazidi ba.smko@gmail.com",
+  "author": {
+    "name": "Smko Bayazidi",
+    "email": "ba.smko@gmail.com"
+  },
   "license": "BSD",
   "private": false
 }

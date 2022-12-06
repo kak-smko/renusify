@@ -1,15 +1,16 @@
 class DateTime {
-    format = {
-        narrow: {
-            weekday: 'narrow'
-        },
-        day: {
-            day: 'numeric'
-        },
-        month: {
-            month: 'short'
-        },
-        year: {
+    constructor() {
+        this.format = {
+            narrow: {
+                weekday: 'narrow'
+            },
+            day: {
+                day: 'numeric'
+            },
+            month: {
+                month: 'short'
+            },
+            year: {
             year: 'numeric'
         },
         short: {
@@ -30,9 +31,10 @@ class DateTime {
             minute: 'numeric',
             second: 'numeric'
         }
-    }
+        }
 
-    langs = {};
+        this.langs = {};
+    }
 
     set_lang(name, lang) {
         if (!lang['localizeName']) {
@@ -45,11 +47,11 @@ class DateTime {
             return
         }
         this.langs[name] = lang
-    }
+    };
 
     set_format(value) {
         Object.assign(this.format, this.format, value)
-    }
+    };
 
     formatLocal(value, type = 'long', local = null) {
         if (local === null && window.app) {
@@ -74,7 +76,7 @@ class DateTime {
             console.error(e, value)
             return value
         }
-    }
+    };
 }
 
 export default new DateTime();
