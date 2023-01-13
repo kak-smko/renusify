@@ -37,13 +37,9 @@
 </template>
 
 <script>
-import Touch from "../../directive/touch";
 
 export default {
   name: 'r-swiper',
-  directives: {
-    'touch': Touch
-  },
   props: {
     items: Array,
     widthItem: Number,

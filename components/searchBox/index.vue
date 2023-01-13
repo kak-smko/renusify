@@ -47,14 +47,10 @@
   </div>
 </template>
 <script>
-import clickOutside from '../../directive/clickOutSide/index'
 
 export default {
   name: 'r-search-box',
   inheritAttrs: false,
-  directives: {
-    'click-outside': clickOutside
-  },
   props: {
     closable: Boolean,
     notFoundMsg: {

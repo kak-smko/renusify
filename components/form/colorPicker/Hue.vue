@@ -1,7 +1,8 @@
 <template>
-  <div class="hue ms-1" @mousedown.prevent.stop="selectHue">
-    <canvas ref="canvasHue" />
-    <div :style="slideHueStyle" class="slide" />
+  <div class="hue ms-1">
+    <canvas ref="canvas" :width="width" :height="height" v-touch="{'end':move,
+                  'move':move}"/>
+    <div :style="style" class="slide"/>
   </div>
 </template>
 
@@ -26,71 +27,51 @@ export default
   emits: ['selectHue'],
   data() {
     return {
-      slideHueStyle: {},
+      style: {},
+      ctx: null
     }
   },
   mounted() {
+    this.ctx = this.$refs.canvas.getContext('2d', {willReadFrequently: true})
     this.renderColor()
     this.renderSlide()
   },
   methods: {
     renderColor() {
-      const canvas = this.$refs.canvasHue
-      const width = this.width
-      const height = this.height
-      const ctx = canvas.getContext('2d')
-      canvas.width = width
-      canvas.height = height
-
-      const gradient = ctx.createLinearGradient(0, 0, 0, height)
-      gradient.addColorStop(0, '#FF0000') // red
-      gradient.addColorStop(0.17 * 1, '#FF00FF') // purple
-      gradient.addColorStop(0.17 * 2, '#0000FF') // blue
-      gradient.addColorStop(0.17 * 3, '#00FFFF') // green
-      gradient.addColorStop(0.17 * 4, '#00FF00') // green
-      gradient.addColorStop(0.17 * 5, '#FFFF00') // yellow
-      gradient.addColorStop(1, '#FF0000') // red
-      ctx.fillStyle = gradient
-      ctx.fillRect(0, 0, width, height)
+      const g = this.ctx.createLinearGradient(0, 0, 0, this.height)
+      g.addColorStop(0, '#FF0000') // red
+      g.addColorStop(0.17 * 1, '#FF00FF') // purple
+      g.addColorStop(0.17 * 2, '#0000FF') // blue
+      g.addColorStop(0.17 * 3, '#00FFFF') // green
+      g.addColorStop(0.17 * 4, '#00FF00') // green
+      g.addColorStop(0.17 * 5, '#FFFF00') // yellow
+      g.addColorStop(1, '#FF0000') // red
+      this.ctx.fillStyle = g
+      this.ctx.fillRect(0, 0, this.width, this.height)
     },
     renderSlide() {
-      this.slideHueStyle = {
-        top: (1 - this.hsv.h / 360) * this.height - 2 + 'px',
+      this.style = {
+        top: (1 - this.hsv.h / 360) * this.height + 'px',
       }
     },
-    selectHue(e) {
-      const { top: hueTop } = this.$el.getBoundingClientRect()
-      const ctx = e.target.getContext('2d')
+    move(e) {
+      let y = e.current.y
 
-      const mousemove = (e) => {
-        let y = e.clientY - hueTop
-
-        if (y < 0) {
-          y = 0
-        }
-        if (y > this.height) {
-          y = this.height
-        }
-
-        this.slideHueStyle = {
-          top: y - 2 + 'px',
-        }
-        // If you use the maximum value, the selected pixel will be empty, and the empty default is black
-        const imgData = ctx.getImageData(0, Math.min(y, this.height - 1), 1, 1)
-        const [r, g, b] = imgData.data
-        this.$emit('selectHue', { r, g, b })
+      if (y < 0) {
+        y = 0
+      }
+      if (y > this.height) {
+        y = this.height
       }
 
-      mousemove(e)
-
-      const mouseup = () => {
-        document.removeEventListener('mousemove', mousemove)
-        document.removeEventListener('mouseup', mouseup)
+      this.style = {
+        top: y - 2 + 'px',
       }
 
-      document.addEventListener('mousemove', mousemove)
-      document.addEventListener('mouseup', mouseup)
-    },
+      const imgData = this.ctx.getImageData(0, Math.min(y, this.height - 1), 1, 1)
+      const [r, g, b] = imgData.data
+      this.$emit('selectHue', {r, g, b})
+    }
   },
 }
 </script>

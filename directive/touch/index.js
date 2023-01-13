@@ -30,11 +30,12 @@ function touchstart(event, wrapper) {
     wrapper.startY = touch.clientY
     wrapper.moveX = touch.clientX
     wrapper.moveY = touch.clientY
+    wrapper.current = {x: touch.clientX - wrapper.clientRect['left'], y: touch.clientY - wrapper.clientRect['top']}
     event['touch'] = wrapper
     wrapper.start && wrapper.start(wrapper)
 
-    document.ontouchmove= e => touchmove(e, wrapper)
-    document.ontouchend= e => touchend( e, wrapper)
+    document.ontouchmove = e => touchmove(e, wrapper)
+    document.ontouchend = e => touchend(e, wrapper)
 }
 
 function mousestart(event, wrapper) {
@@ -44,10 +45,11 @@ function mousestart(event, wrapper) {
     wrapper.startY = touch.clientY
     wrapper.moveX = touch.clientX
     wrapper.moveY = touch.clientY
+    wrapper.current = {x: touch.clientX - wrapper.clientRect['left'], y: touch.clientY - wrapper.clientRect['top']}
     event['touch'] = wrapper
     wrapper.start && wrapper.start(wrapper)
-    document.onmousemove= e => mousemove(e, wrapper)
-    document.onmouseup= e => mouseend( e, wrapper)
+    document.onmousemove = e => mousemove(e, wrapper)
+    document.onmouseup = e => mouseend(e, wrapper)
 }
 
 function touchend(event, wrapper) {
@@ -55,6 +57,8 @@ function touchend(event, wrapper) {
         return null
     }
     wrapper.selected = false
+    const touch = event.changedTouches[0]
+    wrapper.current = {x: touch.clientX - wrapper.clientRect['left'], y: touch.clientY - wrapper.clientRect['top']}
     event['touch'] = wrapper
     wrapper.end && wrapper.end(wrapper)
     handleGesture(wrapper)
@@ -63,8 +67,8 @@ function touchend(event, wrapper) {
     wrapper.moveX = 0
     wrapper.moveY = 0
 
-    document.ontouchmove=null
-    document.ontouchend=null
+    document.ontouchmove = null
+    document.ontouchend = null
 }
 
 function mouseend(event, wrapper) {
@@ -73,6 +77,7 @@ function mouseend(event, wrapper) {
     }
 
     wrapper.selected = false
+    wrapper.current = {x: event.clientX - wrapper.clientRect['left'], y: event.clientY - wrapper.clientRect['top']}
     event['touch'] = wrapper
     wrapper.end && wrapper.end(wrapper)
     handleGesture(wrapper)
@@ -82,8 +87,8 @@ function mouseend(event, wrapper) {
     wrapper.moveX = 0
     wrapper.moveY = 0
 
-    document.onmousemove=null
-    document.onmouseup=null
+    document.onmousemove = null
+    document.onmouseup = null
 }
 
 function touchmove(event, wrapper) {
@@ -93,6 +98,7 @@ function touchmove(event, wrapper) {
         return null
     }
     const touch = event.changedTouches[0]
+    wrapper.current = {x: touch.clientX - wrapper.clientRect['left'], y: touch.clientY - wrapper.clientRect['top']}
     wrapper.moveX = touch.clientX
     wrapper.moveY = touch.clientY
     event['touch'] = wrapper
@@ -109,6 +115,7 @@ function mousemove(event, wrapper) {
         return null
     }
     const touch = event
+    wrapper.current = {x: event.clientX - wrapper.clientRect['left'], y: event.clientY - wrapper.clientRect['top']}
     wrapper.moveX = touch.clientX
     wrapper.moveY = touch.clientY
     event['touch'] = wrapper
@@ -121,6 +128,8 @@ function mousemove(event, wrapper) {
 function createHandlers(value) {
     const wrapper = {
         selected: false,
+        clientRect: value['clientRect'],
+        current: {x: 0, y: 0},
         startX: 0,
         startY: 0,
         goX: 0,
@@ -143,21 +152,25 @@ function createHandlers(value) {
 
 function mounted(el, binding) {
     const value = binding.value
+    el.timeout_touch = setTimeout(() => {
+        value['clientRect'] = el.getBoundingClientRect()
+        const options = value.options || {
+            passive: true
+        }
 
-    const options = value.options || {
-        passive: true
-    }
+        el.eventsHandler = createHandlers(value)
+        keys(el.eventsHandler).forEach(eventName => {
+            el.addEventListener(eventName, el.eventsHandler[eventName], options)
+        })
+    }, 1000)
 
-    el.eventsHandler= createHandlers(value)
-    keys(el.eventsHandler).forEach(eventName => {
-        el.addEventListener(eventName, el.eventsHandler[eventName], options)
-    })
 }
 
 function unmounted(el, binding) {
-    if (!el.eventsHandler){
-            return
-        }
+    clearTimeout(el.timeout_touch)
+    if (!el.eventsHandler) {
+        return
+    }
     keys(el.eventsHandler).forEach(eventName => {
         el.removeEventListener(eventName, el.eventsHandler[eventName])
     })

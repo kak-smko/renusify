@@ -33,14 +33,11 @@
     </div>
 </template>
 <script>
-    import clickOutside from '../../directive/clickOutSide/index'
 
     export default {
         name: 'r-menu',
-        directives: {
-            'click-outside': clickOutside
-        },
-        props: {
+
+      props: {
             modelValue: {
                 type: Boolean,
                 default: false

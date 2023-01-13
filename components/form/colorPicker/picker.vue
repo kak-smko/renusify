@@ -1,41 +1,51 @@
 <template>
   <div
       class="color-box"
-      :style="{ width: totalWidth + 'px' }"
   >
     <div class="color-set">
       <Saturation
           ref="saturation"
           :hsv="{h:h,s:s,v:v}"
           :color="rgbaString"
-          :size="hueHeight"
+          :size="200"
           @selectSaturation="selectSaturation"
       />
       <Hue
           ref="hue"
           :hsv="{h:h,s:s,v:v}"
-          :width="hueWidth"
-          :height="hueHeight"
+          :width="15"
+          :height="200"
           @selectHue="selectHue"
       />
       <Alpha
           ref="alpha"
           :color="rgbaString"
           :rgba="rgba"
-          :width="hueWidth"
-          :height="hueHeight"
+          :width="15"
+          :height="200"
           @selectAlpha="selectAlpha"
       />
     </div>
-    <div :style="{ height: previewHeight + 'px' }" class="color-show">
+    <div class="color-show">
       <Preview
           :color="rgbaString"
-          :width="previewWidth"
-          :height="previewHeight"
+          :width="238"
+          :height="28"
       />
     </div>
-    <Box name="HEX" :color="hexString" @inputColor="inputHex"/>
-    <Box name="RGBA" :color="rgbaString" @inputColor="inputRgba"/>
+    <div class="color-input">
+    <span class="name">
+      HEX
+    </span>
+      <input :value="hexString" @input="inputHex" class="value"/>
+    </div>
+    <div class="color-input">
+    <span class="name">
+      RGBA
+    </span>
+      <input :value="rgbaString" @input="inputRgba" class="value"/>
+    </div>
+
     <slot></slot>
   </div>
 </template>
@@ -47,29 +57,23 @@ import Saturation from './Saturation.vue'
 import Hue from './Hue.vue'
 import Alpha from './Alpha.vue'
 import Preview from './Preview.vue'
-import Box from './Box.vue'
 
 export default {
   components: {
     Saturation,
     Hue,
     Alpha,
-    Preview,
-    Box
+    Preview
   },
-  emits: ['changeColor'],
   mixins: [color],
   props: {
     color: {
       type: String,
-      default: '#DD0FB2',
+      default: '#2F1DCC',
     }
   },
   data() {
     return {
-      hueWidth: 15,
-      hueHeight: 200,
-      previewHeight: 30,
       r: 0,
       g: 0,
       b: 0,
@@ -80,12 +84,6 @@ export default {
     }
   },
   computed: {
-    totalWidth() {
-      return this.hueHeight + (this.hueWidth + 14) * 2
-    },
-    previewWidth() {
-      return this.totalWidth - 20
-    },
     rgba() {
       return {
         r: this.r,
@@ -133,7 +131,11 @@ export default {
       this.a = a
     },
     inputHex(color) {
-      this.setColorValue(color)
+      const value = color.target.value
+      if (value.length !== 7) {
+        return
+      }
+      this.setColorValue(value)
       this.$nextTick(() => {
 
         this.$refs.saturation.renderColor()
@@ -144,7 +146,8 @@ export default {
       })
     },
     inputRgba(color) {
-      this.setColorValue(color)
+      const value = color.target.value
+      this.setColorValue(value)
       this.$nextTick(() => {
         this.$refs.saturation.renderColor()
 
@@ -152,18 +155,7 @@ export default {
 
         this.$refs.hue.renderSlide()
       })
-    },
-    selectColor(color) {
-      this.setColorValue(color)
-      this.$nextTick(() => {
-
-        this.$refs.saturation.renderColor()
-
-        this.$refs.saturation.renderSlide()
-
-        this.$refs.hue.renderSlide()
-      })
-    },
+    }
   },
 }
 </script>
@@ -196,5 +188,54 @@ export default {
     margin-top: 8px;
     display: flex;
   }
+
+  .color-input {
+    display: flex;
+    margin-top: 8px;
+    font-size: 12px;
+
+    .name {
+      width: 60px;
+      height: 30px;
+      float: left;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .value {
+      flex: 1;
+      height: 30px;
+      min-width: 100px;
+      padding: 0 12px;
+      border: 0;
+      box-sizing: border-box;
+      text-align: left;
+      direction: ltr;
+    }
+
+    @include light() {
+      .name {
+        color: #999;
+        background: #e7e8e9;
+      }
+      .value {
+        color: #666;
+        background: #eceef0;
+      }
+    }
+    @include dark() {
+      .name {
+        color: #999;
+        background: #252930;
+      }
+      .value {
+        color: #fff;
+        background: #2e333a;
+      }
+    }
+  }
 }
+
+
 </style>

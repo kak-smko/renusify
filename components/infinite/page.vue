@@ -15,10 +15,9 @@
 </template>
 
 <script>
-    import Scroll from "renusify/directive/scroll";
-   export default {
+
+export default {
         name: 'r-infinite-page',
-       directives: {'scroll':Scroll},
         props: {
             url: {
                 required: true,

@@ -18,6 +18,7 @@
                    :disableDel="disableDel"
                    :tile="tile"
                    :keyWidth="keyWidth"
+                   :valueWidth="valueWidth"
         ></json-view>
         <div v-if="!show &&!disableAdd" class="text-end mb-3">
           <r-btn
@@ -33,28 +34,28 @@
               v-if="!is_array"
               v-model="info.key"
               :tile="tile"
-              class="w-30"
-              :label="$t('key','renusify')"></r-text-input>
-          <div class="w-20">
+              class="w-30 pe-1"
+              :label="keyLabel"></r-text-input>
+          <div class="w-20" v-if="!valueType">
             <r-select v-model="info.type"
                       :tile="tile"
-                      class="mx-1"
+                      class="me-1"
                       :items="['text','number','boolean','json','array']"
                       just-value
                       @update:model-value="info.value=null"
                       firstSelect></r-select>
           </div>
-          <r-text-input v-if="info.type==='text'"
+          <r-text-input v-if="val_type==='text'"
                         :tile="tile"
-                        :label="$t('value','renusify')"
+                        :label="valueLabel"
                         v-model="info.value"></r-text-input>
-          <r-number v-else-if="info.type==='number'"
+          <r-number v-else-if="val_type==='number'"
                     :tile="tile"
                     :label="$t('value','renusify')" v-model="info.value"></r-number>
-          <r-switch v-else-if="info.type==='boolean'"
+          <r-switch v-else-if="val_type==='boolean'"
                     :tile="tile"
                     :label="$t('value','renusify')" v-model="info.value"></r-switch>
-          <r-btn @click.prevent="add" class="ms-1">{{ $t('add', 'renusify') }}</r-btn>
+          <r-btn @click.prevent="add" class="ms-1 color-success" rounded>{{ $t('add', 'renusify') }}</r-btn>
         </div>
       </div>
       <div class="display-5 d-flex v-end pb-2" :style="{'color':color}" :class="{
@@ -73,12 +74,24 @@ export default {
   components: {JsonView},
   props: {
     label: String,
+    keyLabel: {type: String, default: 'key'},
+    valueLabel: {type: String, default: 'value'},
     modelValue: {
       type: Object, Array
     },
     keyWidth: {
       type: String,
       default: '140px'
+    },
+    valueWidth: {
+      type: String,
+      default: '300px'
+    },
+    valueType: {
+      type: String,
+      validator: function (value) {
+        return ['text', 'number', 'boolean'].indexOf(value) !== -1
+      }
     },
     template: Object,
     baseArray: Boolean,
@@ -95,6 +108,12 @@ export default {
     }
   },
   computed: {
+    val_type() {
+      if (this.valueType) {
+        return this.valueType
+      }
+      return this.info.type
+    },
     is_array() {
       if (this.baseArray) {
         return true

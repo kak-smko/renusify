@@ -1,11 +1,10 @@
 <template>
-  <canvas />
+  <canvas ref="canvas" :width="width" :height="height"/>
 </template>
-<script >
+<script>
 import {color} from "./mixin";
 
-export default
-        {
+export default {
   props: {
     color: {
       type: String,
@@ -20,37 +19,31 @@ export default
       default: 30,
     },
   },
-          mixins: [color],
-          data() {
-            return {
-              alphaSize: 5,
-            }
-          },
-          watch: {
-            color() {
-              this.renderColor()
-            },
-          },
+  mixins: [color],
+  data() {
+    return {
+      alphaSize: 7,
+      ctx: null
+    }
+  },
+  watch: {
+    color() {
+      this.renderColor()
+    },
+  },
   mounted() {
+    this.ctx = this.$refs.canvas.getContext('2d', {willReadFrequently: true})
     this.renderColor()
   },
   methods: {
     renderColor() {
-      const canvas = this.$el
-      const width = this.width
-      const height = this.height
-      const size = this.alphaSize
-      const canvasSquare = this.createAlphaSquare(size)
+      const canvasSquare = this.createAlphaSquare(this.alphaSize)
 
-      const ctx = canvas.getContext('2d')
-      canvas.width = width
-      canvas.height = height
+      this.ctx.fillStyle = this.ctx.createPattern(canvasSquare, 'repeat')
+      this.ctx.fillRect(0, 0, this.width, this.height)
 
-      ctx.fillStyle = ctx.createPattern(canvasSquare, 'repeat')
-      ctx.fillRect(0, 0, width, height)
-
-      ctx.fillStyle = this.color
-      ctx.fillRect(0, 0, width, height)
+      this.ctx.fillStyle = this.color
+      this.ctx.fillRect(0, 0, this.width, this.height)
     },
   },
 }

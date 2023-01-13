@@ -14,11 +14,9 @@
 </template>
 
 <script>
-    import Scroll from "renusify/directive/scroll";
     import RChatMsg from "./chatMsg";
 
     export default {
-        directives: {'scroll': Scroll},
         components: {
             RChatMsg
         },

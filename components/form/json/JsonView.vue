@@ -20,20 +20,21 @@
                 :disableDel="disableDel||template!==undefined"
                 :disableEditKey="disableEditKey"
                 :keyWidth="keyWidth"
+                :valueWidth="valueWidth"
         ></r-json>
       </div>
-        <div v-else class="mb-1">
-            <r-text-input v-if="typeof value==='string'"
-                          :tile="tile"
-                          :model-value="value" @update:model-value="emit(key,$event)"></r-text-input>
-            <r-number v-else-if="typeof value==='number'"
+      <div v-else class="mb-1" :style="{'max-width': valueWidth}">
+        <r-text-input v-if="typeof value==='string'"
                       :tile="tile"
-                      :model-value="value" @update:model-value="emit(key,$event)"></r-number>
-            <r-switch v-else-if="typeof value==='boolean'"
-                      :tile="tile"
-                      :model-value="value" @update:model-value="emit(key,$event)"></r-switch>
+                      :model-value="value" @update:model-value="emit(key,$event)"></r-text-input>
+        <r-number v-else-if="typeof value==='number'"
+                  :tile="tile"
+                  :model-value="value" @update:model-value="emit(key,$event)"></r-number>
+        <r-switch v-else-if="typeof value==='boolean'"
+                  :tile="tile"
+                  :model-value="value" @update:model-value="emit(key,$event)"></r-switch>
 
-        </div>
+      </div>
 
     </div>
 </template>
@@ -50,6 +51,9 @@
           keyWidth: {
             type: String,
             default: '140px'
+          }, valueWidth: {
+            type: String,
+            default: '300px'
           }
         },
         data() {

@@ -23,11 +23,9 @@
 <script>
 import './style.scss'
 import { roots } from '../../tools/rootable'
-import Ripple from '../../directive/ripple/index'
 export default {
   name: 'r-btn',
   mixins: [roots],
-  directives: { ripple: Ripple },
   props: {
     tag: {
       type: String,

@@ -12,7 +12,12 @@ export const color = {
             this.r = rgba.r
             this.g = rgba.g
             this.b = rgba.b
-            this.a = rgba.a || 1
+            if (rgba.a >= 0) {
+                this.a = rgba.a
+            } else {
+                this.a = rgba.a || 1
+            }
+
             this.set_hsv(rgba)
         },
         createAlphaSquare(size) {

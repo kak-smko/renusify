@@ -3,7 +3,7 @@
     <r-input :active="active"
              v-bind="$attrs"
              :readonly="readonly"
-             :modelValue="$helper.ifHas(chips,null,0,'value')"
+             :modelValue="$helper.ifHas(chips,null,0,value)"
              @click.prevent="handleClick()">
       <div class="select-wrap v-center"
            :class="{'flex-nowrap':!multiple}">
@@ -49,7 +49,7 @@
               checked>
         <template v-slot="props">
           <slot :item="props.item">
-            <div class="list-title" role="option">
+            <div class="list-title">
               {{ props.item[text] }}
             </div>
           </slot>
@@ -66,14 +66,10 @@
 </template>
 <script>
 import './scss/select.scss'
-import clickOutside from '../../directive/clickOutSide/index'
 
 export default {
   name: 'r-select',
   inheritAttrs: false,
-  directives: {
-    'click-outside': clickOutside
-  },
   props: {
     searchLink: String,
     type: {
@@ -83,6 +79,10 @@ export default {
     text: {
       type: String,
       default: 'name'
+    },
+    value: {
+      type: String,
+      default: 'value'
     },
     combo: Boolean,
     readonly: Boolean,
@@ -132,7 +132,7 @@ export default {
           if (this.$helper.hasKey(res, i)) {
             let v = {}
             v[this.text] = res[i].toString()
-            v['value'] = res[i]
+            v[this.value] = res[i]
             res[i] = v
           }
         }
@@ -178,22 +178,22 @@ export default {
         if (this.$helper.ifHas(this.modelValue, false, this.text)) {
           return [this.modelValue]
         } else if (typeof this.modelValue === 'string' || typeof this.modelValue === 'number') {
-          const index = this.$helper.searchArray(this.genItems, 'value', this.modelValue)
+          const index = this.$helper.searchArray(this.genItems, this.value, this.modelValue)
           if (index !== false) {
             return [this.genItems[index]]
           }
           return [{
-            [this.text]: this.modelValue.toString(), value: this.modelValue
+            [this.text]: this.modelValue.toString(), [this.value]: this.modelValue
           }]
         } else if (typeof this.modelValue[0] === 'string' || typeof this.modelValue[0] === 'number') {
           let res = []
           const lng = this.modelValue.length
           for (let i = 0; i < lng; i++) {
-            const index = this.$helper.searchArray(this.genItems, 'value', this.modelValue[i])
+            const index = this.$helper.searchArray(this.genItems, this.value, this.modelValue[i])
             if (index !== false) {
               res.push(this.genItems[index])
             } else {
-              res.push({[this.text]: this.modelValue[i].toString(), value: this.modelValue[i]})
+              res.push({[this.text]: this.modelValue[i].toString(), [this.value]: this.modelValue[i]})
             }
           }
           return res
@@ -220,7 +220,7 @@ export default {
     },
     add() {
       if (this.inputVal) {
-        let val = {[this.text]: this.inputVal.toString(), value: this.inputVal}
+        let val = {[this.text]: this.inputVal.toString(), [this.value]: this.inputVal}
         if (!this.multiple) {
           this.chips = []
         }
@@ -246,7 +246,7 @@ export default {
         val = []
         for (let i in this.chips) {
           if (this.$helper.hasKey(this.chips, i)) {
-            val.push(this.chips[i]['value'])
+            val.push(this.chips[i][this.value])
           }
         }
       }
@@ -254,7 +254,7 @@ export default {
         val = val[0]
         if (val) {
           if (this.justValue) {
-            val = val['value']
+            val = val[this.value]
           }
           this.closeList()
         }

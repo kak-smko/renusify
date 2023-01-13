@@ -22,11 +22,9 @@
 
 <script>
     import './style.scss'
-    import Ripple from '../../directive/ripple/index'
 
     export default {
         name: 'r-list',
-        directives: {ripple: Ripple},
         props: {
             disabled: Boolean,
             multiple: Boolean,

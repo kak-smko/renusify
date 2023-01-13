@@ -15,7 +15,7 @@
                                 class="iti-flag"></div>
                         <div class="list-title">{{item.name}}</div>
                         <r-spacer></r-spacer>
-                        <span>+{{ item.dialCode }}</span>
+                        <span class="ltr">+{{ item.dialCode }}</span>
                     </template>
                 </r-list>
             </r-card>
@@ -26,14 +26,13 @@
             <span class="country-code pa-1"> +{{ activeCountry.dialCode }} </span>
             <span class="dropdown-arrow">{{ open ? "▲" : "▼" }}</span>
         </r-btn>
-        <r-mask-input class="input-phone" :label="label?label:$t('phone','renusify')"
-                      @update:model-value="emit"
-                      :mask="'+'+activeCountry.dialCode+' NNN NNN NNNN'"
-                      :tile="tile"
-                      :required="required"
-                      v-model="tel.phone"
-        >
-        </r-mask-input>
+      <r-text-input class="input-phone" :label="label?label:$t('phone','renusify')"
+                    @update:model-value="emit"
+                    :tile="tile"
+                    :rules="[required&&'required']"
+                    v-model="tel.phone"
+      >
+      </r-text-input>
 
     </div>
 </template>
@@ -143,7 +142,6 @@
                     setTimeout(() => {
                         this.tel.phone = this.tel.phone.substr(1, this.tel.phone.length)
                         this.$emit('update:modelValue', this.tel)
-                        this.$toast(this.$t('phone_ex', 'renusify'))
                     }, 1)
                 } else {
                     this.$emit('update:modelValue', this.tel)

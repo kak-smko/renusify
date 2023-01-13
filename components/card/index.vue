@@ -8,13 +8,11 @@
 
 <script>
     import {roots} from '../../tools/rootable';
-    import Ripple from '../../directive/ripple/index';
     import './style.scss';
 
     export default {
         name: 'r-card',
         mixins: [roots],
-        directives: {ripple: Ripple},
         props: {
             flat: Boolean,
             hover: Boolean,

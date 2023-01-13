@@ -29,10 +29,9 @@
 </template>
 
 <script>
-    import Scroll from "renusify/directive/scroll";
-    export default {
+
+export default {
         name: 'r-infinite-div',
-        directives: {'scroll':Scroll},
         props: {
             isChat: Boolean,
             height: {

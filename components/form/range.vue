@@ -48,11 +48,9 @@
   </r-input>
 </template>
 <script>
-import touch from '../../directive/touch'
 
 export default {
   name: 'r-range',
-  directives: {touch},
   props: {
     modelValue: {
       type: [Number, Array]

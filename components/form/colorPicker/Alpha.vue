@@ -1,7 +1,8 @@
 <template>
-  <div class="color-alpha ms-1" @mousedown.prevent.stop="selectAlpha">
-    <canvas ref="canvasAlpha"/>
-    <div :style="slideAlphaStyle" class="slide"/>
+  <div class="color-alpha ms-1">
+    <canvas ref="canvas" :width="width" :height="height" v-touch="{'end':move,
+                  'move':move}"/>
+    <div :style="style" class="slide"/>
   </div>
 </template>
 
@@ -32,8 +33,9 @@ export default {
   emits: ['selectAlpha'],
   data() {
     return {
-      slideAlphaStyle: {},
+      style: {},
       alphaSize: 5,
+      ctx: null
     }
   },
   watch: {
@@ -45,65 +47,44 @@ export default {
     },
   },
   mounted() {
+    this.ctx = this.$refs.canvas.getContext('2d', {willReadFrequently: true})
     this.renderColor()
     this.renderSlide()
   },
   methods: {
     renderColor() {
-      const canvas = this.$refs.canvasAlpha
-      const width = this.width
-      const height = this.height
-      const size = this.alphaSize
-      const canvasSquare = this.createAlphaSquare(size)
-
-      const ctx = canvas.getContext('2d')
-      canvas.width = width
-      canvas.height = height
-
-      ctx.fillStyle = ctx.createPattern(canvasSquare, 'repeat')
-      ctx.fillRect(0, 0, width, height)
+      const canvasSquare = this.createAlphaSquare(this.alphaSize)
+      this.ctx.fillStyle = this.ctx.createPattern(canvasSquare, 'repeat')
+      this.ctx.fillRect(0, 0, this.width, this.height)
 
       this.createLinearGradient(
           'p',
-          ctx,
-          width,
-          height,
+          this.ctx,
+          this.width,
+          this.height,
           'rgba(255,255,255,0)',
           this.color
       )
     },
     renderSlide() {
-      this.slideAlphaStyle = {
-        top: this.rgba.a * this.height - 2 + 'px',
+      this.style = {
+        top: this.rgba.a * this.height + 'px',
       }
     },
-    selectAlpha(e) {
-      const {top: hueTop} = this.$el.getBoundingClientRect()
-
-      const mousemove = (e) => {
-        let y = e.clientY - hueTop
-
-        if (y < 0) {
-          y = 0
-        }
-        if (y > this.height) {
-          y = this.height
-        }
-
-        let a = parseFloat((y / this.height).toFixed(2))
-        this.$emit('selectAlpha', a)
+    move(e) {
+      let y = e.current.y
+      if (y <= 0) {
+        this.$emit('selectAlpha', 0)
+        return
+      }
+      if (y >= this.height) {
+        this.$emit('selectAlpha', 1)
+        return
       }
 
-      mousemove(e)
-
-      const mouseup = () => {
-        document.removeEventListener('mousemove', mousemove)
-        document.removeEventListener('mouseup', mouseup)
-      }
-
-      document.addEventListener('mousemove', mousemove)
-      document.addEventListener('mouseup', mouseup)
-    },
+      let a = parseFloat((y / this.height).toFixed(2))
+      this.$emit('selectAlpha', a)
+    }
   },
 }
 </script>

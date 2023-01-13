@@ -40,13 +40,9 @@
 </template>
 
 <script>
-import Touch from "../../directive/touch";
 
 export default {
   name: 'r-slider',
-  directives: {
-    'touch': Touch
-  },
   props: {
     slides: {
       type: Array,

@@ -16,13 +16,8 @@
 </template>
 
 <script>
-    import Mask from '../../directive/mask'
-
     export default {
         name: 'r-mask-input',
-        directives: {
-            mask: Mask
-        },
         props: {
             modelValue: String,
             mask: {

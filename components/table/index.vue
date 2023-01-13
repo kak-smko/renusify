@@ -105,13 +105,9 @@
 
 <script>
     import './style.scss'
-    import Sortable from "../../directive/sortable";
 
     export default {
         name: 'r-table',
-        directives: {
-            'sortable': Sortable
-        },
         props: {
             transition: {
                 type: String,

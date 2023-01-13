@@ -42,12 +42,12 @@
     </div>
 </template>
 <script>
-    import {Intersect} from '../../directive/intersect'
 
-    export default {
+
+export default {
         name: 'r-chat-msg',
-        directives: {Intersect},
-        props: {
+
+  props: {
             isMe: Boolean,
             user: {
                 type: Object,

@@ -114,10 +114,17 @@ export default {
         app.config.globalProperties.$v = (names) => valid.checkType(names)
 
         // install components
-        register(app, options['components'] || []);
+        const required_directive = register(app, options['components'] || []);
 
+        if (options['directives']) {
+            options['directives'].forEach((i) => {
+                if (!required_directive.includes(i)) {
+                    required_directive.push(i)
+                }
+            })
+        }
         // install directives
-        registers(app, options['directives'] || []);
+        registers(app, required_directive);
 
         // renusify storage
         app.config.globalProperties.$storage = Storage

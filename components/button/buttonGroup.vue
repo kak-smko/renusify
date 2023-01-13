@@ -29,13 +29,9 @@
 </template>
 
 <script>
-import clickOutside from '../../directive/clickOutSide/index'
 
 export default {
   name: 'r-button-group',
-  directives: {
-    'click-outside': clickOutside
-  },
   props: {
     items: [Array, Object],
     icon: {
