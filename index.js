@@ -4,9 +4,9 @@ import Translate from './plugins/trans/Translate';
 import Storage from './plugins/storage/index';
 import DateTime from './plugins/trans/DateTime';
 import Currency from './plugins/trans/Currency';
-import Notify from './components/notify/notify.js';
+import Notify from './components/app/notify/notify.js';
 import valid from './plugins/validation/Validate';
-import Toast from './components/toast/toast.js';
+import Toast from './components/app/toast/toast.js';
 import event from './plugins/event';
 import {register} from './components';
 import {registers} from './directive';
@@ -114,8 +114,7 @@ export default {
         app.config.globalProperties.$v = (names) => valid.checkType(names)
 
         // install components
-        const required_directive = register(app, options['components'] || []);
-
+        let required_directive = register(app, options['components'] || []);
         if (options['directives']) {
             options['directives'].forEach((i) => {
                 if (!required_directive.includes(i)) {

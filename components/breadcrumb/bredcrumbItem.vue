@@ -13,17 +13,17 @@
     import {roots} from '../../tools/rootable'
 
     export default {
-        name: 'r-bredcrumbItem',
-        mixins: [roots],
-        props: {
-            item: Object
-        },
-        computed: {
-            att() {
-                let res = {}
-                if (this.href) {
-                    res['href'] = this.route.data.attrs.href
-                }
+      name: 'rBreadcrumbItem',
+      mixins: [roots],
+      props: {
+        item: Object
+      },
+      computed: {
+        att() {
+          let res = {}
+          if (this.href) {
+            res['href'] = this.route.data.attrs.href
+          }
 
                 if (this.target) {
                     res['rel'] = 'noreferrer'

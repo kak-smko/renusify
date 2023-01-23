@@ -75,13 +75,14 @@ export default {
       if (this.show_add) {
         let a = this.modelValue || []
         a.push(this.$helper.clearProxy(this.template))
+        this.$emit('add', true)
         this.$emit('update:model-value', a)
       }
-
     },
     del(i) {
       let a = this.modelValue || []
       a.splice(i, 1)
+      this.$emit('delete', i)
       this.$emit('update:model-value', a)
     },
     up(i) {

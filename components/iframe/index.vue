@@ -14,7 +14,7 @@ export default {
           prefix: "sm-",
           lang: "en",
           package: 'renusify',
-          directives: ["title", "scroll"]
+          directives: []
         }
       }
     }

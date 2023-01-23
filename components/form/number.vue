@@ -9,7 +9,7 @@
         <r-icon v-html="$r.icons.minus"></r-icon>
       </r-btn>
       <input @input="emit"
-             class="text-center"
+             class="text-center ltr"
              @focusin="active=true"
              @focusout="active=false"
              ref="input"

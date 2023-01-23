@@ -105,8 +105,7 @@ function unmounted(el, binding) {
     delete el.eventsHandler
 }
 
-export const Drag = {
+export default {
     mounted,
     unmounted
 }
-export default Drag

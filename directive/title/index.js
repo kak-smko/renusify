@@ -119,9 +119,8 @@ function unmounted(el, binding) {
 }
 
 
-export const Title = {
+export default {
     mounted,
     updated,
     unmounted
 }
-export default Title

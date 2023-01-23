@@ -24,8 +24,7 @@ function unmounted (el) {
   delete el._onScroll
 }
 
-export const Scroll = {
-  mounted,
-  unmounted
+export default {
+    mounted,
+    unmounted
 }
-export default Scroll

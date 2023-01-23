@@ -37,7 +37,7 @@ function unmounted (el) {
   delete el._observe
 }
 
-export const Intersect = {
-  mounted,
-  unmounted
+export default {
+    mounted,
+    unmounted
 }

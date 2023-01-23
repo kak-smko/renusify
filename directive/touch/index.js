@@ -177,8 +177,7 @@ function unmounted(el, binding) {
     delete el.eventsHandler
 }
 
-export const Touch = {
+export default {
     mounted,
     unmounted
 }
-export default Touch

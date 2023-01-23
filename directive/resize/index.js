@@ -24,8 +24,7 @@ function unmounted (el) {
   delete el._onResize
 }
 
-export const Resize = {
-  mounted,
-  unmounted
+export default {
+    mounted,
+    unmounted
 }
-export default Resize

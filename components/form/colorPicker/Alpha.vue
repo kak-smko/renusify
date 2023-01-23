@@ -53,6 +53,9 @@ export default {
   },
   methods: {
     renderColor() {
+      if (!this.ctx) {
+        return
+      }
       const canvasSquare = this.createAlphaSquare(this.alphaSize)
       this.ctx.fillStyle = this.ctx.createPattern(canvasSquare, 'repeat')
       this.ctx.fillRect(0, 0, this.width, this.height)

@@ -23,6 +23,9 @@ export default {
       this.chartShape = new Chart(this.$refs.chart, this.options);
       this.chartShape.render()
     }
+  },
+  beforeUnmount() {
+    this.chartShape.destroy();
   }
 };
 </script>

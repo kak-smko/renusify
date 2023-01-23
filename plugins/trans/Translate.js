@@ -53,17 +53,19 @@ class Translate {
             }
         }
 
-        if(package_name&&typeof package_name!=='string'){
+        if (package_name && typeof package_name !== 'string') {
             console.error(
-                'package name must be string. key:'+key+' package_name:'+package_name
+                'package name must be string. key:' + key + ' package_name:' + package_name
             )
             return key
         }
+        if (typeof key !== 'string') {
+            return key
+        }
+        key = key.toLowerCase()
 
-        key=key.toLowerCase()
-
-        const local = lang!==null?lang : this._local
-        const pack = package_name !==null?package_name: this._package
+        const local = lang !== null ? lang : this._local
+        const pack = package_name !== null ? package_name : this._package
         if (!local) {
             return key;
         }
@@ -80,7 +82,7 @@ class Translate {
                 return key;
             }
             return val;
-        } else if (window.app.$r.autoAddTranslate && pack && this._count < 100 && /^([a-z_.])*$/.test(key)) {
+        } else if (window.app.$r && window.app.$r.autoAddTranslate && pack && this._count < 100 && /^([a-z_.])*$/.test(key)) {
             if (!this._store.includes(key)) {
                 let url = '/translate/' + pack + '/' + key + '?v=';
                 const lng = variable.length
@@ -120,12 +122,6 @@ class Translate {
         if (window.app.$storage.get("lang")) {
             locale = window.app.$storage.get("lang");
         }
-        if (window.app.$storage.get(`msg-${pack}`)) {
-            const msg = window.app.$storage.get(`msg-${pack}`);
-            this.local = locale;
-            this.setMessages(msg);
-            window.app.$r.store['langs_loaded'][pack] = true;
-        }
         Axios.get(`/translate/${pack}/${locale}`).then(
             res => {
                 if (res.data.length !== 0) {
@@ -134,7 +130,6 @@ class Translate {
                     for (let i = 0; i < lng; i++) {
                         lang[res.data[i].key] = res.data[i][locale];
                     }
-                    window.app.$storage.set(`msg-${pack}`, lang);
                     this.local = locale;
                     this.setMessages(lang);
                 } else {

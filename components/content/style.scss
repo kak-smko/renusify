@@ -5,7 +5,6 @@
   max-width: 100%;
   transition: 0.2s map-get($transition, 'fast-out-slow-in');
   position: relative;
-  min-height: 100vh;
   @include firefox() {
     @media print {
       display: block

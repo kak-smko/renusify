@@ -5,10 +5,10 @@
         :key="key"
         v-for="(item,key) in genItems">
 
-        <r-breadcrumbs-item :href="item.href"
-                            :item="item"
-                            :to="item.to"
-                            @click="go(item)"></r-breadcrumbs-item>
+        <r-breadcrumb-item :href="item.href"
+                           :item="item"
+                           :to="item.to"
+                           @click="go(item)"></r-breadcrumb-item>
       </li>
     </ul>
   </transition>
@@ -16,10 +16,11 @@
 
 <script>
 import './style.scss'
-import divider from "../container/divider";
+import RBreadcrumbItem from "./bredcrumbItem";
 
 export default {
   name: 'r-breadcrumbs',
+  components: {RBreadcrumbItem},
   props: {
     sheet: {
       type: Boolean,

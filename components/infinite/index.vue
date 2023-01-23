@@ -30,11 +30,9 @@
 </template>
 
 <script>
-    import RInfiniteDiv from "./div";
 
     export default {
         name: 'r-infinite-box',
-        components: {RInfiniteDiv},
         props: {
             color:{
               type:String,

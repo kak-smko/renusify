@@ -230,10 +230,8 @@ function update (el, binding) {
   updateRipple(el, binding, wasEnabled)
 }
 
-export const Index = {
-  mounted,
-  unmounted,
-  update
+export default {
+    mounted,
+    unmounted,
+    update
 }
-export default Index
-// # sourceMappingURL=index.js.map

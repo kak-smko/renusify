@@ -202,9 +202,8 @@ function updated(el, binding) {
     mounted(el, binding)
 }
 
-export const Sortable = {
+export default {
     mounted,
     updated,
     unmounted
 }
-export default Sortable

@@ -40,8 +40,7 @@ function unmounted(el, binding) {
   delete el['click_outside']
 }
 
-export const clickOutside = {
+export default {
     mounted,
     unmounted
 }
-export default clickOutside

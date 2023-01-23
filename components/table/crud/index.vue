@@ -157,21 +157,20 @@
 <script>
     import ManageFooter from "./footer";
     import ManageHeader from "./header";
-    import RDivider from "../../container/divider";
 
     export default {
-        name: 'r-table-crud',
-        components: {RDivider, ManageHeader, ManageFooter},
-        props: {
-            link: {
-                required: true,
-                type: String
-            },
-            actions: {
-                default: function () {
-                    return []
-                },
-                type: Array
+      name: 'r-table-crud',
+      components: {ManageHeader, ManageFooter},
+      props: {
+        link: {
+          required: true,
+          type: String
+        },
+        actions: {
+          default: function () {
+            return []
+          },
+          type: Array
             },
             cast: {
               default: function () {

@@ -126,7 +126,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-    @import '../../style/include';
+    @import '../../../style/include';
 
     .#{$prefix}notify {
         display: flex;
