@@ -30,6 +30,9 @@ class Translate {
     }
 
     add(key, value) {
+        if (!this._messages[this._local]) {
+            this._messages[this._local] = {}
+        }
         this._messages[this._local][key] = value;
     }
 

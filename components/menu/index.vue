@@ -22,7 +22,7 @@
                 }">
         <r-card>
           <div class="dropdown-menu-item pa-2" v-for="(item,i) in list" :key="i"
-               :class="{'color-one-text':selected===item[value]}"
+               :class="{'menu-selected':selected===item[value]}"
                @click="emit(item)">
             <slot :item="item">
               {{ item }}
@@ -98,17 +98,17 @@ export default {
         this.top += elm.height
       }
       this.opacity = 0
-      let n = 80
-      if (!this.$r.rtl) {
-        this.left = 0
-      } else {
-        this.right = 0
-      }
       if (this.reverse) {
         if (!this.$r.rtl) {
           this.right = 0
         } else {
           this.left = 0
+        }
+      } else {
+        if (!this.$r.rtl) {
+          this.left = 0
+        } else {
+          this.right = 0
         }
       }
 
@@ -135,6 +135,22 @@ export default {
 
 .#{$prefix}menu {
   position: relative;
+
+  .menu-selected {
+    position: relative;
+    color: var(--color-one-light);
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: var(--color-one-light);
+      opacity: .1;
+      width: 100%;
+      height: 100%;
+    }
+  }
 
   @include light() {
     .dropdown-menu {
@@ -168,7 +184,7 @@ export default {
     max-height: 200px;
     overflow-y: auto;
     background-clip: padding-box;
-    border-radius: 4px;
+    border-radius: 8px;
 
     &-item {
       cursor: pointer;

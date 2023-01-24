@@ -62,11 +62,11 @@ export default {
     }
   },
   mounted() {
-    this.get_code('codeSlot', this.runnable)
+    this.get_code('codeSlot')
   },
   beforeUpdate() {
     if (this.show === 'code' && !this.edited) {
-      this.get_code('codeSlot', this.runnable)
+      this.get_code('codeSlot')
     }
   },
   methods: {
@@ -190,13 +190,24 @@ export default {
       let temp = this.code.querySelector('.code-template')
 
       if (temp && temp.childNodes.length > 0) {
-        this.template = this.toHTML(temp.childNodes[0].nodeValue).children[0]
+        for (let i = 0; i < temp.childNodes.length; i++) {
+          if (temp.childNodes[i].nodeName === "#comment") {
+            this.template = this.toHTML(temp.childNodes[i].nodeValue).children[0]
+            break
+          }
+        }
       }
 
       let script = this.code.querySelector('.code-script')
       if (script && script.childNodes.length > 0) {
-        this.script = script.childNodes[0].nodeValue
+        for (let i = 0; i < script.childNodes.length; i++) {
+          if (script.childNodes[i].nodeName === "#comment") {
+            this.script = script.childNodes[i].nodeValue
+            break
+          }
+        }
       }
+
 
       if (this.template || this.script) {
         this.$refs.codeViewTemplate.innerHTML = this.buildHtml(this.template)
@@ -341,6 +352,8 @@ export default {
       res = this.$helper.replacer(res, ' let ', ' <span class="color-orange code-editor-span">let</span> ')
       res = this.$helper.replacer(res, ' const ', ' <span class="color-orange code-editor-span">const</span> ')
       res = this.$helper.replacer(res, ' return ', ' <span class="color-orange code-editor-span">return</span> ')
+      res = this.$helper.replacer(res, ' true', ' <span class="color-orange code-editor-span">true</span>')
+      res = this.$helper.replacer(res, ' false', ' <span class="color-orange code-editor-span">false</span>')
       res = this.$helper.replacer(res, ' this.', ' <span class="color-orange code-editor-span">this</span>.')
 
       return res
@@ -378,30 +391,31 @@ export default {
 @import "../../style/include";
 
 .#{$prefix}code-editor {
+  direction: ltr;
+  text-align: left;
   position: relative;
   white-space: break-spaces;
-  caret-color: white !important;
+  caret-color: white;
+  background-color: #15212e;
+  color: #fff;
+  padding: 10px;
 
   .code-script, .code-template {
-    padding: 10px;
-  }
-
-  .code-action {
-    color: #ffffff;
-    background: #283739;
+    padding: 0 20px;
   }
 
   .code-wrapper {
     direction: ltr;
     text-align: left;
-    background: #283739;
-    color: #ffffff;
     padding: 10px;
   }
 
   .code-compile {
-    border: 1px solid #444444;
+    background-color: #fafafa;
     min-height: 300px;
+    padding: 10px;
+    margin: 0 -10px -10px -10px;
+    color: black;
   }
 
   .color-func {

@@ -12,7 +12,7 @@ export default {
   },
   methods: {
     strToObj2(str) {
-      str = this.$helper.replacer(str, ' ', '')
+      str = str.trim()
       str = this.$helper.replacer(str, "\n", '')
       str = this.$helper.replacer(str, "\r", '')
       let open = 0
