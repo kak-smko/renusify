@@ -72,7 +72,7 @@ export default {
     }
     setTimeout(() => {
       this.slides = Math.ceil(this.$refs.container.scrollWidth / this.$refs.swiper.offsetWidth)
-    }, 500)
+    }, 1000)
   },
   computed: {
     itemWidth() {
@@ -89,7 +89,11 @@ export default {
   methods: {
     goToSlide(n) {
       this.inMove = false
-      this.x = this.$refs.swiper.offsetWidth * (n - 1)
+      let s = -1
+      if (this.$r.rtl) {
+        s = 1
+      }
+      this.x = this.$refs.swiper.offsetWidth * (n - 1) * s
       this.end()
     },
     right(x = null) {
@@ -137,7 +141,7 @@ export default {
         }
         this.prePosition = this.x
 
-        this.currentSlide = Math.ceil(this.x / this.$refs.swiper.offsetWidth) + 1
+        this.currentSlide = Math.ceil(this.x / this.$refs.swiper.offsetWidth * r) + 1
       }, 60)
 
     }

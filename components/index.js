@@ -10,6 +10,7 @@ const list = {
     'r-bottom-navigation-circle': {'p': 'bar/bottomNavigationCircle.vue', 'c': ['r-icon'], 'd': []},
     'r-breadcrumbs': {'p': 'breadcrumb/index.vue', 'c': ['r-icon'], 'd': []},
     'r-btn': {'p': 'button/index.vue', 'c': ['r-progress-circular'], 'd': ['ripple']},
+    'r-btn-confirm': {'p': 'button/buttonConfirm.vue', 'c': ['r-btn', 'r-confirm'], 'd': []},
     'r-btn-group': {
         'p': 'button/buttonGroup.vue',
         'c': ['r-btn', 'r-icon', 'r-card', 'r-list'],

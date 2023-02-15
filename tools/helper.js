@@ -345,14 +345,28 @@ export function trim(s, c) {
     return s.replace(new RegExp("^[" + c + "]+|[" + c + "]+$", "g"), "");
 }
 
-export function download(url, fileName = 'download') {
+export function download(url, fileName = 'download', headers = null, percent = null) {
     const f = url.split(".");
     if (f[1]) {
         fileName += '.' + f[1]
     }
+
+    function updateProgress(evt) {
+        if (evt.lengthComputable) {
+            percent((evt.loaded / evt.total) * 100);
+        }
+    }
+
     let xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
+    xhr.onprogress = updateProgress;
     xhr.responseType = "blob";
+    if (headers) {
+        Object.keys(headers).forEach(function (key) {
+            xhr.setRequestHeader(key, headers[key]);
+        });
+    }
+
     xhr.onload = function () {
         const urlCreator = window.URL || window.webkitURL;
         const imageUrl = urlCreator.createObjectURL(this.response);

@@ -36,7 +36,7 @@
         props: {
             color:{
               type:String,
-              default:'color-one'
+              default: 'color-two'
             },
             isChat:Boolean,
             title: {

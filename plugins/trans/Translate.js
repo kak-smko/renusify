@@ -81,6 +81,7 @@ class Translate {
             for (let i = 0; i < lng; i++) {
                 val = this.replaceAll(val, '{' + i + '}', variable[i]);
             }
+
             if (val === null || val === '') {
                 return key;
             }
