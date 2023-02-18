@@ -5,15 +5,14 @@ $gradient: (
         'three': ('0':#e91e63,'1':#ec743d)
 ) !default;
 $colorMain: (
-        'one':('l':#fff,'d':#fff),
-        'one_l':('l':#fff,'d':#fff),
-        'one_d':('l':#fff,'d':#fff),
-        'two':('l':#fff,'d':#fff),
-        'three':('l':#fff,'d':#fff),
-        'error':('l':#fff,'d':#fff),
-        'info':('l':#fff,'d':#fff),
-        'warning':('l':#fff,'d':#fff),
-        'success':('l':#fff,'d':#fff)
+        'one':#fff,
+        'one_l':#fff,
+        'one_d':#fff,
+        'two':#fff,
+        'error':#fff,
+        'info':#fff,
+        'warning':#fff,
+        'success':#fff
 ) !default;
 
 $shades: (

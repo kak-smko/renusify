@@ -41,8 +41,8 @@ body {
   background: rgba(100, 100, 100, 0.6);
 }
 
-$color: var(--color-two-light);
-$color-text: var(--color-two-text-light);
+$color: var(--color-two);
+$color-text: var(--color-two-text);
 
 ::-moz-selection {
   color: $color-text;
@@ -52,33 +52,6 @@ $color-text: var(--color-two-text-light);
 ::selection {
   color: $color-text;
   background: $color;
-}
-
-.app-dark {
-  ::-webkit-scrollbar-track:hover {
-    border: 1px solid rgba(255, 255, 255, 0.4);
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.4);
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.8);
-  }
-
-  $color: var(--color-two-dark);
-  $color-text: var(--color-two-text-dark);
-
-  ::-moz-selection {
-    color: $color-text;
-    background: $color;
-  }
-
-  ::selection {
-    color: $color-text;
-    background: $color;
-  }
 }
 
 .#{$prefix}app {
@@ -109,12 +82,7 @@ $color-text: var(--color-two-text-light);
 }
 
 .router-link-exact-active {
-  @include dark() {
-    color: var(--color-link-dark);
-  }
-  @include light() {
-    color: var(--color-link-light)
-  }
+  color: var(--color-link)
 }
 
 //curser
@@ -214,13 +182,7 @@ $color-text: var(--color-two-text-light);
 }
 
 .subtitle-1, .subtitle-2, .body-2, .caption, .overline {
-  @include light() {
-    @include text-color(var(--color-text-secondary-light));
-  }
-
-  @include dark() {
-    @include text-color(var(--color-text-secondary-dark));
-  }
+  @include text-color(var(--color-text-secondary));
 }
 
 //width
@@ -292,18 +254,9 @@ $color-text: var(--color-two-text-light);
     margin: 0 15px;
   }
 
-  @include light() {
-    $color: var(--color-one-light);
     pre {
-      border-left: 5px solid $color;
+      border-left: 5px solid var(--color-one);
     }
-  }
-  @include dark() {
-    $color: var(--color-one-dark);
-    pre {
-      border-left: 5px solid $color;
-    }
-  }
 
   pre {
     direction: ltr;
@@ -333,36 +286,19 @@ $color-text: var(--color-two-text-light);
     color: white;
   }
 
-  @include light() {
     $background: #e2ece2;
     blockquote {
       background-color: $background;
-      border: 5px solid var(--color-one-light);
+      border: 5px solid var(--color-one);
 
       &::before {
         background-color: $background;
       }
 
       &::after {
-        color: var(--color-one-light);
+        color: var(--color-one);
       }
     }
-  }
-  @include dark() {
-    $background: #3a3e3a;
-    blockquote {
-      background-color: $background;
-      border: 5px solid var(--color-one-dark);
-
-      &::before {
-        background-color: $background;
-      }
-
-      &::after {
-        color: var(--color-one-dark);
-      }
-    }
-  }
 
   blockquote {
     font-family: Georgia, Times, "Times New Roman", serif;

@@ -5,10 +5,5 @@
   max-width: 100%;
   white-space: nowrap;
   transition: 1s $primary-transition;
-  @include light(){
-    color: var(--color-text-disabled-light);
-  }
-  @include dark(){
-    color: var(--color-text-disabled-dark);
-  }
+  color: var(--color-text-disabled);
 }

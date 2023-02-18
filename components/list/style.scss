@@ -11,29 +11,15 @@ $item-height: 48px;
   position: relative;
   max-width: 100%;
 
-  @include light() {
     .list-item {
       &.list-item-active {
-        background-color: var(--color-table-active-light)
+        background-color: var(--color-table-active)
       }
 
       &:hover {
-        background-color: var(--color-table-hover-light)
+        background-color: var(--color-table-hover)
       }
     }
-  }
-
-  @include dark() {
-    .list-item {
-      &.list-item-active {
-        background-color: var(--color-table-active-dark)
-      }
-
-      &:hover {
-        background-color: var(--color-table-hover-dark)
-      }
-    }
-  }
 
   &.list-subheader {
     align-items: center;

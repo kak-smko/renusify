@@ -36,24 +36,19 @@
             padding: 30px 0;
 
             &:not(:last-child):before {
-                content: '';
-                width: 1px;
-                height: 40%;
-                @include light() {
-                    border-right: 2px solid var(--color-divider-light);
-                }
-                @include dark() {
-                    border-right: 2px solid var(--color-divider-dark);
-                }
-                position: absolute;
-                bottom: -20%;
-                z-index: 0;
-                @include rtl() {
-                    right: percentage(div(1, $grid-columns));
-                }
-                @include ltr() {
-                    left: percentage(div(1, $grid-columns));
-                }
+              content: '';
+              width: 1px;
+              height: 40%;
+              border-right: 2px solid var(--color-divider);
+              position: absolute;
+              bottom: -20%;
+              z-index: 0;
+              @include rtl() {
+                right: percentage(div(1, $grid-columns));
+              }
+              @include ltr() {
+                left: percentage(div(1, $grid-columns));
+              }
             }
 
             @include media-breakpoint-up('md') {

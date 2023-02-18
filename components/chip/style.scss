@@ -1,4 +1,5 @@
 @import "renusify/style/_include.scss";
+
 $chip-avatar-size: 24px !default;
 $chip-close-size: 18px !default;
 $chip-icon-margin-after: 8px !default;
@@ -16,26 +17,26 @@ $chip-transition-duration: 0.28s !default;
 $chip-transition-fn: map-get($transition, 'fast-out-slow-in') !default;
 $icon-outlined-border-width: thin !default;
 $icon-sizes: (
-  'x-small': (
-    'font-size': 10,
-    'height': 16
-  ),
-  'small': (
-    'font-size': 12,
-    'height': 24
-  ),
-  'default': (
-    'font-size': 14,
-    'height': 32
-  ),
-  'large': (
-    'font-size': 16,
-    'height': 54
-  ),
-  'x-large': (
-    'font-size': 18,
-    'height': 66
-  )
+        'x-small': (
+                'font-size': 10,
+                'height': 16
+        ),
+        'small': (
+                'font-size': 12,
+                'height': 24
+        ),
+        'default': (
+                'font-size': 14,
+                'height': 32
+        ),
+        'large': (
+                'font-size': 16,
+                'height': 54
+        ),
+        'x-large': (
+                'font-size': 18,
+                'height': 66
+        )
 ) !default;
 
 
@@ -53,19 +54,12 @@ $icon-sizes: (
   transition-timing-function: $chip-transition-fn;
   vertical-align: middle;
 
-  @include light() {
-    border-color: var(--color-divider-light);
-    color:var(--color-text-primary-light);
-    &:not(.chip-active) {
-    background:var(--color-chips-light);
-  }
-  }
-  @include dark() {
-    border-color: var(--color-divider-dark);
-    color:var(--color-text-primary-dark);
-    &:not(.chip-active) {
-    background:var(--color-chips-dark);
-  }
+
+  border-color: var(--color-divider);
+  color: var(--color-text-primary);
+
+  &:not(.chip-active) {
+    background: #e0e0e0;
   }
 
   @include states();

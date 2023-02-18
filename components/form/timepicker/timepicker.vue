@@ -482,23 +482,18 @@
     @import "../../../style/include";
 
     .#{$prefix}timepicker-clock {
-        @include light() {
-            --color-timepicker: var(--color-one-light);
-        }
 
-        @include dark() {
-            --color-timepicker: var(--color-one-dark);
-        }
+      --color-timepicker: var(--color-one);
 
-        .text-time {
-            display: flex;
-            justify-content: center;
-            align-content: center;
-            margin-top: 40px;
-            width: 260px;
-            height: 60px;
-            color: #818181;
-            font-size: 30px;
+      .text-time {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        margin-top: 40px;
+        width: 260px;
+        height: 60px;
+        color: #818181;
+        font-size: 30px;
         }
 
         .text-time > .time-show {

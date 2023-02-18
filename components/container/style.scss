@@ -1,4 +1,5 @@
 @import "renusify/style/_include.scss";
+
 .#{$prefix}container {
   max-width: 100%;
   padding: $container-padding-x;
@@ -32,11 +33,11 @@
   }
 
   &-dense {
-    margin-right: div($form-grid-gutter , -2);
-    margin-left: div($form-grid-gutter ,-2) ;
+    margin-right: div($form-grid-gutter, -2);
+    margin-left: div($form-grid-gutter, -2);
 
     .col {
-      padding:div($form-grid-gutter , 2) !important;
+      padding: div($form-grid-gutter, 2) !important;
     }
   }
 }
@@ -68,18 +69,15 @@ $divider-inset-margin: 72px !default;
   height: 0px;
   max-height: 0px;
   transition: inherit;
-  @include dark(){
-    border-top: solid thin var(--color-divider-dark)
-  }
-  @include light(){
-    border-top: solid thin var(--color-divider-light)
-  }
+
+  border-top: solid thin var(--color-divider);
+
   &.divider-inset:not(.divider-vertical) {
     max-width: calc(100% - #{$divider-inset-margin});
 
-      margin-left: $divider-inset-margin;
+    margin-left: $divider-inset-margin;
 
-      margin-right: $divider-inset-margin;
+    margin-right: $divider-inset-margin;
 
   }
 

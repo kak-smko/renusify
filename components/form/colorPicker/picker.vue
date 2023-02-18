@@ -168,13 +168,8 @@ export default {
   border-radius: 4px;
   box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.16);
   z-index: 1;
-  @include light() {
-    background: #f7f8f9;
-  }
 
-  @include dark() {
-    background: #1d2024;
-  }
+  background: #f7f8f9;
 
   canvas {
     vertical-align: top;
@@ -214,25 +209,15 @@ export default {
       direction: ltr;
     }
 
-    @include light() {
-      .name {
-        color: #999;
-        background: #e7e8e9;
-      }
-      .value {
-        color: #666;
-        background: #eceef0;
-      }
+
+    .name {
+      color: #999;
+      background: #e7e8e9;
     }
-    @include dark() {
-      .name {
-        color: #999;
-        background: #252930;
-      }
-      .value {
-        color: #fff;
-        background: #2e333a;
-      }
+
+    .value {
+      color: #666;
+      background: #eceef0;
     }
   }
 }

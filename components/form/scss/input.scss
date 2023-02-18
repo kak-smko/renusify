@@ -18,52 +18,27 @@
     }
   }
 
-  @include light() {
     &:not(.input-disabled) {
       input,
       textarea, .label, .#{$prefix}icon, .#{$prefix}btn {
-        color: var(--color-text-primary-light)
+        color: var(--color-text-primary)
       }
     }
 
     input::placeholder,
     textarea::placeholder {
-      color: var(--color-text-disabled-light)
+      color: var(--color-text-disabled)
     }
 
     &.input-disabled {
       * {
-        color: var(--color-text-disabled-light)
+        color: var(--color-text-disabled)
       }
     }
 
     .input-control {
-      border: solid 1px var(--color-border-light)
+      border: solid 1px var(--color-border)
     }
-  }
-  @include dark() {
-    &:not(.input-disabled) {
-      input,
-      textarea, .label, .#{$prefix}icon, .#{$prefix}btn {
-        color: var(--color-text-primary-dark)
-      }
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: var(--color-text-disabled-dark)
-    }
-
-    &.input-disabled {
-      * {
-        color: var(--color-text-disabled-dark)
-      }
-    }
-
-    .input-control {
-      border: solid 1px var(--color-border-dark)
-    }
-  }
 
   &.input-disabled {
     pointer-events: none;

@@ -38,7 +38,6 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
 
 .#{$prefix}btn {
   cursor: pointer;
-  color: inherit;
   align-items: center;
   border-radius: $btn-border-radius;
   display: inline-flex;
@@ -59,48 +58,28 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
   vertical-align: middle;
   white-space: nowrap;
 
-  @include light() {
-    &.btn-disabled {
-      color: var(--color-disabled-light) !important;
 
-      .btn-loading {
-        color: var(--color-disabled-light) !important
-      }
+  &.btn-disabled {
+    color: var(--color-disabled) !important;
 
-      &:not(.btn-text):not(.btn-outlined) {
-        background-color: var(--color-focused-light) !important
-      }
+    .btn-loading {
+      color: var(--color-disabled) !important
     }
 
     &:not(.btn-text):not(.btn-outlined) {
-      background-color: var(--color-cards-light)
-    }
-
-    &.btn-outlined.btn-text {
-      border-color: var(--color-divider-light)
+      background-color: var(--color-focused) !important
     }
   }
-  @include dark() {
-    &.btn-disabled {
-      color: var(--color-disabled-dark) !important;
 
-      .btn-loading {
-        color: var(--color-disabled-dark) !important
-      }
-
-      &:not(.btn-text):not(.btn-outlined) {
-        background-color: var(--color-focused-dark) !important
-      }
-    }
-
-    &:not(.btn-text):not(.btn-outlined) {
-      background-color: var(--color-cards-dark)
-    }
-
-    &.btn-outlined.btn-text {
-      border-color: var(--color-divider-dark)
-    }
+  &:not(.btn-text):not(.btn-outlined) {
+    background-color: var(--color-sheet)
   }
+
+  &.btn-outlined.btn-text {
+    border-color: var(--color-divider)
+  }
+
+
   @include states();
 
   @include ltr() {
@@ -373,12 +352,8 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
 .#{$prefix}button-group {
   position: relative;
   color: inherit;
-  @include light() {
-    background-color: var(--color-cards-light);
-  }
-  @include dark() {
-    background-color: var(--color-cards-dark);
-  }
+  background-color: var(--color-sheet);
+
   @include states();
 
   .btn-container {

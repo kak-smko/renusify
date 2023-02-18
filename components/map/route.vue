@@ -567,7 +567,7 @@
             cursor: pointer;
 
             &:hover {
-                color: var(--color-link-light);
+              color: var(--color-link);
             }
         }
     }

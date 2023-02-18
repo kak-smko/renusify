@@ -376,21 +376,20 @@ export default {
         font-size: 10px;
         color: #303030;
 
-        @include dark {
-            $Color: var(--color-one-dark);
             .cell {
                 &.today {
-                    color: $Color;
+                  color: var(--color-one);
 
-                    .cellContent {
-                        border: solid 1px $Color;
-                    }
+                  .cellContent {
+                    border: solid 1px var(--color-one);
+                  }
                 }
 
                 &.selected {
                     .cellContent {
-                        color: #fff;
-                        background: $Color;
+
+                      color: #fff;
+                      background: var(--color-one);
 
                     }
                 }
@@ -398,46 +397,14 @@ export default {
                 &.selectable:hover {
                     .cellContent {
 
-                        color: #fff;
-                        background: $Color;
+                      color: #fff;
+                      background: var(--color-one);
 
                     }
                 }
 
             }
-        }
 
-        @include light {
-            $Color: var(--color-one-light);
-            .cell {
-                &.today {
-                    color: $Color;
-
-                    .cellContent {
-                        border: solid 1px $Color;
-                    }
-                }
-
-                &.selected {
-                    .cellContent {
-
-                        color: #fff;
-                        background: $Color;
-
-                    }
-                }
-
-                &.selectable:hover {
-                    .cellContent {
-
-                        color: #fff;
-                        background: $Color;
-
-                    }
-                }
-
-            }
-        }
 
         .table {
 

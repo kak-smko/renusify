@@ -138,38 +138,27 @@ export default {
 
   .menu-selected {
     position: relative;
-    color: var(--color-one-light);
+    color: var(--color-one);
 
     &:before {
       content: '';
       position: absolute;
       left: 0;
       top: 0;
-      background-color: var(--color-one-light);
+      background-color: var(--color-one);
       opacity: .1;
       width: 100%;
       height: 100%;
     }
   }
 
-  @include light() {
     .dropdown-menu {
-      border: 1px solid var(--color-border-light);
+      border: 1px solid var(--color-border);
 
       &-item:hover {
-        background-color: var(--color-table-hover-light);
+        background-color: var(--color-table-hover);
       }
     }
-  }
-  @include dark() {
-    .dropdown-menu {
-      border: 1px solid var(--color-border-dark);
-
-      &-item:hover {
-        background-color: var(--color-table-hover-dark);
-      }
-    }
-  }
 
   .menu-label {
     cursor: pointer;

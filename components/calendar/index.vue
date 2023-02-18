@@ -322,60 +322,30 @@ export default {
   color: #303030;
   overflow-x: auto;
   max-width: 100%;
-  @include dark {
-    $Color: var(--color-one-dark);
     .cell, .headCell {
-      border: 1px solid var(--color-border-dark);
+      border: 1px solid var(--color-border);
     }
     .cell {
       &.today {
-        color: $Color;
+        color: var(--color-one);
 
         .cellContent {
-          border: solid 1px $Color;
+          border: solid 1px var(--color-one);
         }
       }
 
       &.selectable:hover {
         .cellContent {
-          border: solid 1px $Color;
-
+          border: solid 1px var(--color-one);
         }
       }
 
     }
     .cell.disabled {
-      background-color: var(--color-disabled-dark);
+      background-color: var(--color-disabled);
       opacity: 0.5;
     }
-  }
 
-  @include light {
-    $Color: var(--color-one-light);
-    .cell, .headCell {
-      border: 1px solid var(--color-border-light);
-    }
-    .cell {
-      &.today {
-        color: $Color;
-
-        .cellContent {
-          border: solid 1px $Color;
-        }
-      }
-
-      &.selectable:hover {
-        .cellContent {
-          border: solid 1px $Color;
-        }
-      }
-
-    }
-    .cell.disabled {
-      background-color: var(--color-disabled-light);
-      opacity: 0.5;
-    }
-  }
 
   .table {
     width: 100%;

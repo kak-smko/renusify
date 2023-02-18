@@ -71,15 +71,9 @@ export default {
 .#{$prefix}radio-input {
   width: 100%;
   cursor: pointer;
-  @include light() {
-    .radio-input-item {
-      border: 1px solid var(--color-border-light)
-    }
-  }
-  @include dark() {
-    .radio-input-item {
-      border: 1px solid var(--color-border-dark)
-    }
+
+  .radio-input-item {
+    border: 1px solid var(--color-border)
   }
 
   .#{$prefix}icon {

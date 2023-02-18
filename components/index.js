@@ -143,6 +143,7 @@ const list = {
         'c': ['r-input', 'r-progress-liner', 'r-card', 'r-list', 'r-btn', 'r-icon'],
         'd': ['click-outside']
     },
+    'r-skeleton': {'p': 'skeleton/index.vue', 'c': [], 'd': []},
     'r-slider': {'p': 'slider/index.vue', 'c': ['r-progress-liner', 'r-btn', 'r-icon'], 'd': ['touch']},
     'r-swiper': {'p': 'swiper/index.vue', 'c': [], 'd': ['touch']},
     'r-table': {

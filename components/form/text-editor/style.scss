@@ -2,33 +2,15 @@
 
 .#{$prefix}text-editor {
 
-  @include light() {
-    .editor-content {
-      border: 1px solid var(--color-border-light);
 
-      &:hover, &:focus {
-        border: 1px solid var(--color-border-hover-light);
-      }
-    }
-  }
-  @include dark() {
     .editor-content {
-      border: 1px solid var(--color-border-dark);
-
-      &:hover, &:focus {
-        border: 1px solid var(--color-border-hover-dark);
-      }
+      border: 1px solid var(--color-border);
     }
-  }
+
   @include typography($headings, 'body-1');
 
   a {
-    @include dark() {
-      color: var(--color-link-dark)
-    }
-    @include light() {
-      color: var(--color-link-light)
-    }
+    color: var(--color-link)
   }
 
   img {
@@ -36,7 +18,7 @@
   }
 
   .editor-content {
-    color: var(--color-text-primary-light);
+    color: var(--color-text-primary);
     transition: all .3s ease;
     min-height: 200px;
     max-height: 60vh;

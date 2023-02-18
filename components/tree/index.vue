@@ -119,24 +119,20 @@
 
     $distance: 20px;
     .#{$prefix}tree {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        @include light(){
-            background-color: var(--color-background-one-light)
-        }
-        @include dark(){
-            background-color: var(--color-background-one-dark)
-        }
-        &.tree-searchable {
-            .#{$prefix}float {
-                height: calc(100% - 70px)
-            }
-        }
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-background-one);
 
+      &.tree-searchable {
         .#{$prefix}float {
-            direction: ltr;
+          height: calc(100% - 70px)
         }
+      }
+
+      .#{$prefix}float {
+        direction: ltr;
+      }
 
         .tree-rotate {
             transform: rotateX(180deg);

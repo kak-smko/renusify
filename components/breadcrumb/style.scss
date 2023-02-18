@@ -11,16 +11,10 @@
   padding: 0 14px;
 
 
-  @include light() {
-    .breadcrumb-divider, .breadcrumb-item-disabled, .#{$prefix}icon {
-      color: var(--color-text-disabled-light)
-    }
+  .breadcrumb-divider, .breadcrumb-item-disabled, .#{$prefix}icon {
+    color: var(--color-text-disabled)
   }
-  @include dark() {
-    .breadcrumb-divider, .breadcrumb-item-disabled, .#{$prefix}icon {
-      color: var(--color-text-disabled-dark)
-    }
-  }
+
 
   li {
     align-items: center;

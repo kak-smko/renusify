@@ -169,13 +169,9 @@
         direction: ltr;
 
         .btn-country {
-            width: 120px;
-            @include light() {
-                border-color: var(--color-border-light)
-            }
-            @include dark() {
-                border-color: var(--color-border-dark)
-            }
+          width: 120px;
+          border-color: var(--color-border)
+
         }
 
         .input-phone {

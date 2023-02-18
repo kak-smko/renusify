@@ -344,7 +344,7 @@ export default {
 
 .#{$prefix}cam-input {
   video {
-    border: 1px solid var(--color-border-light);
+    border: 1px solid var(--color-border);
   }
 
   .self-view {

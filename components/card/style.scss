@@ -12,14 +12,10 @@
   overflow-wrap: break-word;
   white-space: normal;
 
-   &.card-outlined {
-    @include light() {
-      border: 1px solid var(--color-border-light)
-    }
-    @include dark() {
-      border: 1px solid var(--color-border-dark)
-    }
+  &.card-outlined {
+    border: 1px solid var(--color-border)
   }
+
   @include states();
 
   &.card-hover {
@@ -76,16 +72,11 @@
   @include elevation('md');
   border-radius: map_get($borders, 'md');
 
-  @include light() {
-    background-color: var(--color-cards-light);
-    border-color: var(--color-cards-light);
-    color: var(--color-text-primary-light);
-  }
-  @include dark() {
-    background-color: var(--color-cards-dark);
-    border-color: var(--color-cards-dark);
-    color: var(--color-text-primary-dark);
-  }
+
+  background-color: var(--color-sheet);
+  border-color: var(--color-sheet);
+  color: var(--color-text-primary);
+
 
   &-tile {
     border-radius: 0;

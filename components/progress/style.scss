@@ -84,35 +84,19 @@ $progress-circular-overlay-transition: all .6s ease-in-out !default;
 
 .#{$prefix}progress {
   text-align: center;
-  @include light() {
     &.progress-outlined {
-      color: var(--color-divider-light)
+      color: var(--color-divider)
     }
     .liner-determinate {
-      background-color: var(--color-text-primary-light);
+      background-color: var(--color-text-primary);
     }
     .liner-indeterminate {
-      background-color: var(--color-text-primary-light);
+      background-color: var(--color-text-primary);
     }
 
-    .progress-background{
-      background-color: var(--color-divider-light);
+    .progress-background {
+      background-color: var(--color-divider);
     }
-  }
-  @include dark() {
-    &.progress-outlined {
-      color: var(--color-divider-dark)
-    }
-    .liner-determinate {
-      background-color: var(--color-text-primary-dark);
-    }
-    .liner-indeterminate {
-      background-color: var(--color-text-primary-dark);
-    }
-    .progress-background{
-      background-color: var(--color-divider-dark);
-    }
-  }
 
   &.progress-outlined {
     border: 1px solid;

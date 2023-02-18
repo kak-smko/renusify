@@ -115,16 +115,10 @@ export default {
 
 .#{$prefix}chat-input {
   display: flex;
-  @include light() {
-    box-shadow: black 0px 8px 15px;
-    background: var(--color-background-two-light);
-    border-top: 1px solid var(--color-border-light);
-  }
-  @include dark() {
-    box-shadow: white 0px 8px 15px;
-    background: var(--color-background-two-dark);
-    border-top: 1px solid var(--color-border-dark);
-  }
+
+  box-shadow: black 0px 8px 15px;
+  background: var(--color-background-two);
+  border-top: 1px solid var(--color-border);
 
   .chat-input {
     margin: 5px 0;

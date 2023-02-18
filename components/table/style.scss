@@ -8,33 +8,32 @@ $data-table-regular-header-height: 38px !default;
 .#{$prefix}table {
   position: relative;
 
-  @include light {
     .table-wrapper {
-      background-color: var(--color-cards-light);
-      color: var(--color-text-primary-light);
+      background-color: var(--color-sheet);
+      color: var(--color-text-primary);
     }
     .table-svg-path {
-      fill: var(--color-cards-light);
+      fill: var(--color-sheet);
     }
     .table-editable-icon {
-      background-color: var(--color-cards-light) !important;
-      color: var(--color-text-primary-light) !important;
+      background-color: var(--color-sheet) !important;
+      color: var(--color-text-primary) !important;
     }
     &.table-fixed-header {
       thead th {
-        background: var(--color-cards-light);
-        box-shadow: inset 0 -2px var(--color-divider-light)
+        background: var(--color-sheet);
+        box-shadow: inset 0 -2px var(--color-divider)
       }
     }
 
     thead {
       tr {
         &:last-child th {
-          border-bottom: 1px solid var(--color-divider-light)
+          border-bottom: 1px solid var(--color-divider)
         }
 
         th {
-          color: var(--color-text-secondary-light)
+          color: var(--color-text-secondary)
         }
       }
     }
@@ -42,16 +41,16 @@ $data-table-regular-header-height: 38px !default;
     &.table-fixed-first-columns {
       tr {
         th:first-child {
-          background: var(--color-cards-light)
+          background: var(--color-sheet)
         }
 
         td:first-child {
-          background: var(--color-cards-light)
+          background: var(--color-sheet)
         }
 
         &:hover {
           td:first-child {
-            background: var(--color-table-hover-light)
+            background: var(--color-table-hover)
           }
         }
       }
@@ -61,7 +60,7 @@ $data-table-regular-header-height: 38px !default;
       tbody {
         tr:nth-child(2n):not(:hover) {
           td {
-            background: var(--color-table-active-light)
+            background: var(--color-table-active)
           }
         }
       }
@@ -70,108 +69,25 @@ $data-table-regular-header-height: 38px !default;
     tbody {
       tr {
         &:active {
-          background: var(--color-table-active-light)
+          background: var(--color-table-active)
         }
 
         &:hover {
-          background: var(--color-table-hover-light)
+          background: var(--color-table-hover)
         }
       }
 
       tr:not(:last-child) {
         td {
-          border-bottom: 1px solid var(--color-divider-light)
+          border-bottom: 1px solid var(--color-divider)
         }
       }
     }
 
     &.table-bordered .table-wrapper {
-      border: 1px solid var(--color-divider-light);
+      border: 1px solid var(--color-divider);
       border-collapse: collapse;
     }
-  }
-  @include dark {
-    .table-wrapper {
-      background-color: var(--color-cards-dark);
-      color: var(--color-text-primary-dark);
-    }
-    .table-svg-path {
-      fill: var(--color-cards-dark);
-    }
-    .table-editable-icon {
-      background-color: var(--color-cards-dark) !important;
-      color: var(--color-text-primary-dark) !important;
-    }
-    &.table-fixed-header {
-      thead th {
-        background: var(--color-cards-dark);
-        box-shadow: inset 0 -2px var(--color-divider-dark)
-      }
-    }
-
-    thead {
-      tr {
-        &:last-child th {
-          border-bottom: 1px solid var(--color-divider-dark)
-        }
-
-        th {
-          color: var(--color-text-secondary-dark)
-        }
-      }
-    }
-
-    &.table-fixed-first-columns {
-      tr {
-        th:first-child {
-          background: var(--color-cards-dark)
-        }
-
-        td:first-child {
-          background: var(--color-cards-dark)
-        }
-
-        &:hover {
-          td:first-child {
-            background: var(--color-table-hover-dark)
-          }
-        }
-      }
-    }
-
-    &.table-stripped {
-      tbody {
-        tr:nth-child(2n):not(:hover) {
-          td {
-            background: var(--color-table-active-dark)
-          }
-        }
-      }
-    }
-
-    tbody {
-      tr {
-        &:active {
-          background: var(--color-table-active-dark)
-        }
-
-        &:hover {
-          background: var(--color-table-hover-dark)
-        }
-      }
-
-      tr:not(:last-child) {
-        td {
-          border-bottom: 1px solid var(--color-divider-dark)
-        }
-      }
-    }
-
-    &.table-bordered .table-wrapper {
-      border: 1px solid var(--color-divider-dark);
-      border-collapse: collapse;
-    }
-  }
 
   .table-wrapper {
     border-radius: map_get($borders, 'lg');
@@ -367,20 +283,12 @@ $data-table-regular-header-height: 38px !default;
     width: 17px;
     height: 17px;
   }
-  @include light() {
+
     .manage-footer {
       .btn-page {
-        border: solid 1px var(--color-border-light);
+        border: solid 1px var(--color-border);
       }
     }
-  }
-  @include dark() {
-    .manage-footer {
-      .btn-page {
-        border: solid 1px var(--color-border-dark);
-      }
-    }
-  }
 
   th {
     position: relative;

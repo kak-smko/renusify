@@ -1,18 +1,6 @@
 @import "utilities";
 @import 'container';
 
-@mixin light() {
-  .app-light & {
-      @content
-    }
-}
-
-@mixin dark() {
-  .app-dark & {
-      @content
-    }
-}
-
 @mixin rtl() {
   .app-rtl & {
     @content

@@ -35,13 +35,13 @@
       width: 0;
       height: 100vh;
       z-index: map_get($z-index, 'important');
-      background-color: var(--color-overlay-light);
+      background-color: var(--color-overlay);
       transition: 1s width map-get($transition, 'swing');
       overflow: hidden;
-      @include rtl(){
+      @include rtl() {
         right: 0;
       }
-      @include ltr(){
+      @include ltr() {
         left: 0;
       }
     }
@@ -139,12 +139,7 @@
       width: 0;
       position: absolute;
       bottom: 0;
-      @include light() {
-        color: var(--color-one-light);
-      }
-      @include dark() {
-        color: var(--color-one-dark);
-      }
+      color: var(--color-one);
       border-bottom: 4px solid;
     }
 

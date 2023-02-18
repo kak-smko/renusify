@@ -10,21 +10,12 @@ $bottom-nav-btn-font-size: map-metro-get($headings, 'caption', 'size') !default;
   width: 100%;
   height: $bottom-nav-height;
 
-  @include light() {
-    background-color: var(--color-cards-light);
-    color: var(--color-text-primary-light);
 
-    .#{$prefix}btn.router-link-exact-active {
-      color: var(--color-one-light) !important
-    }
-  }
-  @include dark() {
-    background-color: var(--color-cards-dark);
-    color: var(--color-text-primary-dark);
+  background-color: var(--color-sheet);
+  color: var(--color-text-primary);
 
-    .#{$prefix}btn.router-link-exact-active {
-      color: var(--color-one-dark) !important
-    }
+  .#{$prefix}btn.router-link-exact-active {
+    color: var(--color-one) !important
   }
 
   .#{$prefix}btn {

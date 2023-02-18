@@ -12,22 +12,13 @@
   outline: none;
   bottom: 0;
 
-  @include light() {
+
     &:not(.modal-no-overlay) {
-      background-color: var(--color-overlay-light);
+      background-color: var(--color-overlay);
     }
     .modal-content {
-      border: 1px solid var(--color-border-light);
+      border: 1px solid var(--color-border);
     }
-  }
-  @include dark() {
-    &:not(.modal-no-overlay) {
-      background-color: var(--color-overlay-dark);
-    }
-    .modal-content {
-      border: 1px solid var(--color-border-dark);
-    }
-  }
 
   &:not(.modal-no-overlay) {
     backdrop-filter: blur(3px) grayscale(30%);

@@ -60,7 +60,6 @@ export default {
         // renusify application
         app.config.globalProperties.$r = reactive(Object.assign({}, {
             prefix: 'r-',
-            dark: false,
             rtl: false,
             lang: 'en',
             langs:
