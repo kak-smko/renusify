@@ -112,7 +112,7 @@ const list = {
     'r-html2pdf': {'p': 'html2pdf/index.vue', 'c': ['r-btn', 'r-icon', 'r-html2pdf-page-break'], 'd': []},
     'r-html2pdf-page-break': {'p': 'html2pdf/pageBreak.vue', 'c': [], 'd': []},
     'r-icon': {'p': 'icon/index.vue', 'c': [], 'd': []},
-    'r-img': {'p': 'img/index.vue', 'c': [], 'd': []},
+    'r-img': {'p': 'img/index.vue', 'c': [], 'd': ['intersect']},
     'r-infinite-div': {
         'p': 'infinite/div.vue',
         'c': ['r-container', 'r-row', 'r-col', 'r-progress-liner'],

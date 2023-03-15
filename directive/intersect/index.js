@@ -1,24 +1,27 @@
 function mounted (el, binding) {
-  const modifiers = binding.modifiers ||  {}
-  const value = binding.value
-  const callback = typeof value === 'object' ? value.handler : value
-  let options = binding.value.options||{}
+    const modifiers = binding.modifiers || {}
+    if (modifiers.pre) {
+        return
+    }
+    const value = binding.value
+    const callback = typeof value === 'object' ? value.handler : value
+    let options = binding.value.options || {}
 
-  const observer = new IntersectionObserver((
-    entries = [],
-    observer
-  ) => {
-    if (!el._observe) return
+    const observer = new IntersectionObserver((
+        entries = [],
+        observer
+    ) => {
+        if (!el._observe) return
 
-    if (
-      callback && (
-        !modifiers.silent ||
-        el._observe.init
-      )
-    ) {
-      const isIntersecting = Boolean(entries.find(entry => entry.isIntersecting))
+        if (
+            callback && (
+                !modifiers.silent ||
+                el._observe.init
+            )
+        ) {
+            const isIntersecting = Boolean(entries.find(entry => entry.isIntersecting))
 
-      callback(isIntersecting,entries, observer,options)
+            callback(isIntersecting, entries, observer, options)
     }
 
     if (el._observe.init && modifiers.once) unmounted(el)

@@ -26,7 +26,7 @@
       <div class="file-meta pa-1" v-if="meta && uploadPercentage===100">
         <r-text-input :label="$t(m,'renusify')" v-model="metaList[m]" @update:model-value="emit"
                       v-for="(m,k) in meta" :key="k"
-                      :rules="['required']"></r-text-input>
+                      :rules="[metaRequired&&'required']"></r-text-input>
       </div>
     </div>
     <r-icon @click.prevent.stop="pickFile"
@@ -67,7 +67,8 @@ export default {
     meta: {
       type: Array,
       default: null
-    }
+    },
+    metaRequired: Boolean
   },
   data() {
     return {

@@ -48,7 +48,7 @@ export default {
       default: 0
     },
     size: {
-      type: String,
+      type: [Number, String],
       default: '32'
     },
     width: {

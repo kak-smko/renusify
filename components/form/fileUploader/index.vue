@@ -9,6 +9,7 @@
         <single class="ma-1"
                 :accept="accept"
                 :meta="meta"
+                :metaRequired="metaRequired"
                 :uploadLink="uploadLink"
                 :modelValue="file"
                 :w-p-h="wPH"
@@ -20,6 +21,7 @@
       <single :key="'add-'+keyAdd" v-if="filesLinks.length<size" class="ma-1"
               :accept="accept"
               :meta="meta"
+              :metaRequired="metaRequired"
               :w-p-h="wPH"
               :maxFileSize="maxFileSize"
               :uploadLink="uploadLink"
@@ -58,7 +60,8 @@ export default {
       },
       type: Array
     },
-    meta: Array
+    meta: Array,
+    metaRequired: {type: Boolean, default: true}
   },
   components: {
     single
