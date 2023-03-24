@@ -81,7 +81,7 @@ $color-text: var(--color-two-text);
 
 }
 
-.router-link-exact-active {
+.router-link-exact-active, a:hover {
   color: var(--color-link)
 }
 

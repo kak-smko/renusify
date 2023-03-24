@@ -255,7 +255,9 @@ export default {
       this.direction = currentDate !== oldDate
           ? (currentDate > oldDate ? 'next' : 'prev')
           : undefined
-      this.$emit('change', this.rangeLocalDate)
+      setTimeout(() => {
+        this.$emit('change', this.rangeLocalDate)
+      }, 10)
     }
   },
   methods: {

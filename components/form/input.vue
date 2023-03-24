@@ -2,18 +2,18 @@
   <div
       :class="{
         [`${$r.prefix}input-container`]:true,
-        [color]:color&&!isDisabled,
+        [c_color||'color-one-text']:c_color&&!isDisabled,
         'color-error-text':hasError&&genMessages.length>0,
-        'hide-detail':hide,
+        'hide-detail':c_hide,
         'input-focused':active,
         'input-disabled':isDisabled,
-        'input-ltr':ltr
+        'input-ltr':c_ltr
          }"
   >
-    <div ref="input" :class="[inputControlClass,{'input-tile':tile,'ps-8':preIcon}]" class="input-control">
+    <div ref="input" :class="[c_inputControlClass,{'input-tile':c_tile,'ps-8':preIcon}]" class="input-control">
       <label :for="computedId" class="label"
              v-if="label"
-             :class="[labelControlClass,
+             :class="[c_labelControlClass,
                    {'label-active':labelActive,
                    'ms-5':((preIcon&&!labelActive&&!active))
                    }]"
@@ -28,7 +28,7 @@
          :class="{
             'massage-active':genMessages.length>0,
         }">
-      <div :class="{'animation-shake-3':msgShake}">{{ genMessages[0] }}</div>
+      <div :class="{'animation-shake-3':c_msgShake}">{{ genMessages[0] }}</div>
 
     </div>
   </div>
@@ -50,24 +50,23 @@ export default {
     msg: String,
     labelControlClass: [String, Object, Array],
     inputControlClass: [String, Object, Array],
-    color: {type: String, default: 'color-one-text'},
+    color: String,
     label: String,
     modelValue: [String, Boolean, Number, Array, Object],
     active: Boolean,
-    hide: Boolean,
-    tile: Boolean,
+    hide: {type: Boolean, default: undefined},
+    tile: {type: Boolean, default: undefined},
     disabled: Boolean,
     readonly: Boolean,
     error: Boolean,
-    ltr: Boolean,
-    msgShake: {type: Boolean, default: true},
+    ltr: {type: Boolean, default: undefined},
+    msgShake: {type: Boolean, default: undefined},
     rules: {
       type: [Array, Function],
       default: () => []
     },
-    validateOnBlur: Boolean
+    validateOnBlur: {type: Boolean, default: undefined}
   },
-
   data() {
     return {
       uid: 'input_' + this.$helper.uniqueId(),
@@ -94,7 +93,6 @@ export default {
   created() {
     this.form && this.form.register(this)
   },
-
   beforeUnmount() {
     this.form && this.form.unregister(this)
   },
@@ -123,16 +121,13 @@ export default {
     hasMessages() {
       return this.validationTarget.length > 0
     },
-
     shouldValidate() {
       if (this.isResetting) return false
-      return this.validateOnBlur ? this.hasFocused && !this.isFocused : this.hasInput || this.hasFocused
+      return this.c_validateOnBlur ? this.hasFocused && !this.isFocused : this.hasInput || this.hasFocused
     },
-
     validations() {
       return this.validationTarget.slice(0, 1)
     },
-
     validationTarget() {
       if (this.shouldValidate) {
         return this.errorBucket
@@ -140,6 +135,54 @@ export default {
     },
     labelActive() {
       return (this.lazyValue !== undefined && this.lazyValue !== '' && this.lazyValue !== null)
+    },
+    c_labelControlClass() {
+      if (this.labelControlClass === undefined && this.$r.inputs.labelControlClass) {
+        return this.$r.inputs.labelControlClass
+      }
+      return this.labelControlClass
+    },
+    c_inputControlClass() {
+      if (this.inputControlClass === undefined && this.$r.inputs.inputControlClass) {
+        return this.$r.inputs.inputControlClass
+      }
+      return this.inputControlClass
+    },
+    c_color() {
+      if (this.color === undefined && this.$r.inputs.color) {
+        return this.$r.inputs.color
+      }
+      return this.color
+    },
+    c_hide() {
+      if (this.hide === undefined && this.$r.inputs.hide) {
+        return this.$r.inputs.hide
+      }
+      return this.hide
+    },
+    c_tile() {
+      if (this.tile === undefined && this.$r.inputs.tile) {
+        return this.$r.inputs.tile
+      }
+      return this.tile
+    },
+    c_ltr() {
+      if (this.ltr === undefined && this.$r.inputs.ltr) {
+        return this.$r.inputs.ltr
+      }
+      return this.ltr
+    },
+    c_msgShake() {
+      if (this.msgShake === undefined && this.$r.inputs.msgShake) {
+        return this.$r.inputs.msgShake
+      }
+      return this.msgShake === undefined ? true : this.msgShake
+    },
+    c_validateOnBlur() {
+      if (this.validateOnBlur === undefined && this.$r.inputs.validateOnBlur) {
+        return this.$r.inputs.validateOnBlur
+      }
+      return this.validateOnBlur
     }
   },
   watch: {
@@ -157,7 +200,7 @@ export default {
       // if disabled
       if (!val && !this.isDisabled) {
         this.hasFocused = true
-        this.validateOnBlur && this.validate()
+        this.c_validateOnBlur && this.validate()
       }
     },
 

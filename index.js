@@ -61,6 +61,7 @@ export default {
         app.config.globalProperties.$r = reactive(Object.assign({}, {
             prefix: 'r-',
             rtl: false,
+            inputs: {tile: false},
             lang: 'en',
             langs:
                 {

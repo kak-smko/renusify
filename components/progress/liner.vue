@@ -7,7 +7,7 @@
     }">
         <span class="label" v-if="showPercent">{{ modelValue }} %</span>
         <div class="progress-container" :class="{'progress-background':showBackground}">
-            <div :class="classes" :style="styles"></div>
+            <div :class="classes" :style="[styles,progressStyle]"></div>
         </div>
     </div>
 </template>
@@ -18,18 +18,19 @@
     export default {
         name: 'liner',
         props: {
-            modelValue: [Number, String],
-            color: String,
-            showPercent: Boolean,
-            outlined: Boolean,
-            rounded: Boolean,
-            showBackground: Boolean,
-            size: {
-                type: String,
-                default: 'small',
-                validator: function (value) {
-                    return ['small', 'medium', 'large', 'x-large'].indexOf(value) !== -1
-                }
+          modelValue: [Number, String],
+          color: String,
+          progressStyle: [String, Object, Array],
+          showPercent: Boolean,
+          outlined: Boolean,
+          rounded: Boolean,
+          showBackground: Boolean,
+          size: {
+            type: String,
+            default: 'small',
+            validator: function (value) {
+              return ['small', 'medium', 'large', 'x-large'].indexOf(value) !== -1
+            }
             }
         },
         computed: {
@@ -52,9 +53,10 @@
             styles() {
                 let c = ''
                 if (!this.isIndeterminate) {
-                    c += 'width:' + this.modelValue + '%'
+                  c += 'width:' + this.modelValue + '%;'
                 }
-                return c
+
+              return c
             }
         }
     }

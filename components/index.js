@@ -78,6 +78,7 @@ const list = {
     },
     'r-text-editor-preview': {'p': 'form/text-editor/preview.vue', 'c': [], 'd': []},
     'r-time-picker': {'p': 'form/timepicker/index.vue', 'c': ['r-input', 'r-modal', 'r-card', 'r-btn'], 'd': []},
+    'r-time-picker-range': {'p': 'form/timepicker/range.vue', 'c': ['r-input', 'r-modal', 'r-card', 'r-btn'], 'd': []},
     'r-unique-feild': {'p': 'form/uniqueFeild/index.vue', 'c': ['r-text-input'], 'd': []},
     'r-address': {'p': 'form/address.vue', 'c': ['r-select', 'r-text-area', 'r-text-input'], 'd': []},
     'r-cam-input': {'p': 'form/camInput', 'c': ['r-input', 'r-btn', 'r-icon'], 'd': []},

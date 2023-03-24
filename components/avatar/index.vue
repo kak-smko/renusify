@@ -1,15 +1,15 @@
 <template>
-    <div :class="`${$r.prefix}avatar ${!flat?'elevation-'+elevation:''} ${tile?'avatar-tile':''}`"
+    <div :class="`${$r.prefix}avatar ${tile?'avatar-tile':''}`"
          :style="`height:${size}px;width:${size}px;`">
-        <div class="avatar-content" :key="k">
-            <slot></slot>
-        </div>
-        <r-btn :loading="loading" v-if="editable" @click.prevent.stop="pickFile" icon class="avatar-edit color-info">
-            <r-icon v-html="$r.icons.camera"></r-icon>
-        </r-btn>
-        <input v-if="editable" accept="image/*"
-               @change="addFile()"
-               ref="file"
+      <div class="avatar-content" :class="`${!flat?'elevation-'+elevation:''}`" :key="k">
+        <slot></slot>
+      </div>
+      <r-btn :loading="loading" v-if="editable" @click.prevent.stop="pickFile" icon class="avatar-edit color-info">
+        <r-icon v-html="$r.icons.camera"></r-icon>
+      </r-btn>
+      <input v-if="editable" accept="image/*"
+             @change="addFile()"
+             ref="file"
                class="d-none"
                type="file"
         >
