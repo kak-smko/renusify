@@ -2,7 +2,7 @@
   <div
       :class="{
         [`${$r.prefix}input-container`]:true,
-        [c_color||'color-one-text']:c_color&&!isDisabled,
+        [c_color]:c_color&&!isDisabled,
         'color-error-text':hasError&&genMessages.length>0,
         'hide-detail':c_hide,
         'input-focused':active,
@@ -152,7 +152,7 @@ export default {
       if (this.color === undefined && this.$r.inputs.color) {
         return this.$r.inputs.color
       }
-      return this.color
+      return this.color || 'color-one-text'
     },
     c_hide() {
       if (this.hide === undefined && this.$r.inputs.hide) {

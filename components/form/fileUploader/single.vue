@@ -104,7 +104,7 @@ export default {
       is = image[0] === 'image'
       if (!is) {
         const p = this.fileLink.split('.')
-        is = ['jpg', 'jpeg', 'png', 'gif'].includes(p[p.length - 1])
+        is = ['jpg', 'jpeg', 'png', 'gif', 'svg'].includes(p[p.length - 1])
       }
       return is
     },

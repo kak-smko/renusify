@@ -12,6 +12,7 @@
             :close="multiple&&!textChip"
             :key="key"
             :text="textChip || !multiple"
+            :class="{'px-0':!multiple}"
             @update:modelValue="handleChip($event,key)"
             selectable
             v-for="(item,key) in chips">

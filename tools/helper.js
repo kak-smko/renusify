@@ -401,3 +401,23 @@ export function getCookie(cname) {
     }
     return "";
 }
+
+export function changeColor(vars) {
+    let head = document.head || document.getElementsByTagName('head')[0]
+    let children = head.querySelectorAll("[c='color']");
+    if (children) {
+        let childArray = Array.prototype.slice.call(children);
+        childArray.forEach(function (child) {
+            child.parentNode.removeChild(child);
+        });
+    }
+    let style = document.createElement('style');
+    style.setAttribute("c", "color");
+    head.appendChild(style);
+    let css = ':root{';
+    for (let k in vars) {
+        css += k + ':' + vars[k] + ';'
+    }
+    css += '}'
+    style.appendChild(document.createTextNode(css));
+}

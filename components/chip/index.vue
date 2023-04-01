@@ -37,7 +37,7 @@ export default {
   },
   computed: {
     classes () {
-      let c = this.$r.prefix+'chip px-3 chip-size-' + this.size
+      let c = this.$r.prefix + 'chip chip-size-' + this.size
       if (this.selectable) {
         c += ' chip-selectable'
       }

@@ -25,6 +25,7 @@
       <r-card class="pt-3">
         <timepicker
             class="mb-2 mx-3"
+            :disableTime="disableTime"
             :is24-hour="is24Hour"
             :withSec="withSec"
             v-model="lazyValue"
@@ -57,6 +58,11 @@ export default {
   name: "r-time-picker",
   components: {Timepicker},
   props: {
+    disableTime: {
+      type: Function, default: () => {
+        return false
+      }
+    },
     withSec: Boolean,
     is24Hour: {type: Boolean, default: true},
     noOverlay: Boolean,

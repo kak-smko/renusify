@@ -72,7 +72,8 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
   }
 
   &:not(.btn-text):not(.btn-outlined) {
-    background-color: var(--color-sheet)
+    background-color: var(--color-sheet);
+    color: var(--color-text-primary)
   }
 
   &.btn-outlined.btn-text {
