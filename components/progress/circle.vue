@@ -1,8 +1,8 @@
 <template>
   <div :aria-valuemax="100" :aria-valuemin="0"
        :aria-valuenow="indeterminate ? undefined : normalizedValue"
-       :class="{[`${$r.prefix}progress-circular`]:true,
-       [`${$r.prefix}progress-circular-indeterminate`]:indeterminate}"
+       :class="{[`${$r.prefix}progress-circle`]:true,
+       [`${$r.prefix}progress-circle-indeterminate`]:indeterminate}"
        :style="styles"
        role="progressbar">
     <svg :style="svgStyles"
@@ -14,7 +14,7 @@
               :stroke-dasharray="strokeDashArray"
               :stroke-dashoffset="0"
               :stroke-width="strokeWidth"
-              :class="`${$r.prefix}progress-circular-underlay`"
+              :class="`${$r.prefix}progress-circle-underlay`"
               fill="transparent"
       ></circle>
       <circle :cx="2 * viewBoxSize"
@@ -23,11 +23,11 @@
               :stroke-dasharray="strokeDashArray"
               :stroke-dashoffset="strokeDashOffset"
               :stroke-width="strokeWidth"
-              :class="`${$r.prefix}progress-circular-overlay`"
+              :class="`${$r.prefix}progress-circle-overlay`"
               fill="transparent"
       ></circle>
     </svg>
-    <div :class="`${$r.prefix}progress-circular-info`">
+    <div :class="`${$r.prefix}progress-circle-info`">
       <slot>
         <span v-if="showPercent">{{ modelValue }} %</span>
       </slot>
@@ -39,7 +39,7 @@
 import './style.scss'
 
 export default {
-  name: 'circular',
+  name: 'pcircle',
   props: {
     indeterminate: Boolean,
     showPercent: Boolean,

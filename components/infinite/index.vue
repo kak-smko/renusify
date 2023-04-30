@@ -6,10 +6,10 @@
                     <h3 class="title px-2">{{ title }}</h3>
                 </r-col>
                 <r-col class="col-auto">
-                    <r-switch
-                            label="live"
-                            v-model="live"
-                    ></r-switch>
+                    <r-switch-input
+                        label="live"
+                        v-model="live"
+                    ></r-switch-input>
                 </r-col>
             </r-row>
         </r-container>

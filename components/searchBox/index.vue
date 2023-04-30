@@ -17,7 +17,7 @@
                  :value="lazyValue"
                  autocomplete="no"
           />
-          <r-progress-liner v-if="loading" color="color-two" class="w-full"></r-progress-liner>
+          <r-progress-line v-if="loading" color="color-two" class="w-full"></r-progress-line>
         </r-input>
         <r-card v-if="open&&(list.length>0||!loading)"
                 class="card-select  z-important"

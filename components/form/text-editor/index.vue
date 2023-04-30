@@ -34,10 +34,10 @@
         </r-row>
         <r-row>
             <r-col class="col-12" v-if="selectElm&&!selectElm.classList.contains('editor-content')">
-                <r-select :label="$t('class','renusify')" :model-value="[...selectElm.classList]"
-                          multiple
-                          tags
-                          @update:model-value="addClass"></r-select>
+                <r-select-input :label="$t('class','renusify')" :model-value="[...selectElm.classList]"
+                                multiple
+                                tags
+                                @update:model-value="addClass"></r-select-input>
             </r-col>
             <r-col class="col-12 ltr">
                 <span class="cursor-pointer" v-for="(item,i) in currentPath" :key="i" @click="borderd(item)">
@@ -86,10 +86,10 @@
                                           :label="$t('link','renusify')"
                                           :rules="['required']"></r-text-input>
                         </r-col>
-                        <r-col class="col-12">
-                            <r-switch :label="$t('open_new_tab','renusify')"
-                                      v-model="target"></r-switch>
-                        </r-col>
+                      <r-col class="col-12">
+                        <r-switch-input :label="$t('open_new_tab','renusify')"
+                                        v-model="target"></r-switch-input>
+                      </r-col>
                     </r-row>
                     <r-row class="h-end">
                         <r-col class="col-auto">
@@ -113,29 +113,29 @@
                  :closebtn="false"
                  v-model="showImg">
             <r-form v-model="valid2">
-                <r-container class="sheet">
-                    <r-file-uploader v-model="image"
-                                     :label="$t('image','renusify')"
-                                     :size="1"
-                                     :upload-link="uploadLink"
-                                     accept="image/*"></r-file-uploader>
-                    <r-text-input v-model="img_alt"
-                                  :label="$t('img_alt','renusify')"
-                                  :rules="['required']"></r-text-input>
-                    <r-number v-model="img_width" :label="$t('width','renusify')"
-                              :rules="['required']"></r-number>
-                    <r-number v-model="img_height" :label="$t('height','renusify')"
-                              :rules="['required']"></r-number>
-                    <r-row class="h-end">
-                        <r-col class="col-auto">
-                            <r-btn class="color-error-text"
-                                   outlined
-                                   @click.prevent="showImg=false">{{$t('cancel','renusify')}}
-                            </r-btn>
-                        </r-col>
-                        <r-col class="col-auto">
-                          <r-btn class="color-success-text"
-                                 :disabled="!valid2"
+              <r-container class="sheet">
+                <r-file-input v-model="image"
+                              :label="$t('image','renusify')"
+                              :size="1"
+                              :upload-link="uploadLink"
+                              accept="image/*"></r-file-input>
+                <r-text-input v-model="img_alt"
+                              :label="$t('img_alt','renusify')"
+                              :rules="['required']"></r-text-input>
+                <r-number-input v-model="img_width" :label="$t('width','renusify')"
+                                :rules="['required']"></r-number-input>
+                <r-number-input v-model="img_height" :label="$t('height','renusify')"
+                                :rules="['required']"></r-number-input>
+                <r-row class="h-end">
+                  <r-col class="col-auto">
+                    <r-btn class="color-error-text"
+                           outlined
+                           @click.prevent="showImg=false">{{ $t('cancel', 'renusify') }}
+                    </r-btn>
+                  </r-col>
+                  <r-col class="col-auto">
+                    <r-btn class="color-success-text"
+                           :disabled="!valid2"
                                  outlined
                                  @click.prevent="handleImageForm()">{{ $t('send', 'renusify') }}
                           </r-btn>
@@ -149,15 +149,15 @@
                v-model="showVideo">
         <r-form v-model="valid2">
           <r-container class="sheet">
-            <r-file-uploader v-model="video"
-                             :label="$t('video','renusify')"
-                             :size="1"
-                             :upload-link="uploadLink"
-                             accept="video/mp4,video/webm"></r-file-uploader>
-            <r-number v-model="img_width" :label="$t('width','renusify')"
-                      :rules="['required']"></r-number>
-            <r-number v-model="img_height" :label="$t('height','renusify')"
-                      :rules="['required']"></r-number>
+            <r-file-input v-model="video"
+                          :label="$t('video','renusify')"
+                          :size="1"
+                          :upload-link="uploadLink"
+                          accept="video/mp4,video/webm"></r-file-input>
+            <r-number-input v-model="img_width" :label="$t('width','renusify')"
+                            :rules="['required']"></r-number-input>
+            <r-number-input v-model="img_height" :label="$t('height','renusify')"
+                            :rules="['required']"></r-number-input>
             <r-row class="h-end">
               <r-col class="col-auto">
                 <r-btn class="color-error-text"

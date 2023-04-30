@@ -13,8 +13,8 @@
                             <slot v-bind:item="item">{{item}}</slot>
                         </r-col>
                         <r-col class="col-12" key="loading">
-                            <r-progress-liner color="color-two"
-                                              v-show="loading"></r-progress-liner>
+                          <r-progress-line color="color-two"
+                                           v-show="loading"></r-progress-line>
                         </r-col>
                     </transition-group>
                 </div>

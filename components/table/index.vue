@@ -20,7 +20,7 @@
         </div>
         <div class="table-wrapper">
             <div class="table-container" ref="table">
-                <r-progress-liner v-if="loading" color="color-two"></r-progress-liner>
+                <r-progress-line v-if="loading" color="color-two"></r-progress-line>
                 <table>
                     <thead>
                     <tr>
@@ -91,9 +91,9 @@
                   </r-btn>
                   {{ col.text }}
                 </span>
-                            <span>
-                                <r-switch :label="$t('show','renusify')" v-model="col.show"
-                                          @update:model-value="store_db(cols)"></r-switch>
+                          <span>
+                                <r-switch-input :label="$t('show','renusify')" v-model="col.show"
+                                                @update:model-value="store_db(cols)"></r-switch-input>
                 </span>
                         </r-card>
                     </r-col>

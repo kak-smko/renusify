@@ -3,10 +3,10 @@
         <div class="infinite-page-container" v-scroll="onScroll">
             <slot :items="datacollection"></slot>
         </div>
-        <r-progress-liner color="color-two"
-                          v-show="loading"
+        <r-progress-line color="color-two"
+                         v-show="loading"
 
-        ></r-progress-liner>
+        ></r-progress-line>
         <div class="text-center subtitle-1"
              v-if="noItem"
         >{{noItemMsg}}

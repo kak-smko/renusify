@@ -13,26 +13,26 @@
         </template>
       </div>
       <div v-if="typeof value==='object'" class="flex-grow-1 w-full ps-10">
-        <r-json :tile="tile"
-                :model-value="value"
-                @update:model-value="emit(key,$event)"
-                :disableAdd="disableAdd||template!==undefined"
-                :disableDel="disableDel||template!==undefined"
-                :disableEditKey="disableEditKey"
-                :keyWidth="keyWidth"
-                :valueWidth="valueWidth"
-        ></r-json>
+        <r-json-input :tile="tile"
+                      :model-value="value"
+                      @update:model-value="emit(key,$event)"
+                      :disableAdd="disableAdd||template!==undefined"
+                      :disableDel="disableDel||template!==undefined"
+                      :disableEditKey="disableEditKey"
+                      :keyWidth="keyWidth"
+                      :valueWidth="valueWidth"
+        ></r-json-input>
       </div>
       <div v-else class="mb-1" :style="{'max-width': valueWidth}">
         <r-text-input v-if="typeof value==='string'"
                       :tile="tile"
                       :model-value="value" @update:model-value="emit(key,$event)"></r-text-input>
-        <r-number v-else-if="typeof value==='number'"
-                  :tile="tile"
-                  :model-value="value" @update:model-value="emit(key,$event)"></r-number>
-        <r-switch v-else-if="typeof value==='boolean'"
-                  :tile="tile"
-                  :model-value="value" @update:model-value="emit(key,$event)"></r-switch>
+        <r-number-input v-else-if="typeof value==='number'"
+                        :tile="tile"
+                        :model-value="value" @update:model-value="emit(key,$event)"></r-number-input>
+        <r-switch-input v-else-if="typeof value==='boolean'"
+                        :tile="tile"
+                        :model-value="value" @update:model-value="emit(key,$event)"></r-switch-input>
 
       </div>
 

@@ -5,7 +5,7 @@
                 'left':$r.rtl?prev:next,
                 'right':$r.rtl?next:prev
             }">
-    <r-progress-liner v-if="autoplay &&progress" :model-value="remain" color="color-two"></r-progress-liner>
+    <r-progress-line v-if="autoplay &&progress" :model-value="remain" color="color-two"></r-progress-line>
     <r-btn v-if="arrow" icon @click="prev" class="btn-left-arrow">
       <r-icon v-html="$r.icons.chevron_left"></r-icon>
     </r-btn>

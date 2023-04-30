@@ -1,12 +1,12 @@
 @import "../../style/include";
 
-$progress-circular-rotate-animation: progress-circular-rotate 1.4s linear infinite !default;
-$progress-circular-rotate-dash: progress-circular-dash 1.4s ease-in-out infinite !default;
-$process-circular-intermediate-svg-transition: all .2s ease-in-out !default;
-$progress-circular-underlay-stroke: rgba(map-get($shades, 'black'), 0.1) !default;
-$progress-circular-overlay-transition: all .6s ease-in-out !default;
+$progress-circle-rotate-animation: progress-circle-rotate 1.4s linear infinite !default;
+$progress-circle-rotate-dash: progress-circle-dash 1.4s ease-in-out infinite !default;
+$process-circle-intermediate-svg-transition: all .2s ease-in-out !default;
+$progress-circle-underlay-stroke: rgba(map-get($shades, 'black'), 0.1) !default;
+$progress-circle-overlay-transition: all .6s ease-in-out !default;
 
-.#{$prefix}progress-circular {
+.#{$prefix}progress-circle {
   position: relative;
   display: inline-flex;
   vertical-align: middle;
@@ -27,13 +27,13 @@ $progress-circular-overlay-transition: all .6s ease-in-out !default;
 
   &-indeterminate {
     svg {
-      animation: $progress-circular-rotate-animation;
+      animation: $progress-circle-rotate-animation;
       transform-origin: center center;
-      transition: $process-circular-intermediate-svg-transition;
+      transition: $process-circle-intermediate-svg-transition;
     }
 
-    .#{$prefix}progress-circular-overlay {
-      animation: $progress-circular-rotate-dash;
+    .#{$prefix}progress-circle-overlay {
+      animation: $progress-circle-rotate-dash;
       stroke-linecap: round;
       stroke-dasharray: 80, 200;
       stroke-dashoffset: 0px;
@@ -47,18 +47,18 @@ $progress-circular-overlay-transition: all .6s ease-in-out !default;
   }
 
   &-underlay {
-    stroke: $progress-circular-underlay-stroke;
+    stroke: $progress-circle-underlay-stroke;
     z-index: 1
   }
 
   &-overlay {
     stroke: currentColor;
     z-index: 2;
-    transition: $progress-circular-overlay-transition
+    transition: $progress-circle-overlay-transition
   }
 }
 
-@keyframes progress-circular-dash {
+@keyframes progress-circle-dash {
   0% {
     stroke-dasharray: 1, 200;
     stroke-dashoffset: 0px
@@ -73,26 +73,29 @@ $progress-circular-overlay-transition: all .6s ease-in-out !default;
   }
 }
 
-@keyframes progress-circular-rotate {
+@keyframes progress-circle-rotate {
   100% {
     transform: rotate(360deg)
   }
 }
 
 
-//liner
+//line
 
 .#{$prefix}progress {
   text-align: center;
-    &.progress-outlined {
-      color: var(--color-divider)
-    }
-    .liner-determinate {
-      background-color: var(--color-text-primary);
-    }
-    .liner-indeterminate {
-      background-color: var(--color-text-primary);
-    }
+
+  &.progress-outlined {
+    color: var(--color-divider)
+  }
+
+  .line-determinate {
+    background-color: var(--color-text-primary);
+  }
+
+  .line-indeterminate {
+    background-color: var(--color-text-primary);
+  }
 
     .progress-background {
       background-color: var(--color-divider);
@@ -153,7 +156,7 @@ $progress-circular-overlay-transition: all .6s ease-in-out !default;
     }
   }
 
-  .liner-determinate {
+  .line-determinate {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -161,7 +164,7 @@ $progress-circular-overlay-transition: all .6s ease-in-out !default;
     border-radius: 2px;
   }
 
-  .liner-indeterminate {
+  .line-indeterminate {
     border-radius: 2px;
 
     &:before {

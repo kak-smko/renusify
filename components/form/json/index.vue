@@ -37,24 +37,24 @@
               class="w-30 pe-1"
               :label="keyLabel"></r-text-input>
           <div class="w-20" v-if="!valueType">
-            <r-select v-model="info.type"
-                      :tile="tile"
-                      class="me-1"
-                      :items="['text','number','boolean','json','array']"
-                      just-value
-                      @update:model-value="info.value=null"
-                      firstSelect></r-select>
+            <r-select-input v-model="info.type"
+                            :tile="tile"
+                            class="me-1"
+                            :items="['text','number','boolean','json','array']"
+                            just-value
+                            @update:model-value="info.value=null"
+                            firstSelect></r-select-input>
           </div>
           <r-text-input v-if="val_type==='text'"
                         :tile="tile"
                         :label="valueLabel"
                         v-model="info.value"></r-text-input>
-          <r-number v-else-if="val_type==='number'"
-                    :tile="tile"
-                    :label="$t('value','renusify')" v-model="info.value"></r-number>
-          <r-switch v-else-if="val_type==='boolean'"
-                    :tile="tile"
-                    :label="$t('value','renusify')" v-model="info.value"></r-switch>
+          <r-number-input v-else-if="val_type==='number'"
+                          :tile="tile"
+                          :label="$t('value','renusify')" v-model="info.value"></r-number-input>
+          <r-switch-input v-else-if="val_type==='boolean'"
+                          :tile="tile"
+                          :label="$t('value','renusify')" v-model="info.value"></r-switch-input>
           <r-btn @click.prevent="add" class="ms-1 color-success" rounded>{{ $t('add', 'renusify') }}</r-btn>
         </div>
       </div>

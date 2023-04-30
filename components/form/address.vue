@@ -1,5 +1,5 @@
 <template>
-  <r-select
+  <r-select-input
       :label="$t('country','renusify')"
       v-model="country"
       @update:model-value="emit(true,true)"
@@ -7,31 +7,31 @@
       :searchLink="`https://codenus.com/api/apps/address?lang=${$r.lang}`"
       :rules="required?['required']:[]"
       :tile="tile">
-  </r-select>
-  <r-select :label="$t('state','renusify')"
-            v-model="state"
-            :disabled="!country"
-            :key="country&&country['id']"
-            v-if="!hideState"
-            @update:model-value="emit(false,true)"
-            :searchLink="country&&`https://codenus.com/api/apps/address/${country['id']}?lang=${$r.lang}`"
-            :rules="required?['required']:[]"
-            value="id"
-            :tile="tile">
+  </r-select-input>
+  <r-select-input :label="$t('state','renusify')"
+                  v-model="state"
+                  :disabled="!country"
+                  :key="country&&country['id']"
+                  v-if="!hideState"
+                  @update:model-value="emit(false,true)"
+                  :searchLink="country&&`https://codenus.com/api/apps/address/${country['id']}?lang=${$r.lang}`"
+                  :rules="required?['required']:[]"
+                  value="id"
+                  :tile="tile">
 
-  </r-select>
-  <r-select v-if="!hideCity"
-            v-model="city"
-            :disabled="!state"
-            :key="state&&(country['id']+'-'+state['id'])"
-            @update:model-value="emit(false,false)"
-            :label="$t('city','renusify')"
-            :searchLink="state&&`https://codenus.com/api/apps/address/${country['id']}/${state['id']}?lang=${$r.lang}`"
-            :rules="required?['required']:[]"
-            value="id"
-            :tile="tile">
+  </r-select-input>
+  <r-select-input v-if="!hideCity"
+                  v-model="city"
+                  :disabled="!state"
+                  :key="state&&(country['id']+'-'+state['id'])"
+                  @update:model-value="emit(false,false)"
+                  :label="$t('city','renusify')"
+                  :searchLink="state&&`https://codenus.com/api/apps/address/${country['id']}/${state['id']}?lang=${$r.lang}`"
+                  :rules="required?['required']:[]"
+                  value="id"
+                  :tile="tile">
 
-  </r-select>
+  </r-select-input>
   <r-text-input v-if="!hideZipCode" @update:model-value="emit(false,false)"
                 :label="$t('zip_code','renusify')"
                 v-model="zip_code"

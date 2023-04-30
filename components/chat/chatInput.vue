@@ -18,7 +18,7 @@
                text>
           <r-icon v-html="$r.icons.attachment"></r-icon>
         </r-btn>
-        <r-progress-circular
+        <r-progress-circle
             v-else
             @click.prevent="fileDelete()"
             :indeterminate=false
@@ -27,7 +27,7 @@
             size="30"
         >
           <r-icon v-html="$r.icons.close"></r-icon>
-        </r-progress-circular>
+        </r-progress-circle>
       </template>
       <r-btn class="color-success-text"
              :disabled="!text"

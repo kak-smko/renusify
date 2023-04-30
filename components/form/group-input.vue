@@ -8,10 +8,10 @@
             <template v-for="(v,k) in item" :key="i+'-'+k">
               <r-text-input v-if="typeof v==='string'" class="flex-grow-0 me-1" :label="k"
                             v-model="item[k]"></r-text-input>
-              <r-number v-else-if="typeof v==='number'" class="flex-grow-0 me-1" :label="k"
-                        v-model="item[k]"></r-number>
-              <r-switch v-else-if="typeof v==='boolean'" class="flex-grow-0 me-1" :label="k"
-                        v-model="item[k]"></r-switch>
+              <r-number-input v-else-if="typeof v==='number'" class="flex-grow-0 me-1" :label="k"
+                              v-model="item[k]"></r-number-input>
+              <r-switch-input v-else-if="typeof v==='boolean'" class="flex-grow-0 me-1" :label="k"
+                              v-model="item[k]"></r-switch-input>
             </template>
           </div>
         </slot>

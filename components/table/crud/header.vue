@@ -35,23 +35,23 @@
                 </r-col>
                 <r-col v-else class="col-12">
                     <r-container class="pa-0" full-width>
-                    <r-select :model-value="select" :items="header" text="text"
-                              :label="$t('add','renusify')" @update:model-value="add"></r-select>
-                        <r-divider class="my-3"></r-divider>
-                    <template v-for="(item,i) in inputs" :key="i">
+                      <r-select-input :model-value="select" :items="header" text="text"
+                                      :label="$t('add','renusify')" @update:model-value="add"></r-select-input>
+                      <r-divider class="my-3"></r-divider>
+                      <template v-for="(item,i) in inputs" :key="i">
                         <r-row class="v-baseline" v-if="['text-input','text-area'].includes(item.option.type)">
-                            <r-col class="col-5 md-3">
-                            <r-select v-model="item.advance.action"
-                                      :items="[
+                          <r-col class="col-5 md-3">
+                            <r-select-input v-model="item.advance.action"
+                                            :items="[
                                           {name:$t('advance_search_like','renusify'),value:'r'},
                                           {name:$t('advance_search_not_like','renusify'),value:'nr'},
                                           {name:$t('advance_search_equal','renusify'),value:'e'},
                                           {name:$t('advance_search_not_equal','renusify'),value:'ne'},
                                           {name:$t('advance_search_id','renusify'),value:'_id'}
                                           ]"
-                                      justValue
-                                      firstSelect
-                                      :label="$t('advance_search_operator','renusify')"></r-select>
+                                            justValue
+                                            firstSelect
+                                            :label="$t('advance_search_operator','renusify')"></r-select-input>
                                 </r-col>
                             <r-col class="col-6 md-8">
                               <r-text-input v-model="item.advance.search" :label="item.text"></r-text-input>
@@ -64,20 +64,20 @@
                         </r-row>
                         <r-row class="v-baseline" v-else-if="'number'===item.option.type">
                             <r-col class="col-6 md-3">
-                              <r-select v-model="item.advance.action"
-                                        :items="[
+                              <r-select-input v-model="item.advance.action"
+                                              :items="[
                                           {name:$t('advance_search_equal','renusify'),value:'e'},
                                           {name:$t('advance_search_not_equal','renusify'),value:'ne'},
                                           {name:$t('advance_search_gt','renusify'),value:'gt'},
                                       {name:$t('advance_search_gte','renusify'),value:'gte'},
                                       {name:$t('advance_search_lt','renusify'),value:'lt'},
                                       {name:$t('advance_search_lte','renusify'),value:'lte'}]"
-                                        firstSelect
-                                        justValue
-                                        :label="$t('advance_search_operator','renusify')"></r-select>
+                                              firstSelect
+                                              justValue
+                                              :label="$t('advance_search_operator','renusify')"></r-select-input>
                                 </r-col>
                             <r-col class="col-6 md-8">
-                              <r-number v-model="item.advance.search" :label="item.text"></r-number>
+                              <r-number-input v-model="item.advance.search" :label="item.text"></r-number-input>
                             </r-col>
                             <r-col class="col-1">
                                 <r-btn class="color-error" icon @click.prevent="del(i)">
@@ -87,16 +87,16 @@
                         </r-row>
                         <r-row class="v-baseline" v-else-if="'switch'===item.option.type">
                             <r-col class="col-5 md-3">
-                              <r-select v-model="item.advance.action"
-                                        :items="[
+                              <r-select-input v-model="item.advance.action"
+                                              :items="[
                                           {name:$t('advance_search_equal','renusify'),value:'e'}
                                           ]"
-                                        justValue
-                                        firstSelect
-                                        :label="$t('advance_search_operator','renusify')"></r-select>
+                                              justValue
+                                              firstSelect
+                                              :label="$t('advance_search_operator','renusify')"></r-select-input>
                                 </r-col>
                             <r-col class="col-6 md-8">
-                              <r-switch v-model="item.advance.search" :label="item.text"></r-switch>
+                              <r-switch-input v-model="item.advance.search" :label="item.text"></r-switch-input>
                             </r-col>
                             <r-col class="col-1">
                                 <r-btn class="color-error" icon @click.prevent="del(i)">
@@ -106,18 +106,18 @@
                         </r-row>
                         <r-row class="v-baseline" v-else-if="'select'===item.option.type">
                             <r-col class="col-5 md-3">
-                              <r-select v-model="item.advance.action"
-                                        :items="[
+                              <r-select-input v-model="item.advance.action"
+                                              :items="[
                                           {name:$t('advance_search_in','renusify'),value:'in'},
                                           {name:$t('advance_search_not_in','renusify'),value:'nin'}
                                           ]"
-                                        justValue
-                                        firstSelect
-                                        :label="$t('advance_search_operator','renusify')"></r-select>
+                                              justValue
+                                              firstSelect
+                                              :label="$t('advance_search_operator','renusify')"></r-select-input>
                             </r-col>
                           <r-col class="col-6 md-8">
-                            <r-select v-model="item.advance.search" :label="item.text" :items="item.option.items"
-                                      multiple tags></r-select>
+                            <r-select-input v-model="item.advance.search" :label="item.text" :items="item.option.items"
+                                            multiple tags></r-select-input>
                           </r-col>
                           <r-col class="col-1">
                             <r-btn class="color-error" icon @click.prevent="del(i)">
@@ -127,19 +127,19 @@
                         </r-row>
                       <r-row class="v-baseline" v-else-if="['date-picker','time-ago'].includes(item.option.type)">
                         <r-col class="col-5 md-3" :a="item.advance.t='date'">
-                          <r-select v-model="item.advance.action"
-                                    :items="[
+                          <r-select-input v-model="item.advance.action"
+                                          :items="[
                                          {name:$t('advance_search_gt','renusify'),value:'gt'},
                                       {name:$t('advance_search_gte','renusify'),value:'gte'},
                                       {name:$t('advance_search_lt','renusify'),value:'lt'},
                                       {name:$t('advance_search_lte','renusify'),value:'lte'}
                                           ]"
-                                    justValue
-                                    firstSelect
-                                    :label="$t('advance_search_operator','renusify')"></r-select>
+                                          justValue
+                                          firstSelect
+                                          :label="$t('advance_search_operator','renusify')"></r-select-input>
                         </r-col>
                         <r-col class="col-6 md-8">
-                          <r-date-picker with-time v-model="item.advance.search" :label="item.text"></r-date-picker>
+                          <r-date-input with-time v-model="item.advance.search" :label="item.text"></r-date-input>
                         </r-col>
                         <r-col class="col-1">
                           <r-btn class="color-error" icon @click.prevent="del(i)">
@@ -153,7 +153,7 @@
                 </r-col>
             </r-row>
         </r-container>
-        <r-progress-liner color="color-two" v-if="loading"></r-progress-liner>
+      <r-progress-line color="color-two" v-if="loading"></r-progress-line>
         <r-confirm
                 hard
                 v-model="showConfirm"

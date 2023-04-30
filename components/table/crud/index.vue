@@ -24,23 +24,23 @@
                      v-for="(item,key) in table.option">
                     <template v-if="item['formInput']!==false">
 
-                            <r-json v-if="item['type']==='file-uploader'" baseArray :label="$t(key,'renusify')"
-                                    v-model="copyItem['d'][key]"></r-json>
-                            <component
-                                    v-else
-                                    :is="'r-'+item['type']"
-                                    :label="$t(key,'renusify')"
-                                    v-model="copyItem['d'][key]"
-                                    v-bind="getAttr(table.option[key],copyItem['t'])"
-                            ></component>
+                      <r-json-input v-if="item['type']==='file-uploader'" baseArray :label="$t(key,'renusify')"
+                                    v-model="copyItem['d'][key]"></r-json-input>
+                      <component
+                          v-else
+                          :is="'r-'+item['type']"
+                          :label="$t(key,'renusify')"
+                          v-model="copyItem['d'][key]"
+                          v-bind="getAttr(table.option[key],copyItem['t'])"
+                      ></component>
                     </template>
                 </div>
 
                 <r-divider class="my-5"></r-divider>
                 <div class="d-flex h-space-between v-baseline">
                 <span>
-                  <r-number v-if="copyItem['t']==='copy'" :label="$t('count_copy','renusify')"
-                            v-model="copyItem['c']"></r-number>
+                  <r-number-input v-if="copyItem['t']==='copy'" :label="$t('count_copy','renusify')"
+                                  v-model="copyItem['c']"></r-number-input>
                 </span>
                     <r-btn class="color-success" :loading="loading" @click="copyAll()">{{$t('send','renusify')}}</r-btn>
                 </div>

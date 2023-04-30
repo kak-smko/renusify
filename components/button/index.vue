@@ -16,7 +16,7 @@
 
       </span>
     <span class="btn-loader" v-if="loading">
-        <r-progress-circular :size="(size==='x-small')?'15':'23'" indeterminate width="2"></r-progress-circular></span>
+        <r-progress-circle :size="(size==='x-small')?'15':'23'" indeterminate width="2"></r-progress-circle></span>
   </component>
 </template>
 

@@ -32,7 +32,7 @@
         />
           </span>
       </div>
-      <r-progress-liner v-if="loading" color="color-two"></r-progress-liner>
+      <r-progress-line v-if="loading" color="color-two"></r-progress-line>
     </r-input>
     <r-card class="card-select" :class="{
             'card-select-active':genItems.length>0 && openList,

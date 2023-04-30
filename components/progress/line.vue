@@ -16,17 +16,17 @@
     import './style.scss'
 
     export default {
-        name: 'liner',
-        props: {
-          modelValue: [Number, String],
-          color: String,
-          progressStyle: [String, Object, Array],
-          showPercent: Boolean,
-          outlined: Boolean,
-          rounded: Boolean,
-          showBackground: Boolean,
-          size: {
-            type: String,
+      name: 'pline',
+      props: {
+        modelValue: [Number, String],
+        color: String,
+        progressStyle: [String, Object, Array],
+        showPercent: Boolean,
+        outlined: Boolean,
+        rounded: Boolean,
+        showBackground: Boolean,
+        size: {
+          type: String,
             default: 'small',
             validator: function (value) {
               return ['small', 'medium', 'large', 'x-large'].indexOf(value) !== -1
@@ -43,7 +43,7 @@
             },
             classes() {
                 let c = ''
-                c += this.isIndeterminate ? 'liner-indeterminate' : 'liner-determinate'
+              c += this.isIndeterminate ? 'line-indeterminate' : 'line-determinate'
 
                 if (this.color) {
                     c += ' ' + this.color

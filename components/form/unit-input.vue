@@ -15,10 +15,10 @@
            class="me-1"
     />
     <div class="select-unit" :class="{'input-shadow':disableUnit}">
-      <r-select :readonly="disableUnit" :items="units" v-model="unit"
-                @update:model-value="emit" hide justValue :translate="translate"
-                class="mt-0"
-                firstSelect></r-select>
+      <r-select-input :readonly="disableUnit" :items="units" v-model="unit"
+                      @update:model-value="emit" hide justValue :translate="translate"
+                      class="mt-0"
+                      firstSelect></r-select-input>
     </div>
   </r-input>
 </template>

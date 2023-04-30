@@ -5,7 +5,7 @@
         <r-btn icon class="image-close color-white">
           <r-icon @click.prevent="fileDelete()" class="color-error-text" v-html="$r.icons.delete"></r-icon>
         </r-btn>
-        <r-progress-circular
+        <r-progress-circle
             :indeterminate=false
             :modelValue="uploadPercentage"
             :width="2"
@@ -13,7 +13,7 @@
             size="50"
         >
           {{ `% ${uploadPercentage}` }}
-        </r-progress-circular>
+        </r-progress-circle>
         <r-btn @click.prevent="$helper.copy(fileLink)" class="image-copy" icon>
           <r-icon v-html="$r.icons.copy"></r-icon>
         </r-btn>

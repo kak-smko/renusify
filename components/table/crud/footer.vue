@@ -3,15 +3,15 @@
         <r-container class="container-fluid">
             <r-row class="v-baseline h-end">
                 <r-col class="col-auto">
-                    <r-select class="per-page" open-to-top :items="[
+                    <r-select-input class="per-page" open-to-top :items="[
                       {name: '10', value: 10},
                       {name: '20', value: 20},
                       {name: '50', value: 50},
                       {name: '100', value: 100},
                       {name: '200', value: 200},
               ]"
-                              @update:modelValue="perPageE"
-                              :modelValue="perPage"></r-select>
+                                    @update:modelValue="perPageE"
+                                    :modelValue="perPage"></r-select-input>
                 </r-col>
                 <r-col class="col-auto ms-1">{{totalSetup}}</r-col>
                 <r-col class="col-auto">
