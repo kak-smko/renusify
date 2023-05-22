@@ -125,7 +125,7 @@
                             </r-btn>
                           </r-col>
                         </r-row>
-                      <r-row class="v-baseline" v-else-if="['date-picker','time-ago'].includes(item.option.type)">
+                      <r-row class="v-baseline" v-else-if="['date-input','time-ago'].includes(item.option.type)">
                         <r-col class="col-5 md-3" :a="item.advance.t='date'">
                           <r-select-input v-model="item.advance.action"
                                           :items="[
@@ -214,7 +214,7 @@
             header() {
                 let res = []
                 this.headerTable.forEach((item) => {
-                  if (['text-input', 'text-area', 'number', 'switch', 'select', 'date-picker', 'time-ago'].includes(item.option.type)) {
+                  if (['text-input', 'text-area', 'number', 'switch', 'select', 'date-input', 'time-ago'].includes(item.option.type)) {
                     res.push(item)
                   }
                 })

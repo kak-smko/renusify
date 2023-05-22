@@ -2,6 +2,7 @@
   <r-select-input
       :label="$t('country','renusify')"
       v-model="country"
+      v-if="!defaultCountry"
       @update:model-value="emit(true,true)"
       value="id"
       :searchLink="`https://codenus.com/api/apps/address?lang=${$r.lang}`"
@@ -56,11 +57,12 @@ export default {
     hideZipCode: Boolean,
     hideStreet: Boolean,
     tile: Boolean,
+    defaultCountry: Object,
     modelValue: Object
   },
   data() {
     return {
-      country: this.modelValue ? this.modelValue.country : null,
+      country: this.modelValue ? this.modelValue.country : this.defaultCountry,
       state: this.modelValue ? this.modelValue.state : null,
       city: this.modelValue ? this.modelValue.city : null,
       zip_code: this.modelValue ? this.modelValue.zip_code : null,

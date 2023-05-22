@@ -1,15 +1,16 @@
 <template>
-    <r-input :error="error?true:false" :rules="required?['required']:[]" :msg="error?error:undefined" :modelValue="lazyVal" :active="active" class="ltr">
-        <input
-                v-model="lazyVal"
-                @complete="onComplete"
-                @accept="onAccept"
-                @backspace="onBackspace"
-                autocomplete="no"
-                @paste.prevent="onPaste"
-                @focusin="active=true"
-                @focusout="active=false"
-                v-mask="mask"
+    <r-input :error="error?true:false" ltr :rules="required?['required']:[]" :msg="error?error:undefined"
+             :modelValue="lazyVal" :active="active">
+      <input
+          v-model="lazyVal"
+          @complete="onComplete"
+          @accept="onAccept"
+          @backspace="onBackspace"
+          autocomplete="no"
+          @paste.prevent="onPaste"
+          @focusin="active=true"
+          @focusout="active=false"
+          v-mask="mask"
         />
 
     </r-input>

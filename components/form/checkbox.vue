@@ -18,7 +18,7 @@
             </span>
         <span class="ms-2 color-primary-text" @click="emit">
                 <span class="color-error-text" v-if="isRequired">*</span>
-                {{ label }}
+          <slot name="label">{{ label }}</slot>
             </span>
       </div>
     </template>

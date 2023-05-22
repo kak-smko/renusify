@@ -102,24 +102,25 @@
                             <r-icon v-html="props.opened!==props.key?$r.icons.plus:$r.icons.minus"></r-icon>
                         </r-btn>
                         <slot name="cell" :value="value" :item="props.item" :editItem="editItem">
-                            <div v-if="value['option']['type']==='date-picker' && props.item[value['value']]!==undefined">
-                                {{$d(new Date(props.item[value['value']]),value['option']['format']||'short')}}
-                            </div>
-                            <div v-else-if="value['option']['type']==='time-ago' && props.item[value['value']]!==undefined">
-                                <r-time-ago :time="props.item[value['value']]"></r-time-ago>
-                            </div>
-                            <div v-else-if="value['option']['type']==='switch'">
-                                <r-switch
-                                        :readonly="value['option']['formInput']===false"
-                                        :modelValue="props.item[value['value']]"
-                                        @update:modelValue="value['option']['formInput']!==false?editItem(props.item,true,value['value']):''"
-                                        class="mt-0"
-                                ></r-switch>
-                            </div>
-                            <div v-else-if="value['option']['type'] === 'number'">
-                                {{ $n(props.item[value["value"]]) }}
-                            </div>
-                            <div v-else-if="value['option']['type']!=='action'">
+                          <div v-if="value['option']['type']==='date-input' && props.item[value['value']]!==undefined">
+                            {{ $d(new Date(props.item[value['value']]), value['option']['format'] || 'short') }}
+                          </div>
+                          <div
+                              v-else-if="value['option']['type']==='time-ago' && props.item[value['value']]!==undefined">
+                            <r-time-ago :time="props.item[value['value']]"></r-time-ago>
+                          </div>
+                          <div v-else-if="value['option']['type']==='switch-input'">
+                            <r-switch-input
+                                :readonly="value['option']['formInput']===false"
+                                :modelValue="props.item[value['value']]"
+                                @update:modelValue="value['option']['formInput']!==false?editItem(props.item,true,value['value']):''"
+                                class="mt-0"
+                            ></r-switch-input>
+                          </div>
+                          <div v-else-if="value['option']['type'] === 'number-input'">
+                            {{ $n(props.item[value["value"]]) }}
+                          </div>
+                          <div v-else-if="value['option']['type']!=='action'">
                                 {{value['value'] in cast?
                                 $helper.ifHas(props.item,'',value['value'],cast[value['value']])
                                 :props.item[value['value']]}}

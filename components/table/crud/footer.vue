@@ -10,6 +10,7 @@
                       {name: '100', value: 100},
                       {name: '200', value: 200},
               ]"
+                                    disable-search
                                     @update:modelValue="perPageE"
                                     :modelValue="perPage"></r-select-input>
                 </r-col>
@@ -22,7 +23,7 @@
                             <r-icon v-html="this.$r.icons.chevron_left"></r-icon>
 
                         </r-btn>
-                        <input type="text" :value="page" @input="pageN" class="input-page text-center">
+                      <input name="input-page" type="text" :value="page" @input="pageN" class="input-page text-center">
                         <r-btn :disabled="endPage" @click.prevent="pageBtn('next')" class="btn-shaped"
                                icon
                                text>

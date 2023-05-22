@@ -5,17 +5,17 @@
         />
     </r-input>
     <r-modal :model-value="show" @update:model-value="close()" :closebtn="false" closable class="text-center">
-        <div v-if="!showTime" :class="`${$r.prefix}date-picker`">
-            <div class="sheet">
-                <r-container>
-                    <r-row>
-                      <r-col class="col-auto">
-                        <r-btn v-if="tab!=='month'" icon
-                               @click.prevent="tab==='day'?incrementMonth(-1):incrementYear(-12)">
-                          <r-icon v-html="$r.icons.arrow_left"></r-icon>
-                        </r-btn>
-                      </r-col>
-                      <r-col class="text-center">
+        <div v-if="!showTime" :class="`${$r.prefix}date-input`">
+          <div class="sheet">
+            <r-container>
+              <r-row>
+                <r-col class="col-auto">
+                  <r-btn v-if="tab!=='month'" icon
+                         @click.prevent="tab==='day'?incrementMonth(-1):incrementYear(-12)">
+                    <r-icon v-html="$r.icons.arrow_left"></r-icon>
+                  </r-btn>
+                </r-col>
+                <r-col class="text-center">
                         <r-btn class="me-2" text @click.prevent="tab==='month'?tab='day':tab='month'">
                           <r-icon v-html="tab==='month'?$r.icons.chevron_up:$r.icons.chevron_down"></r-icon>
                           {{
@@ -370,17 +370,17 @@ export default {
 <style lang="scss">
     @import "../../../style/include";
 
-    .#{$prefix}date-picker {
-        position: relative;
-        display: inline-block;
-        font-size: 10px;
-        color: #303030;
+    .#{$prefix}date-input {
+      position: relative;
+      display: inline-block;
+      font-size: 10px;
+      color: #303030;
 
-            .cell {
-                &.today {
-                  color: var(--color-one);
+      .cell {
+        &.today {
+          color: var(--color-one);
 
-                  .cellContent {
+          .cellContent {
                     border: solid 1px var(--color-one);
                   }
                 }

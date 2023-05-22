@@ -6,10 +6,10 @@
       <r-form ref="form" v-model="valid" @submit.prevent="save">
         <r-row>
           <template :key="key" v-for="(item,key) in options">
-            <r-col class="col-12" v-if="item['formInput']!==false">
+            <r-col class="col-12" v-if="item['formInput']!==false&&iff(options[key])">
               <component
                   :is="'r-'+item['type']"
-                  :label="$t(key,'renusify')"
+                  :label="$t(key)"
                   v-model="editedItem[key]"
                   v-bind="getAttr(options[key])"
               ></component>
@@ -96,11 +96,64 @@ export default {
     }
   },
   methods: {
+    iff(data) {
+      const that = this
+
+      function get(item, key) {
+        if (key.toString().startsWith('$')) {
+          return that.$helper.ifHas(item, null, ...key.substring(1).split('.'))
+        }
+        return key
+      }
+
+      if ('$if' in data) {
+        for (let i = 0; i < data['$if'].length; i++) {
+          const item = data['$if'][i]
+          let can = true
+          const one = get(this.editedItem, item[0])
+          const op = item[1]
+          const two = get(this.editedItem, item[2])
+          if (op === '===' || op === '==') {
+            can = one === two
+          } else if (op === '>') {
+            can = one > two
+          } else if (op === '>=') {
+            can = one >= two
+          } else if (op === '<') {
+            can = one < two
+          } else if (op === '<=') {
+            can = one <= two
+          } else if (op === '!=') {
+            can = one !== two
+          } else if (op === 'in') {
+            if (two && typeof two === 'object') {
+              can = two.includes(one)
+            } else {
+              can = false
+            }
+          } else {
+            can = false
+            console.error(`operator '${op}' is not defined.(form creator)`)
+          }
+          if (can === false) {
+            return false
+          }
+        }
+      }
+      return true
+    },
     getAttr(data) {
       let res = {}
       for (let i in data) {
-        if (this.$helper.hasKey(data, i) && !['formInput', 'sortable', 'type', 'tableShow', 'priority'].includes(i)) {
-          res[i] = data[i]
+        if (this.$helper.hasKey(data, i) && !['formInput', 'sortable', 'type', 'tableShow', 'priority', '$if'].includes(i)) {
+          if (i === '$bind') {
+            data[i].forEach((item) => {
+              res[item[0]] = this.editedItem[item[1]]
+            })
+
+          } else {
+            res[i] = data[i]
+          }
         }
       }
       return res

@@ -6,7 +6,10 @@
              :modelValue="$helper.ifHas(chips,null,0,value)"
              @click.prevent="handleClick()">
       <div class="select-wrap v-center"
-           :class="{'flex-nowrap':!multiple}">
+           :class="{
+        'h-center':disableSearch,
+        'flex-nowrap':!multiple
+      }">
         <r-chip
             class="my-0 ms-0"
             :close="multiple&&!textChip"
@@ -20,6 +23,7 @@
         </r-chip>
         <span>
         <input :type="type"
+               v-if="!disableSearch"
                @focusin="focusInput(true)"
                @focusout="focusInput(false)"
                @keydown.enter="add"
@@ -85,7 +89,7 @@ export default {
       type: String,
       default: 'value'
     },
-    combo: Boolean,
+    disableSearch: Boolean,
     readonly: Boolean,
     textChip: Boolean,
     items: Array,
@@ -217,6 +221,8 @@ export default {
     handleClick() {
       if (this.$refs.input) {
         this.$refs.input.focus()
+      } else {
+        this.focusInput(true)
       }
     },
     add() {
@@ -225,7 +231,7 @@ export default {
         if (!this.multiple) {
           this.chips = []
         }
-        if (!this.combo && !this.tags) {
+        if (!this.tags) {
           const exist = this.$helper.searchArray(this.genItems, this.text, val[this.text])
           if (exist !== false) {
             this.chips.push(val)
@@ -242,8 +248,7 @@ export default {
       this.chips = this.$helper.uniqArray(this.chips)
 
       let val = this.chips
-
-      if (this.tags) {
+      if (this.justValue) {
         val = []
         for (let i in this.chips) {
           if (this.$helper.hasKey(this.chips, i)) {
@@ -251,12 +256,9 @@ export default {
           }
         }
       }
-      if (!this.multiple && !this.tags) {
+      if (!this.multiple) {
         val = val[0]
         if (val) {
-          if (this.justValue) {
-            val = val[this.value]
-          }
           this.closeList()
         }
       }

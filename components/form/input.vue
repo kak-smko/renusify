@@ -3,7 +3,7 @@
       :class="{
         [`${$r.prefix}input-container`]:true,
         [c_color]:c_color&&!isDisabled,
-        'color-error-text':hasError&&genMessages.length>0,
+        'color-error-text':hasError&&validations.length>0,
         'hide-detail':c_hide,
         'input-focused':active,
         'input-disabled':isDisabled,
@@ -28,7 +28,7 @@
          :class="{
             'massage-active':genMessages.length>0,
         }">
-      <div :class="{'animation-shake-3':c_msgShake}">{{ genMessages[0] }}</div>
+      <div :class="{'animation-shake-3':c_msgShake}">{{ genMessages.join(',') }}</div>
 
     </div>
   </div>
@@ -113,10 +113,11 @@ export default {
       return this.errorBucket.length > 0
     },
     genMessages() {
+      let m = []
       if (this.msg) {
-        return [this.msg]
+        m = [this.msg]
       }
-      return this.hasMessages ? this.validations : []
+      return this.hasMessages ? this.validations : m
     },
     hasMessages() {
       return this.validationTarget.length > 0

@@ -6,11 +6,11 @@
         <slot :item="item" :index="i" :disableDel="disDel">
           <div class="d-flex flex-wrap pt-5">
             <template v-for="(v,k) in item" :key="i+'-'+k">
-              <r-text-input v-if="typeof v==='string'" class="flex-grow-0 me-1" :label="k"
+              <r-text-input v-if="typeof v==='string'" class="flex-grow-0 me-1" :label="t(k)"
                             v-model="item[k]"></r-text-input>
-              <r-number-input v-else-if="typeof v==='number'" class="flex-grow-0 me-1" :label="k"
+              <r-number-input v-else-if="typeof v==='number'" class="flex-grow-0 me-1" :label="t(k)"
                               v-model="item[k]"></r-number-input>
-              <r-switch-input v-else-if="typeof v==='boolean'" class="flex-grow-0 me-1" :label="k"
+              <r-switch-input v-else-if="typeof v==='boolean'" class="flex-grow-0 me-1" :label="t(k)"
                               v-model="item[k]"></r-switch-input>
             </template>
           </div>
@@ -48,6 +48,7 @@ export default {
     modelValue: Array,
     size: Number,
     disableAdd: Boolean,
+    translate: Boolean,
     template: Object
   },
   data() {
@@ -68,6 +69,12 @@ export default {
     }
   },
   methods: {
+    t(k) {
+      if (this.translate) {
+        return this.$t(k)
+      }
+      return k
+    },
     disDel(value) {
       this.disabledDel[value] = true
     },
