@@ -43,17 +43,18 @@
             link: String,
             searchLink: String,
             gen: String,
-            selected: String,
-            rotate: Boolean,
-            expand: {
-                type: Boolean,
-                default: false
-            },
-            childsName: {
-                type: String,
-                default: 'childs'
-            },
-            openAll:Boolean
+          selected: String,
+          rotate: Boolean,
+          expand: {
+            type: Boolean,
+            default: false
+          },
+          childsName: {
+            type: String,
+            default: 'childs'
+          },
+          openAll: Boolean,
+          headers: Object
         },
         data() {
             return {
@@ -91,7 +92,7 @@
                 }
             },
             get() {
-                this.$axios.get(this.link + this.nodeParent)
+              this.$axios.get(this.link + this.nodeParent, {headers: this.headers})
                     .then(({data}) => {
                         this.node = data
                         this.show = true

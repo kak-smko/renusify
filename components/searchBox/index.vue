@@ -66,7 +66,8 @@ export default {
     modelValue: [String, Number],
     autofocus: Boolean,
     noOverlay: Boolean,
-    openToTop: Boolean
+    openToTop: Boolean,
+    headers: Object
   },
 
   data() {
@@ -95,7 +96,8 @@ export default {
         this.$axios.get(this.url, {
           params: {
             [this.query]: this.lazyValue
-          }
+          },
+          headers: this.headers
         }).then(({data}) => {
           this.list = data
           this.loading = false

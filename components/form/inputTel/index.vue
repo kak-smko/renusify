@@ -20,17 +20,17 @@
         </r-list>
       </r-card>
     </r-modal>
-    <r-btn class="btn-country ltr mx-1"
-           :rounded="!tile" :disabled="!select||readonly" @click.stop="toggleDropdown" outlined>
+    <r-btn class="btn-country ltr ms-1"
+           :rounded="!c_tile" :disabled="!select||readonly" @click.stop="toggleDropdown" outlined>
       <div :class="activeCountry.iso2.toLowerCase()" class="iti-flag"></div>
       <span class="country-code pa-1"> +{{ activeCountry.dialCode }} </span>
       <span class="dropdown-arrow">{{ open ? "▲" : "▼" }}</span>
     </r-btn>
     <r-text-input class="input-phone" :label="label?label:$t('phone','renusify')"
                   @update:model-value="emit"
-                  :tile="tile"
+                  :tile="c_tile"
                   :readonly="readonly"
-                  :rules="required?['required']:[]"
+                  :rules="required?['required','number']:['number']"
                   v-model="tel.phone"
     >
     </r-text-input>
@@ -56,7 +56,7 @@ export default {
       type: String,
       default: ''
     },
-    tile: Boolean,
+    tile: {type: Boolean, default: undefined},
     required: Boolean,
     readonly: Boolean,
     select: {
@@ -88,6 +88,14 @@ export default {
       this.tel.phone = a[1]
       this.activeCountry.dialCode = this.tel.country_code
     }
+  },
+  computed: {
+    c_tile() {
+      if (this.tile === undefined && this.$r.inputs.tile) {
+        return this.$r.inputs.tile
+      }
+      return this.tile
+    },
   },
   methods: {
     initializeCountry() {
@@ -143,15 +151,16 @@ export default {
         return
       }
       this.tel.country_code = this.activeCountry.dialCode
-      if (this.tel.phone.startsWith('0')) {
-        setTimeout(() => {
+
+      setTimeout(() => {
+        this.tel.phone = this.$helper.replacer(this.tel.phone, ' ', '')
+        if (this.tel.phone.startsWith('0')) {
           this.tel.phone = this.tel.phone.substr(1, this.tel.phone.length)
           this.$emit('update:modelValue', this.tel.country_code + ' ' + this.tel.phone)
-        }, 1)
-      } else {
-        this.$emit('update:modelValue', this.tel.country_code + ' ' + this.tel.phone)
-
-      }
+        } else {
+          this.$emit('update:modelValue', this.tel.country_code + ' ' + this.tel.phone)
+        }
+      }, 10)
 
     },
     toggleDropdown() {

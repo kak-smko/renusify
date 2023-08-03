@@ -22,6 +22,7 @@ export default {
       default: null,
       type: String
     },
+    headers: Object
   },
   data() {
     return {
@@ -40,7 +41,7 @@ export default {
       if (this.item) {
         this.$axios.post(this.link, {
           'unique_name': this.item
-        })
+        }, {headers: this.headers})
             .then((res) => {
               if (res.data) {
                 this.color = 'color-success-text'

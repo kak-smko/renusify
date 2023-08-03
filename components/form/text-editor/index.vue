@@ -117,6 +117,7 @@
                 <r-file-input v-model="image"
                               :label="$t('image','renusify')"
                               :size="1"
+                              :headers="headers"
                               :upload-link="uploadLink"
                               accept="image/*"></r-file-input>
                 <r-text-input v-model="img_alt"
@@ -152,6 +153,7 @@
             <r-file-input v-model="video"
                           :label="$t('video','renusify')"
                           :size="1"
+                          :headers="headers"
                           :upload-link="uploadLink"
                           accept="video/mp4,video/webm"></r-file-input>
             <r-number-input v-model="img_width" :label="$t('width','renusify')"
@@ -187,15 +189,16 @@
         name: 'r-text-editor',
         inheritAttrs: false,
         props: {
-            uploadLink: {type: String, default: '/storage'},
-            modelValue: {
-                type: [Object, String], default: () => {
-                    return {
-                        text: '',
-                        files: []
-                    }
-                }
+          uploadLink: {type: String, default: '/storage'},
+          modelValue: {
+            type: [Object, String], default: () => {
+              return {
+                text: '',
+                files: []
+              }
             }
+          },
+          headers: Object
         },
         data() {
             return {
@@ -393,7 +396,8 @@
             deleteImage(img, i) {
                 this.$axios.delete(this.uploadLink,
                     {
-                        data: {link: img}
+                      data: {link: img},
+                      headers: this.headers
                     }
                 ).then(() => {
                     this.files.splice(i, 1)

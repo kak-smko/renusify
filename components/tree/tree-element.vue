@@ -4,6 +4,7 @@
       <r-col class="text-center">
         <div class="d-flex h-center mb-1 node-info">
           <component :is="componentName" :node="node[nodeKey]"
+                     @fire="$emit('fire',$event)"
                      @click.prevent="$emit('select',{key:nodeKey,item:node[nodeKey]})"
           ></component>
         </div>
@@ -32,6 +33,7 @@
                         :expand="expand"
                         :openAll="openAll"
                         :component-name="componentName"
+                        @fire="$emit('fire',$event)"
                         @select="$emit('select',$event)"
         >
         </r-tree-element>
@@ -60,7 +62,8 @@ export default {
       default: 'childs'
     },
     openAll: Boolean,
-    componentName: Object
+    componentName: Object,
+    headers: Object
   },
   data() {
     return {
@@ -132,7 +135,7 @@ export default {
       if (current) {
         if (this.link && this.size === 0) {
           this.loading = true
-          this.$axios.get(this.link + e)
+          this.$axios.get(this.link + e, {headers: this.headers})
               .then(({data}) => {
                 this.$emit('update:model-value', data)
                 this.open = !this.open

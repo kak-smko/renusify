@@ -1,7 +1,7 @@
 <template>
     <div class="infinite-page">
         <div class="infinite-page-container" v-scroll="onScroll">
-            <slot :items="datacollection"></slot>
+            <slot :items="datacollection" :total="total"></slot>
         </div>
         <r-progress-line color="color-two"
                          v-show="loading"
@@ -23,17 +23,18 @@ export default {
                 required: true,
                 type: String
             },
-            query: {
-                type: Object
-            },
-            noItemMsg: {
-                type: String,
-                default: 'ITEMS NOT FOUND'
-            },
-            distanceLoad: {
-                type: Number,
-                default: 150
-            }
+          query: {
+            type: Object
+          },
+          noItemMsg: {
+            type: String,
+            default: 'ITEMS NOT FOUND'
+          },
+          distanceLoad: {
+            type: Number,
+            default: 150
+          },
+          headers: Object
         },
         data() {
             return {
@@ -75,17 +76,17 @@ export default {
                 if (typeof this.query==='object') {
                     Object.assign(par,{},this.query)
                 }
-                this.$axios.get(this.url,{params:par}).then(
-                    (res) => {
-                        this.push(res.data.data)
-                        this.total = res.data.total
-                        if (this.total === 0) {
-                            this.noItem = true
-                        }
-                        this.loading = false
-                    }, () => {
-                        this.loading = false
-                    })
+              this.$axios.get(this.url, {params: par, headers: this.headers}).then(
+                  (res) => {
+                    this.push(res.data.data)
+                    this.total = res.data.total
+                    if (this.total === 0) {
+                      this.noItem = true
+                    }
+                    this.loading = false
+                  }, () => {
+                    this.loading = false
+                  })
             },
             push(data) {
                 const lng=data.length

@@ -7,6 +7,7 @@
       value="id"
       :searchLink="`https://codenus.com/api/apps/address?lang=${$r.lang}`"
       :rules="required?['required']:[]"
+      :headers="{'Authorization':''}"
       :tile="tile">
   </r-select-input>
   <r-select-input :label="$t('state','renusify')"
@@ -18,6 +19,7 @@
                   :searchLink="country&&`https://codenus.com/api/apps/address/${country['id']}?lang=${$r.lang}`"
                   :rules="required?['required']:[]"
                   value="id"
+                  :headers="{'Authorization':''}"
                   :tile="tile">
 
   </r-select-input>
@@ -30,6 +32,7 @@
                   :searchLink="state&&`https://codenus.com/api/apps/address/${country['id']}/${state['id']}?lang=${$r.lang}`"
                   :rules="required?['required']:[]"
                   value="id"
+                  :headers="{'Authorization':''}"
                   :tile="tile">
 
   </r-select-input>
@@ -56,7 +59,7 @@ export default {
     hideCity: Boolean,
     hideZipCode: Boolean,
     hideStreet: Boolean,
-    tile: Boolean,
+    tile: {type: Boolean, default: undefined},
     defaultCountry: Object,
     modelValue: Object
   },

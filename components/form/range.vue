@@ -94,7 +94,7 @@ export default {
     this.width = this.$refs.range.getBoundingClientRect().width - 10
     this.preValue = this.min
     if (this.isRange && !this.modelValue) {
-      this.$emit('update:modelValue', [this.min, this.max])
+      this.$emit('update:modelValue', [])
       const r = this.$r.rtl ? -1 : 1
       this.x2 = this.width * r
       this.prePosition2 = this.width * r
@@ -241,6 +241,18 @@ export default {
       height: 10px;
       border-radius: 50%;
       cursor: grabbing;
+
+      &:hover {
+        width: 16px;
+        height: 16px;
+        @include rtl() {
+          transform: translate(2px, -2px);
+        }
+        @include ltr() {
+          transform: translate(-2px, -2px);
+        }
+        border: 3px solid var(--color-two) !important;
+      }
     }
 
     .dot-tooltip {
@@ -292,6 +304,18 @@ export default {
       border-radius: 50%;
       margin-top: -3px;
       cursor: grabbing;
+
+      &:hover {
+        width: 16px;
+        height: 16px;
+        @include rtl() {
+          transform: translate(2px, -2px);
+        }
+        @include ltr {
+          transform: translate(-2px, -2px);
+        }
+        border: 3px solid var(--color-two) !important;
+      }
     }
 
     .dot-tooltip {

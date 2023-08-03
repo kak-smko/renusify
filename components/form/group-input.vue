@@ -1,43 +1,45 @@
 <template>
-  <div :class="`${$r.prefix}group-input`">
-    <label>{{ label }}</label>
-    <div class="group-holder" v-for="(item,i) in modelValue" :key="i">
-      <div class="group-slot">
-        <slot :item="item" :index="i" :disableDel="disDel">
-          <div class="d-flex flex-wrap pt-5">
-            <template v-for="(v,k) in item" :key="i+'-'+k">
-              <r-text-input v-if="typeof v==='string'" class="flex-grow-0 me-1" :label="t(k)"
-                            v-model="item[k]"></r-text-input>
-              <r-number-input v-else-if="typeof v==='number'" class="flex-grow-0 me-1" :label="t(k)"
-                              v-model="item[k]"></r-number-input>
-              <r-switch-input v-else-if="typeof v==='boolean'" class="flex-grow-0 me-1" :label="t(k)"
-                              v-model="item[k]"></r-switch-input>
+  <r-input :class="`${$r.prefix}group-input`"
+           :model-value="modelValue"
+           hide>
+    <div class="w-full">
+      <div class="group-holder" v-for="(item,i) in modelValue" :key="i">
+        <div class="group-slot">
+          <slot :item="item" :index="i" :disableDel="disDel">
+            <div class="d-flex flex-wrap pt-5">
+              <template v-for="(v,k) in item" :key="i+'-'+k">
+                <r-text-input v-if="typeof v==='string'" class="flex-grow-0 me-1" :label="t(k)"
+                              v-model="item[k]"></r-text-input>
+                <r-number-input v-else-if="typeof v==='number'" class="flex-grow-0 me-1" :label="t(k)"
+                                v-model="item[k]"></r-number-input>
+                <r-switch-input v-else-if="typeof v==='boolean'" class="flex-grow-0 me-1" :label="t(k)"
+                                v-model="item[k]"></r-switch-input>
             </template>
           </div>
         </slot>
       </div>
-      <div class="group-action">
-        <r-btn icon text>
-          <r-icon v-html="$r.icons.chevron_up" :class="{'icon-disabled':i===0}" @click.prevent="up(i)"></r-icon>
-        </r-btn>
-        <r-btn icon text>
-          <r-icon v-html="$r.icons.chevron_down" :class="{'icon-disabled':i===modelValue.length-1}"
-                  @click.prevent="down(i)"></r-icon>
-        </r-btn>
-        <r-btn v-if="!disableItems.includes(item[itemKey])" icon class="color-error-text" text @click.prevent="del(i)">
-          <r-icon v-html="$r.icons.delete"></r-icon>
-        </r-btn>
+        <div class="group-action">
+          <r-btn icon text>
+            <r-icon v-html="$r.icons.chevron_up" :class="{'icon-disabled':i===0}" @click.prevent="up(i)"></r-icon>
+          </r-btn>
+          <r-btn icon text>
+            <r-icon v-html="$r.icons.chevron_down" :class="{'icon-disabled':i===modelValue.length-1}"
+                    @click.prevent="down(i)"></r-icon>
+          </r-btn>
+          <r-btn v-if="!disableItems.includes(item[itemKey])" icon text @click.prevent="del(i)">
+            <r-icon v-html="$r.icons.delete" class="color-error-text"></r-icon>
+          </r-btn>
+        </div>
+      </div>
+      <div class="mt-5" :class="addBtnClass">
+        <transition name="scale">
+          <r-btn v-if="show_add" class="color-success" icon @click.prevent="add">
+            <r-icon v-html="$r.icons.plus" class="color-white-text"></r-icon>
+          </r-btn>
+        </transition>
       </div>
     </div>
-    <div class="text-center mt-5">
-      <transition name="scale">
-        <r-btn v-if="show_add" class="color-success" icon @click.prevent="add">
-          <r-icon v-html="$r.icons.plus"></r-icon>
-        </r-btn>
-      </transition>
-    </div>
-
-  </div>
+  </r-input>
 </template>
 <script>
 export default {
@@ -49,7 +51,8 @@ export default {
     size: Number,
     disableAdd: Boolean,
     translate: Boolean,
-    template: Object
+    template: Object,
+    addBtnClass: {'type': String, default: 'text-center'}
   },
   data() {
     return {

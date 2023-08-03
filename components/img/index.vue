@@ -14,12 +14,17 @@
         }"
     >{{ alt }}
     </div>
-    <img v-if="load" ref="img" :src="link" :alt="alt" draggable="false" :width="size.width" :height="size.height"/>
+    <img v-if="load &&!isSvg" ref="img" :src="link" :alt="alt" draggable="false" :width="size.width"
+         :height="size.height"/>
+    <svg-img v-else-if="load &&isSvg&&link" :link="link" :size="size">
+    </svg-img>
   </div>
 </template>
 <script>
+import SvgImg from "./svgImg";
 export default {
   name: 'r-img',
+  components: {SvgImg},
   props: {
     src: {
       type: String,
@@ -53,6 +58,8 @@ export default {
     titleVs: Boolean,
     titleVc: Boolean,
     titleVe: Boolean,
+    isSvg: Boolean,
+    svgCache: {type: Number, default: 86400},
     wPH: {
       type: Number,
       default: 1
@@ -85,7 +92,10 @@ export default {
       if (this.query) {
         res += this.query
       }
-      if ((this.autoSize && this.size.width > 0) || this.width) {
+      if (this.isSvg && this.svgCache) {
+        res += 'c=' + this.svgCache
+      }
+      if (!this.isSvg && ((this.autoSize && this.size.width > 0) || this.width)) {
         res += `&w=${this.size.width}&h=${this.size.height}`
       }
       return res

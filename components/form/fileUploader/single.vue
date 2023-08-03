@@ -14,8 +14,8 @@
         >
           {{ `% ${uploadPercentage}` }}
         </r-progress-circle>
-        <r-btn @click.prevent="$helper.copy(fileLink)" class="image-copy" icon>
-          <r-icon v-html="$r.icons.copy"></r-icon>
+        <r-btn :href="'/'+fileLink" class="image-copy" icon>
+          <r-icon v-html="$r.icons.eye"></r-icon>
         </r-btn>
         <img v-if="isImg()" :class="`image ${imageStatus} `" :src="getUrl(file)">
         <r-icon v-else
@@ -167,6 +167,7 @@ export default {
       height: 200px;
       z-index: -2;
       opacity: 0.8;
+      max-width: 100%;
     }
 
     .icon-100 {

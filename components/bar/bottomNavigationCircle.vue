@@ -7,9 +7,13 @@
         :key="i"
     >
       <div class="navigation-item-icon">
-        <r-icon v-html="item.icon"></r-icon>
+        <slot name="icon" :item="item">
+          <r-icon v-html="item.icon"></r-icon>
+        </slot>
       </div>
-      <div class="navigation-item-text">{{ item.name }}</div>
+      <div class="navigation-item-text">
+        <slot name="name" :item="item">{{ item.name }}</slot>
+      </div>
     </router-link>
   </nav>
 </template>
@@ -77,7 +81,7 @@ export default {
       bottom: 31px;
       background-color: currentColor;
       border-radius: 50%;
-      padding: 15px;
+      padding: 12px;
       width: 50px;
       height: 50px;
       border: 3px solid white;

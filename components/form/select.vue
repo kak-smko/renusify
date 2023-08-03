@@ -50,6 +50,8 @@
               :items="genItems"
               :multiple="multiple"
               :modelValue="chips"
+              :text="text"
+              :val="value"
               @update:modelValue="listInput"
               checked>
         <template v-slot="props">
@@ -99,7 +101,8 @@ export default {
     justValue: Boolean,
     openToTop: Boolean,
     translate: Boolean,
-    firstSelect: Boolean
+    firstSelect: Boolean,
+    headers: Object
   },
   data() {
     return {
@@ -170,7 +173,8 @@ export default {
       return this.$axios.get(this.searchLink, {
         params: {
           s: (this.inputVal === null ? '' : this.inputVal)
-        }
+        },
+        headers: this.headers
       }).then(({data}) => {
         this.apiData = data
         this.loading = false

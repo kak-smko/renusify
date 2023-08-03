@@ -1,4 +1,7 @@
 export default {
+    props: {
+        headers: Object
+    },
     data() {
         return {
             imageStatus: 'inProgress',
@@ -95,9 +98,23 @@ export default {
             this.imageStatus = 'inProgress'
             let fileData = new FormData()
             fileData.append('file', this.file)
-            this.$axios.post(this.uploadLink, fileData,
+            let headers = this.headers
+            if (!headers) {
+                headers = {}
+            }
+            headers['Content-Type'] = 'multipart/form-data'
+            let link = this.uploadLink
+            if (this.maxFileSize) {
+                if (link.indexOf('?') === -1) {
+                    link += '?'
+                } else {
+                    link += '&'
+                }
+                link += 'max_size=' + this.maxFileSize
+            }
+            this.$axios.post(link, fileData,
                 {
-                    headers: {'Content-Type': 'multipart/form-data'},
+                    headers: headers,
                     onUploadProgress: function (progressEvent) {
                         this.uploadPercentage = Math.min(parseInt(Math.floor((progressEvent.loaded * 100) / progressEvent.total)), 98)
                     }.bind(this),
@@ -117,7 +134,8 @@ export default {
         deleteImage() {
             this.$axios.delete(this.uploadLink,
                 {
-                    data: {link: this.fileLink}
+                    data: {link: this.fileLink},
+                    headers: this.headers
                 }
             )
         },

@@ -1,16 +1,18 @@
 <template>
     <div :class="classes">
-        <div :class="`list-item h-space-between ${$helper.searchArray(list,text,item_value[text])!==false?'list-item-active color-one-text':''}`"
-             :key="item_key"
-             @click.prevent="handle(item_value)"
-             v-for="(item_value,item_key) in genItems"
-             v-ripple
-        >
-            <slot :item="item_value">
-              <div class="list-title">{{ item_value[text] }}</div>
-              <transition name="fade">
-                <r-icon class="pe-1"
-                        exact
+      <div
+          class="list-item h-space-between"
+          :class="{'list-item-active color-one-text':$helper.searchArray(list,text,item_value[text])!==false}"
+          :key="item_key"
+          @click.prevent="handle(item_value)"
+          v-for="(item_value,item_key) in genItems"
+          v-ripple
+      >
+        <slot :item="item_value">
+          <div class="list-title">{{ item_value[text] }}</div>
+          <transition name="fade">
+            <r-icon class="pe-1"
+                    exact
                         v-html="$r.icons.check"
                         v-if="(checked&&$helper.searchArray(list,text,item_value[text])!==false)"
                 ></r-icon>
@@ -21,30 +23,29 @@
 </template>
 
 <script>
-    import './style.scss'
+import './style.scss'
+import Ripple from '../../directive/ripple/index'
 
     export default {
-        name: 'r-list',
-        props: {
-            disabled: Boolean,
-            multiple: Boolean,
-            min: {type: Number, default: 0},
-            text: {type: String, default: 'name'},
-            val: {type: String, default: 'value'},
-            flat: Boolean,
-            rounded: Boolean,
-            subheader: Boolean,
-            checked: Boolean,
-            filter: String,
-            items: Array,
-            modelValue: {type:[Array, Object]}
-        },
+      name: 'r-list',
+      directives: {ripple: Ripple},
+      props: {
+        disabled: Boolean,
+        multiple: Boolean,
+        min: {type: Number, default: 0},
+        text: {type: String, default: 'name'},
+        value: {type: String, default: 'value'},
+        flat: Boolean,
+        rounded: Boolean,
+        subheader: Boolean,
+        checked: Boolean,
+        filter: String,
+        items: Array,
+        modelValue: {type: [Array, Object]}
+      },
         computed: {
             list() {
                 if (this.modelValue) {
-                    if (!this.multiple&&this.modelValue[0]) {
-                        return [this.modelValue[0]]
-                    }
                     return this.modelValue
                 }
                 return []
@@ -96,6 +97,7 @@
                 return
               }
               let val = this.list
+
               const index = this.$helper.searchArray(val, this.text, item[this.text])
 
               if (index !== false) {

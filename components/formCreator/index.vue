@@ -64,7 +64,8 @@ export default {
         return {}
       },
       type: Object
-    }
+    },
+    headers: Object
   },
   data() {
     return {
@@ -180,7 +181,7 @@ export default {
         return
       }
       this.loading = true
-      this.$axios[this.method](this.url, this.editedItem)
+      this.$axios[this.method](this.url, this.editedItem, {headers: this.headers})
           .then(() => {
             this.close()
           }, (error) => {

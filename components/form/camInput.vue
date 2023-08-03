@@ -131,6 +131,7 @@ export default {
       default: 3,
       type: Number,
     },
+    headers: Object
   },
   data() {
     return {
@@ -240,9 +241,14 @@ export default {
       const blob = new Blob(this.recordedBlobs, {type: this.type});
       let fileData = new FormData();
       fileData.append("file", blob, "user.webm");
+      let headers = this.headers
+      if (!headers) {
+        headers = {}
+      }
+      headers['Content-Type'] = 'multipart/form-data'
       this.$axios
           .post(this.uploadLink, fileData, {
-            headers: {"Content-Type": "multipart/form-data"},
+            headers: headers,
             onUploadProgress: function (progressEvent) {
               this.uploadPercentage = Math.min(
                   parseInt(
@@ -329,7 +335,7 @@ export default {
       this.$axios
           .delete(this.uploadLink, {
             data: {link: link},
-          })
+          }, {headers: this.headers})
           .then(() => {
             this.files.splice(i, 1);
             this.emit();

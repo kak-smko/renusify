@@ -5,7 +5,7 @@
              :active="active"
              inputControlClass="v-center"
     >
-      <r-btn @click.prevent="minus" class="minus" icon :text="btnText">
+      <r-btn @click.prevent.stop="minus" class="minus" icon :text="btnText">
         <r-icon v-html="$r.icons.minus"></r-icon>
       </r-btn>
       <input @input="emit"
@@ -13,11 +13,11 @@
              @focusin="active=true"
              @focusout="active=false"
              ref="input"
-             type="number"
+             type="text"
              autocomplete="no"
-             v-model.number="number"
+             v-model="number"
       />
-      <r-btn @click.prevent="plus" class="plus" icon :text="btnText">
+      <r-btn @click.prevent.stop="plus" class="plus" icon :text="btnText">
         <r-icon v-html="$r.icons.plus"></r-icon>
       </r-btn>
     </r-input>
@@ -32,6 +32,7 @@ export default {
   props: {
     modelValue: Number,
     step: {type: Number, default: 1},
+    split: {type: Number, default: 0},
     min: {
       type: Number
     },
@@ -42,25 +43,38 @@ export default {
   },
   data() {
     return {
-      number: this.modelValue,
+      number: this.setSplit(this.modelValue),
       active: false
     }
   },
   watch: {
     'modelValue': function (newVal) {
       setTimeout(() => {
-        this.number = newVal
+        this.number = this.setSplit(newVal)
       })
     }
   },
   methods: {
+    setSplit(n) {
+      if (n && this.split > 0) {
+        const x = this.split
+        n = n.toString()
+        const step = n.indexOf('.')
+        const re = '\\d(?=(\\d{' + (x) + '})+' + (step > -1 ? '\\.' : '$') + ')';
+        return n.replace(new RegExp(re, 'g'), '$&,');
+      }
+      return n
+    },
+    removeSplit(n) {
+      return parseFloat(this.$helper.replacer(n.toString(), ',', ''))
+    },
     emit() {
       if (this.number === '' || this.number === null) {
         this.number = undefined
-        this.$emit('update:modelValue', d)
+        this.$emit('update:modelValue', this.number)
         return
       }
-      let d = this.number
+      let d = this.removeSplit(this.number)
       if (this.max !== undefined && d > this.max) {
         d = this.max
       }
@@ -68,13 +82,11 @@ export default {
         d = this.min
       }
       const n = ((1 / this.step) + '').length - 1
-      this.number = parseFloat(d.toFixed(n))
-      this.$emit('update:modelValue', this.number)
-
+      this.number = this.setSplit(d.toFixed(n))
+      this.$emit('update:modelValue', this.removeSplit(this.number))
     },
     plus() {
       let n = this.modelValue || 0
-
       this.number = n + this.step
       this.emit()
     },

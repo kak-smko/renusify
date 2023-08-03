@@ -50,6 +50,7 @@ export default {
                 default: 10000,
                 type: Number
             },
+          headers: Object
         },
         data() {
             return {
@@ -110,7 +111,7 @@ export default {
                 Object.assign(par, this.query)
 
               }
-              this.$axios.get(this.url, {params: par}).then(
+              this.$axios.get(this.url, {params: par, headers: this.headers}).then(
                   (res) => {
                     this.push(res.data.data, end)
                     this.total = res.data.total

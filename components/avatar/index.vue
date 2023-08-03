@@ -24,17 +24,18 @@
         props: {
             size: {
                 type: [Number, String],
-                default: 48
+              default: 48
             },
-            elevation: {
-                type: String,
-                default: 'none'
-            },
-            editable: {
-                type: String
-            },
-            flat: Boolean,
-            tile: Boolean
+          elevation: {
+            type: String,
+            default: 'none'
+          },
+          editable: {
+            type: String
+          },
+          flat: Boolean,
+          tile: Boolean,
+          headers: Object
         },
         data() {
             return {
@@ -58,19 +59,24 @@
                 this.$refs.file.click()
             },
             saveImage() {
-                this.loading = true
-                let fileData = new FormData()
-                fileData.append('file', this.files[0])
-                this.$axios.post(this.editable, fileData,
-                    {
-                        headers: {'Content-Type': 'multipart/form-data'},
-                        onUploadProgress: function (progressEvent) {
-                            this.uploadPercentage = Math.min(parseInt(Math.floor((progressEvent.loaded * 100) / progressEvent.total)), 98)
-                        }.bind(this),
-                        cancelToken: this.CancelTokenSource.token
-                    }
-                )
-                    .then(() => {
+              this.loading = true
+              let fileData = new FormData()
+              fileData.append('file', this.files[0])
+              let headers = this.headers
+              if (!headers) {
+                headers = {}
+              }
+              headers['Content-Type'] = 'multipart/form-data'
+              this.$axios.post(this.editable, fileData,
+                  {
+                    headers: headers,
+                    onUploadProgress: function (progressEvent) {
+                      this.uploadPercentage = Math.min(parseInt(Math.floor((progressEvent.loaded * 100) / progressEvent.total)), 98)
+                    }.bind(this),
+                    cancelToken: this.CancelTokenSource.token
+                  }
+              )
+                  .then(() => {
                         this.loading = false
                         this.k+=1
                     }, () => {

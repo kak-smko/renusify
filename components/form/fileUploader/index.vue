@@ -1,8 +1,9 @@
 <template>
   <r-input :class="[`${$r.prefix}file-uploader`]"
-           :model-value="filesLinks.length>0?filesLinks:null" hide
+           :model-value="filesLinks.length>0?filesLinks:null"
+           hide
            :label="labelFile"
-           :rules="$attrs.rules"
+           v-bind="attrs"
            labelControlClass="label-fixed">
     <r-row no-gutters>
       <template :key="meta?file['url']:file" v-for="(file,n) in filesLinks">
@@ -81,6 +82,15 @@ export default {
     }
   },
   computed: {
+    attrs() {
+      let l = {}
+      for (let k in this.$attrs) {
+        if (k !== 'label') {
+          l[k] = this.$attrs[k]
+        }
+      }
+      return l
+    },
     labelFile() {
       let l = this.$attrs.label || ''
       if (this.maxFileSize) {
