@@ -14,10 +14,8 @@ export default {
     page() {
       let temp = this.template || ''
       let scr = this.script || 'name:"test"'
-
       scr = this.$helper.replacer(scr, '&lt;', '<')
       scr = this.$helper.replacer(scr, '&gt;', '>')
-
       return defineAsyncComponent(() =>
           new Promise((resolve, reject) => {
             resolve({
