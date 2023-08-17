@@ -9,7 +9,7 @@
                     <r-spacer></r-spacer>
                     <div v-if="search" class="mt-n5">
                         <r-search-box closable autofocus
-                                      :label="search_label" :url="search">
+                                      :label="searchLabel" :url="search">
                           <template v-slot="{item}">
                             <slot name="search" :item="item"></slot>
                           </template>
@@ -23,9 +23,10 @@
     </div>
 </template>
 <script>
-    import {toolbar} from "./mixin";
-    import MenuMobile from "./menuMob";
-    export default {
+import {toolbar} from "./mixin";
+import MenuMobile from "./menuMob";
+
+export default {
         components: {MenuMobile},
         mixins:[toolbar]
     }

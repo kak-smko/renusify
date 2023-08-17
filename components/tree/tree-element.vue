@@ -65,6 +65,7 @@ export default {
     componentName: Object,
     headers: Object
   },
+  emits:['update:modelValue','fire','select','expand'],
   data() {
     return {
       back: false,
@@ -129,7 +130,7 @@ export default {
     updateNode(e, key) {
       let res = Object.assign({}, this.modelValue)
       res[this.nodeKey][this.childsName][key] = e[key]
-      this.$emit('update:model-value', this.modelValue)
+      this.$emit('update:modelValue', this.modelValue)
     },
     handleExpand(e, current) {
       if (current) {
@@ -137,7 +138,7 @@ export default {
           this.loading = true
           this.$axios.get(this.link + e, {headers: this.headers})
               .then(({data}) => {
-                this.$emit('update:model-value', data)
+                this.$emit('update:modelValue', data)
                 this.open = !this.open
                 setTimeout(() => {
                   this.$emit('expand', [this.open, this.$refs.tree.$el])

@@ -25,7 +25,7 @@ export default {
     modelValue: [String, Number],
     autofocus: Boolean,
   },
-
+emits:['update:modelValue'],
   data () {
     return {
       lazyValue: this.modelValue,

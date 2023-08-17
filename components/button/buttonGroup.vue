@@ -42,6 +42,7 @@ export default {
     exact: Boolean,
     modelValue: [Number,String]
   },
+  emits:['open','update:modelValue'],
   data () {
     return {
       open: false,

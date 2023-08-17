@@ -42,6 +42,7 @@
                             class="me-1"
                             :items="['text','number','boolean','json','array']"
                             just-value
+                            disableSearch
                             @update:model-value="info.value=null"
                             firstSelect></r-select-input>
           </div>
@@ -100,6 +101,7 @@ export default {
     disableEditKey: Boolean,
     disableDel: Boolean
   },
+  emits:['update:modelValue'],
   data() {
     return {
       show: false,

@@ -1,7 +1,6 @@
 <template>
   <r-card v-if="!autoSend" class="overflow-auto">
     <r-container>
-      <r-message :items="errors" type="error"></r-message>
       <h1 class="title">{{ title }}</h1>
       <r-form ref="form" v-model="valid" @submit.prevent="save">
         <r-row>
@@ -16,7 +15,8 @@
             </r-col>
           </template>
         </r-row>
-        <r-row class="h-end my-12">
+        <r-message :items="errors" type="error"></r-message>
+        <div class="text-end my-12">
           <r-btn @click.prevent="close"
                  class="color-error-text mx-1"
                  outlined
@@ -29,7 +29,7 @@
               rounded>
             {{ $t('send', 'renusify') }}
           </r-btn>
-        </r-row>
+        </div>
       </r-form>
     </r-container>
   </r-card>
@@ -67,6 +67,7 @@ export default {
     },
     headers: Object
   },
+  emits:['update:modelValue','ok'],
   data() {
     return {
       loading: false,
@@ -92,7 +93,7 @@ export default {
     editedItem: {
       deep: true,
       handler: function (n) {
-        this.$emit('update:model-value', n)
+        this.$emit('update:modelValue', n)
       }
     }
   },

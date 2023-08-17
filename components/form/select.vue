@@ -72,7 +72,6 @@
   </div>
 </template>
 <script>
-import './scss/select.scss'
 
 export default {
   name: 'r-select',
@@ -104,6 +103,7 @@ export default {
     firstSelect: Boolean,
     headers: Object
   },
+  emits:['update:modelValue','del'],
   data() {
     return {
       apiData: [],
@@ -225,6 +225,7 @@ export default {
     handleClick() {
       if (this.$refs.input) {
         this.$refs.input.focus()
+        this.$refs.input.scrollIntoView()
       } else {
         this.focusInput(true)
       }
@@ -270,7 +271,7 @@ export default {
         val = null
       }
 
-      this.$emit('update:model-value', val)
+      this.$emit('update:modelValue', val)
 
     },
     focusInput(val) {
@@ -306,3 +307,61 @@ export default {
 }
 
 </script>
+<style lang="scss">
+@import "../../style/include";
+$min-height:40px;
+.#{$prefix}select-container {
+  position: relative;
+  .input-control {
+    min-height: $min-height;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    display: flex;
+    flex: 1 1;
+    flex-wrap: wrap;
+    line-height: 24px;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .select-wrap {
+    max-width: 100%;
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+  }
+
+  input {
+    flex: 1 1;
+    margin-top: 0;
+    min-width: 140px;
+    position: relative;
+  }
+
+  .#{$prefix}chip {
+    flex: 0 1 auto;
+    margin: 4px;
+  }
+
+  .card-select {
+    max-height: 0;
+    overflow: auto;
+    opacity: .5;
+    transition: all .3s $primary-transition;
+    position: absolute;
+    left: 0;
+    z-index: map_get($z-index, 'default');
+  }
+  .to-top{
+    bottom: $min-height+2px;
+  }
+
+  .card-select-active {
+    transition: all 0.3s $primary-transition;
+    max-height: 300px;
+    opacity: 1;
+  }
+}
+
+</style>

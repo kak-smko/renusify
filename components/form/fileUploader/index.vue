@@ -64,6 +64,7 @@ export default {
     meta: Array,
     metaRequired: {type: Boolean, default: true}
   },
+  emits:['update:modelValue','add'],
   components: {
     single
   },

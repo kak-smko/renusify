@@ -75,6 +75,7 @@ export default {
       default: true
     }
   },
+  emits:['index'],
   data() {
     return {
       direction: 'slider-right',

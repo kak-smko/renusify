@@ -71,6 +71,7 @@
             darkMode: Boolean,
             editable: Boolean
         },
+      emits:['update:modelValue'],
         data() {
             return {
                 loading: false,

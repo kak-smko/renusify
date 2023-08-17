@@ -21,6 +21,7 @@ export default {
     locale: String,
     year: Number
   },
+  emits:['update:model-value'],
   data() {
     return {
       p: 0

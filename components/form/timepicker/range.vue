@@ -75,6 +75,7 @@ export default {
     noOverlay: Boolean,
     modelValue: Array
   },
+  emits:['update:modelValue'],
   data() {
     return {
       state: 'from',
@@ -151,7 +152,7 @@ export default {
 
     },
     emit() {
-      this.$emit("update:model-value", this.lazyValue);
+      this.$emit("update:modelValue", this.lazyValue);
     }
   }
 };

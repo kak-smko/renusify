@@ -53,6 +53,7 @@ export default {
     modelValue: Boolean,
     hard: Boolean
   },
+  emits:['accept','cancel'],
   data () {
     return {
       valid: false,

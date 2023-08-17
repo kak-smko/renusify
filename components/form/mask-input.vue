@@ -34,6 +34,7 @@
                 type: Boolean
             },
         },
+      emits:['update:modelValue','complete'],
         data() {
             return {
                 lazyVal: this.modelValue?this.build_mask(this.modelValue, this.mask):null,

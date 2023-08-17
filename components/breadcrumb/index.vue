@@ -34,6 +34,7 @@ export default {
       default: () => []
     }
   },
+  emits:['click'],
   computed: {
     classes(){
       let a={'mb-1':true}

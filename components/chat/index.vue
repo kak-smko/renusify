@@ -59,6 +59,7 @@ export default {
       default: '/storage/chat'
     },
   },
+  emits:['see','msg-submit'],
   data() {
     return {
       timeout_id: null

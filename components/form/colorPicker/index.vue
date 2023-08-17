@@ -25,6 +25,7 @@ export default {
     modelValue: String,
     format: {type: String, default: 'rgba'}
   },
+  emits:['update:model-value','close'],
   data() {
     return {
       open: false

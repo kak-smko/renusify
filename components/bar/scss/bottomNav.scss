@@ -14,7 +14,7 @@ $bottom-nav-btn-font-size: map-metro-get($headings, 'caption', 'size') !default;
   background-color: var(--color-sheet);
   color: var(--color-text-primary);
 
-  .#{$prefix}btn.router-link-exact-active {
+  .router-link-exact-active {
     color: var(--color-one) !important
   }
 

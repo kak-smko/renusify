@@ -56,6 +56,7 @@ export default {
     overlay: Boolean,
     items: Array
   },
+  emits:['update:modelValue'],
   data() {
     return {
       show: false,

@@ -60,6 +60,7 @@
             beforeClass: String,
             afterClass: String
         },
+      emits:['progress','has-downloaded','before-download'],
         data() {
             return {
                 show: true,

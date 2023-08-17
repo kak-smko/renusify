@@ -68,6 +68,7 @@ export default {
     noOverlay: Boolean,
     modelValue: String
   },
+  emits:['update:modelValue'],
   data() {
     return {
       active: false,
@@ -82,7 +83,7 @@ export default {
   },
   methods: {
     emit() {
-      this.$emit("update:model-value", this.lazyValue);
+      this.$emit("update:modelValue", this.lazyValue);
     }
   }
 };

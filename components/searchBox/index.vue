@@ -69,7 +69,7 @@ export default {
     openToTop: Boolean,
     headers: Object
   },
-
+emits:['update:modelValue','select'],
   data() {
     return {
       show: false,

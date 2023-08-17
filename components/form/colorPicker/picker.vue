@@ -72,6 +72,7 @@ export default {
       default: '#2F1DCC',
     }
   },
+  emits:['changeColor'],
   data() {
     return {
       r: 0,

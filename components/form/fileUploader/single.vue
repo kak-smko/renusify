@@ -70,6 +70,7 @@ export default {
     },
     metaRequired: Boolean
   },
+  emits:['file-link','select'],
   data() {
     return {
       showAdd: true,

@@ -391,8 +391,6 @@ export default {
 @import "../../style/include";
 
 .#{$prefix}code-editor {
-  direction: ltr;
-  text-align: left;
   position: relative;
   white-space: break-spaces;
   caret-color: white;

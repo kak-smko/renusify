@@ -133,6 +133,7 @@ export default {
     },
     headers: Object
   },
+  emits:['update:modelValue','error'],
   data() {
     return {
       started: false,
@@ -272,7 +273,7 @@ export default {
           );
     },
     emit() {
-      this.$emit("update:model-value", this.files);
+      this.$emit("update:modelValue", this.files);
     },
     run() {
       try {

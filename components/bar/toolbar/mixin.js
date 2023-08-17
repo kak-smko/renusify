@@ -10,9 +10,8 @@ export const toolbar= {
             logoW: {type: Number, default: 180},
             logoH: {type: Number, default: 60},
             search: String,
-            search_label: {type:String,default:'search'},
+            searchLabel: {type:String,default:'search'},
             fixed: Boolean,
-            modelValue: Boolean,
             flat: Boolean,
             sticky: Boolean,
             tile: {

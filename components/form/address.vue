@@ -63,6 +63,7 @@ export default {
     defaultCountry: Object,
     modelValue: Object
   },
+  emits:['update:modelValue'],
   data() {
     return {
       country: this.modelValue ? this.modelValue.country : this.defaultCountry,
@@ -105,7 +106,7 @@ export default {
         if (!this.hideZipCode) {
           r['zip_code'] = this.zip_code
         }
-        this.$emit('update:model-value', r)
+        this.$emit('update:modelValue', r)
       }, 10)
     }
   }

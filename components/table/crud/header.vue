@@ -30,12 +30,12 @@
                 </r-col>
                 <r-col v-if="!show" class="col-12">
                     <r-text-input :label="$t('search','renusify')"
-                                  @update:modelValue="$emit('update:model-value',$event)"
+                                  @update:modelValue="$emit('update:modelValue',$event)"
                                   :model-value="search"></r-text-input>
                 </r-col>
                 <r-col v-else class="col-12">
                     <r-container class="pa-0" full-width>
-                      <r-select-input :model-value="select" :items="header" text="text"
+                      <r-select-input :model-value="select" :items="header" text="text" disableSearch
                                       :label="$t('add','renusify')" @update:model-value="add"></r-select-input>
                       <r-divider class="my-3"></r-divider>
                       <template v-for="(item,i) in inputs" :key="i">
@@ -50,6 +50,7 @@
                                           {name:$t('advance_search_id','renusify'),value:'_id'}
                                           ]"
                                             justValue
+                                            disableSearch
                                             firstSelect
                                             :label="$t('advance_search_operator','renusify')"></r-select-input>
                                 </r-col>
@@ -74,6 +75,7 @@
                                       {name:$t('advance_search_lte','renusify'),value:'lte'}]"
                                               firstSelect
                                               justValue
+                                              disableSearch
                                               :label="$t('advance_search_operator','renusify')"></r-select-input>
                                 </r-col>
                             <r-col class="col-6 md-8">
@@ -93,6 +95,7 @@
                                           ]"
                                               justValue
                                               firstSelect
+                                              disableSearch
                                               :label="$t('advance_search_operator','renusify')"></r-select-input>
                                 </r-col>
                             <r-col class="col-6 md-8">
@@ -113,11 +116,12 @@
                                           ]"
                                               justValue
                                               firstSelect
+                                              disableSearch
                                               :label="$t('advance_search_operator','renusify')"></r-select-input>
                             </r-col>
                           <r-col class="col-6 md-8">
                             <r-select-input v-model="item.advance.search" :label="item.text" :items="item.option.items"
-                                            multiple tags></r-select-input>
+                                            disableSearch multiple tags></r-select-input>
                           </r-col>
                           <r-col class="col-1">
                             <r-btn class="color-error" icon @click.prevent="del(i)">
@@ -135,6 +139,7 @@
                                       {name:$t('advance_search_lte','renusify'),value:'lte'}
                                           ]"
                                           justValue
+                                          disableSearch
                                           firstSelect
                                           :label="$t('advance_search_operator','renusify')"></r-select-input>
                         </r-col>
@@ -174,6 +179,7 @@
             newItem: Function,
             search: String
         },
+      emits:['update:modelValue','copy','edit','delete','a-search'],
         data() {
             return {
                 show: false,
@@ -188,7 +194,7 @@
                 this.showConfirm=false
             },
             send() {
-              this.$emit('update:model-value', '')
+              this.$emit('update:modelValue', '')
               let r = []
               this.inputs.forEach((item) => {
                 r.push({'name': item.value, 'advance': item.advance})

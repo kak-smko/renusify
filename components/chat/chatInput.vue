@@ -62,6 +62,7 @@ export default {
     uploadLink: String,
     canFile: Boolean,
   },
+  emits:['update:model-value'],
   data() {
     return {
       text: '',

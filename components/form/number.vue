@@ -41,6 +41,7 @@ export default {
     },
     btnText: Boolean
   },
+  emits:['update:modelValue'],
   data() {
     return {
       number: this.setSplit(this.modelValue),

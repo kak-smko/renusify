@@ -54,6 +54,7 @@ export default {
     template: Object,
     addBtnClass: {'type': String, default: 'text-center'}
   },
+  emits:['update:modelValue','add','delete'],
   data() {
     return {
       disabledDel: {}
@@ -86,14 +87,14 @@ export default {
         let a = this.modelValue || []
         a.push(this.$helper.clearProxy(this.template))
         this.$emit('add', true)
-        this.$emit('update:model-value', a)
+        this.$emit('update:modelValue', a)
       }
     },
     del(i) {
       let a = this.modelValue || []
       a.splice(i, 1)
       this.$emit('delete', i)
-      this.$emit('update:model-value', a)
+      this.$emit('update:modelValue', a)
     },
     up(i) {
       if (i === 0) {
@@ -101,7 +102,7 @@ export default {
       }
       let a = this.modelValue || []
       a = this.array_move(a, i, i - 1)
-      this.$emit('update:model-value', a)
+      this.$emit('update:modelValue', a)
     },
     down(i) {
       if (i === this.modelValue.length - 1) {
@@ -109,7 +110,7 @@ export default {
       }
       let a = this.modelValue || []
       a = this.array_move(a, i, i + 1)
-      this.$emit('update:model-value', a)
+      this.$emit('update:modelValue', a)
     },
     array_move(arr, old_index, new_index) {
       if (new_index >= arr.length) {

@@ -31,7 +31,7 @@ export default {
       default: '7'
     }
   },
-
+emits:['update:modelValue'],
   data() {
     return {
       lazyValue: this.modelValue,

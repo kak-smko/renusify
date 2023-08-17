@@ -10,11 +10,14 @@
 </template>
 
 <script>
-    import Toast from './toast.vue'
+import Toast from './toast.vue'
 
-    const EVENTS = ['online', 'offline', 'load']
+const EVENTS = ['online', 'offline', 'load']
     export default {
         name: 'r-toast',
+      props:{
+        showOnlineStatus: {type:Boolean,default:true}
+      },
         components: {
             Toast
         },
@@ -44,7 +47,9 @@
                     }
                 }
             )
+          if(this.showOnlineStatus) {
             EVENTS.forEach(event => window.addEventListener(event, this.updateOnlineStatus))
+          }
         },
         beforeUnmount() {
             EVENTS.forEach(event => window.removeEventListener(event, this.updateOnlineStatus))

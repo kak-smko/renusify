@@ -24,6 +24,7 @@
                 default: .1
             }
         },
+      emits:['move','zoom'],
         data() {
             return {
                 started: Date.now(),

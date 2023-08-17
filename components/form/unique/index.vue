@@ -24,6 +24,7 @@ export default {
     },
     headers: Object
   },
+  emits:['update:modelValue'],
   data() {
     return {
       item: null,

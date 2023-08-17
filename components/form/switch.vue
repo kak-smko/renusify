@@ -20,7 +20,6 @@
     </r-input>
 </template>
 <script>
-    import './scss/switch.scss'
 
     export default {
         name: 'r-switch',
@@ -32,7 +31,7 @@
                 type: [Boolean, String]
             }
         },
-
+emits:['update:modelValue','change'],
         data() {
             return {
                 lazyValue: this.modelValue || false
@@ -62,3 +61,66 @@
     }
 
 </script>
+<style lang="scss">
+@import "renusify/style/_include.scss";
+
+.#{$prefix}switch {
+
+  .switch-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 30px;
+  }
+
+  .switch-holder {
+    width: 45px;
+    height: 13px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .switch-line {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background-color: var(--color-disabled);
+  }
+
+  .switch-dot {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #cdcbcb;
+    transition: .3s map_get($transition,'fast-in-fast-out');
+    @include rtl() {
+      right: 0;
+    }
+    @include ltr() {
+      left: 0;
+    }
+  }
+
+  .switch-active {
+    .switch-line {
+      background-color: currentColor;
+      opacity: 0.5;
+    }
+
+    .switch-dot {
+      background-color: currentColor;
+      @include rtl() {
+        right: 25px;
+      }
+      @include ltr() {
+        left: 25px;
+      }
+    }
+  }
+
+}
+</style>

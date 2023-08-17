@@ -89,6 +89,7 @@ export default {
     is24Hour: Boolean,
     modelValue: String
   },
+  emits:['update:modelValue','finish'],
   data() {
     return {
       show: this.is24Hour ? "hours24" : "hours12",
@@ -307,7 +308,7 @@ export default {
       if (!this.is24Hour) {
         n += " " + this.meridiem;
       }
-      this.$emit("update:model-value", n);
+      this.$emit("update:modelValue", n);
       if ((min !== null && !this.withSec) || sec !== null) {
         this.$emit("finish", true);
       }

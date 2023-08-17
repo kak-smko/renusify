@@ -17,7 +17,7 @@
                                 }">
                     <slot
                                     :parent-node="nodeParent"
-                                    @update:model-value="$emit('update:model-value',$event)"
+                                    @update:model-value="$emit('update:modelValue',$event)"
                                     :model-value="node"
                                     :link="link"
                                     @select-node="handleSelect"
@@ -56,6 +56,7 @@
           openAll: Boolean,
           headers: Object
         },
+      emits:['update:modelValue','select-node'],
         data() {
             return {
                 show: false,

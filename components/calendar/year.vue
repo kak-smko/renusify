@@ -21,6 +21,7 @@ export default {
     locale: String,
     month: Number
   },
+  emits:['update:model-value'],
   methods: {
     emit(n) {
       this.$emit('update:model-value', n)

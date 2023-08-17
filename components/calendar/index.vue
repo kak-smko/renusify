@@ -111,6 +111,7 @@ export default {
     year: Number,
     month: Number,
   },
+  emits:['change','select'],
   data() {
     return {
       tab: 'day',

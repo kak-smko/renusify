@@ -40,7 +40,7 @@ export default {
       }
     },
   },
-
+emits:['update:modelValue'],
   data() {
     return {
       lazyValue: this.modelValue

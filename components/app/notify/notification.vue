@@ -38,6 +38,7 @@ export default {
       default: 4000
     }
   },
+  emits:['hide'],
   data () {
     return {
       show: false
@@ -45,7 +46,7 @@ export default {
   },
   methods: {
     hideMe () {
-      this.$emit('hide')
+      this.$emit('hide',true)
     }
   },
   created () {

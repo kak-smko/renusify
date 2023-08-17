@@ -62,6 +62,7 @@ export default {
     }
 
   },
+  emits:['update:modelValue'],
   data() {
     return {
       state: null,

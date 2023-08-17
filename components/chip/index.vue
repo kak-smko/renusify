@@ -35,6 +35,7 @@ export default {
     outlined: Boolean,
     text: Boolean
   },
+  emits:['update:modelValue','close'],
   computed: {
     classes () {
       let c = this.$r.prefix + 'chip chip-size-' + this.size

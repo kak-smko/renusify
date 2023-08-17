@@ -73,7 +73,7 @@ $colorsList: (
 @each $color_name, $color_value in $colorMain {
   .color-#{$color_name} {
     @include background-color(var(--color-#{$color_name}), true);
-    @include text-color(var(--color-#{$color_name}-text));
+    @include text-color(var(--color-#{$color_name}-text),true);
   }
   .color-#{$color_name}-text {
     @include text-color(var(--color-#{$color_name}), true);

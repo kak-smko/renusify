@@ -30,6 +30,7 @@ export default {
       validator: value => value >= 0
     }
   },
+  emits:['start','end'],
   data() {
     return {
       time_id: null,

@@ -18,7 +18,7 @@
 export default {
   name: "buttonConfirm",
   props: {
-    hard: String,
+    hard: Boolean,
     title: String,
     body: String,
     cancelText: String,

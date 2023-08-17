@@ -18,6 +18,7 @@ export default {
   props: {
     modelValue: Boolean
   },
+  emits:['update:modelValue'],
   data: () => ({
     inputs: [],
     watchers: [],

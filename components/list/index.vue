@@ -26,7 +26,7 @@
 import './style.scss'
 import Ripple from '../../directive/ripple/index'
 
-    export default {
+export default {
       name: 'r-list',
       directives: {ripple: Ripple},
       props: {
@@ -43,6 +43,7 @@ import Ripple from '../../directive/ripple/index'
         items: Array,
         modelValue: {type: [Array, Object]}
       },
+      emits:['update:modelValue'],
         computed: {
             list() {
                 if (this.modelValue) {
@@ -112,7 +113,7 @@ import Ripple from '../../directive/ripple/index'
                     val.push(item)
                 }
 
-                this.$emit('update:model-value', this.multiple?val:val[0])
+                this.$emit('update:modelValue', this.multiple?val:val[0])
             }
         }
 

@@ -37,6 +37,8 @@
                 <r-select-input :label="$t('class','renusify')" :model-value="[...selectElm.classList]"
                                 multiple
                                 tags
+                                disableSearch
+                                justValue
                                 @update:model-value="addClass"></r-select-input>
             </r-col>
             <r-col class="col-12 ltr">
@@ -183,9 +185,9 @@
 </template>
 
 <script>
-    import './style.scss'
+import './style.scss'
 
-    export default {
+export default {
         name: 'r-text-editor',
         inheritAttrs: false,
         props: {
@@ -200,6 +202,7 @@
           },
           headers: Object
         },
+      emits:['update:modelValue'],
         data() {
             return {
               id: 'text_editor_' + this.$helper.uniqueId(12),

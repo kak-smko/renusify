@@ -6,7 +6,7 @@
                     <menu-laptop :menu="menu"></menu-laptop>
                     <r-spacer></r-spacer>
                     <div v-if="search" class="mt-n5">
-                        <r-search-box autofocus closable :label="search_label" :url="search">
+                        <r-search-box autofocus closable :label="searchLabel" :url="search">
                           <template v-slot="{item}">
                             <slot name="search" :item="item"></slot>
                           </template>
@@ -21,10 +21,10 @@
     </div>
 </template>
 <script>
-    import {toolbar} from "./mixin";
-    import MenuLaptop from "./menuLaptop";
+import {toolbar} from "./mixin";
+import MenuLaptop from "./menuLaptop";
 
-    export default {
+export default {
         components: {MenuLaptop},
         mixins: [toolbar]
     }

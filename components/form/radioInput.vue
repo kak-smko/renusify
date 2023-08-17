@@ -34,6 +34,7 @@ export default {
     translate: Boolean,
     modelValue: [String, Number, Object]
   },
+  emits:['update:modelValue'],
   computed: {
     current() {
       if (!this.modelValue) {

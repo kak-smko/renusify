@@ -3,7 +3,7 @@
         <r-container class="container-fluid">
             <r-row class="v-baseline h-end">
                 <r-col class="col-auto">
-                    <r-select-input class="per-page" open-to-top :items="[
+                    <r-select-input class="per-page" open-to-top disableSearch :items="[
                       {name: '10', value: 10},
                       {name: '20', value: 20},
                       {name: '50', value: 50},

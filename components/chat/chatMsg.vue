@@ -62,6 +62,7 @@ export default {
       }
     }
   },
+  emits:['see'],
   methods: {
     isImg(link) {
       const is = link.indexOf('storage/img/') !== -1

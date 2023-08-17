@@ -18,6 +18,7 @@
       <r-select-input :readonly="disableUnit" :items="units" v-model="unit"
                       @update:model-value="emit" hide justValue :translate="translate"
                       class="mt-0"
+                      disableSearch
                       firstSelect></r-select-input>
     </div>
   </r-input>
@@ -47,7 +48,7 @@ export default {
     autofocus: Boolean,
     translate: Boolean
   },
-
+emits:['update:modelValue'],
   data() {
     return {
       lazyValue: this.modelValue.value,

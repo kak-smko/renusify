@@ -24,6 +24,7 @@
 
 <script>
 import './style.scss'
+
 export default {
   name: 'r-toast',
   props: {
@@ -43,6 +44,7 @@ export default {
       default: 3000
     }
   },
+  emits:['update:modelValue'],
   data(){
     return{
       setTimeout_id:null

@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import './scss/rating.scss'
 
 export default {
   name: 'r-rating',
@@ -32,6 +31,7 @@ export default {
     modelValue: Number,
     readonly: Boolean
   },
+  emits:['update:modelValue'],
   created(){
     if(!this.$r.icons.star) {
       this.$r.icons.star = '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2L9.19 8.62L2 9.24l5.45 4.73L5.82 21L12 17.27Z"/></svg>'
@@ -44,3 +44,15 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+@import "../../style/include";
+
+
+.#{$prefix}rating {
+  max-width: 100%;
+  white-space: nowrap;
+  transition: 1s $primary-transition;
+  color: var(--color-text-disabled);
+}
+
+</style>

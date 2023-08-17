@@ -76,6 +76,7 @@ export default {
   }
 
   .router-link-exact-active {
+    color: var(--color-one);
     .navigation-item-icon {
       transition: 0.3s all ease-in-out;
       bottom: 31px;

@@ -34,7 +34,6 @@
   </div>
 </template>
 <script>
-import './scss/input.scss'
 
 export default {
   name: 'r-input',
@@ -67,6 +66,7 @@ export default {
     },
     validateOnBlur: {type: Boolean, default: undefined}
   },
+  emits:['pre-icon','icon','update:modelValue'],
   data() {
     return {
       uid: 'input_' + this.$helper.uniqueId(),
@@ -283,3 +283,255 @@ export default {
 }
 
 </script>
+<style lang="scss">
+@import '../../style/include';
+
+
+.#{$prefix}input-container {
+  position: relative;
+  align-items: flex-start;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  line-height: 24px;
+  font-size: 1rem;
+  letter-spacing: normal;
+  margin-top: 20px;
+
+  &.input-ltr {
+    input {
+      direction: ltr;
+    }
+  }
+
+    &:not(.input-disabled) {
+      input,
+      textarea, .label, .#{$prefix}icon, .#{$prefix}btn {
+        color: var(--color-text-primary)
+      }
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: var(--color-text-disabled)
+    }
+
+    &.input-disabled {
+      * {
+        color: var(--color-text-disabled)
+      }
+    }
+
+    .input-control {
+      border: solid 1px var(--color-border)
+    }
+
+  &.input-disabled {
+    pointer-events: none;
+  }
+
+  input {
+    max-height: 32px
+  }
+
+  input,
+  textarea {
+    flex: 1 1 auto;
+    line-height: 20px;
+    padding: 8px 0 8px;
+    max-width: 100%;
+    min-width: 0px;
+    width: 100%;
+    outline: none;
+    position: relative;
+
+    &[type=text ]::-ms-clear {
+      display: none
+    }
+
+    &:invalid {
+      box-shadow: none
+    }
+
+    &:focus,
+    &:active {
+      outline: none
+    }
+  }
+
+  .input-control {
+    display: flex;
+    flex-direction: column;
+    height: 40px;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+    .after-icon {
+      position: absolute;
+      cursor: pointer;
+      @include ltr() {
+        right: 5px;
+      }
+      @include rtl() {
+        left: 5px;
+      }
+
+    }
+    .pre-icon {
+      position: absolute;
+      cursor: pointer;
+      @include ltr() {
+        left: 5px;
+      }
+      @include rtl() {
+        right: 5px;
+      }
+
+    }
+
+    &:not(.input-tile) {
+      padding: 0 16px;
+      border-radius: 20px;
+    }
+
+    &.input-tile {
+      padding: 0 8px;
+      border-radius: 4px;
+    }
+  }
+
+  &.hide-detail {
+
+    > .input-control {
+      border: unset !important;
+      height: auto;
+      padding: 0;
+    }
+  }
+
+  .label {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 0;
+    top: 8px;
+    transition: $primary-transition;
+
+    @include ltr() {
+      left: 15px;
+      transform-origin: top left;
+    }
+
+    @include rtl() {
+      right: 15px;
+      transform-origin: top right;
+    }
+  }
+
+  :not(.input-tile) {
+    .label-active {
+      @include ltr() {
+        transform: translateY(-27px) translateX(5px) scale(.9);
+      }
+      @include rtl() {
+        transform: translateY(-27px) translateX(-5px) scale(.9);
+      }
+      transition: $primary-transition
+    }
+  }
+
+  .label-fixed {
+    transform: none !important;
+    top: -20px !important;
+    @include ltr() {
+      left: 0 !important;
+    }
+    @include rtl() {
+      right: 0 !important;
+    }
+  }
+
+  .input-tile {
+    .label-active {
+      @include ltr() {
+        transform: translateY(-27px) translateX(-8px) scale(.9);
+      }
+      @include rtl() {
+        transform: translateY(-27px) translateX(8px) scale(.9);
+      }
+      transition: $primary-transition
+    }
+  }
+
+  &.input-focused {
+    .input-control {
+      border: solid 1px currentColor;
+    }
+
+    .#{$prefix}icon, .#{$prefix}btn {
+      color: currentColor !important;
+    }
+
+    :not(.input-tile) {
+      .label {
+        color: currentColor !important;
+        @include ltr() {
+          transform: translateY(-27px) translateX(5px) scale(.9);
+        }
+        @include rtl() {
+          transform: translateY(-27px) translateX(-5px) scale(.9);
+        }
+        transition: $primary-transition
+      }
+    }
+
+    .input-tile {
+      .label {
+        color: currentColor !important;
+        @include ltr() {
+          transform: translateY(-27px) translateX(-8px) scale(.9);
+        }
+        @include rtl() {
+          transform: translateY(-27px) translateX(8px) scale(.9);
+        }
+        transition: $primary-transition
+      }
+    }
+  }
+
+  .massage {
+    display: none;
+    margin-left: 10px;
+
+    &-active {
+      display: block;
+    }
+  }
+
+
+  &.color-error-text {
+    .label {
+      color: currentColor;
+    }
+
+    .input-control {
+      border: solid 1px currentColor;
+    }
+  }
+
+  &.text-area {
+    .input-control {
+      height: auto;
+
+      &:not(.input-tile) {
+        border-radius: 15px;
+      }
+    }
+
+  }
+}
+
+
+</style>

@@ -199,6 +199,7 @@ export default {
     mcud: String,
     headers: Object
   },
+  emits:['actions'],
   data() {
     return {
       time_out_id: null,

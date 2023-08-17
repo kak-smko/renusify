@@ -16,6 +16,7 @@
         height: {type: String, default: "500px"},
         zoom: {type: Number, default: 13},
       },
+      emits:['update:modelValue'],
       data() {
         return {
           map: null,

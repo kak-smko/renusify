@@ -42,7 +42,7 @@ export default {
     autofocus: Boolean,
     headers: Object
   },
-
+emits:['update:modelValue','data'],
   data() {
     return {
       lazyValue: this.modelValue,

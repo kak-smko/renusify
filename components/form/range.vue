@@ -77,6 +77,7 @@ export default {
     isRange: Boolean
 
   },
+  emits:['update:modelValue'],
   data() {
     return {
       width: 0,
