@@ -84,7 +84,7 @@ export default {
     }
     if (typeof this.imgSrc === "string") {
       this.crop(this.imgSrc);
-    } else {
+    } else if (this.imgSrc) {
       const that = this;
       const reader = new FileReader();
       reader.onload = function (e) {
@@ -132,6 +132,8 @@ export default {
       this.cropped = this.getDataURL();
       if (this.getBlob) {
         this.$emit("cropped", this.get_blob());
+      } else {
+        this.$emit("cropped", this.cropped);
       }
 
       this.show = false;
@@ -222,8 +224,7 @@ export default {
       return canvas.toDataURL("image/png");
     },
     get_blob() {
-      let imageData = this.getDataURL();
-      let b64 = imageData.replace("data:image/png;base64,", "");
+      let b64 = this.cropped.replace("data:image/png;base64,", "");
       let binary = atob(b64);
       let array = [];
       for (let i = 0; i < binary.length; i++) {

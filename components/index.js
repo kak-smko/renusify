@@ -142,7 +142,7 @@ const list = {
     'r-progress-line': {'p': 'progress/line.vue', 'c': [], 'd': []},
     'r-search-box': {
         'p': 'searchBox/index.vue',
-        'c': ['r-progress-line', 'r-card', 'r-list', 'r-btn', 'r-icon', 'r-select'],
+        'c': ['r-progress-line', 'r-card', 'r-list', 'r-btn', 'r-icon', 'r-select-input'],
         'd': ['click-outside']
     },
     'r-skeleton': {'p': 'skeleton/index.vue', 'c': [], 'd': []},
