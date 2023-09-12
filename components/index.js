@@ -42,6 +42,7 @@ const list = {
     'r-divider': {'p': 'container/divider.vue', 'c': [], 'd': []},
     'r-content': {'p': 'content/index.vue', 'c': [], 'd': []},
     'r-count-down': {'p': 'countdown/index.vue', 'c': [], 'd': []},
+    'r-cropper': {'p': 'cropper/index.vue', 'c': [], 'd': ['touch']},
     'r-float': {'p': 'float/index.vue', 'c': [], 'd': []},
     'r-form': {'p': 'form/form.vue', 'c': [], 'd': []},
     'r-color-input': {
@@ -56,7 +57,7 @@ const list = {
     },
     'r-file-input': {
         'p': 'form/fileUploader/index.vue',
-        'c': ['r-input', 'r-row', 'r-btn', 'r-icon', 'r-progress-circle', 'r-text-input'],
+        'c': ['r-input', 'r-row', 'r-btn', 'r-icon', 'r-progress-circle', 'r-text-input', 'r-cropper'],
         'd': []
     },
     'r-tel-input': {
@@ -141,7 +142,7 @@ const list = {
     'r-progress-line': {'p': 'progress/line.vue', 'c': [], 'd': []},
     'r-search-box': {
         'p': 'searchBox/index.vue',
-        'c': ['r-input', 'r-progress-line', 'r-card', 'r-list', 'r-btn', 'r-icon'],
+        'c': ['r-progress-line', 'r-card', 'r-list', 'r-btn', 'r-icon', 'r-select'],
         'd': ['click-outside']
     },
     'r-skeleton': {'p': 'skeleton/index.vue', 'c': [], 'd': []},

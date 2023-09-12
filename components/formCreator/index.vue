@@ -1,11 +1,12 @@
 <template>
   <r-card v-if="!autoSend" class="overflow-auto">
     <r-container>
-      <h1 class="title">{{ title }}</h1>
+      <h1 v-if="title" class="title">{{ title }}</h1>
       <r-form ref="form" v-model="valid" @submit.prevent="save">
         <r-row>
           <template :key="key" v-for="(item,key) in options">
-            <r-col class="col-12" v-if="item['formInput']!==false&&iff(options[key])">
+            <r-col v-if="item['formInput']!==false&&iff(options[key])"
+                   :class="options[key]['r-col']?options[key]['r-col']:'col-12'">
               <component
                   :is="'r-'+item['type']"
                   :label="$t(key)"
@@ -147,7 +148,7 @@ export default {
     getAttr(data) {
       let res = {}
       for (let i in data) {
-        if (this.$helper.hasKey(data, i) && !['formInput', 'sortable', 'type', 'tableShow', 'priority', '$if'].includes(i)) {
+        if (this.$helper.hasKey(data, i) && !['formInput', 'sortable', 'type', 'tableShow', 'priority', '$if', 'r-col'].includes(i)) {
           if (i === '$bind') {
             data[i].forEach((item) => {
               res[item[0]] = this.editedItem[item[1]]

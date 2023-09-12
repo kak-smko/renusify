@@ -15,7 +15,11 @@ export default {
         addFile() {
             this.CancelTokenSource = this.$axios.CancelToken.source()
             this.file = this.$refs.file.files[0]
-            this.checkSave()
+            if (!this.wPH) {
+                this.checkSave()
+            } else {
+                this.showCrop = true
+            }
             this.showAdd = false
         },
         pickFile() {
@@ -97,7 +101,7 @@ export default {
         saveImage() {
             this.imageStatus = 'inProgress'
             let fileData = new FormData()
-            fileData.append('file', this.file)
+            fileData.append('file', this.file, this.file.name)
             let headers = this.headers
             if (!headers) {
                 headers = {}

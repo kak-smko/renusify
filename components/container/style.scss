@@ -1,7 +1,6 @@
 @import "renusify/style/_include.scss";
 
 .#{$prefix}container {
-  max-width: 100%;
   padding: $container-padding-x;
   margin-right: auto;
   margin-left: auto;
@@ -9,7 +8,8 @@
   @include make-container-max-widths;
 
   &.container-fluid {
-    max-width: 100%
+    max-width: 100%;
+    width: 100%;
   }
 
   &.fill {

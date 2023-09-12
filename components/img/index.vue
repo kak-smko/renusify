@@ -22,6 +22,7 @@
 </template>
 <script>
 import SvgImg from "./svgImg";
+
 export default {
   name: 'r-img',
   components: {SvgImg},
@@ -83,7 +84,7 @@ export default {
         return null
       }
       let res = this.src
-      if (!(res.startsWith('/') || res.startsWith('http://') || res.startsWith('https://'))) {
+      if (!(res.startsWith('/') || res.startsWith('http://') || res.startsWith('https://') || res.startsWith('data:image/'))) {
         res = '/' + res
       }
       if (this.src.search('[?]') === -1) {

@@ -14,7 +14,7 @@
         >
           {{ `% ${uploadPercentage}` }}
         </r-progress-circle>
-        <r-btn :href="'/'+fileLink" class="image-copy" icon>
+        <r-btn :href="'/'+fileLink" class="image-copy" icon target="_blank">
           <r-icon v-html="$r.icons.eye"></r-icon>
         </r-btn>
         <img v-if="isImg()" :class="`image ${imageStatus} `" :src="getUrl(file)">
@@ -40,6 +40,12 @@
            type="file"
            v-if="showFile"
     >
+    <r-modal v-model="showCrop" maxWidth="300px">
+      <r-card>
+        <r-cropper v-if="wPH&&file" :imgSrc="file" :selectImg="false" :w-p-h="wPH" get-blob showCropped
+                   @cropped="file=$event,checkSave()"></r-cropper>
+      </r-card>
+    </r-modal>
   </div>
 </template>
 
@@ -70,11 +76,12 @@ export default {
     },
     metaRequired: Boolean
   },
-  emits:['file-link','select'],
+  emits: ['file-link', 'select'],
   data() {
     return {
       showAdd: true,
       showFile: true,
+      showCrop: false,
       metaList: {}
     }
   },

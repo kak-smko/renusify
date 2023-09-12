@@ -1,75 +1,99 @@
 <template>
-  <div :class="$r.prefix+'search-container'">
-    <template v-if="!closable||show">
-      <div class="search-input" v-click-outside="handleclose">
-        <r-input :active="active"
-                 :icon="$r.icons.search"
-                 @icon="show=false"
-                 v-bind="$attrs"
-                 :class="{'z-important':open}"
-                 :modelValue="lazyValue"
-                 :input-control-class="[inputControlClass,{'search-active-border':open}]">
-          <input :autofocus="autofocus"
-                 type="text"
-                 @focusin="active=true"
-                 @focusout="active=false"
-                 @input="handle"
-                 :value="lazyValue"
-                 autocomplete="no"
-          />
-          <r-progress-line v-if="loading" color="color-two" class="w-full"></r-progress-line>
-        </r-input>
-        <r-card v-if="open&&(list.length>0||!loading)"
-                class="card-select  z-important"
-                :class="{'card-tile':$attrs.tile!==undefined&&$attrs.tile!==false,'to-top':openToTop}"
+  <div :class="$r.prefix + 'search-box'">
+    <template v-if="!closable || show">
+      <div
+          v-click-outside="handleclose"
+          :class="[inputClass, { 'z-important search-open': open }]"
+          class="search-input"
+      >
+        <span v-if="categories" class="w-30">
+          <r-select-input
+              v-model="category"
+              :items="categories"
+              class="mt-0"
+              disable-search
+              first-select
+              hide
+              justValue
+          ></r-select-input>
+        </span>
+        <span
+            :class="{ 'w-70': categories, 'w-full': !categories }"
+            class="d-flex v-center"
         >
-          <r-list v-if="list.length>0"
-                  :items="list"
-                  @update:modelValue="listInput">
-            <template v-slot="props">
-              <slot :item="props.item">
-                <div class="list-title">{{ props.item['name'] }}</div>
-              </slot>
-            </template>
-          </r-list>
-          <div v-else-if="!loading" class="py-5">
-            {{ notFoundMsg }}
-          </div>
-        </r-card>
+          <input
+              :placeholder="label"
+              :value="lazyValue"
+              autocomplete="no"
+              class="flex-grow-1"
+              type="text"
+              @focusin="active = true"
+              @focusout="active = false"
+              @input="handle"
+          />
+          <r-icon v-html="$r.icons.search"></r-icon>
+        </span>
       </div>
+      <r-card
+          v-if="open"
+          :class="{
+          'card-tile': $attrs.tile !== undefined && $attrs.tile !== false,
+          'to-top': openToTop,
+        }"
+          class="card-search z-important"
+      >
+        <r-progress-line
+            v-if="loading"
+            class="w-full"
+            color="color-two"
+        ></r-progress-line>
+        <r-list
+            v-if="list.length > 0"
+            :items="list"
+            @update:modelValue="listInput"
+        >
+          <template v-slot="props">
+            <slot :item="props.item">
+              <div class="list-title">{{ props.item["name"] }}</div>
+            </slot>
+          </template>
+        </r-list>
+        <div v-else-if="!loading" class="py-5">
+          {{ notFoundMsg }}
+        </div>
+      </r-card>
       <transition name="fade" v-if="!noOverlay">
         <div v-if="open" class="search-shadow"></div>
       </transition>
     </template>
-    <r-btn v-else icon class="mt-5" @click="show=!show">
+    <r-btn v-else class="mt-5" icon @click="show = !show">
       <r-icon v-html="$r.icons.search"></r-icon>
     </r-btn>
   </div>
 </template>
 <script>
-
 export default {
-  name: 'r-search-box',
-  inheritAttrs: false,
+  name: "r-search-box",
   props: {
     closable: Boolean,
     notFoundMsg: {
       type: String,
-      default: "Can't Find Anything :("
+      default: "Can't Find Anything :(",
     },
+    label: String,
     url: String,
+    inputClass: String,
     query: {
       type: String,
-      default: 'search'
+      default: "search",
     },
-    inputControlClass: [String, Object, Array],
     modelValue: [String, Number],
-    autofocus: Boolean,
     noOverlay: Boolean,
     openToTop: Boolean,
-    headers: Object
+    categories: Array,
+    headers: Object,
   },
-emits:['update:modelValue','select'],
+  emits: ["update:modelValue", "select"],
   data() {
     return {
       show: false,
@@ -78,57 +102,63 @@ emits:['update:modelValue','select'],
       active: false,
       open: false,
       idSet: null,
-      list: []
-    }
+      category: null,
+      list: [],
+    };
   },
   watch: {
     modelValue() {
-      this.lazyValue = this.modelValue
-    }
+      this.lazyValue = this.modelValue;
+    },
   },
   methods: {
     handleclose() {
-      this.open = false
+      this.open = false;
     },
     get() {
       if (this.url) {
-        this.loading = true
-        this.$axios.get(this.url, {
-          params: {
-            [this.query]: this.lazyValue
-          },
-          headers: this.headers
-        }).then(({data}) => {
-          this.list = data
-          this.loading = false
-          this.open = true
-        }, (e) => {
-          this.loading = false
-        })
+        this.loading = true;
+        this.$axios
+            .get(this.url, {
+              params: {
+                [this.query]: this.lazyValue,
+                category: this.category,
+              },
+              headers: this.headers,
+            })
+            .then(
+                ({data}) => {
+                  this.list = data;
+                  this.loading = false;
+                  this.open = true;
+                },
+                () => {
+                  this.loading = false;
+                }
+            );
       }
     },
     handle(e) {
-      this.lazyValue = e.target.value
-      this.open = true
-      this.loading = true
-      clearTimeout(this.idSet)
+      this.lazyValue = e.target.value;
+      this.open = true;
+      this.loading = true;
+      clearTimeout(this.idSet);
       this.idSet = setTimeout(() => {
-        this.$emit('update:modelValue', this.lazyValue)
-        this.get()
-      }, 1000)
+        this.$emit("update:modelValue", this.lazyValue);
+        this.get();
+      }, 1000);
     },
     listInput(e) {
-      this.$emit('select', e)
-      this.open = false
-    }
-  }
-}
-
+      this.$emit("select", e);
+      this.open = false;
+    },
+  },
+};
 </script>
 <style lang="scss">
-@import '../../style/include';
+@import "~renusify/style/include";
 
-.#{$prefix}search-container {
+.#{$prefix}search-box {
   position: relative;
 
   .to-top {
@@ -136,35 +166,75 @@ emits:['update:modelValue','select'],
   }
 
   .search-input {
+    display: flex;
+    align-items: center;
+    border: solid 1px var(--color-border);
+    color: var(--color-text-primary);
+    position: relative;
+    border-radius: map-get($borders, "md");
+
     .sheet {
       transition: 0.5s all ease;
     }
+  }
 
-    .card-select {
-      position: absolute;
-      left: 0;
-      width: 100%;
-      overflow-y: auto;
-      max-height: 300px;
+  .search-open {
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+  }
 
-      &:not(.card-tile) {
-        border-radius: 0 0 20px 20px;
-      }
-    }
+  input {
+    outline: none;
+    line-height: 20px;
+    padding: 12px;
+    max-width: 100%;
+    min-width: 0px;
+    caret-color: var(--color-text-primary);
+  }
 
-    .search-active-border:not(.input-tile) {
-      border-radius: 20px 20px 0 0;
-    }
+  .card-search {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow-y: auto;
+    max-height: 300px;
+    border-radius: 0 0 map-get($borders, "md") map-get($borders, "md");
   }
 
   .search-shadow {
     position: fixed;
     width: 100vw;
     height: 100vh;
-    z-index: map_get($z-index, 'medium');
+    z-index: map_get($z-index, "medium");
     top: 0;
     left: 0;
     backdrop-filter: blur(3px) grayscale(30%);
+  }
+
+  .#{$prefix}select-container {
+    .input-control {
+      border-radius: 0;
+      min-height: 30px;
+      @include ltr() {
+        border-right: 1px solid var(--color-border) !important;
+      }
+
+      @include rtl() {
+        border-left: 1px solid var(--color-border) !important;
+      }
+    }
+
+    .card-select {
+      top: -6px;
+      border-radius: map-get($borders, "md");
+      @include ltr() {
+        border-top-right-radius: 0 !important;
+      }
+
+      @include rtl() {
+        border-top-left-radius: 0 !important;
+      }
+    }
   }
 }
 </style>

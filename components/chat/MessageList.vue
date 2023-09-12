@@ -8,35 +8,35 @@
     </div>
     <transition name="scale" v-if="!hideBottomBtn">
         <r-btn v-if="!is_bottom" fab class="go-buttom" :label="newMsg.num" @click.prevent="goTo(newMsg.first_id)">
-            <r-icon v-html="$r.icons.chevron_left"></r-icon>
+            <r-icon v-html="$r.icons.chevron_down"></r-icon>
         </r-btn>
     </transition>
 </template>
 
 <script>
-    import RChatMsg from "./chatMsg";
+import RChatMsg from "./chatMsg";
 
-    export default {
-        components: {
-            RChatMsg
-        },
-        emits: ["see"],
-        props: {
-            newMsg: {
-                type: Object, default: () => {
-                    return {
-                        num: 0,
-                        first_id: null
-                    }
-                }
-            },
-            hideBottomBtn: Boolean,
-            messages: {type: Array,},
-            myself: {type: Object},
-            participants: {type: Object}
-        },
-        data() {
-            return {
+export default {
+  components: {
+    RChatMsg
+  },
+  emits: ["see"],
+  props: {
+    newMsg: {
+      type: Object, default: () => {
+        return {
+          num: 0,
+          first_id: null
+        }
+      }
+    },
+    hideBottomBtn: Boolean,
+    messages: {type: Array,},
+    myself: {type: Object},
+    participants: {type: Object}
+  },
+  data() {
+    return {
                 timeout_id: null,
                 timeout_scroll: null,
                 is_bottom: false
