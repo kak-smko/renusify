@@ -441,23 +441,23 @@
     @import "../../style/_include.scss";
 
     .#{$prefix}float {
+      width: 100%;
+      max-width: 100%;
+      max-height: 100vh;
+      height: 100%;
+      overflow: hidden;
+      outline: none;
+      border-radius: map-get($borders, 'sm');
+
+      &.float-bordered {
+        border: 1px solid #3a3e3a;
+      }
+
+      .float-container {
         width: 100%;
-        max-width: 100%;
-        max-height: 100vh;
         height: 100%;
-        overflow: hidden;
-        outline: none;
-        border-radius: 4px;
 
-        &.float-bordered {
-            border: 1px solid #3a3e3a;
-        }
-
-        .float-container {
-            width: 100%;
-            height: 100%;
-
-            &.in-zoom {
+        &.in-zoom {
                 transition: all 0.5s ease-in-out;
             }
         }

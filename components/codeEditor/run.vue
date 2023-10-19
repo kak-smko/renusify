@@ -8,22 +8,39 @@ export default {
   name: "r-code-editor-run",
   props: {
     template: String,
-    script: String
+    script: String,
+    style: String,
+    id: String,
   },
   computed: {
     page() {
-      let temp = this.template || ''
-      let scr = this.script || 'name:"test"'
-      scr = this.$helper.replacer(scr, '&lt;', '<')
-      scr = this.$helper.replacer(scr, '&gt;', '>')
-      return defineAsyncComponent(() =>
-          new Promise((resolve, reject) => {
-            resolve({
-              template: temp,
-              ...eval('Object({' + scr + '})')
-            })
-          }))
-    }
-  }
+      if (this.style) {
+        let children = document.querySelectorAll(`[f='${this.id}']`);
+        if (children) {
+          let childArray = Array.prototype.slice.call(children);
+
+          childArray.forEach(function (child) {
+            child.parentNode.removeChild(child);
+          });
+        }
+        let s = document.createElement("style");
+        s.innerText = this.style;
+        s.setAttribute("f", this.id);
+        s.setAttribute("type", "text/css");
+        window.document.head.append(s);
+      }
+      let temp = this.template || "";
+      let scr = this.script || 'name:"test"';
+      return defineAsyncComponent(
+          () =>
+              new Promise((resolve) => {
+                resolve({
+                  template: temp,
+                  ...eval("Object({" + scr + "})"),
+                });
+              })
+      );
+    },
+  },
 };
 </script>

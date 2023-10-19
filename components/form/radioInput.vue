@@ -86,7 +86,7 @@ export default {
     text-align: center;
     width: 25px;
     height: 25px;
-    border-radius: 4px;
+    border-radius: map-get($borders, 'sm');
     transition: .3s all ease-in-out;
   }
 

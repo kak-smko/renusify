@@ -148,7 +148,7 @@ export default {
 
   .input-tile {
     .#{$prefix}btn {
-      border-radius: 4px;
+      border-radius: map-get($borders, 'sm');
     }
   }
 }

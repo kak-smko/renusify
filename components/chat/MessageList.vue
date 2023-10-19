@@ -124,13 +124,13 @@ export default {
         }
 
         .msg-select {
-            animation: color .7s;
-            animation-iteration-count: infinite;
-            border-radius: 4px;
+          animation: color .7s;
+          animation-iteration-count: infinite;
+          border-radius: map-get($borders, 'sm');
 
-            .message-text {
-                opacity: .4;
-            }
+          .message-text {
+            opacity: .4;
+          }
         }
     }
 

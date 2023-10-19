@@ -7,7 +7,7 @@
   background: #181818;
   color: #FFF;
   position: fixed;
-  border-radius: 4px;
+  border-radius: map-get($borders, 'sm');
   font-size: 14px;
   font-family: inherit;
   transform: translateX(-50%);

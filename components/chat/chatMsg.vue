@@ -119,7 +119,7 @@ export default {
     background: #fff;
     color: black;
     padding: 5px 10px;
-    border-radius: 15px;
+    border-radius: map-get($borders, 'lg');
     max-width: 80%;
     overflow-wrap: break-word;
     white-space: pre-wrap;
@@ -146,7 +146,7 @@ export default {
     .message-text {
       margin-top: 0px;
       margin-bottom: 2px;
-      border-radius: 4px !important;
+      border-radius: map-get($borders, 'sm') !important;
     }
   }
 

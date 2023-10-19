@@ -1,7 +1,7 @@
 @import "renusify/style/_include.scss";
 
 $btn-active-opacity: 0.18 !default;
-$btn-border-radius: 4px !default;
+$btn-border-radius: map-get($borders, 'sm') !default;
 $btn-focus-opacity: 0.24 !default;
 $btn-font-size: .875rem !default;
 $btn-font-weight: 500 !default;
@@ -10,7 +10,7 @@ $btn-letter-spacing: .07em !default;
 $btn-icon-font-size: 18px !default;
 $btn-icon-padding: 12px !default;
 $btn-outline-border-width: thin !default;
-$btn-rounded-border-radius: 28px !default;
+$btn-rounded-border-radius: 2rem !default;
 $btn-sizes: (
         'x-small': 20,
         'small': 30,
@@ -73,7 +73,6 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
 
   &:not(.btn-text):not(.btn-outlined) {
     background-color: var(--color-sheet);
-    color: var(--color-text-primary);
   }
 
   &.btn-outlined.btn-text {

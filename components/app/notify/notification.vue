@@ -61,15 +61,17 @@ export default {
   }
 }
 </script>
-<style scoped>
-    .notify-msg {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        padding: 10px;
-        border-radius: 5px;
-        position: relative;
-        z-index: 9999;
-        margin:0.3rem 0;
-    }
+<style lang="scss">
+@import "renusify/style/_include.scss";
+
+.notify-msg {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px;
+  border-radius: map-get($borders, 'md');
+  position: relative;
+  z-index: 9999;
+  margin: 0.3rem 0;
+}
 </style>

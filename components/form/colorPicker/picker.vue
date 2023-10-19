@@ -166,7 +166,7 @@ export default {
 
 .color-box {
   padding: 10px;
-  border-radius: 4px;
+  border-radius: map-get($borders, 'sm');
   box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.16);
   z-index: 1;
 

@@ -3,7 +3,7 @@
 $item-height: 48px;
 
 .#{$prefix}list {
-  border-radius: 4px;
+  border-radius: map-get($borders, 'sm');
   display: block;
   padding: 8px 0;
   will-change: box-shadow;
@@ -11,9 +11,9 @@ $item-height: 48px;
   position: relative;
   max-width: 100%;
 
-    .list-item {
-      &.list-item-active {
-        background-color: var(--color-table-active)
+  .list-item {
+    &.list-item-active {
+      background-color: var(--color-table-active)
       }
 
       &:hover {
@@ -65,7 +65,7 @@ $item-height: 48px;
 
   &.list-rounded {
     .list-item {
-      border-radius: 30px;
+      border-radius: map-get($borders, 'xl');
     }
   }
 }

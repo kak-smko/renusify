@@ -299,7 +299,7 @@ export default {
   margin-top: 20px;
 
   &.input-ltr {
-    input {
+    input, textarea {
       direction: ltr;
     }
   }
@@ -394,12 +394,12 @@ export default {
 
     &:not(.input-tile) {
       padding: 0 16px;
-      border-radius: 20px;
+      border-radius: map-get($borders, 'xl');
     }
 
     &.input-tile {
       padding: 0 8px;
-      border-radius: 4px;
+      border-radius: map-get($borders, 'sm');
     }
   }
 
@@ -526,7 +526,7 @@ export default {
       height: auto;
 
       &:not(.input-tile) {
-        border-radius: 15px;
+        border-radius: map-get($borders, 'xl');
       }
     }
 

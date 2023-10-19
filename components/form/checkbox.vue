@@ -85,7 +85,7 @@ emits:['update:modelValue'],
 
   .checkbox-input {
     text-align: center;
-    border-radius: 4px;
+    border-radius: map-get($borders, 'sm');
     transition: .3s all ease-in-out;
 
     &.x-small {

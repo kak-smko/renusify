@@ -174,7 +174,7 @@ export default {
     max-height: 200px;
     overflow-y: auto;
     background-clip: padding-box;
-    border-radius: 8px;
+    border-radius: map-get($borders, 'sm');
 
     &-item {
       cursor: pointer;

@@ -29,12 +29,12 @@ body {
 
 ::-webkit-scrollbar-track:hover {
   border: 1px solid rgba(100, 100, 100, 0.4);
-  border-radius: 4px;
+  border-radius: map-get($borders, 'sm');
 }
 
 ::-webkit-scrollbar-thumb {
   background: rgba(100, 100, 100, 0.4);
-  border-radius: 4px;
+  border-radius: map-get($borders, 'sm');
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -265,7 +265,7 @@ $color-text: var(--color-two-text);
     font-size: 17px;
     line-height: 22px;
     border: 2px solid grey;
-    border-radius: 2px;
+    border-radius: map-get($borders, 'sm');
     background-color: #283739;
     color: white;
     padding: 0em 1em;

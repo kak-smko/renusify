@@ -261,20 +261,20 @@ winPrint.close();
 
     .#{$prefix}html2pdf {
         .preview {
-            position: fixed;
-            width: 65%;
-            min-width: 600px;
-            height: 80vh;
-            top: 100px;
-            z-index: 9999999;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px #00000048;
+          position: fixed;
+          width: 65%;
+          min-width: 600px;
+          height: 80vh;
+          top: 100px;
+          z-index: 9999999;
+          left: 50%;
+          transform: translateX(-50%);
+          border-radius: map-get($borders, 'sm');
+          box-shadow: 0px 0px 10px #00000048;
 
-            iframe {
-                border: 0;
-            }
+          iframe {
+            border: 0;
+          }
         }
     }
 </style>
