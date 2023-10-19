@@ -31,7 +31,7 @@
     <div v-show="show !== 'run'" ref="codeView" class="code-wrapper">
       <div v-show="templateShow">
         <span class="color-green">&lt;template&gt;</span>
-        <highlight-html v-model="template"></highlight-html>
+        <highlight-html v-model="temp"></highlight-html>
         <span class="color-green">&lt;/template&gt;</span>
         <br/>
       </div>
@@ -41,14 +41,14 @@
           <br/>
           export default {</span
         >
-        <highlight-script v-model="script"></highlight-script>
+        <highlight-script v-model="scr"></highlight-script>
         <span class="color-orange">}<br/>&lt;script&gt;</span>
       </div>
       <div v-show="styleShow">
         <span class="color-orange"
         >&lt;style lang<span class="color-green">="css"</span>&gt;</span
         >
-        <highlight-css v-model="style"></highlight-css>
+        <highlight-css v-model="sty"></highlight-css>
         <span class="color-orange">&lt;style&gt;</span>
       </div>
     </div>
@@ -58,8 +58,8 @@
 <script>
 import RCodeEditorRun from "./run";
 import highlightHtml from "./highlightHtml";
-import HighlightScript from "@/components/codeEditor/highlightJs";
-import HighlightCss from "@/components/codeEditor/highlightCss";
+import HighlightScript from "./highlightJs";
+import HighlightCss from "./highlightCss";
 
 export default {
   name: "r-code-editor",
@@ -69,9 +69,9 @@ export default {
     templateShow: {type: Boolean, default: true},
     scriptShow: {type: Boolean, default: true},
     styleShow: {type: Boolean, default: true},
-    Template: String,
-    Script: String,
-    Style: String,
+    template: String,
+    script: String,
+    style: String,
   },
   emits: ["update:template", "update:script", "update:style"],
   data() {
@@ -79,9 +79,9 @@ export default {
       show: "code",
       code: "",
       edited: false,
-      template: this.Template,
-      script: this.Script,
-      style: this.Style,
+      temp: this.template,
+      scr: this.script,
+      sty: this.style,
       id: this.$helper.uniqueId(),
     };
   },
@@ -99,14 +99,14 @@ export default {
     this.get_code("codeSlot");
   },
   watch: {
-    template: function () {
-      this.$emit("update:template", this.template);
+    temp: function () {
+      this.$emit("update:template", this.temp);
     },
-    script: function () {
-      this.$emit("update:script", this.script);
+    scr: function () {
+      this.$emit("update:script", this.scr);
     },
-    style: function () {
-      this.$emit("update:style", this.style);
+    sty: function () {
+      this.$emit("update:style", this.sty);
     },
   },
   methods: {
