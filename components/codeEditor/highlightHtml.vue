@@ -6,6 +6,7 @@
         autocomplete="off"
         autocorrect="off"
         spellcheck="false"
+        @keydown="setTab"
     ></textarea>
     <div class="text-preview" v-html="build"></div>
   </div>
@@ -86,6 +87,14 @@ export default {
     },
   },
   methods: {
+    setTab(event) {
+      if (event.keyCode === 9) {
+        event.preventDefault()
+        document.execCommand('insertText', false, ' '.repeat(4));
+        return false;
+      }
+      return true
+    },
     re_words(res) {
       res = this.$helper.replacer(
           res,

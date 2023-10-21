@@ -87,7 +87,7 @@ const list = {
     'r-checkbox-input': {'p': 'form/checkbox.vue', 'c': ['r-input', 'r-icon'], 'd': []},
     'r-group-input': {
         'p': 'form/group-input.vue',
-        'c': ['r-text-input', 'r-number-input', 'r-switch-input', 'r-btn', 'r-icon'],
+        'c': ['r-btn', 'r-icon'],
         'd': []
     },
     'r-input': {'p': 'form/input.vue', 'c': ['r-icon'], 'd': []},

@@ -37,9 +37,7 @@
       </div>
       <div v-show="scriptShow">
         <span class="color-orange"
-        >&lt;script&gt;
-          <br/>
-          export default {</span
+        >&lt;script&gt;<br/>export default {</span
         >
         <highlight-script v-model="scr"></highlight-script>
         <span class="color-orange">}<br/>&lt;script&gt;</span>
@@ -151,6 +149,7 @@ export default {
 
 <style lang="scss">
 @import "~renusify/style/include";
+
 .#{$prefix}code-editor {
   position: relative;
   white-space: break-spaces;
@@ -212,6 +211,7 @@ export default {
 
   .code-editor-highlight {
     position: relative;
+    margin: -12px 0;
 
     .text-preview {
       white-space: pre-wrap;
@@ -223,7 +223,6 @@ export default {
       line-height: 20px;
       margin: 0;
       border: 0;
-
       padding: 12px;
     }
 
@@ -253,6 +252,7 @@ export default {
       top: 0;
       left: 0;
       resize: none;
+      overflow: hidden;
     }
   }
 }

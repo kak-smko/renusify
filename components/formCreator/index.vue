@@ -8,7 +8,7 @@
             <r-col v-if="item['formInput']!==false&&iff(options[key])"
                    :class="options[key]['r-col']?options[key]['r-col']:'col-12'">
               <component
-                  :is="'r-'+item['type']"
+                  :is="buildName(item['type'])"
                   :label="$t(key)"
                   v-model="editedItem[key]"
                   v-bind="getAttr(options[key])"
@@ -99,6 +99,12 @@ export default {
     }
   },
   methods: {
+    buildName(name) {
+      if (name.startsWith('r-')) {
+        return name
+      }
+      return 'r-' + name
+    },
     iff(data) {
       const that = this
 

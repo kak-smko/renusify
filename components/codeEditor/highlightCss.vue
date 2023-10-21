@@ -6,6 +6,7 @@
         autocomplete="off"
         autocorrect="off"
         spellcheck="false"
+        @keydown="setTab"
     ></textarea>
     <div class="text-preview" v-html="build"></div>
   </div>
@@ -66,6 +67,14 @@ export default {
     },
   },
   methods: {
+    setTab(event) {
+      if (event.keyCode === 9) {
+        event.preventDefault()
+        document.execCommand('insertText', false, ' '.repeat(4));
+        return false;
+      }
+      return true
+    },
     re_class(res) {
       let regex = /\.-?[_a-zA-Z]+[_a-zA-Z0-9-]*\s*\{/g;
       let matched = res.matchAll(regex);

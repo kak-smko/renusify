@@ -3,19 +3,16 @@
            :model-value="modelValue"
            hide>
     <div class="w-full">
+      <span v-if="label" class="color-primary-text">{{ label }}</span>
       <div class="group-holder" v-for="(item,i) in modelValue" :key="i">
         <div class="group-slot">
           <slot :item="item" :index="i" :disableDel="disDel">
-            <div class="d-flex flex-wrap pt-5">
+            <div v-if="template" class="d-flex flex-wrap pt-5 v-start">
               <template v-for="(v,k) in item" :key="i+'-'+k">
-                <r-text-input v-if="typeof v==='string'" class="flex-grow-0 me-1" :label="t(k)"
-                              v-model="item[k]"></r-text-input>
-                <r-number-input v-else-if="typeof v==='number'" class="flex-grow-0 me-1" :label="t(k)"
-                                v-model="item[k]"></r-number-input>
-                <r-switch-input v-else-if="typeof v==='boolean'" class="flex-grow-0 me-1" :label="t(k)"
-                                v-model="item[k]"></r-switch-input>
-            </template>
-          </div>
+                <component :is="template[k]['type']" v-model="item[k]" :label="t(k)"
+                           class="flex-grow-0 me-1" v-bind="template[k]['props']"></component>
+              </template>
+            </div>
         </slot>
       </div>
         <div class="group-action">
@@ -85,7 +82,17 @@ export default {
     add() {
       if (this.show_add) {
         let a = this.modelValue || []
-        a.push(this.$helper.clearProxy(this.template))
+        let b = {}
+        if (this.template) {
+          for (let k in this.template) {
+            let d = 'default' in this.template[k] ? this.template[k]['default'] : null
+            if (typeof d === 'object') {
+              d = this.$helper.clearProxy(d)
+            }
+            b[k] = d
+          }
+        }
+        a.push(b)
         this.$emit('add', true)
         this.$emit('update:modelValue', a)
       }
