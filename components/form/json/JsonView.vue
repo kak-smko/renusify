@@ -66,23 +66,6 @@ export default {
       }
       this.$emit('update:model-value', o)
     },
-    emitkey(oldKey, newKey) {
-      clearTimeout(this.time_id)
-      let o = this.modelValue
-      let n = {};
-
-      Object.keys(o).forEach(key => {
-        if (key === oldKey) {
-          let newPair = {[newKey]: o[oldKey]};
-          n = {...n, ...newPair}
-        } else {
-          n = {...n, [key]: o[key]}
-        }
-      });
-      this.time_id = setTimeout(() => {
-        this.$emit('update:model-value', n)
-      }, 1000)
-    },
     emit(k, v) {
       let d = this.modelValue
       d[k] = v
@@ -92,7 +75,7 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../../style/include";
+@import "~renusify/style/include";
 
 .#{$prefix}json-view {
   @include rtl() {

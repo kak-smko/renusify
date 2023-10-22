@@ -58,7 +58,8 @@
               class="ltr w-full"
               spellcheck="false"
               @input="emitt"
-              @keydown="setTab">{{ JSON.stringify(modelValue, null, 4) }}</textarea>
+              :value="JSON.stringify(modelValue, null, 4)"
+              @keydown="setTab"></textarea>
   </div>
 </template>
 <script>
