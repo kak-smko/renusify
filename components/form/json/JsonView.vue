@@ -1,16 +1,12 @@
 <template>
-  <div :class="`${$r.prefix}json-view d-flex v-baseline flex-wrap`"
+  <div :class="`${$r.prefix}json-view d-flex v-end flex-wrap`"
        v-for="(value,key) in modelValue"
        :key="key">
-    <div class="key d-flex v-baseline me-1" :style="{'max-width': keyWidth}">
+    <div class="d-flex v-center me-1">
       <r-btn v-if="!disableDel" icon class="color-error-text" text @click="del(key)">
         <r-icon v-html="$r.icons.delete"></r-icon>
       </r-btn>
-      <template v-if="!is_array">
-        <r-text-input :tile="tile" :readonly="disableEditKey" :model-value="key"
-                      @update:model-value="emitkey(key,$event)"></r-text-input>
-        :
-      </template>
+      <div v-if="typeof value==='object'">{{ key }}</div>
     </div>
     <div v-if="typeof value==='object'" class="flex-grow-1 w-full ps-10">
       <r-json-input :tile="tile"
@@ -18,20 +14,21 @@
                     @update:model-value="emit(key,$event)"
                     :disableAdd="disableAdd||template!==undefined"
                     :disableDel="disableDel||template!==undefined"
-                    :disableEditKey="disableEditKey"
-                    :keyWidth="keyWidth"
-                    :valueWidth="valueWidth"
+                    disableEditKey
       ></r-json-input>
     </div>
-    <div v-else class="mb-1" :style="{'max-width': valueWidth}">
+    <div v-else class="mb-1 flex-grow-1">
       <r-text-input v-if="typeof value==='string'"
                     :tile="tile"
+                    :label="!is_array?key:''"
                     :model-value="value" @update:model-value="emit(key,$event)"></r-text-input>
       <r-number-input v-else-if="typeof value==='number'"
                       :tile="tile"
+                      :label="!is_array?key:''"
                       :model-value="value" @update:model-value="emit(key,$event)"></r-number-input>
       <r-switch-input v-else-if="typeof value==='boolean'"
                       :tile="tile"
+                      :label="!is_array?key:''"
                       :model-value="value" @update:model-value="emit(key,$event)"></r-switch-input>
 
     </div>
@@ -44,17 +41,9 @@ export default {
   props: {
     modelValue: Object,
     template: Object,
-    disableEditKey: Boolean,
     disableAdd: Boolean,
     disableDel: Boolean,
-    tile: Boolean,
-    keyWidth: {
-      type: String,
-      default: '140px'
-    }, valueWidth: {
-      type: String,
-      default: '300px'
-    }
+    tile: Boolean
   },
   emits: ['update:model-value'],
   data() {
@@ -105,4 +94,12 @@ export default {
 <style lang="scss">
 @import "../../../style/include";
 
+.#{$prefix}json-view {
+  @include rtl() {
+    border-right: 1px solid var(--color-border);
+  }
+  @include ltr() {
+    border-left: 1px solid var(--color-border);
+  }
+}
 </style>

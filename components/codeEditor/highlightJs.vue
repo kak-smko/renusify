@@ -90,6 +90,22 @@ export default {
         document.execCommand('insertText', false, ' '.repeat(4));
         return false;
       }
+      if (event.keyCode === 13) {
+        event.preventDefault()
+        let n = event.target.value.substr(0, event.target.selectionStart).split('\n')
+        n = n[n.length - 1].split('')
+        let w = ''
+        for (let i = 0; i < n.length; i++) {
+          if (n[i] === ' ') {
+            w += ' '
+          } else {
+            break
+          }
+        }
+
+        document.execCommand('insertText', false, '\n' + w);
+        return false;
+      }
       return true
     },
     strToObj(str) {
