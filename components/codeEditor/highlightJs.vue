@@ -85,6 +85,34 @@ export default {
   },
   methods: {
     setTab(event) {
+      if (event.key === "'" || event.key === '"' || event.key === '`') {
+        const end = event.target.selectionEnd;
+        event.preventDefault()
+        document.execCommand('insertText', false, event.key.repeat(2));
+        event.target.selectionEnd = end + 1;
+        return false;
+      }
+      if (event.key === "{") {
+        const end = event.target.selectionEnd;
+        event.preventDefault()
+        document.execCommand('insertText', false, '{}');
+        event.target.selectionEnd = end + 1;
+        return false;
+      }
+      if (event.key === "(") {
+        const end = event.target.selectionEnd;
+        event.preventDefault()
+        document.execCommand('insertText', false, '()');
+        event.target.selectionEnd = end + 1;
+        return false;
+      }
+      if (event.key === "[") {
+        const end = event.target.selectionEnd;
+        event.preventDefault()
+        document.execCommand('insertText', false, '[]');
+        event.target.selectionEnd = end + 1;
+        return false;
+      }
       if (event.keyCode === 9) {
         event.preventDefault()
         document.execCommand('insertText', false, ' '.repeat(4));

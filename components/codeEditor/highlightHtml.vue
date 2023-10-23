@@ -23,6 +23,7 @@ export default {
       d: this.modelValue,
       runnable: false,
       code: "",
+      openTag: null
     };
   },
   watch: {
@@ -88,6 +89,48 @@ export default {
   },
   methods: {
     setTab(event) {
+      if (event.key === "<") {
+        this.openTag = event.target.selectionEnd
+        return false
+      } else if (event.key === ">" && this.openTag !== null) {
+        const end = event.target.selectionEnd;
+        const sel = event.target.value.substring(this.openTag + 1, end).trim().split(' ')[0];
+        const t = `></${sel}>`
+        event.preventDefault()
+        document.execCommand('insertText', false, t);
+        event.target.selectionEnd = end + 1;
+        this.openTag = null
+        return false
+      }
+
+      if (event.key === "'" || event.key === '"' || event.key === '`') {
+        const end = event.target.selectionEnd;
+        event.preventDefault()
+        document.execCommand('insertText', false, event.key.repeat(2));
+        event.target.selectionEnd = end + 1;
+        return false;
+      }
+      if (event.key === "{") {
+        const end = event.target.selectionEnd;
+        event.preventDefault()
+        document.execCommand('insertText', false, '{}');
+        event.target.selectionEnd = end + 1;
+        return false;
+      }
+      if (event.key === "(") {
+        const end = event.target.selectionEnd;
+        event.preventDefault()
+        document.execCommand('insertText', false, '()');
+        event.target.selectionEnd = end + 1;
+        return false;
+      }
+      if (event.key === "[") {
+        const end = event.target.selectionEnd;
+        event.preventDefault()
+        document.execCommand('insertText', false, '[]');
+        event.target.selectionEnd = end + 1;
+        return false;
+      }
       if (event.keyCode === 9) {
         event.preventDefault()
         document.execCommand('insertText', false, ' '.repeat(4));
