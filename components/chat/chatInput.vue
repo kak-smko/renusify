@@ -62,7 +62,7 @@ export default {
     uploadLink: String,
     canFile: Boolean,
   },
-  emits:['update:model-value'],
+  emits: ['update:modelValue'],
   data() {
     return {
       text: '',
@@ -97,14 +97,14 @@ export default {
     },
     send() {
       if (this.text) {
-        this.$emit('update:model-value', {type: "text", content: this.text})
+        this.$emit('update:modelValue', {type: "text", content: this.text})
         this.$refs.input.innerText = ''
         this.text = ''
         this.$refs.input.focus()
       }
     },
     emit() {
-      this.$emit('update:model-value', {type: "file", content: this.text, link: this.fileLink})
+      this.$emit('update:modelValue', {type: "file", content: this.text, link: this.fileLink})
       this.$refs.input.innerText = ''
       this.text = ''
     }

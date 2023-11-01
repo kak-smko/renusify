@@ -21,7 +21,7 @@ export default {
     locale: String,
     year: Number
   },
-  emits:['update:model-value'],
+  emits: ['update:modelValue'],
   data() {
     return {
       p: 0
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     emit(n) {
-      this.$emit('update:model-value', n)
+      this.$emit('update:modelValue', n)
     }
   }
 }

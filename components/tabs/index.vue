@@ -26,7 +26,7 @@
           type="button"
           v-for="tab in items"
       >
-        {{ tab.title }}
+        <slot :item="tab">{{ tab.title }}</slot>
       </button>
       <div
           :class="lineClass"

@@ -15,24 +15,24 @@
     </div>
 </template>
 <script>
-    import MenuChilds from "./menuChilds";
+import MenuChilds from "./menuChilds";
 
-    export default {
-        name: 'menu-mobile',
-        components: {MenuChilds},
-        props: {
-            logo: String,
-            logoW: Number,
-            logoH: Number,
-            menu: Array,
-            modelValue: Boolean
-        },
-        data() {
+export default {
+  name: 'menu-mobile',
+  components: {MenuChilds},
+  props: {
+    logo: String,
+    logoW: Number,
+    logoH: Number,
+    menu: Array,
+    modelValue: Boolean
+  },
+  data() {
             return {}
         },
         methods: {
             close() {
-                this.$emit('update:model-value', false)
+              this.$emit('update:modelValue', false)
             }
         }
     }

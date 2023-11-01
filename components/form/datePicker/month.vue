@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     emit(n) {
-      this.$emit('update:model-value', n)
+      this.$emit('update:modelValue', n)
     }
   }
 }

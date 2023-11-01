@@ -31,7 +31,7 @@ export default {
       this.d = this.modelValue;
     },
     d: function () {
-      this.$emit("update:model-value", this.d);
+      this.$emit("update:modelValue", this.d);
     },
   },
   computed: {

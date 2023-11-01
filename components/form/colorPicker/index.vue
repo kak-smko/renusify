@@ -25,7 +25,7 @@ export default {
     modelValue: String,
     format: {type: String, default: 'rgba'}
   },
-  emits:['update:model-value','close'],
+  emits: ['update:modelValue', 'close'],
   data() {
     return {
       open: false
@@ -34,7 +34,7 @@ export default {
   methods: {
     clear() {
       this.open = false
-      this.$emit('update:model-value', null)
+      this.$emit('update:modelValue', null)
       this.$emit('close', true)
     },
     close() {
@@ -46,7 +46,7 @@ export default {
       if (this.format === 'rgba') {
         r = e.rgba
       }
-      this.$emit('update:model-value', r)
+      this.$emit('update:modelValue', r)
     }
   }
 

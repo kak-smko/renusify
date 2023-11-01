@@ -85,7 +85,7 @@ export default {
         let b = {}
         if (this.template) {
           for (let k in this.template) {
-            let d = 'default' in this.template[k] ? this.template[k]['default'] : null
+            let d = this.template[k]['default'] !== undefined ? this.template[k]['default'] : null
             if (typeof d === 'object') {
               d = this.$helper.clearProxy(d)
             }

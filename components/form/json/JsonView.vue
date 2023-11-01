@@ -45,7 +45,7 @@ export default {
     disableDel: Boolean,
     tile: Boolean
   },
-  emits: ['update:model-value'],
+  emits: ['update:modelValue'],
   data() {
     return {
       time_id: null
@@ -64,12 +64,12 @@ export default {
       } else {
         delete o[key]
       }
-      this.$emit('update:model-value', o)
+      this.$emit('update:modelValue', o)
     },
     emit(k, v) {
       let d = this.modelValue
       d[k] = v
-      this.$emit('update:model-value', d)
+      this.$emit('update:modelValue', d)
     }
   }
 }

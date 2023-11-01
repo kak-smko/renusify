@@ -87,7 +87,7 @@ export default {
     disableEditKey: Boolean,
     disableDel: Boolean
   },
-  emits: ['update:model-value'],
+  emits: ['update:modelValue'],
   data() {
     return {
       modeForm: true,
@@ -164,7 +164,7 @@ export default {
           d = []
         }
         d.push(Object.assign({}, {}, this.template))
-        this.$emit('update:model-value', d)
+        this.$emit('update:modelValue', d)
       } else {
         this.show = true
       }
@@ -173,13 +173,13 @@ export default {
       try {
         this.error = false
         e = JSON.parse(e.target.value)
-        this.$emit('update:model-value', e)
+        this.$emit('update:modelValue', e)
       } catch (er) {
         this.error = true
       }
     },
     emit(e) {
-      this.$emit('update:model-value', e)
+      this.$emit('update:modelValue', e)
     },
     add() {
       let d = this.modelValue
@@ -211,7 +211,7 @@ export default {
       }
       this.show = false
       this.info = {}
-      this.$emit('update:model-value', d)
+      this.$emit('update:modelValue', d)
     }
   }
 }
