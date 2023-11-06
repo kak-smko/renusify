@@ -313,12 +313,12 @@ export default {
 
     input::placeholder,
     textarea::placeholder {
-      color: var(--color-text-disabled)
+      color: var(--color-disabled)
     }
 
     &.input-disabled {
       * {
-        color: var(--color-text-disabled)
+        color: var(--color-disabled)
       }
     }
 

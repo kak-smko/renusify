@@ -50,7 +50,7 @@ $data-table-regular-header-height: 38px !default;
 
         &:hover {
           td:first-child {
-            background: var(--color-table-hover)
+            background: var(--color-sheet-hover)
           }
         }
       }
@@ -60,7 +60,7 @@ $data-table-regular-header-height: 38px !default;
       tbody {
         tr:nth-child(2n):not(:hover) {
           td {
-            background: var(--color-table-active)
+            background: var(--color-sheet-active)
           }
         }
       }
@@ -69,11 +69,11 @@ $data-table-regular-header-height: 38px !default;
     tbody {
       tr {
         &:active {
-          background: var(--color-table-active)
+          background: var(--color-sheet-active)
         }
 
         &:hover {
-          background: var(--color-table-hover)
+          background: var(--color-sheet-hover)
         }
       }
 

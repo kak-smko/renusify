@@ -78,7 +78,7 @@ emits:['update:modelValue'],
 
 .#{$prefix}unit-input {
   .input-shadow, .input-shadow * {
-    color: var(--color-text-disabled) !important
+    color: var(--color-disabled) !important
   }
 
   input {

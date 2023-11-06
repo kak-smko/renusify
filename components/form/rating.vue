@@ -52,7 +52,7 @@ export default {
   max-width: 100%;
   white-space: nowrap;
   transition: 1s $primary-transition;
-  color: var(--color-text-disabled);
+  color: var(--color-disabled);
 }
 
 </style>

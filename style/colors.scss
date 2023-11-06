@@ -15,14 +15,13 @@ $colorsList: (
         'divider':rgba(#444, 0.2),
         'text-primary':#515151,
         'text-secondary':#888,
-        'text-disabled':rgba(#000, 0.26),
         'disabled':rgba(#000, 0.26),
         'focused':rgba(#000, 0.12),
         'pressed':rgba(#999, 0.4),
         'border': rgba(#000, 0.24),
         'sheet': #fff,
-        'table-active': #f5f5f5,
-        'table-hover': #eeeeee,
+        'sheet-active': #f5f5f5,
+        'sheet-hover': #eeeeee,
         'overlay': rgba(225, 225, 225, 0.5)
 ) !default;
 
@@ -105,7 +104,7 @@ $colorsList: (
 }
 
 .color-disabled-text {
-  @include text-color(var(--color-text-disabled), true);
+  @include text-color(var(--color-disabled), true);
 }
 
 

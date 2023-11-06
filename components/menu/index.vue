@@ -157,7 +157,7 @@ export default {
       border: 1px solid var(--color-border);
 
       &-item:hover {
-        background-color: var(--color-table-hover);
+        background-color: var(--color-sheet-hover);
       }
     }
 

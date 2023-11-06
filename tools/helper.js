@@ -173,10 +173,6 @@ export function limiter(string, length) {
         : string;
 }
 
-export function url() {
-    return process.env.NODE_ENV === 'production' ? process.env.VUE_APP_API_production_URL : process.env.VUE_APP_API_URL;
-}
-
 export function cleanArray(actual) {
     const newArray = [];
     const lng = actual.length

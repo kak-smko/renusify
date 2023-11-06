@@ -13,11 +13,11 @@ $item-height: 48px;
 
   .list-item {
     &.list-item-active {
-      background-color: var(--color-table-active)
+      background-color: var(--color-sheet-active)
       }
 
       &:hover {
-        background-color: var(--color-table-hover)
+        background-color: var(--color-sheet-hover)
       }
     }
 
