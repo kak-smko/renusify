@@ -1,8 +1,7 @@
 <template>
-  <div :class="`${$r.prefix}rating `">
+  <div :class="`${$r.prefix}rating size-${size} ms-n1`">
     <r-btn :class="`${Math.round(modelValue)>=i?'color-warning-text':''}`" :key="i"
            :readonly="readonly"
-           :size="size"
            @click="select(i)"
            icon
            text
@@ -34,7 +33,7 @@ export default {
   emits:['update:modelValue'],
   created(){
     if(!this.$r.icons.star) {
-      this.$r.icons.star = '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2L9.19 8.62L2 9.24l5.45 4.73L5.82 21L12 17.27Z"/></svg>'
+      this.$r.icons.star = '<svg xmlns="http://www.w3.org/2000/svg"   preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2L9.19 8.62L2 9.24l5.45 4.73L5.82 21L12 17.27Z"/></svg>'
     }
   },
   methods: {
@@ -47,12 +46,32 @@ export default {
 <style lang="scss">
 @import "../../style/include";
 
-
+$btn-sizes: (
+    'x-small': 20,
+    'small': 25,
+    'default': 30,
+    'large': 35,
+    'x-large': 40
+) !default;
 .#{$prefix}rating {
   max-width: 100%;
   white-space: nowrap;
   transition: 1s $primary-transition;
   color: var(--color-disabled);
+
+  @each $name, $size in $btn-sizes {
+    &.size-#{$name} {
+      .#{$prefix}btn {
+        height: #{$size}px;
+        width: #{$size}px
+      }
+
+      .#{$prefix}icon {
+        height: #{$size - 4px};
+        width: #{$size - 4px}
+      }
+    }
+  }
 }
 
 </style>

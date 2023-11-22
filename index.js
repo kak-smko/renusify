@@ -101,17 +101,21 @@ export default {
         app.config.globalProperties.$toast = function (message, options) {
             Toast.show(message, options);
         }
+        // renusify storage
+        app.config.globalProperties.$storage = Storage
+
         // renusify helper
         app.config.globalProperties.$helper = helper
         // renusify translate
-        app.config.globalProperties.$translate = Translate
-        DateTime.langs = app.config.globalProperties.$r.langs
-        app.config.globalProperties.$dateTime = DateTime
-        app.config.globalProperties.$t = (key, package_name = null, lang = null) => Translate.get(key, package_name, lang)
-        app.config.globalProperties.$d = (value, key = 'long', local = null) => DateTime.formatLocal(value, key, local)
-        app.config.globalProperties.$n = (value) => Currency.formatLocal(value)
+        app.config.globalProperties.$translate = new Translate(app.config.globalProperties.$r, app.config.globalProperties.$storage)
+        app.config.globalProperties.$dateTime = new DateTime(app.config.globalProperties.$r, app.config.globalProperties.$r.langs)
+        app.config.globalProperties.$t = (key, package_name = null, lang = null) => app.config.globalProperties.$translate.get(key, package_name, lang)
+        app.config.globalProperties.$d = (value, key = 'long', local = null) => app.config.globalProperties.$dateTime.formatLocal(value, key, local)
+        const c = new Currency(app.config.globalProperties.$r)
+        app.config.globalProperties.$n = (value) => c.formatLocal(value)
         // renusify validation
-        app.config.globalProperties.$v = (names) => valid.checkType(names)
+        const v = new valid(app.config.globalProperties.$t)
+        app.config.globalProperties.$v = (names) => v.checkType(names)
 
         // install components
         let required_directive = register(app, options['components'] || []);
@@ -125,8 +129,6 @@ export default {
         // install directives
         registers(app, required_directive);
 
-        // renusify storage
-        app.config.globalProperties.$storage = Storage
 
         // renusify breakpoint
         function resize() {

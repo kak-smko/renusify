@@ -10,6 +10,7 @@
                  :template="template"
                  :disableAdd="disableAdd"
                  :disableDel="disableDel"
+                 :translate="translate"
                  :tile="tile"
       ></json-view>
       <r-btn
@@ -24,7 +25,7 @@
         <r-text-input
             v-if="!is_array"
             v-model="info.key"
-            :label="keyLabel"
+            :label="keyLabel||$t('key','renusify')"
             :tile="tile"
             class="w-30 pe-1"></r-text-input>
         <div class="w-20" v-if="!valueType">
@@ -34,31 +35,32 @@
                             :items="['text','number','boolean','json','array']"
                             just-value
                             disableSearch
+                            :translate="translate"
                             @update:model-value="info.value=null"
                             firstSelect></r-select-input>
-          </div>
-          <r-text-input v-if="val_type==='text'"
+        </div>
+        <r-text-input v-if="info.type==='text'"
+                      :tile="tile"
+                      :label="valueLabel||$t('value','renusify')"
+                      v-model="info.value"></r-text-input>
+        <r-number-input v-else-if="info.type==='number'"
                         :tile="tile"
-                        :label="valueLabel"
-                        v-model="info.value"></r-text-input>
-        <r-number-input v-else-if="val_type==='number'"
+                        v-model="info.value" :label="valueLabel||$t('value','renusify')"></r-number-input>
+        <r-switch-input v-else-if="info.type==='boolean'"
                         :tile="tile"
-                        :label="$t('value','renusify')" v-model="info.value"></r-number-input>
-        <r-switch-input v-else-if="val_type==='boolean'"
-                        :tile="tile"
-                        :label="$t('value','renusify')" v-model="info.value"></r-switch-input>
+                        v-model="info.value" :label="valueLabel||$t('value','renusify')"></r-switch-input>
         <r-btn @click.prevent="add" class="ms-1 color-success" rounded>{{ $t('add', 'renusify') }}</r-btn>
       </div>
     </div>
     <textarea v-else :class="{'state-error':error}"
-              :rows="Object.keys(modelValue).length+5"
+              :rows="modelValue?Object.keys(modelValue).length+5:5"
               autocapitalize="off"
               autocomplete="off"
               autocorrect="off"
               class="ltr w-full"
               spellcheck="false"
               @input="emitt"
-              @keydown="setTab">{{ JSON.stringify(modelValue, null, 4) }}</textarea>
+              @keydown="setTab">{{ JSON.stringify(modelValue||{}, null, 4) }}</textarea>
   </div>
 </template>
 <script>
@@ -85,7 +87,8 @@ export default {
     disableAdd: Boolean,
     tile: Boolean,
     disableEditKey: Boolean,
-    disableDel: Boolean
+    disableDel: Boolean,
+    translate: Boolean
   },
   emits: ['update:modelValue'],
   data() {
@@ -98,12 +101,6 @@ export default {
     }
   },
   computed: {
-    val_type() {
-      if (this.valueType) {
-        return this.valueType
-      }
-      return this.info.type
-    },
     is_array() {
       if (this.baseArray) {
         return true
@@ -166,6 +163,9 @@ export default {
         d.push(Object.assign({}, {}, this.template))
         this.$emit('update:modelValue', d)
       } else {
+        if (this.valueType) {
+          this.info.type = this.valueType
+        }
         this.show = true
       }
     },

@@ -6,7 +6,7 @@
       <r-btn v-if="!disableDel" icon class="color-error-text" text @click="del(key)">
         <r-icon v-html="$r.icons.delete"></r-icon>
       </r-btn>
-      <div v-if="typeof value==='object'">{{ key }}</div>
+      <div v-if="typeof value==='object'">{{ t(key) }}</div>
     </div>
     <div v-if="typeof value==='object'" class="flex-grow-1 w-full ps-10">
       <r-json-input :tile="tile"
@@ -14,21 +14,22 @@
                     @update:model-value="emit(key,$event)"
                     :disableAdd="disableAdd||template!==undefined"
                     :disableDel="disableDel||template!==undefined"
+                    :translate="translate"
                     disableEditKey
       ></r-json-input>
     </div>
     <div v-else class="mb-1 flex-grow-1">
       <r-text-input v-if="typeof value==='string'"
                     :tile="tile"
-                    :label="!is_array?key:''"
+                    :label="!is_array?t(key):''"
                     :model-value="value" @update:model-value="emit(key,$event)"></r-text-input>
       <r-number-input v-else-if="typeof value==='number'"
                       :tile="tile"
-                      :label="!is_array?key:''"
+                      :label="!is_array?t(key):''"
                       :model-value="value" @update:model-value="emit(key,$event)"></r-number-input>
       <r-switch-input v-else-if="typeof value==='boolean'"
                       :tile="tile"
-                      :label="!is_array?key:''"
+                      :label="!is_array?t(key):''"
                       :model-value="value" @update:model-value="emit(key,$event)"></r-switch-input>
 
     </div>
@@ -43,7 +44,8 @@ export default {
     template: Object,
     disableAdd: Boolean,
     disableDel: Boolean,
-    tile: Boolean
+    tile: Boolean,
+    translate: Boolean
   },
   emits: ['update:modelValue'],
   data() {
@@ -57,6 +59,12 @@ export default {
     }
   },
   methods: {
+    t(key) {
+      if (this.translate) {
+        return this.$t(key)
+      }
+      return key
+    },
     del(key) {
       let o = this.modelValue
       if (this.is_array) {

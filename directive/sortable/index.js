@@ -1,5 +1,5 @@
 import './style.scss'
-import {keys, ifHas, cleanArray} from '../../tools/helper'
+import {cleanArray, ifHas, keys} from '../../tools/helper'
 
 let scopeObj;
 
@@ -134,7 +134,7 @@ function mounted(el, binding) {
         end: value.end,
         grab: value.grab
     }
-    el.classList.add(`${window.app.$r.prefix}sortable`);
+    el.classList.add(`r-directive-sortable`);
     el.eventsHandler = {
         mousedown: e => mousestart(e, wrapper),
         touchstart: e => mousestart(e, wrapper)
@@ -169,7 +169,7 @@ function unmounted(el, binding) {
     let wrapper = {
         grab: value.grab
     }
-    el.classList.remove(`${window.app.$r.prefix}sortable`);
+    el.classList.remove(`r-directive-sortable`);
     const lng=children.length
     for(let i=0;i<lng;i++){
         let child=children[i]

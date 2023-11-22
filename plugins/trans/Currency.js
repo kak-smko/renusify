@@ -1,14 +1,14 @@
-import Translate from './Translate';
-
-class Currency {
-  formatLocal (value) {
-    try {
-          return new Intl.NumberFormat(Translate._local).format(value);
-    }catch (e) {
-      console.error(e)
-      return value
+export default class Currency {
+    constructor($r) {
+        this.$r = $r
     }
-  }
-}
 
-export default new Currency();
+    formatLocal(value) {
+        try {
+            return new Intl.NumberFormat(this.$r.lang).format(value);
+        } catch (e) {
+            console.error(e)
+            return value
+        }
+    }
+}

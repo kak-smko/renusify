@@ -1,22 +1,23 @@
-/* eslint-disable */
-import Translate from '../trans/Translate'
+export default class Validate {
+    constructor($t) {
+        this.$t = $t
+    }
 
-class Validate {
-  required() {
-    let msg = Translate.get('required_error','renusify');
-    return (v) => !!(v !== undefined && v !== null && v !== '') || msg
-  }
+    required() {
+        let msg = this.$t('required_error', 'renusify');
+        return (v) => !!(v !== undefined && v !== null && v !== '') || msg
+    }
 
-  requiredArray() {
-    return (v) => (v !== undefined && v !== null && v.length > 0) || Translate.get('required_error','renusify');
-  }
+    requiredArray() {
+        return (v) => (v !== undefined && v !== null && v.length > 0) || this.$t('required_error', 'renusify');
+    }
 
-  email() {
-    return (v) => (v && v.length > 0 ? /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) : true) || Translate.get('validate_email','renusify');
+    email() {
+        return (v) => (v && v.length > 0 ? /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) : true) || this.$t('validate_email', 'renusify');
   }
 
   url() {
-    return (v) => (v && v.length > 0 ? /^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/.test(v) : true) || Translate.get('validate_url','renusify');
+      return (v) => (v && v.length > 0 ? /^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/.test(v) : true) || this.$t('validate_url', 'renusify');
   }
 
   match(val) {
@@ -24,49 +25,49 @@ class Validate {
       if (v == val) {
         return true
       } else {
-        return Translate.get(['validate_match', [val]],'renusify');
+          return this.$t(['validate_match', [val]], 'renusify');
       }
     }
   }
 
   phone() {
-    return (v) => (v && v.length > 0 ? /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4}$/.test(v) : true) || Translate.get('validate_phone','renusify');
+      return (v) => (v && v.length > 0 ? /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4}$/.test(v) : true) || this.$t('validate_phone', 'renusify');
   }
 
   number() {
-    return (v) => (v && v.length > 0 ? /^([0-9.])*$/.test(v) : true) || Translate.get('numeric_error','renusify');
+      return (v) => (v && v.length > 0 ? /^([0-9.])*$/.test(v) : true) || this.$t('numeric_error', 'renusify');
   }
 
   english() {
-    return (v) => (v && v.length > 0 ? /^([0-9a-zA-Z])*$/.test(v) : true) || Translate.get('english_error','renusify');
+      return (v) => (v && v.length > 0 ? /^([0-9a-zA-Z])*$/.test(v) : true) || this.$t('english_error', 'renusify');
   }
 
   min_len(num) {
-    return v => (v && v.length > 0 ? v.length >= parseInt(num)?true: Translate.get(['min_len_error', [num,v.length]],'renusify') : true)
+      return v => (v && v.length > 0 ? v.length >= parseInt(num) ? true : this.$t(['min_len_error', [num, v.length]], 'renusify') : true)
   }
 
   max_len(num) {
-    return v => (v && v.length > 0 ? v.length <= parseInt(num)?true: Translate.get(['max_len_error', [num,v.length]],'renusify') : true)
+      return v => (v && v.length > 0 ? v.length <= parseInt(num) ? true : this.$t(['max_len_error', [num, v.length]], 'renusify') : true)
   }
 
   len(num) {
-    return v => (v && v.length > 0 ? v.length === parseInt(num)?true: Translate.get(['len_error', [num,v.length]],'renusify') : true) || msg
+      return v => (v && v.length > 0 ? v.length === parseInt(num) ? true : this.$t(['len_error', [num, v.length]], 'renusify') : true) || msg
   }
 
   min(num) {
-    return v => (v ? parseFloat(v) >= parseFloat(num)?true: Translate.get(['min_error', [num,parseFloat(v)]],'renusify') : true)
+      return v => (v ? parseFloat(v) >= parseFloat(num) ? true : this.$t(['min_error', [num, parseFloat(v)]], 'renusify') : true)
   }
 
   max(num) {
-    return v => (v ? parseFloat(v) <= parseFloat(num)?true: Translate.get(['max_error', [num,parseFloat(v)]],'renusify') : true)
+      return v => (v ? parseFloat(v) <= parseFloat(num) ? true : this.$t(['max_error', [num, parseFloat(v)]], 'renusify') : true)
   }
 
   eq(num) {
-    return v => (v ? parseFloat(v) === parseFloat(num) : true) || Translate.get(['validate_eq', [num]],'renusify');
+      return v => (v ? parseFloat(v) === parseFloat(num) : true) || this.$t(['validate_eq', [num]], 'renusify');
   }
 
   notDefined(name) {
-    return v => Translate.get(['validate_notDefined', [name]],'renusify');
+      return v => this.$t(['validate_notDefined', [name]], 'renusify');
   }
 
   checkType(names) {
@@ -93,5 +94,3 @@ class Validate {
     return filters
   }
 }
-
-export default new Validate()

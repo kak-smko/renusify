@@ -7,7 +7,7 @@ function mounted(el, binding) {
     const duration = value.duration || .5
     const timing = value.timing || null
     const delay = value.delay + 50 || 50
-    el.classList.add(`${window.app.$r.prefix}animate`)
+    el.classList.add(`r-directive-animate`)
     names.forEach((name) => {
         el.classList.add(name)
     })

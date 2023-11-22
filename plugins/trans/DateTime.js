@@ -1,5 +1,6 @@
-class DateTime {
-    constructor() {
+export default class DateTime {
+    constructor($r, langs) {
+        this.$r = $r
         this.format = {
             narrow: {
                 weekday: 'narrow'
@@ -33,7 +34,7 @@ class DateTime {
         }
         }
 
-        this.langs = {};
+        this.langs = langs;
     }
 
     set_lang(name, lang) {
@@ -54,8 +55,8 @@ class DateTime {
     };
 
     formatLocal(value, type = 'long', local = null) {
-        if (local === null && window.app) {
-            local = window.app.$r.lang
+        if (local === null) {
+            local = this.$r.lang
         }
         if (!(local in this.langs)) {
             console.warn('set local:' + local + ' with this.$dateTime.set_lang("' + local + '",{\n' +
@@ -79,4 +80,3 @@ class DateTime {
     };
 }
 
-export default new DateTime();

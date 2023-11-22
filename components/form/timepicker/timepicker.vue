@@ -10,7 +10,7 @@
           :key="i"
           class="number"
           :class="['number' + i,{'number-disabled':disableTime(parseInt(i),show,hour,min,sec)}]"
-          :ref="'number' + i"
+          ref="number"
           @click="set(i)"
       >
         {{ num }}
@@ -349,7 +349,7 @@ export default {
     set(h, next = true) {
       h = parseInt(h);
       const circle = this.$refs.circle;
-      const cl = this.$refs["number" + h];
+      const cl = this.$refs["number"][h];
       const hand = this.$refs.hand;
       const clock = this.$refs.clock.getBoundingClientRect();
 
@@ -440,7 +440,7 @@ export default {
       let cl = null;
       let po = null;
       for (let i = 1; i <= 12; i++) {
-        cl = this.$refs["number" + i];
+        cl = this.$refs["number"][i];
         po = this.print_point(i, 110);
         cl.style.left = po[0] - 10 + "px";
         cl.style.top = po[1] - 10 + "px";
@@ -448,13 +448,13 @@ export default {
       }
       if (this.is24Hour) {
         for (let i = 13; i <= 23; i++) {
-          cl = this.$refs["number" + i];
+          cl = this.$refs["number"][i];
           po = this.print_point(i, 70);
           cl.style.left = po[0] - 10 + "px";
           cl.style.top = po[1] - 10 + "px";
           cl.classList.add('number-show')
         }
-        cl = this.$refs["number0"];
+        cl = this.$refs["number"][0];
         po = this.print_point(0, 70);
         cl.style.left = po[0] - 10 + "px";
         cl.style.top = po[1] - 10 + "px";
@@ -473,7 +473,7 @@ export default {
       let cl = null;
       let po = null;
       for (let i = 0; i <= 59; i++) {
-        cl = this.$refs["number" + i];
+        cl = this.$refs["number"][i];
         po = this.print_point(i, 110, 60);
         cl.style.left = po[0] - 10 + "px";
         cl.style.top = po[1] - 10 + "px";

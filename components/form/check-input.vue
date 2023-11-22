@@ -16,11 +16,13 @@
              ref="input"
       />
       <r-btn size="small"
+             :class="{'color-success-text':pass!==null && pass!==false,'color-error-text':pass===false}"
              :rounded="$attrs.tile===undefined||$attrs.tile===false"
              :loading="loading" @click.prevent="check()" class="elevation-none mx-1">
         {{ $t('check', 'renusify') }}
-        <r-icon v-if="pass!==null && pass!==false" v-html="$r.icons.check" exact width="20" height="20"></r-icon>
-        <r-icon v-if=" pass===false" v-html="$r.icons.close" width="20" height="20"></r-icon>
+        <r-icon v-if="pass!==null && pass!==false" class="color-success-text" exact height="20" width="20"
+                v-html="$r.icons.check"></r-icon>
+        <r-icon v-if=" pass===false" class="color-error-text" height="20" width="20" v-html="$r.icons.close"></r-icon>
       </r-btn>
     </div>
   </r-input>

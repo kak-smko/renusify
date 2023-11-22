@@ -1,15 +1,18 @@
 @import '../../style/include';
 
-.#{$prefix}animate{
-  transition-timing-function: map_get($transition,'swing');
-   transition-property: opacity,transform;
-  &.fade{
+.r-directive-animate {
+  transition-timing-function: map_get($transition, 'swing');
+  transition-property: opacity, transform;
+
+  &.fade {
     opacity: 0;
-    &.animate{
+
+    &.animate {
       opacity: 1;
     }
   }
-  &.scaleIn{
+
+  &.scaleIn {
     transform: scale(.5);
     &.animate{
      transform:translateZ(0) scale(1);

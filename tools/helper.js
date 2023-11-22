@@ -1,3 +1,5 @@
+import Toast from "../components/app/toast/toast";
+
 export function clearProxy(obj) {
     return JSON.parse(JSON.stringify(typeof obj === 'object' ? obj : {}))
 }
@@ -33,9 +35,9 @@ export function copy(text, msg = null) {
     }
 
     navigator.clipboard.writeText(text).then(function () {
-        window.app.$toast(msg || window.app.$t('copy_text_to_clipboard', 'renusify'), {type: 'success'})
+        Toast.show(msg || 'text copied.', {type: 'success'});
     }, function () {
-        window.app.$toast(window.app.$t('text_not_copied!', 'renusify'), {type: 'error'})
+        Toast.show('text not copied.', {type: 'error'});
     })
 }
 

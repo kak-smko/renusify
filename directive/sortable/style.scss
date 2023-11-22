@@ -1,16 +1,19 @@
 @import "../../style/include";
 
-.#{$prefix}sortable {
+.r-directive-sortable {
   position: relative;
-  .dragable{
-    .grab{
+
+  .dragable {
+    .grab {
       cursor: grab;
     }
-    &.grab{
+
+    &.grab {
       cursor: grab;
     }
   }
-  .sortable-holder{
+
+  .sortable-holder {
     background-color: rgba(20, 200, 255, 0.5);
   }
   .on-drag {

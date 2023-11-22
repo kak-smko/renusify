@@ -3,7 +3,7 @@
       :class="{
         [`${$r.prefix}input-container`]:true,
         [c_color]:c_color&&!isDisabled,
-        'color-error-text':hasError&&validations.length>0,
+        'color-error-text':hasError&&genMessages.length>0,
         'hide-detail':c_hide,
         'input-focused':active,
         'input-disabled':isDisabled,
@@ -72,7 +72,7 @@ export default {
       uid: 'input_' + this.$helper.uniqueId(),
       lazyValue: this.modelValue,
       focused: false,
-      errorBucket: this.error || [],
+      errorBucket: [],
       hasColor: false,
       hasFocused: false,
       hasInput: false,

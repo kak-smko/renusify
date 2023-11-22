@@ -8,10 +8,10 @@ function mousestart(el, binding) {
         d = binding.arg
     }
 
-    let $title = document.getElementById(`${window.app.$r.prefix}title`)
+    let $title = document.getElementById(`r-directive-title`)
     if (!$title) {
         $title = document.createElement('div')
-        $title.setAttribute('id', `${window.app.$r.prefix}title`)
+        $title.setAttribute('id', `r-directive-title`)
     } else {
         mouseleave(el, binding)
         mousestart(el, binding)
@@ -21,8 +21,7 @@ function mousestart(el, binding) {
     var $titleDimension = el.getBoundingClientRect()
     $title.innerHTML = binding.value
     $title.style.opacity = 1
-    const app=document.getElementsByClassName(`${window.app.$r.prefix}app`)
-    app[0].appendChild($title)
+    document.body.appendChild($title)
     const h = $title.getBoundingClientRect().height + 5
     const w = $title.getBoundingClientRect().width + 5
 
@@ -48,7 +47,7 @@ function mouseleave(el, binding) {
     if (['left', 'right', 'top', 'bottom'].includes(binding.arg)) {
         d = binding.arg
     }
-    let elm = document.getElementById(`${window.app.$r.prefix}title`)
+    let elm = document.getElementById(`r-directive-title`)
 
     if (elm === null) {
         return null
@@ -65,12 +64,11 @@ function mouseleave(el, binding) {
         elm.style.left = $titleDimension.left + $titleDimension.width + 'px'
     }
 
-    elm = document.getElementById(`${window.app.$r.prefix}title`)
+    elm = document.getElementById(`r-directive-title`)
     if (elm === null) {
         return null
     }
-    const app=document.getElementsByClassName(`${window.app.$r.prefix}app`)
-    app[0].removeChild(elm)
+    document.body.removeChild(elm)
 }
 
 function createHandlers(el, binding) {

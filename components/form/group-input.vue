@@ -9,7 +9,8 @@
           <slot :item="item" :index="i" :disableDel="disDel">
             <div v-if="template" class="d-flex flex-wrap pt-5 v-start">
               <template v-for="(v,k) in item" :key="i+'-'+k">
-                <component :is="template[k]['type']" v-model="item[k]" :label="t(k)"
+                <component :is="template[k]['type']" v-if="template[k]&&template[k]['type']" v-model="item[k]"
+                           :label="t(k)"
                            class="flex-grow-0 me-1" v-bind="template[k]['props']"></component>
               </template>
             </div>

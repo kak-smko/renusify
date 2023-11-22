@@ -14,8 +14,11 @@
         }"
     >{{ alt }}
     </div>
-    <img v-if="load &&!isSvg" ref="img" :src="link" :alt="alt" draggable="false" :width="size.width"
-         :height="size.height"/>
+    <img v-if="load &&!isSvg" ref="img" :alt="alt" :height="size.height>0?size.height:'auto'" :src="link" :style="{'height':size.height>0?undefined:'auto',
+         'width':size.width>0?undefined:'auto'
+         }"
+         :width="size.width>0?size.width:'auto'"
+         draggable="false"/>
     <svg-img v-else-if="load &&isSvg&&link" :link="link" :size="size">
     </svg-img>
   </div>
@@ -61,10 +64,7 @@ export default {
     titleVe: Boolean,
     isSvg: Boolean,
     svgCache: {type: Number, default: 86400},
-    wPH: {
-      type: Number,
-      default: 1
-    },
+    wPH: Number
   },
   data() {
     return {
@@ -97,7 +97,10 @@ export default {
         res += 'c=' + this.svgCache
       }
       if (!this.isSvg && ((this.autoSize && this.size.width > 0) || this.width)) {
-        res += `&w=${this.size.width}&h=${this.size.height}`
+        res += `&w=${this.size.width}`
+      }
+      if (!this.isSvg && ((this.autoSize && this.size.height > 0) || this.height)) {
+        res += `&h=${this.size.height}`
       }
       return res
     }
@@ -116,13 +119,29 @@ export default {
       if (this.height) {
         res["height"] = this.height
       }
-      if (res['width'] !== 0 && res['height'] === 0) {
-        res['height'] = res['width'] / this.wPH
+      let wPH = this.wPH
+      if (!wPH) {
+        const ls = this.src.split('/')
+        if (ls.length > 0) {
+          const p = ls[ls.length - 1].split('_')
+          if (p.length === 3) {
+            const p0 = parseInt(p[0])
+            const p1 = parseInt(p[1])
+            if (p0 && p1) {
+              wPH = p0 / p1
+            }
+          }
+        }
       }
-      if (res['width'] === 0 && res['height'] !== 0) {
-        res['width'] = res['height'] * this.wPH
+      if (wPH) {
+        if (res['width'] !== 0 && res['height'] === 0) {
+          res['height'] = res['width'] / wPH
+        }
+        if (res['width'] === 0 && res['height'] !== 0) {
+          res['width'] = res['height'] * wPH
+        }
       }
-      if (res['width'] !== 0) {
+      if (res['width'] !== 0 || res['height'] !== 0) {
         return this.size = res
       }
 
@@ -133,7 +152,7 @@ export default {
         let w = parseFloat((parseFloat(cs.getPropertyValue('width')) - paddingX - borderX).toFixed(2));
         return this.size = {
           width: w,
-          height: w / this.wPH
+          height: wPH ? w / wPH : 0
         }
       }
       return false
@@ -141,7 +160,7 @@ export default {
     },
     activate() {
       this.getSize()
-      if (this.size.width !== 0) {
+      if (this.size.width !== 0 || this.size.height) {
         this.load = true
       } else {
         clearTimeout(this.time_id)
