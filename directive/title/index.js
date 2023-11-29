@@ -1,5 +1,4 @@
 import './style.scss'
-import {keys} from '../../tools/helper'
 
 function mousestart(el, binding) {
     let d = 'top'
@@ -91,7 +90,7 @@ function mounted(el, binding) {
 
     el.eventsHandler= createHandlers(el, binding)
 
-    keys(el.eventsHandler).forEach(eventName => {
+    Object.keys(el.eventsHandler).forEach(eventName => {
         el.addEventListener(eventName, el.eventsHandler[eventName], options)
     })
 }
@@ -110,7 +109,7 @@ function unmounted(el, binding) {
     if (!el.eventsHandler){
             return
         }
-    keys(el.eventsHandler).forEach(eventName => {
+    Object.keys(el.eventsHandler).forEach(eventName => {
         el.removeEventListener(eventName, el.eventsHandler[eventName])
     })
     delete el.eventsHandler

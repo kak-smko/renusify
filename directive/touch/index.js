@@ -1,5 +1,3 @@
-import {keys} from '../../tools/helper'
-
 const handleGesture = wrapper => {
     const {
         startX,
@@ -159,7 +157,7 @@ function mounted(el, binding) {
         }
 
         el.eventsHandler = createHandlers(value)
-        keys(el.eventsHandler).forEach(eventName => {
+        Object.keys(el.eventsHandler).forEach(eventName => {
             el.addEventListener(eventName, el.eventsHandler[eventName], options)
         })
     }, 1000)
@@ -171,7 +169,7 @@ function unmounted(el, binding) {
     if (!el.eventsHandler) {
         return
     }
-    keys(el.eventsHandler).forEach(eventName => {
+    Object.keys(el.eventsHandler).forEach(eventName => {
         el.removeEventListener(eventName, el.eventsHandler[eventName])
     })
     delete el.eventsHandler

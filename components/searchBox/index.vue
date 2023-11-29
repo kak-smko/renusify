@@ -82,7 +82,7 @@ export default {
     },
     label: String,
     url: String,
-    inputClass: String,
+    inputClass: [String, Object, Array],
     query: {
       type: String,
       default: "search",

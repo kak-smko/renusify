@@ -104,19 +104,19 @@
 </template>
 
 <script>
-    import './style.scss'
+import './style.scss'
 
-    export default {
-        name: 'r-table',
-        props: {
-            transition: {
-                type: String,
-                default: 'table-row'
-            },
-            keyItem: [String, Function],
-            thin: Boolean,
-            responsive: Boolean,
-            translate: Boolean,
+export default {
+  name: 'r-table',
+  props: {
+    transition: {
+      type: String,
+      default: 'table-row'
+    },
+    keyItem: [String, Function],
+    thin: Boolean,
+    responsive: Boolean,
+    translate: Boolean,
             editable: Boolean,
             stripped: Boolean,
             borderd: Boolean,
@@ -282,7 +282,7 @@
                 if (this.$helper.isArray(this.th) && k === 0) {
                     return true
                 }
-                const l = this.$helper.keys(this.th)
+              const l = Object.keys(this.th)
                 return l[0] === k;
 
             },

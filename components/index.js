@@ -23,6 +23,7 @@ const list = {
     },
     'r-card': {'p': 'card/index.vue', 'c': [], 'd': ['ripple']},
     'r-chart': {'p': 'chart/chart.vue', 'c': [], 'd': []},
+    'r-world-map': {'p': 'chart/worldMap.vue', 'c': ['r-float'], 'd': []},
     'r-chat': {
         'p': 'chat/index.vue',
         'c': ['r-btn', 'r-icon', 'r-progress-circle', 'r-img'],

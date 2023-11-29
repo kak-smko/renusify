@@ -9,6 +9,14 @@
       >
         <r-icon v-html="$r.icons.copy"></r-icon>
       </r-btn>
+      <r-btn
+          class="image-copy"
+          icon
+          text
+          @click.prevent="pretty"
+      >
+        P
+      </r-btn>
       <r-btn v-if="show === 'code' && runnable" text @click="show = 'run'">
         run
         <r-icon v-html="$r.icons.play" exact></r-icon>
@@ -31,7 +39,7 @@
     <div v-show="show !== 'run'" ref="codeView" class="code-wrapper">
       <div v-show="templateShow">
         <span class="color-green">&lt;template&gt;</span>
-        <highlight-html v-model="temp"></highlight-html>
+        <highlight-html ref="h-html" v-model="temp"></highlight-html>
         <span class="color-green">&lt;/template&gt;</span>
         <br/>
       </div>
@@ -39,14 +47,14 @@
         <span class="color-orange"
         >&lt;script&gt;<br/>export default {</span
         >
-        <highlight-script v-model="scr"></highlight-script>
+        <highlight-script ref="h-js" v-model="scr"></highlight-script>
         <span class="color-orange">}<br/>&lt;script&gt;</span>
       </div>
       <div v-show="styleShow">
         <span class="color-orange"
         >&lt;style lang<span class="color-green">="css"</span>&gt;</span
         >
-        <highlight-css v-model="sty"></highlight-css>
+        <highlight-css ref="h-css" v-model="sty"></highlight-css>
         <span class="color-orange">&lt;style&gt;</span>
       </div>
     </div>
@@ -97,6 +105,15 @@ export default {
     this.get_code("codeSlot");
   },
   watch: {
+    template: function (n) {
+      this.temp = n
+    },
+    script: function (n) {
+      this.scr = n
+    },
+    style: function (n) {
+      this.sty = n
+    },
     temp: function () {
       this.$emit("update:template", this.temp);
     },
@@ -108,6 +125,11 @@ export default {
     },
   },
   methods: {
+    pretty() {
+      this.temp = this.$refs["h-html"].pretty_html(this.temp)
+      this.scr = this.$refs["h-js"].pretty_js(this.scr)
+      this.sty = this.$refs["h-css"].pretty_js(this.sty)
+    },
     toHTML(htmlString) {
       let div = document.createElement("div");
       div.innerHTML = htmlString;

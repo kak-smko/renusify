@@ -1,24 +1,27 @@
 <template>
   <div class="slider-container"
+       :style="{
+        width:width+'px',
+        height:(width/wPH)+'px'
+           }"
        ref="slider"
        v-touch="{
                 'left':$r.rtl?prev:next,
                 'right':$r.rtl?next:prev
             }">
-    <r-progress-line v-if="autoplay &&progress" :model-value="remain" color="color-two"></r-progress-line>
+
     <r-btn v-if="arrow" icon @click="prev" class="btn-left-arrow">
       <r-icon v-html="$r.icons.chevron_left"></r-icon>
     </r-btn>
     <r-btn v-if="arrow" icon @click="next" class="btn-right-arrow">
       <r-icon v-html="$r.icons.chevron_right"></r-icon>
     </r-btn>
-    <transition :name="direction" mode="out-in" appear>
+    <transition :appear="appear" :mode="mode" :name="direction">
       <div :key="`slider-${currentIndex}`"
-           :class="{'slide-loaded':loaded,'slide-loading':!loaded}"
-           class="slider-slides" :style="{
-        width:width+'px',
-        height:(width/wPH)+'px'
-           }">
+           :class="[slidesClass,{'slide-loaded':loaded,'slide-loading':!loaded}]"
+           class="slider-slides">
+        <r-progress-line v-if="autoplay&&progress" :model-value="remain" class="slider-progress"
+                         color="color-one"></r-progress-line>
         <slot v-if="width>0" :item="currentSlide" :width="width" :height="width/wPH">
           {{ currentSlide }}
         </slot>
@@ -58,6 +61,10 @@ export default {
       type: Number,
       default: 2
     },
+    startIndex: {
+      type: Number,
+      default: 0
+    },
     autoplay: {
       type: Boolean,
       default: false
@@ -73,14 +80,22 @@ export default {
     dots: {
       type: Boolean,
       default: true
-    }
+    },
+    appear: {
+      type: Boolean,
+      default: true
+    },
+    slidesClass: [String, Object, Array],
+    mode: {type: String, default: 'out-in'},
+    transitionRight: {type: String, default: 'slider-right'},
+    transitionLeft: {type: String, default: 'slider-left'}
   },
   emits:['index'],
   data() {
     return {
-      direction: 'slider-right',
+      direction: this.transitionRight,
       loaded: false,
-      currentIndex: 0,
+      currentIndex: this.startIndex,
       loaded_timer: null,
       timer: null,
       width: null,
@@ -113,7 +128,7 @@ export default {
     toggle() {
       clearInterval(this.timer)
       this.loaded = false
-      clearInterval(this.loaded_timer)
+      clearTimeout(this.loaded_timer)
       this.loaded_timer = setTimeout(() => {
         this.loaded = true
       }, 500)
@@ -128,7 +143,7 @@ export default {
 
     next: function () {
       this.toggle()
-      this.direction = 'slider-right'
+      this.direction = this.transitionRight
       if (this.currentIndex > this.slides.length - 2) {
         this.currentIndex = 0
       } else {
@@ -138,7 +153,7 @@ export default {
     },
     prev: function () {
       this.toggle()
-      this.direction = 'slider-left'
+      this.direction = this.transitionLeft
       if (this.currentIndex === 0) {
         this.currentIndex = this.slides.length - 1
       } else {
@@ -149,9 +164,9 @@ export default {
     goToSlide(i) {
       this.toggle()
       if (i < this.currentIndex) {
-        this.direction = 'slider-left'
+        this.direction = this.transitionLeft
       } else {
-        this.direction = 'slider-right'
+        this.direction = this.transitionRight
       }
 
       this.currentIndex = i
@@ -165,12 +180,21 @@ export default {
     }
   },
   beforeUnmount() {
+    clearInterval(this.timer)
+    clearTimeout(this.loaded_timer)
     clearInterval(this.remain_id)
   }
 }
 </script>
 <style lang="scss">
 @import '../../style/include';
+
+.slider-progress {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
 
 .btn-left-arrow {
   position: absolute;

@@ -1,4 +1,4 @@
-import {keys,ifHas} from '../../tools/helper'
+import {ifHas} from '../../tools/helper'
 
 let wrapper = {}
 let current=null
@@ -82,7 +82,7 @@ function mounted(el, binding) {
 
     el.eventsHandler = createHandlers(el, value,uid)
 
-    keys(el.eventsHandler).forEach(eventName => {
+    Object.keys(el.eventsHandler).forEach(eventName => {
         el.addEventListener(eventName, el.eventsHandler[eventName], options)
     })
 }
@@ -98,10 +98,10 @@ function unmounted(el, binding) {
     if (!el.eventsHandler){
             return
         }
-    keys(el.eventsHandler).forEach(eventName => {
-        el.removeEventListener(eventName, el.eventsHandler[eventName]),options
+    Object.keys(el.eventsHandler).forEach(eventName => {
+        el.removeEventListener(eventName, el.eventsHandler[eventName]), options
     })
-    wrapper[uid]={}
+    wrapper[uid] = {}
     delete el.eventsHandler
 }
 

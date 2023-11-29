@@ -52,23 +52,29 @@
         <r-btn @click.prevent="add" class="ms-1 color-success" rounded>{{ $t('add', 'renusify') }}</r-btn>
       </div>
     </div>
-    <textarea v-else :class="{'state-error':error}"
-              :rows="modelValue?Object.keys(modelValue).length+5:5"
-              autocapitalize="off"
-              autocomplete="off"
-              autocorrect="off"
-              class="ltr w-full"
-              spellcheck="false"
-              @input="emitt"
-              @keydown="setTab">{{ JSON.stringify(modelValue||{}, null, 4) }}</textarea>
+    <div v-else :class="{'state-error':error}" class="json-highlight ltr">
+      <textarea
+          v-model="lazyValue"
+          autocapitalize="off"
+          autocomplete="off"
+          autocorrect="off"
+          class="ltr w-full"
+          spellcheck="false"
+          :rows="modelValue?Object.keys(modelValue).length+5:5"
+          @keydown="setTab"
+      ></textarea>
+      <div class="text-preview" v-html="build"></div>
+    </div>
   </div>
 </template>
 <script>
 import JsonView from "./JsonView";
+import mixin from 'renusify/components/codeEditor/mixin'
 
 export default {
   name: 'r-json',
   components: {JsonView},
+  mixins: [mixin],
   props: {
     label: String,
     keyLabel: {type: String, default: 'key'},
@@ -93,14 +99,49 @@ export default {
   emits: ['update:modelValue'],
   data() {
     return {
+      lazyValue: '',
       modeForm: true,
       error: false,
       show: false,
-      info: {},
-      color: `rgb(${this.$helper.randomInt(0, 255)},${this.$helper.randomInt(0, 255)},${this.$helper.randomInt(0, 255)})`
+      info: {}
     }
   },
+  watch: {
+    modeForm: function () {
+      this.lazyValue = JSON.stringify(this.modelValue || {}, null, 4)
+    },
+    modelValue: function () {
+      try {
+        this.error = false
+        if (JSON.stringify(JSON.parse(this.lazyValue)) !== JSON.stringify(this.modelValue)) {
+          this.lazyValue = JSON.stringify(this.modelValue || {}, null, 4)
+        }
+      } catch (er) {
+        this.error = true
+      }
+
+    },
+    lazyValue: function () {
+      try {
+        this.error = false
+        this.$emit('update:modelValue', JSON.parse(this.lazyValue))
+      } catch (er) {
+        this.error = true
+      }
+    },
+  },
   computed: {
+    build() {
+      if (!this.lazyValue) {
+        return "";
+      }
+      let res = this.lazyValue
+      res = this.re_quote(res);
+      res = this.re_words(res, [true, false, null]);
+      res = this.re_number(res);
+      res = this.re_special(res, /([{},:\[\]])/g, 'color-orange');
+      return res;
+    },
     is_array() {
       if (this.baseArray) {
         return true
@@ -109,51 +150,6 @@ export default {
     }
   },
   methods: {
-    setTab(event) {
-      if (event.key === '"') {
-        const end = event.target.selectionEnd;
-        event.preventDefault()
-        document.execCommand('insertText', false, event.key.repeat(2));
-        event.target.selectionEnd = end + 1;
-        return false;
-      }
-      if (event.key === "{") {
-        const end = event.target.selectionEnd;
-        event.preventDefault()
-        document.execCommand('insertText', false, '{}');
-        event.target.selectionEnd = end + 1;
-        return false;
-      }
-      if (event.key === "[") {
-        const end = event.target.selectionEnd;
-        event.preventDefault()
-        document.execCommand('insertText', false, '[]');
-        event.target.selectionEnd = end + 1;
-        return false;
-      }
-      if (event.keyCode === 9) {
-        event.preventDefault()
-        document.execCommand('insertText', false, ' '.repeat(4));
-        return false;
-      }
-      if (event.keyCode === 13) {
-        event.preventDefault()
-        let n = event.target.value.substr(0, event.target.selectionStart).split('\n')
-        n = n[n.length - 1].split('')
-        let w = ''
-        for (let i = 0; i < n.length; i++) {
-          if (n[i] === ' ') {
-            w += ' '
-          } else {
-            break
-          }
-        }
-
-        document.execCommand('insertText', false, '\n' + w);
-        return false;
-      }
-      return true
-    },
     open() {
       if (this.template) {
         let d = this.modelValue
@@ -169,15 +165,7 @@ export default {
         this.show = true
       }
     },
-    emitt(e) {
-      try {
-        this.error = false
-        e = JSON.parse(e.target.value)
-        this.$emit('update:modelValue', e)
-      } catch (er) {
-        this.error = true
-      }
-    },
+
     emit(e) {
       this.$emit('update:modelValue', e)
     },
@@ -227,6 +215,66 @@ export default {
 
   .state-error {
     border: 1px solid var(--color-error);
+  }
+
+  .json-highlight {
+    position: relative;
+    margin: -12px 0;
+
+    .text-preview {
+      white-space: pre-wrap;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      min-height: 40px;
+      font-size: 14px;
+      letter-spacing: 2px;
+      line-height: 20px;
+      margin: 0;
+      border: 0;
+      padding: 12px;
+    }
+
+    textarea {
+      &::selection {
+        background-color: var(--color-two);
+        -webkit-text-fill-color: var(--color-two-text);
+        color: var(--color-two-text);
+      }
+
+      padding: 12px;
+      margin: 0;
+      border: 0;
+      font-size: 14px;
+      letter-spacing: 2px;
+      line-height: 20px;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-fill-color: transparent;
+      outline: none;
+      width: 100%;
+      height: 100%;
+      min-height: 40px;
+      white-space: pre-wrap;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      position: absolute;
+      top: 0;
+      left: 0;
+      resize: none;
+      overflow: hidden;
+    }
+
+    .color-orange {
+      color: orange;
+    }
+
+    .color-green {
+      color: #0cde27;
+    }
+
+
+    .color-blue {
+      color: #7ad5ff;
+    }
   }
 }
 </style>

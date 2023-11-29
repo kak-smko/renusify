@@ -135,12 +135,13 @@ export default {
       }
       if (wPH) {
         if (res['width'] !== 0 && res['height'] === 0) {
-          res['height'] = res['width'] / wPH
+          res['height'] = parseInt(res['width'] / wPH)
         }
         if (res['width'] === 0 && res['height'] !== 0) {
-          res['width'] = res['height'] * wPH
+          res['width'] = parseInt(res['height'] * wPH)
         }
       }
+
       if (res['width'] !== 0 || res['height'] !== 0) {
         return this.size = res
       }
@@ -149,10 +150,10 @@ export default {
         let cs = window.getComputedStyle(this.$refs.rImg.parentElement)
         let paddingX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
         let borderX = parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
-        let w = parseFloat((parseFloat(cs.getPropertyValue('width')) - paddingX - borderX).toFixed(2));
+        let w = parseInt(parseFloat(cs.getPropertyValue('width')) - paddingX - borderX);
         return this.size = {
           width: w,
-          height: wPH ? w / wPH : 0
+          height: parseInt(wPH ? w / wPH : 0)
         }
       }
       return false

@@ -1,5 +1,5 @@
 import './style.scss'
-import {cleanArray, ifHas, keys} from '../../tools/helper'
+import {cleanArray, ifHas} from '../../tools/helper'
 
 let scopeObj;
 
@@ -153,7 +153,7 @@ function mounted(el, binding) {
             c = grab
         }
         c.classList.add("grab");
-        keys(el.eventsHandler).forEach(eventName => {
+        Object.keys(el.eventsHandler).forEach(eventName => {
             c.addEventListener(eventName, el.eventsHandler[eventName], {
                 passive: true
             })
@@ -188,7 +188,7 @@ function unmounted(el, binding) {
         if (!el.eventsHandler) {
             return
         }
-        keys(el.eventsHandler).forEach(eventName => {
+        Object.keys(el.eventsHandler).forEach(eventName => {
             c.removeEventListener(eventName, el.eventsHandler[eventName], {
                 passive: true
             })

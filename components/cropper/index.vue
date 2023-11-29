@@ -61,6 +61,7 @@ export default {
     getBlob: Boolean,
     selectImg: {type: Boolean, default: true},
   },
+  emits: ['cropped', 'original'],
   data() {
     return {
       show: false,
@@ -172,7 +173,7 @@ export default {
         that.crop(e.target.result);
       };
 
-      this.$emit("orginal", e.target.files[0]);
+      this.$emit("original", e.target.files[0]);
       reader.readAsDataURL(e.target.files[0]);
     },
     getDataURL() {

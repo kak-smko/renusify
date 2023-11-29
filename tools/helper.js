@@ -121,10 +121,6 @@ export function isArray(input) {
     return input instanceof Array || Object.prototype.toString.call(input) === '[object Array]';
 }
 
-export function keys(o) {
-    return Object.keys(o);
-}
-
 export function searchArray(arr, key, value) {
     if (!arr) {
         return false
@@ -186,18 +182,6 @@ export function cleanArray(actual) {
     return newArray;
 }
 
-export function highlightSetup(text, highlight) {
-    if (typeof text !== 'string' || typeof highlight !== 'string') {
-        return text;
-    }
-    highlight = highlight.trim();
-    if (highlight.length === 0) {
-        return text;
-    }
-    let keywords = cleanArray(highlight.split(' '));
-    keywords = keywords.join('|');
-    return text.replace(new RegExp(keywords, 'gi'), '<span class="color-warning-text">$&</span>');
-}
 
 export function htmlEncode(str) {
     return str.replace(/[\u00A0-\u9999<>]/gim, function (i) {
@@ -262,12 +246,7 @@ export function base64decode(str) {
 }
 
 export function size(obj) {
-    let size = 0;
-    let key;
-    for (key in obj) {
-        if (hasKey(obj, key)) size++;
-    }
-    return size;
+    return Object.keys(obj).length;
 }
 
 export function log(txt, type = 'log', on = 'development') {
@@ -398,24 +377,4 @@ export function getCookie(cname) {
         }
     }
     return "";
-}
-
-export function changeColor(vars) {
-    let head = document.head || document.getElementsByTagName('head')[0]
-    let children = head.querySelectorAll("[c='color']");
-    if (children) {
-        let childArray = Array.prototype.slice.call(children);
-        childArray.forEach(function (child) {
-            child.parentNode.removeChild(child);
-        });
-    }
-    let style = document.createElement('style');
-    style.setAttribute("c", "color");
-    head.appendChild(style);
-    let css = ':root{';
-    for (let k in vars) {
-        css += k + ':' + vars[k] + ';'
-    }
-    css += '}'
-    style.appendChild(document.createTextNode(css));
 }

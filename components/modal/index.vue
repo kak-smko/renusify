@@ -1,17 +1,16 @@
 <template>
   <teleport :to="`.${$r.prefix}app`">
     <transition :name="animate">
-      <div v-bind="$attrs" :class="{
+      <div v-if="modelValue" :class="{
         [`${$r.prefix}modal`]:true,
         'h-end': bottom,
         'modal-no-overlay': noOverlay,
         'animate-modal-vibrate': run_animate,
-      }" :style="{'height':$r.breakpoint.height+'px'}" @click.self="close"
-           v-if="modelValue">
+      }" v-bind="$attrs" @click.self="close"
+      >
         <div class="modal-container" :style="{'max-width':maxWidth,'max-height':maxHeight}" :class="{
       'modal-bottom':bottom,
       [color]:color,
-      ['animate-modal-' +animate]:animate,
      'modal-full-width':fullWidth,
      'modal-full-height':fullHeight,
       'modal-mini':minWidth,
@@ -54,30 +53,57 @@ export default {
     minWidth: {type: Boolean, default: true},
     flat: Boolean,
     closable: Boolean,
+    routeHistory: String,
     closebtn: {type: Boolean, default: true},
     color: String,
     animate: {
       type: String,
-      default: 'slide-up'
+      default: 'scale'
     }
-
   },
-  emits:['update:modelValue'],
+  emits: ['update:modelValue'],
   data() {
     return {
       state: null,
       run_animate: false
     }
   },
+  created() {
+    if (this.routeHistory) {
+      const h = this.$route.hash.replace('#', '').split('&')
+      if (h.includes(this.routeHistory)) {
+        this.$emit('update:modelValue', true)
+      }
+    }
+  },
   watch: {
+    '$route': function (n) {
+      let h = []
+      if (this.$route.hash) {
+        h = this.$route.hash.replace('#', '').split('&')
+      }
+      if (!h.includes(this.routeHistory)) {
+        this.$emit('update:modelValue', false)
+      } else {
+        this.$emit('update:modelValue', true)
+      }
+    },
     modelValue: {
       // immediate: true, watch at created component
       handler: function (newVal, oldVal) {
         if (newVal === true) {
           document.documentElement.style.overflow = 'hidden'
-          const that = this
-          window.onpopstate = function (event) {
-            that.$emit('update:modelValue', false)
+          if (this.routeHistory) {
+            const routeHashs = this.$route.hash.replace('#', '').split('&')
+            if (!routeHashs.includes(this.routeHistory)) {
+              let h = ''
+              if (this.$route.hash) {
+                h = this.$route.hash + '&' + this.routeHistory
+              } else {
+                h = '#' + this.routeHistory
+              }
+              this.$router.push({path: this.$route.fullPath, hash: h})
+            }
           }
         } else {
           document.documentElement.style.overflow = null
@@ -88,7 +114,27 @@ export default {
   methods: {
     close(force = false) {
       if (this.closable || force === true) {
-        this.$emit('update:modelValue', !this.modelValue)
+        if (this.routeHistory) {
+          if (history.state.back) {
+            this.$router.back()
+          } else {
+            let h = ''
+            if (this.$route.hash) {
+              h = this.$route.hash.replace('#', '').split('&')
+              h.splice(h.indexOf(this.routeHistory), 1)
+              let s = ''
+              let first = true
+              h.forEach((item) => {
+                if (item) {
+                  s += (first ? '#' : '&') + item
+                }
+              })
+              h = s
+            }
+            this.$router.replace({'path': this.$route.fullPath, hash: h})
+          }
+        }
+        this.$emit('update:modelValue', false)
       } else {
         this.run_animate = true
         setTimeout(() => {
