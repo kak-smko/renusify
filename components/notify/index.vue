@@ -21,11 +21,9 @@
                       @click.prevent="handle(item.on_click)"
                       @hide="hideChild(item.id,item.on_close)">
 
-            <template v-slot:content>
-                <slot name="content" :data="item.content">
-                    {{item.content}}
-                </slot>
-            </template>
+          <slot :data="item">
+            {{ item }}
+          </slot>
 
         </notification>
     </div>
@@ -60,12 +58,6 @@ export default {
     timeout: {
       type: Number,
       default: 4000
-    },
-    eventShow: {
-      default: 'notify'
-    },
-    eventHide: {
-      default: 'hide-notify'
     }
   },
   data () {
@@ -116,8 +108,8 @@ export default {
       }
     },
     registerBusMethods () {
-      window.renusifyBus.on(this.eventShow, this.showMe)
-      window.renusifyBus.on(this.eventHide, this.hideMe)
+      window.renusifyBus.on('r-notify', this.showMe)
+      window.renusifyBus.on('hide-r-notify', this.hideMe)
     }
   },
   created () {
@@ -126,26 +118,26 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-    @import '../../../style/include';
+@import '../../style/include';
 
     .#{$prefix}notify {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        position: fixed;
-        width: auto;
-        height: auto;
-        z-index: map_get($z-index, 'medium');;
-        overflow-y: auto;
-        max-height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      position: fixed;
+      width: auto;
+      height: auto;
+      z-index: map_get($z-index, 'medium');
+      overflow-y: auto;
+      max-height: 100%;
 
-        &.bottom-pos {
-            bottom: 0;
-        }
+      &.bottom-pos {
+        bottom: 0;
+      }
 
-        &.top-pos {
-            top: 0;
-        }
+      &.top-pos {
+        top: 0;
+      }
 
         &.right-pos {
             right: 0;

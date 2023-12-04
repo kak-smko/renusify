@@ -2,7 +2,7 @@
   <div
       :class="{
         [`${$r.prefix}input-container`]:true,
-        [c_color]:c_color&&!isDisabled,
+        [c_color]:c_color&&!isDisabled&&!hasError,
         'color-error-text':hasError&&genMessages.length>0,
         'hide-detail':c_hide,
         'input-focused':active,

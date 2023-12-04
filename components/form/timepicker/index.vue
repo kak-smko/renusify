@@ -30,22 +30,24 @@
             :withSec="withSec"
             v-model="lazyValue"
         ></timepicker>
-        <r-btn
-            class="color-success-text ml-7 mr-9 mb-3 mt-3"
-            outlined
-            @click="show_modal = false,emit()"
-        >
-          {{ $t('accept', 'renusify') }}
-        </r-btn
-        >
-        <r-btn
-            class="color-warning-text mr-7 ml-4 mb-3 mt-3"
-            outlined
-            @click="(show_modal = false), (lazyValue = null),emit()"
-        >
-          {{ $t('cancel', 'renusify') }}
-        </r-btn
-        >
+        <div class="my-3 d-flex h-space-between">
+          <r-btn
+              class="color-success-text"
+              outlined
+              @click="show_modal = false,emit()"
+          >
+            {{ $t('accept', 'renusify') }}
+          </r-btn
+          >
+          <r-btn
+              class="color-warning-text"
+              outlined
+              @click="(show_modal = false), (lazyValue = null),emit()"
+          >
+            {{ $t('cancel', 'renusify') }}
+          </r-btn
+          >
+        </div>
       </r-card>
     </r-modal>
   </div>

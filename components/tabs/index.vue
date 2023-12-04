@@ -13,18 +13,18 @@
     'tabs-hidden':$r.breakpoint.width>960
     }]" class="tabs-wrap" ref="tabs">
       <button
+          v-for="tab in items"
+          :key="tab.title"
+          :ref="tab.value.toString()"
           :class="[
         { 'tabs__item_active' : tab.value === modelValue,
         [tabActiveClass]:tab.value === modelValue },
         tabClass,
       ]"
           :disabled="tab.disabled || false"
-          :key="tab.title"
-          :ref="tab.value.toString()"
-          @click="handleClick(tab.value)"
           class="tabs__item"
           type="button"
-          v-for="tab in items"
+          @click="handleClick(tab.value)"
       >
         <slot :item="tab">{{ tab.title }}</slot>
       </button>
@@ -72,12 +72,9 @@ export default {
       type: String,
       required: false
     },
-    autoScrollToView: {
-      type: Boolean,
-      default: true
-    }
+    autoScrollToView: Boolean
   },
-  emits:['update:modelValue'],
+  emits: ['update:modelValue'],
   data() {
     return {
       disableLeft: true,
@@ -89,7 +86,9 @@ export default {
   mounted() {
     setTimeout(() => {
       this.offset()
-      this.moveActiveLine(this.modelValue.toString())
+      if (this.modelValue) {
+        this.moveActiveLine(this.modelValue.toString())
+      }
     }, 100)
   },
   watch: {
@@ -162,19 +161,6 @@ $btnTabsWidth: 50px;
   max-width: 100%;
   display: flex;
   flex-direction: row;
-
-  .tabs__item {
-    color: var(--color-text-secondary);
-
-    &_active {
-      color: var(--color-text-primary)
-    }
-
-    &:hover {
-      color: var(--color-text-primary);
-      border-bottom: 2px solid var(--color-text-secondary);
-    }
-  }
 
   .tabs-wrap {
     position: relative;

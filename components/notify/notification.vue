@@ -3,15 +3,15 @@
             :name="`slide-fade-${pos}`"
     >
         <div v-if="show" :class="[status, 'notify-msg']" :style="{ width: width }">
-            <slot name="content">
-                <div>
-                    <h3 class="title"><b>{{content.title}}</b></h3>
-                    <p class="subtitle-1 ma-0">{{content.text}}</p>
-                </div>
+            <slot>
+              <div>
+                <h3 class="title"><b>{{ content.title }}</b></h3>
+                <p class="subtitle-1 ma-0">{{ content.text }}</p>
+              </div>
             </slot>
-            <r-btn class="h-end" icon text @click="hideMe">
-                <r-icon v-html="$r.icons.close"></r-icon>
-            </r-btn>
+          <r-btn class="h-end" icon text @click.prevent.stop="hideMe">
+            <r-icon v-html="$r.icons.close"></r-icon>
+          </r-btn>
         </div>
     </transition>
 </template>
@@ -62,7 +62,7 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "renusify/style/_include.scss";
+@import "../../style/include";
 
 .notify-msg {
   display: flex;
@@ -71,7 +71,7 @@ export default {
   padding: 10px;
   border-radius: map-get($borders, 'md');
   position: relative;
-  z-index: 9999;
+  z-index: map_get($z-index, 'important');
   margin: 0.3rem 0;
 }
 </style>

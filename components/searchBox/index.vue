@@ -1,9 +1,10 @@
 <template>
-  <div :class="$r.prefix + 'search-box'">
+  <div :class="[$r.prefix + 'search-box',{
+          'to-top': openToTop}]">
     <template v-if="!closable || show">
       <div
           v-click-outside="handleclose"
-          :class="[inputClass, { 'z-important search-open': open }]"
+          :class="[inputControlClass, { 'z-important search-open': open }]"
           class="search-input"
       >
         <span v-if="categories" class="w-30">
@@ -11,9 +12,11 @@
               v-model="category"
               :items="categories"
               class="mt-0"
+              inputControlClass="ps-2"
               disable-search
               first-select
               hide
+              tile
               justValue
           ></r-select-input>
         </span>
@@ -37,8 +40,7 @@
       <r-card
           v-if="open"
           :class="{
-          'card-tile': $attrs.tile !== undefined && $attrs.tile !== false,
-          'to-top': openToTop,
+          'card-tile': $attrs.tile !== undefined && $attrs.tile !== false
         }"
           class="card-search z-important"
       >
@@ -82,7 +84,7 @@ export default {
     },
     label: String,
     url: String,
-    inputClass: [String, Object, Array],
+    inputControlClass: [String, Object, Array],
     query: {
       type: String,
       default: "search",
@@ -161,8 +163,28 @@ export default {
 .#{$prefix}search-box {
   position: relative;
 
-  .to-top {
-    bottom: 42px;
+  &.to-top {
+    .card-search {
+      bottom: 47px;
+      border-radius: map-get($borders, "md") map-get($borders, "md") 0 0;
+    }
+
+    .search-open {
+      border-top-left-radius: 0px !important;
+      border-top-right-radius: 0px !important;
+    }
+  }
+
+  &:not(&.to-top) {
+    .card-search {
+      top: 47px;
+      border-radius: 0 0 map-get($borders, "md") map-get($borders, "md");
+    }
+
+    .search-open {
+      border-bottom-left-radius: 0px !important;
+      border-bottom-right-radius: 0px !important;
+    }
   }
 
   .search-input {
@@ -178,10 +200,6 @@ export default {
     }
   }
 
-  .search-open {
-    border-bottom-left-radius: 0px !important;
-    border-bottom-right-radius: 0px !important;
-  }
 
   input {
     outline: none;
@@ -198,8 +216,8 @@ export default {
     width: 100%;
     overflow-y: auto;
     max-height: 300px;
-    border-radius: 0 0 map-get($borders, "md") map-get($borders, "md");
   }
+
 
   .search-shadow {
     position: fixed;

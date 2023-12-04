@@ -133,7 +133,7 @@ export default {
     },
     headers: Object
   },
-  emits:['update:modelValue','error'],
+  emits: ['update:modelValue', 'error'],
   data() {
     return {
       started: false,
@@ -268,7 +268,11 @@ export default {
               },
               (err) => {
                 this.uploadPercentage = 0;
-                this.$emit('error', err.response.data)
+                if (err.response) {
+                  this.$emit('error', err.response.data)
+                } else {
+                  this.$emit('error', err)
+                }
               }
           );
     },

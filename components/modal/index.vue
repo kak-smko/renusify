@@ -1,10 +1,12 @@
 <template>
   <teleport :to="`.${$r.prefix}app`">
-    <transition :name="animate">
+    <div v-if="modelValue&&!noOverlay" :class="{
+      [`${$r.prefix}modal-overlay`]:true
+    }"></div>
+    <transition :name="c_animate">
       <div v-if="modelValue" :class="{
         [`${$r.prefix}modal`]:true,
-        'h-end': bottom,
-        'modal-no-overlay': noOverlay,
+        'h-end': bottom||fullHeight,
         'animate-modal-vibrate': run_animate,
       }" v-bind="$attrs" @click.self="close"
       >
@@ -56,10 +58,7 @@ export default {
     routeHistory: String,
     closebtn: {type: Boolean, default: true},
     color: String,
-    animate: {
-      type: String,
-      default: 'scale'
-    }
+    animate: String
   },
   emits: ['update:modelValue'],
   data() {
@@ -109,6 +108,20 @@ export default {
           document.documentElement.style.overflow = null
         }
       }
+    }
+  },
+  computed: {
+    c_animate() {
+      if (this.animate) {
+        return this.animate
+      }
+      if (this.bottom) {
+        return 'slide-up'
+      }
+      if (this.fullHeight) {
+        return 'slide-up'
+      }
+      return 'scale'
     }
   },
   methods: {

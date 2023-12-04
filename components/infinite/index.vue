@@ -13,17 +13,19 @@
                 </r-col>
             </r-row>
         </r-container>
-        <r-infinite-div  class="pt-0"
+        <r-infinite-div class="pt-0"
                         :url="url"
                         :height="height"
                         :query="query"
                         :live-timer="liveTimer"
-                         :is-chat="isChat"
-                        :live="live">
+                        :is-chat="isChat"
+                        :headers="headers"
+                        :live="live"
+        >
 
-            <template v-slot="{item}">
-                <slot v-bind:item="item"></slot>
-            </template>
+          <template v-slot="{item}">
+            <slot v-bind:item="item"></slot>
+          </template>
 
         </r-infinite-div>
     </r-card>
@@ -59,6 +61,7 @@
                 default: 10000,
                 type: Number
             },
+          headers: Object
         },
         data() {
             return {

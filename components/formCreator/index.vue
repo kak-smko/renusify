@@ -6,9 +6,9 @@
         <r-row>
           <template :key="key" v-for="(item,key) in options">
             <r-col v-if="item['formInput']!==false&&iff(options[key])"
-                   :class="options[key]['r-col']?options[key]['r-col']:'col-12'">
+                   :class="options[key]['class']?options[key]['class']:'col-12'">
               <component
-                  :is="buildName(item['type'])"
+                  :is="item['type']"
                   :label="$t(key)"
                   v-model="editedItem[key]"
                   v-bind="getAttr(options[key])"
@@ -99,12 +99,6 @@ export default {
     }
   },
   methods: {
-    buildName(name) {
-      if (name.startsWith('r-')) {
-        return name
-      }
-      return 'r-' + name
-    },
     iff(data) {
       const that = this
 
@@ -152,18 +146,11 @@ export default {
       return true
     },
     getAttr(data) {
-      let res = {}
-      for (let i in data) {
-        if (this.$helper.hasKey(data, i) && !['formInput', 'sortable', 'type', 'tableShow', 'priority', '$if', 'r-col'].includes(i)) {
-          if (i === '$bind') {
-            data[i].forEach((item) => {
-              res[item[0]] = this.editedItem[item[1]]
-            })
-
-          } else {
-            res[i] = data[i]
-          }
-        }
+      let res = data['props'] ? data['props'] : {}
+      if (data['$bind']) {
+        data['$bind'].forEach((item) => {
+          res[item[0]] = this.editedItem[item[1]]
+        })
       }
       return res
     },

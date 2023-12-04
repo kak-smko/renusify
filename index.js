@@ -4,7 +4,7 @@ import Translate from './plugins/trans/Translate';
 import Storage from './plugins/storage/index';
 import DateTime from './plugins/trans/DateTime';
 import Currency from './plugins/trans/Currency';
-import Notify from './components/app/notify/notify.js';
+import Notify from './components/notify/notify.js';
 import valid from './plugins/validation/Validate';
 import Toast from './components/app/toast/toast.js';
 import event from './plugins/event';
@@ -84,19 +84,24 @@ export default {
                     },
                 },
             autoAddTranslate: true,
+            useNotify: false,
             package: null,
             store: {},
-            icons: Icons,
-            breakpoint: breakpointData
+            icons: Icons
         }, options))
-        // renusify notify
-        app.config.globalProperties.$notify = function (message = null) {
-            if (message === null) {
-                Notify.hide();
-            } else {
-                Notify.show(message);
+        app.config.globalProperties.$r.breakpoint = breakpointData
+        if (app.config.globalProperties.$r.useNotify) {
+            // renusify notify
+            app.config.globalProperties.$notify = function (message = null, settings = {}) {
+                if (message === null) {
+                    Notify.hide();
+                } else {
+                    settings['data'] = message
+                    Notify.show(settings);
+                }
             }
         }
+
         // renusify toast
         app.config.globalProperties.$toast = function (message, options) {
             Toast.show(message, options);

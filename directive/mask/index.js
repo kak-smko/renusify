@@ -4,7 +4,7 @@ function fireEvent(el, eventName, data) {
     el.dispatchEvent(e);
 }
 
-const maskStart = /^([^0ANX]+)/;
+const maskStart = /^([^BANX]+)/;
 
 function getInputElement(element) {
     if (element.tagName.toLocaleUpperCase() === 'INPUT') {
@@ -60,9 +60,6 @@ function format(data, mask = '') {
                 }
 
                 break loop;
-            case '?':
-                dataOffset++;
-                break;
             case 'X':
                 dataOutput += dataChar;
                 unmask += dataChar

@@ -52,7 +52,7 @@ export default {
       res = this.re_func(res);
 
       res = res.replace(/(&lt;+[\s\S]+&gt;)/g, '<span class="color-orange code-editor-span">$1</span>')
-      res = res.replace(/(\{\{+[\s\S]+}})/g, '<span class="color-blue code-editor-span">$1</span>')
+      res = res.replace(/\{\{([^}]+)}}/g, '<span class="color-blue code-editor-span">{{$1}}</span>')
       return res;
     },
   },
@@ -74,7 +74,13 @@ export default {
         this.openTag = null
         return false
       }
-
+      if (event.key === "=") {
+        const end = event.target.selectionEnd;
+        event.preventDefault()
+        document.execCommand('insertText', false, '=""');
+        event.target.selectionEnd = end + 2;
+        return false;
+      }
       return this.setTab(event)
     },
     re_comment(res) {

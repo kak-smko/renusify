@@ -99,6 +99,7 @@ emits:['update:modelValue'],
 
     .input-control {
       border-radius: 0;
+      padding: 4px;
       @include rtl() {
         border-right: 1px solid var(--c-unit) !important;
       }

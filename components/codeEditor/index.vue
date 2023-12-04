@@ -25,37 +25,33 @@
         <r-icon v-html="$r.icons.code_tags" exact></r-icon>
       </r-btn>
     </div>
-    <div v-show="false" ref="codeSlot">
-      <slot></slot>
-    </div>
     <div v-if="show === 'run' && runnable" class="code-compile">
       <r-code-editor-run
           :id="id"
-          :script="script"
-          :style="style"
-          :template="template"
+          :script="scr"
+          :style="sty"
+          :template="temp"
       ></r-code-editor-run>
     </div>
     <div v-show="show !== 'run'" ref="codeView" class="code-wrapper">
-      <div v-show="templateShow">
-        <span class="color-green">&lt;template&gt;</span>
+      <div>
+        <span v-show="templateShow" class="color-green">&lt;template&gt;</span>
         <highlight-html ref="h-html" v-model="temp"></highlight-html>
-        <span class="color-green">&lt;/template&gt;</span>
-        <br/>
+        <span v-show="templateShow" class="color-green">&lt;/template&gt;</span>
       </div>
-      <div v-show="scriptShow">
-        <span class="color-orange"
+      <div>
+        <span v-show="scriptShow" class="color-orange"
         >&lt;script&gt;<br/>export default {</span
         >
         <highlight-script ref="h-js" v-model="scr"></highlight-script>
-        <span class="color-orange">}<br/>&lt;script&gt;</span>
+        <span v-show="scriptShow" class="color-orange">}<br/>&lt;script&gt;</span>
       </div>
-      <div v-show="styleShow">
-        <span class="color-orange"
+      <div>
+        <span v-show="styleShow" class="color-orange"
         >&lt;style lang<span class="color-green">="css"</span>&gt;</span
         >
         <highlight-css ref="h-css" v-model="sty"></highlight-css>
-        <span class="color-orange">&lt;style&gt;</span>
+        <span v-show="styleShow" class="color-orange">&lt;style&gt;</span>
       </div>
     </div>
   </div>
@@ -101,9 +97,6 @@ export default {
           '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="m14.6 16.6l4.6-4.6l-4.6-4.6L16 6l6 6l-6 6l-1.4-1.4m-5.2 0L4.8 12l4.6-4.6L8 6l-6 6l6 6l1.4-1.4Z"/></svg>';
     }
   },
-  mounted() {
-    this.get_code("codeSlot");
-  },
   watch: {
     template: function (n) {
       this.temp = n
@@ -129,42 +122,7 @@ export default {
       this.temp = this.$refs["h-html"].pretty_html(this.temp)
       this.scr = this.$refs["h-js"].pretty_js(this.scr)
       this.sty = this.$refs["h-css"].pretty_js(this.sty)
-    },
-    toHTML(htmlString) {
-      let div = document.createElement("div");
-      div.innerHTML = htmlString;
-      return div;
-    },
-    get_code(slot = "codeSlot") {
-      if (!this.$refs[slot]) {
-        setTimeout(() => {
-          this.get_code(slot);
-        }, 100);
-        return;
-      }
-
-      this.code = this.toHTML(this.$refs[slot].innerHTML);
-      let temp = this.code.querySelector(".code-template");
-
-      if (temp && temp.childNodes.length > 0) {
-        for (let i = 0; i < temp.childNodes.length; i++) {
-          if (temp.childNodes[i].nodeName === "#comment") {
-            this.template = this.toHTML(temp.childNodes[i].nodeValue).innerHTML;
-            break;
-          }
-        }
-      }
-
-      let script = this.code.querySelector(".code-script");
-      if (script && script.childNodes.length > 0) {
-        for (let i = 0; i < script.childNodes.length; i++) {
-          if (script.childNodes[i].nodeName === "#comment") {
-            this.script = script.childNodes[i].nodeValue;
-            break;
-          }
-        }
-      }
-    },
+    }
   },
 };
 </script>

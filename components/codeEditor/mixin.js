@@ -1,6 +1,10 @@
 export default {
     methods: {
         pretty_html(text) {
+            if (!text) {
+                return ''
+            }
+            text = text.trim()
             text = text.replace(/ +(?= )/g, '');
             text = text.replace(/[\r|\n|\t]/g, '');
             let r = ''
@@ -18,9 +22,14 @@ export default {
                     }
                 }
             })
+            r = r.replace(/<([^/].*)>+[\r|\n|\t]+<\//g, '<$1></');
             return r
         },
         pretty_js(text) {
+            if (!text) {
+                return ''
+            }
+            text = text.trim()
             text = text.replace(/ +(?= )/g, '');
             text = text.replace(/[\r|\n|\t]/g, '');
             text = text.replace(/([,|;|{|(|\[])+[\s]/g, '$1');
@@ -50,6 +59,9 @@ export default {
                 if (c === '}') {
                     numopen -= 1
                 }
+                if (numopen < 0) {
+                    numopen = 0
+                }
                 r += c
                 if (c === '}' && next !== ',' && next !== ';' && next !== '}' && next !== ')') {
                     r += '\n' + '\t'.repeat(numopen)
@@ -60,7 +72,8 @@ export default {
                 if (c === ';' && next !== '}') {
                     r += '\n' + '\t'.repeat(numopen)
                 }
-                if (next === '}' && c !== '{') {
+                if (next === '}' && c !== '{' && numopen > 0) {
+
                     r += '\n' + '\t'.repeat(numopen - 1)
                 }
 
@@ -112,11 +125,12 @@ export default {
             if (event.keyCode === 13) {
                 event.preventDefault()
                 let n = event.target.value.substr(0, event.target.selectionStart).split('\n')
-                n = n[n.length - 1].split('')
+                n = n[n.length - 1].split('\t')
+
                 let w = ''
                 for (let i = 0; i < n.length; i++) {
-                    if (n[i] === ' ') {
-                        w += ' '
+                    if (n[i] === '') {
+                        w += '\t'
                     } else {
                         break
                     }

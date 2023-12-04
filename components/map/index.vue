@@ -1,16 +1,19 @@
 <template>
   <div ref="map"
+       :style="{
+          '--map-image-layers':`url(${iconLayers})`
+  }"
        :class="{[`${$r.prefix}map`]:true,'map-dark': dark, 'attribution-show': attribution }"
   >
     <div class="map-search" v-if="searchBox">
       <r-search-box
           :label="$t('search','renusify')"
-          @select="go"
-          url="https://nominatim.openstreetmap.org/search.php?polygon_geojson=0&accept-language=fa&countrycodes=IR&format=jsonv2"
-          query="q"
-          no-overlay
-          inputControlClass="sheet"
           :notFoundMsg="$t('map_not_found','renusify')"
+          inputClass="sheet"
+          no-overlay
+          query="q"
+          url="https://nominatim.openstreetmap.org/search.php?polygon_geojson=0&accept-language=fa&countrycodes=IR&format=jsonv2"
+          @select="go"
       >
         <template v-slot="{ item }">
           {{ item["display_name"] }}
@@ -21,20 +24,20 @@
 
     <r-btn
         v-if="meLocation"
+        :loading="loading"
         class="map-location color-white color-primary-text"
         icon
         @click.prevent="showConfirm"
-        :loading="loading"
     >
       <r-icon v-html="$r.icons.crosshairs_gps"></r-icon>
     </r-btn>
     <r-btn
-        class="map-attribution color-white color-primary-text"
-        @click.prevent="attribution = !attribution"
-        size="x-small"
+        class="map-attribution color-white color-black-text"
         icon
+        size="x-small"
+        @click.prevent="attribution = !attribution"
     >
-      <r-icon v-html="$r.icons.copyright" exact></r-icon>
+      C
     </r-btn>
 
     <r-confirm v-model="confirm"
@@ -54,7 +57,10 @@ export default {
     center: {
       type: Array,
       default: () => {
-        return [35.69940749291485, 51.33705139160157];
+        return [
+          35.69973857757377,
+          51.33806092139637
+        ];
       }
     },
     markers: {
@@ -68,10 +74,13 @@ export default {
     layerControl: {type: Boolean, default: true},
     meLocation: {type: Boolean, default: true},
     disableMove: {type: Boolean, default: false},
-    darkMode: Boolean
+    darkMode: Boolean,
+    mapImageMarker: String,
+    mapImageLayers: String
   },
   data() {
     return {
+      timeout_id: null,
       dark: this.darkMode,
       attribution: false,
       confirm: false,
@@ -84,24 +93,35 @@ export default {
       license: '&copy; | <a href="https://leafletjs.com" target="_blank">Leaflet</a> | <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors | Renusify'
     };
   },
-  emits:['update:modelValue','leaflet','map'],
+  emits: ['update:modelValue', 'leaflet', 'map'],
   created() {
     if (!this.$r.icons.crosshairs_gps) {
       this.$r.icons.crosshairs_gps = '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M12 8a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m-8.95 5H1v-2h2.05C3.5 6.83 6.83 3.5 11 3.05V1h2v2.05c4.17.45 7.5 3.78 7.95 7.95H23v2h-2.05c-.45 4.17-3.78 7.5-7.95 7.95V23h-2v-2.05C6.83 20.5 3.5 17.17 3.05 13M12 5a7 7 0 0 0-7 7a7 7 0 0 0 7 7a7 7 0 0 0 7-7a7 7 0 0 0-7-7Z"/></svg>'
-    }
-    if (!this.$r.icons.copyright) {
-      this.$r.icons.copyright = '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M10.08 10.86c.05-.33.16-.62.3-.86c.3-.56.81-.85 1.5-.86c.45 0 .86.2 1.15.49c.28.31.47.74.47 1.17h1.8c-.02-.47-.11-.9-.3-1.3c-.15-.38-.38-.72-.68-1c-1.45-1.34-4.14-1.15-5.37.37c-1.29 1.67-1.32 4.59-.01 6.26c1.21 1.49 3.86 1.7 5.3.37c.31-.25.56-.56.76-.92c.16-.36.27-.74.28-1.15H13.5c0 .21-.07.4-.16.57c-.09.19-.21.34-.34.47c-.33.26-.72.4-1.14.4c-.36-.01-.66-.08-.89-.23a1.41 1.41 0 0 1-.59-.64c-.5-.9-.42-2.15-.3-3.14M12 2C6.5 2 2 6.5 2 12c.53 13.27 19.5 13.26 20 0c0-5.5-4.5-10-10-10m0 18c-4.41 0-8-3.59-8-8c.44-10.61 15.56-10.61 16 0c0 4.41-3.59 8-8 8Z"/></svg>'
     }
   },
   async beforeMount() {
     await this.add();
   },
   watch: {
-    modelValue: function () {
+    modelValue: function (n, o) {
       this.map.flyTo(this.modelValue);
     },
     markers: function () {
       this.printMarkers()
+    }
+  },
+  computed: {
+    iconLayers() {
+      if (this.mapImageLayers) {
+        return this.mapImageLayers
+      }
+      return require('./images/layers.png')
+    },
+    iconMarker() {
+      if (this.mapImageMarker) {
+        return this.mapImageMarker
+      }
+      return require('./images/marker-icon.png')
     }
   },
   methods: {
@@ -114,7 +134,7 @@ export default {
     },
     go(e) {
       if (e.lat) {
-        this.map.flyTo([e.lat, e.lon]);
+        this.$emit("update:modelValue", [parseFloat(e.lat), parseFloat(e.lon)]);
       }
     },
     initMap() {
@@ -186,8 +206,13 @@ export default {
           that.dark = that.darkMode;
         }
       });
-      this.map.on("move", function () {
-        that.$emit("update:modelValue", Object.values(that.map.getCenter()));
+      this.map.on("move", function (e) {
+        if (e.originalEvent) {
+          clearTimeout(that.timeout_id)
+          that.timeout_id = setTimeout(() => {
+            that.$emit("update:modelValue", Object.values(that.map.getCenter()));
+          }, 100)
+        }
       });
     },
     run() {
@@ -219,6 +244,13 @@ export default {
         let options = {riseOnHover: true, item: item}
         if (item.icon) {
           options.icon = new this.L.icon(item.icon);
+        } else {
+          options.icon = new this.L.icon({
+            iconUrl: this.iconMarker,
+            iconSize: [30, 30],
+            iconAnchor: [15, 30],
+            popupAnchor: [0, -30]
+          });
         }
         let marker = new this.L.Marker(item.loc, options);
         marker.addTo(this.layerGroup)

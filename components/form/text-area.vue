@@ -3,7 +3,7 @@
            v-model="lazyValue"
            @click.stop="handleClick()"
            @update:model-value="emit"
-           class="text-area"
+           :class="`${$r.prefix}text-area`"
            :class="{'no-resize':noResize}"
   >
     <template v-slot="{uid}">

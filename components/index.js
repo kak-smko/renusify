@@ -1,5 +1,6 @@
 const list = {
     'r-app': {'p': 'app/index.vue', 'c': ['r-btn', 'r-icon', 'r-spacer'], 'd': []},
+    'r-notify': {'p': 'notify/index.vue', 'c': ['r-btn', 'r-icon'], 'd': []},
     'r-avatar': {'p': 'avatar/index.vue', 'c': ['r-btn', 'r-icon'], 'd': []},
     'r-toolbar': {
         'p': 'bar/toolbar/index.vue',
@@ -146,7 +147,6 @@ const list = {
         'c': ['r-progress-line', 'r-card', 'r-list', 'r-btn', 'r-icon', 'r-select-input'],
         'd': ['click-outside']
     },
-    'r-skeleton': {'p': 'skeleton/index.vue', 'c': [], 'd': []},
     'r-slider': {'p': 'slider/index.vue', 'c': ['r-progress-line', 'r-btn', 'r-icon'], 'd': ['touch']},
     'r-swiper': {'p': 'swiper/index.vue', 'c': [], 'd': ['touch']},
     'r-table': {

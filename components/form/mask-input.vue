@@ -74,11 +74,11 @@
                 for (let i = 0; i <lng; i++) {
                     const dataChar = data.charAt(n);
                     const maskChar = mask.charAt(i);
-                    switch (maskChar) {
+
+                  switch (maskChar) {
                         case 'N':
                             if (/[0-9]/.test(dataChar)) {
                                 dataOutput += dataChar;
-
                             }
                             n++
                             break;

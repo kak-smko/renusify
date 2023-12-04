@@ -3,7 +3,7 @@
     <r-row class="h-center flex-nowrap no-gutters">
       <r-col class="text-center">
         <div class="d-flex h-center mb-1 node-info">
-          <component :is="componentName" :node="node[nodeKey]"
+          <component :is="componentElm" :node="node[nodeKey]"
                      @fire="$emit('fire',$event)"
                      @click.prevent="$emit('select',{key:nodeKey,item:node[nodeKey]})"
           ></component>
@@ -32,7 +32,7 @@
                         @expand="handleExpand"
                         :expand="expand"
                         :openAll="openAll"
-                        :component-name="componentName"
+                        :component-name="componentElm"
                         @fire="$emit('fire',$event)"
                         @select="$emit('select',$event)"
         >
@@ -42,6 +42,7 @@
   </r-container>
 </template>
 <script>
+import {markRaw} from "vue";
 
 export default {
   name: 'r-tree-element',
@@ -83,6 +84,15 @@ export default {
     }
   },
   computed: {
+    componentElm() {
+      if (!this.componentName) {
+        return
+      }
+      if (this.componentName.__v_skip) {
+        return this.componentName
+      }
+      return markRaw(this.componentName)
+    },
     node() {
       return this.modelValue
     },
@@ -99,6 +109,9 @@ export default {
       let s = []
       for (const key in childs) {
         if (this.$helper.hasKey(childs, key)) {
+          if (childs[key]['gen'] === undefined) {
+            childs[key]['gen'] = key
+          }
           s.push({
             'key': key,
             'value': childs[key]
@@ -169,6 +182,7 @@ $distance: 20px;
   direction: ltr;
   position: relative;
   display: table;
+  user-select: none;
 
   .btn-extend {
     position: relative;

@@ -11,8 +11,7 @@ const list = {
     'sortable': 'sortable',
     'touch': 'touch',
     'title': 'title',
-
-
+    'skeleton': 'skeleton',
 }
 export const registers = (app, directives) => {
     directives.forEach((item) => {

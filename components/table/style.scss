@@ -247,7 +247,7 @@ $data-table-regular-header-height: 38px !default;
   }
 
   .table-row-enter-active, .table-row-leave-active {
-    transition: height .3s ease-in-out;
+    transition: height .3s linear;
     line-height: 0;
   }
 
@@ -265,9 +265,6 @@ $data-table-regular-header-height: 38px !default;
       line-height: 0;
       overflow: hidden;
 
-      > * {
-        height: 0;
-      }
     }
   }
 

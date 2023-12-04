@@ -294,6 +294,7 @@ export default {
     width: 100%;
     position: relative;
     display: flex;
+    height: 100%;
   }
 
   .slider-dots {

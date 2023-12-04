@@ -37,7 +37,6 @@
                 <r-select-input :label="$t('class','renusify')" :model-value="[...selectElm.classList]"
                                 multiple
                                 tags
-                                disableSearch
                                 justValue
                                 @update:model-value="addClass"></r-select-input>
             </r-col>

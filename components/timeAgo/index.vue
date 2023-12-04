@@ -73,7 +73,7 @@ export default {
         listChoice = 2
       }
 
-      if (seconds < 10) {
+      if (seconds < 5) {
         return this.t('just_now')
       }
       const lng = timeFormats.length
@@ -97,6 +97,9 @@ export default {
       }
     },
     t(val) {
+      if (this.noTrans) {
+        return val.replace(/_/g, ' ')
+      }
       return this.$t('date_time_' + val, 'renusify')
     }
   },
