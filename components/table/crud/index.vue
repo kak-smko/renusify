@@ -102,14 +102,14 @@
               <r-icon v-html="props.opened!==props.key?$r.icons.plus:$r.icons.minus"></r-icon>
             </r-btn>
             <slot name="cell" :value="value" :item="props.item" :editItem="editItem">
-              <div v-if="value['option']['type']==='date-input' && props.item[value['value']]!==undefined">
+              <div v-if="value['option']['type']==='r-date-input' && props.item[value['value']]!==undefined">
                 {{ $d(new Date(props.item[value['value']]), value['option']['format'] || 'short') }}
               </div>
               <div
-                  v-else-if="value['option']['type']==='time-ago' && props.item[value['value']]!==undefined">
+                  v-else-if="value['option']['type']==='r-time-ago' && props.item[value['value']]!==undefined">
                 <r-time-ago :time="props.item[value['value']]"></r-time-ago>
               </div>
-              <div v-else-if="value['option']['type']==='switch-input'">
+              <div v-else-if="value['option']['type']==='r-switch-input'">
                 <r-switch-input
                     :readonly="value['option']['formInput']===false"
                     :modelValue="props.item[value['value']]"
@@ -117,7 +117,7 @@
                     class="mt-0"
                 ></r-switch-input>
               </div>
-              <div v-else-if="value['option']['type'] === 'number-input'">
+              <div v-else-if="value['option']['type'] === 'r-number-input'">
                 {{ $n(props.item[value["value"]]) }}
               </div>
               <div v-else-if="value['option']['type']!=='action'">

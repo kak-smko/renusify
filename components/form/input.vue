@@ -521,7 +521,7 @@ export default {
     }
   }
 
-  &.text-area {
+  &.#{$prefix}text-area {
     .input-control {
       height: auto;
 

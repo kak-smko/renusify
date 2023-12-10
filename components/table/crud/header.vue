@@ -39,7 +39,7 @@
                                       :label="$t('add','renusify')" @update:model-value="add"></r-select-input>
                       <r-divider class="my-3"></r-divider>
                       <template v-for="(item,i) in inputs" :key="i">
-                        <r-row class="v-baseline" v-if="['text-input','text-area'].includes(item.option.type)">
+                        <r-row v-if="['r-text-input','r-text-area'].includes(item.option.type)" class="v-baseline">
                           <r-col class="col-5 md-3">
                             <r-select-input v-model="item.advance.action"
                                             :items="[
@@ -63,17 +63,17 @@
                                 </r-btn>
                             </r-col>
                         </r-row>
-                        <r-row class="v-baseline" v-else-if="'number'===item.option.type">
-                            <r-col class="col-6 md-3">
-                              <r-select-input v-model="item.advance.action"
-                                              :items="[
+                        <r-row v-else-if="'r-number-input'===item.option.type" class="v-baseline">
+                          <r-col class="col-6 md-3">
+                            <r-select-input v-model="item.advance.action"
+                                            :items="[
                                           {name:$t('advance_search_equal','renusify'),value:'e'},
                                           {name:$t('advance_search_not_equal','renusify'),value:'ne'},
                                           {name:$t('advance_search_gt','renusify'),value:'gt'},
                                       {name:$t('advance_search_gte','renusify'),value:'gte'},
                                       {name:$t('advance_search_lt','renusify'),value:'lt'},
                                       {name:$t('advance_search_lte','renusify'),value:'lte'}]"
-                                              firstSelect
+                                            firstSelect
                                               justValue
                                               disableSearch
                                               :label="$t('advance_search_operator','renusify')"></r-select-input>
@@ -87,17 +87,17 @@
                                 </r-btn>
                             </r-col>
                         </r-row>
-                        <r-row class="v-baseline" v-else-if="'switch'===item.option.type">
-                            <r-col class="col-5 md-3">
-                              <r-select-input v-model="item.advance.action"
-                                              :items="[
+                        <r-row v-else-if="'r-switch-input'===item.option.type" class="v-baseline">
+                          <r-col class="col-5 md-3">
+                            <r-select-input v-model="item.advance.action"
+                                            :items="[
                                           {name:$t('advance_search_equal','renusify'),value:'e'}
                                           ]"
-                                              justValue
-                                              firstSelect
-                                              disableSearch
-                                              :label="$t('advance_search_operator','renusify')"></r-select-input>
-                                </r-col>
+                                            justValue
+                                            firstSelect
+                                            disableSearch
+                                            :label="$t('advance_search_operator','renusify')"></r-select-input>
+                          </r-col>
                             <r-col class="col-6 md-8">
                               <r-switch-input v-model="item.advance.search" :label="item.text"></r-switch-input>
                             </r-col>
@@ -107,17 +107,17 @@
                                 </r-btn>
                             </r-col>
                         </r-row>
-                        <r-row class="v-baseline" v-else-if="'select'===item.option.type">
-                            <r-col class="col-5 md-3">
-                              <r-select-input v-model="item.advance.action"
-                                              :items="[
+                        <r-row v-else-if="'r-select-input'===item.option.type" class="v-baseline">
+                          <r-col class="col-5 md-3">
+                            <r-select-input v-model="item.advance.action"
+                                            :items="[
                                           {name:$t('advance_search_in','renusify'),value:'in'},
                                           {name:$t('advance_search_not_in','renusify'),value:'nin'}
                                           ]"
-                                              justValue
-                                              firstSelect
-                                              disableSearch
-                                              :label="$t('advance_search_operator','renusify')"></r-select-input>
+                                            justValue
+                                            firstSelect
+                                            disableSearch
+                                            :label="$t('advance_search_operator','renusify')"></r-select-input>
                             </r-col>
                           <r-col class="col-6 md-8">
                             <r-select-input v-model="item.advance.search" :label="item.text" :items="item.option.items"
@@ -129,17 +129,38 @@
                             </r-btn>
                           </r-col>
                         </r-row>
-                      <r-row class="v-baseline" v-else-if="['date-input','time-ago'].includes(item.option.type)">
-                        <r-col class="col-5 md-3" :a="item.advance.t='date'">
-                          <r-select-input v-model="item.advance.action"
-                                          :items="[
+                        <r-row v-else-if="'r-json-input'===item.option.type" class="v-baseline">
+                          <r-col class="col-5 md-3">
+                            <r-select-input v-model="item.advance.action"
+                                            :items="[
+                                          {name:$t('advance_search_equal','renusify'),value:'e'},
+                                          {name:$t('advance_search_not_equal','renusify'),value:'ne'}
+                                          ]"
+                                            :label="$t('advance_search_operator','renusify')"
+                                            disableSearch
+                                            firstSelect
+                                            justValue></r-select-input>
+                          </r-col>
+                          <r-col class="col-6 md-8">
+                            <r-json-input v-model="item.advance.search" :label="item.text"></r-json-input>
+                          </r-col>
+                          <r-col class="col-1">
+                            <r-btn class="color-error" icon @click.prevent="del(i)">
+                              <r-icon v-html="$r.icons.delete"></r-icon>
+                            </r-btn>
+                          </r-col>
+                        </r-row>
+                        <r-row v-else-if="['r-date-input','r-time-ago'].includes(item.option.type)" class="v-baseline">
+                          <r-col class="col-5 md-3" :a="item.advance.t='date'">
+                            <r-select-input v-model="item.advance.action"
+                                            :items="[
                                          {name:$t('advance_search_gt','renusify'),value:'gt'},
                                       {name:$t('advance_search_gte','renusify'),value:'gte'},
                                       {name:$t('advance_search_lt','renusify'),value:'lt'},
                                       {name:$t('advance_search_lte','renusify'),value:'lte'}
                                           ]"
-                                          justValue
-                                          disableSearch
+                                            justValue
+                                            disableSearch
                                           firstSelect
                                           :label="$t('advance_search_operator','renusify')"></r-select-input>
                         </r-col>
@@ -210,9 +231,9 @@
             add($event) {
               this.inputs.push($event)
               $event.advance = {}
-                if($event.option.type==='switch'){
-                  $event.advance.search = false
-                }
+              if ($event.option.type === 'r-switch-input') {
+                $event.advance.search = false
+              }
                 this.select = []
             }
         },
@@ -220,7 +241,7 @@
             header() {
                 let res = []
                 this.headerTable.forEach((item) => {
-                  if (['text-input', 'text-area', 'number', 'switch', 'select', 'date-input', 'time-ago'].includes(item.option.type)) {
+                  if (['r-text-input', 'r-text-area', 'r-number-input', 'r-switch-input', 'r-select-input', 'r-json-input', 'r-date-input', 'r-time-ago'].includes(item.option.type)) {
                     res.push(item)
                   }
                 })

@@ -11,7 +11,7 @@
         'flex-nowrap':!multiple
       }">
         <r-chip
-            class="my-0 ms-0"
+            class="my-0 ms-0 color-primary-text"
             :close="multiple&&!textChip"
             :key="key"
             :text="textChip || !multiple"
