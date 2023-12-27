@@ -1,6 +1,6 @@
 <template>
   <div :class="`${$r.prefix}rating size-${size} ms-n1`">
-    <r-btn :class="`${Math.round(modelValue)>=i?'color-warning-text':''}`" :key="i"
+    <r-btn :key="i" :class="`${Math.round(modelValue)>=i?'color-rating':''}`"
            :readonly="readonly"
            @click="select(i)"
            icon
@@ -30,14 +30,14 @@ export default {
     modelValue: Number,
     readonly: Boolean
   },
-  emits:['update:modelValue'],
-  created(){
-    if(!this.$r.icons.star) {
+  emits: ['update:modelValue'],
+  created() {
+    if (!this.$r.icons.star) {
       this.$r.icons.star = '<svg xmlns="http://www.w3.org/2000/svg"   preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2L9.19 8.62L2 9.24l5.45 4.73L5.82 21L12 17.27Z"/></svg>'
     }
   },
   methods: {
-    select (n) {
+    select(n) {
       this.$emit('update:modelValue', n)
     }
   }
@@ -58,6 +58,10 @@ $btn-sizes: (
   white-space: nowrap;
   transition: 1s $primary-transition;
   color: var(--color-disabled);
+
+  .color-rating * {
+    color: #fbc02d !important;
+  }
 
   @each $name, $size in $btn-sizes {
     &.size-#{$name} {

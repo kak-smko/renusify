@@ -1,5 +1,5 @@
 <template>
-  <r-card v-if="!autoSend" class="overflow-auto">
+  <r-card v-if="!autoSend" :class="$r.prefix+'form-creator'" class="overflow-auto">
     <r-container>
       <h1 v-if="title" class="title">{{ title }}</h1>
       <r-form ref="form" v-model="valid" @submit.prevent="save">

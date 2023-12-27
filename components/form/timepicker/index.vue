@@ -22,7 +22,7 @@
         :closebtn="false"
         :no-overlay="noOverlay"
     >
-      <r-card class="pt-3">
+      <r-card class="pt-3 pb-1">
         <timepicker
             class="mb-2 mx-3"
             :disableTime="disableTime"
@@ -30,7 +30,7 @@
             :withSec="withSec"
             v-model="lazyValue"
         ></timepicker>
-        <div class="my-3 d-flex h-space-between">
+        <div class="my-3 d-flex h-space-between px-3">
           <r-btn
               class="color-success-text"
               outlined
@@ -70,7 +70,7 @@ export default {
     noOverlay: Boolean,
     modelValue: String
   },
-  emits:['update:modelValue'],
+  emits: ['update:modelValue'],
   data() {
     return {
       active: false,

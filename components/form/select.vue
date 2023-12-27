@@ -11,14 +11,14 @@
         'flex-nowrap':!multiple
       }">
         <r-chip
-            class="my-0 ms-0 color-primary-text"
-            :close="multiple&&!textChip"
+            v-for="(item,key) in chips"
             :key="key"
-            :text="textChip || !multiple"
             :class="{'px-0':!multiple}"
-            @update:modelValue="handleChip($event,key)"
+            :close="multiple&&!textChip"
+            :text="textChip || !multiple"
+            class="my-0 ms-0 color-primary-text"
             selectable
-            v-for="(item,key) in chips">
+            @update:modelValue="handleChip($event,key)">
           {{ item ? item[text] : '' }}
         </r-chip>
         <span>
@@ -103,7 +103,7 @@ export default {
     firstSelect: Boolean,
     headers: Object
   },
-  emits:['update:modelValue','del'],
+  emits: ['update:modelValue', 'del'],
   data() {
     return {
       apiData: [],
@@ -220,12 +220,14 @@ export default {
       } else {
         this.handleClick()
       }
-
     },
     handleClick() {
       if (this.$refs.input) {
         this.$refs.input.focus()
-        this.$refs.input.scrollIntoView()
+        this.$refs.select.scrollIntoView({
+          block: "start",
+          behavior: "smooth"
+        })
       } else {
         this.focusInput(true)
       }
@@ -309,9 +311,12 @@ export default {
 </script>
 <style lang="scss">
 @import "../../style/include";
-$min-height:40px;
+
+$min-height: 40px;
 .#{$prefix}select-container {
   position: relative;
+  scroll-margin: $min-height;
+
   .input-control {
     min-height: $min-height;
     height: auto;
@@ -353,7 +358,8 @@ $min-height:40px;
     left: 0;
     z-index: map_get($z-index, 'default');
   }
-  .to-top{
+
+  .to-top {
     bottom: $min-height+2px;
   }
 

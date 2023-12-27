@@ -8,6 +8,7 @@
       :searchLink="`https://codenus.com/api/apps/address?lang=${$r.lang}`"
       :rules="required?['required']:[]"
       :headers="{'Authorization':''}"
+      :readonly="readonly"
       :tile="tile">
   </r-select-input>
   <r-select-input :label="$t('state','renusify')"
@@ -20,6 +21,7 @@
                   :rules="required?['required']:[]"
                   value="id"
                   :headers="{'Authorization':''}"
+                  :readonly="readonly"
                   :tile="tile">
 
   </r-select-input>
@@ -33,6 +35,7 @@
                   :rules="required?['required']:[]"
                   value="id"
                   :headers="{'Authorization':''}"
+                  :readonly="readonly"
                   :tile="tile">
 
   </r-select-input>
@@ -40,11 +43,13 @@
                 :label="$t('zip_code','renusify')"
                 v-model="zip_code"
                 :tile="tile"
+                :readonly="readonly"
                 :rules="required?['required']:[]"></r-text-input>
   <r-text-area v-if="!hideStreet" @update:model-value="emit(false,false)"
                :label="$t('street','renusify')"
                v-model="street"
                :tile="tile"
+               :readonly="readonly"
                :rules="required?['required']:[]"></r-text-area>
 </template>
 <script>
@@ -59,6 +64,7 @@ export default {
     hideCity: Boolean,
     hideZipCode: Boolean,
     hideStreet: Boolean,
+    readonly: Boolean,
     tile: {type: Boolean, default: undefined},
     defaultCountry: Object,
     modelValue: Object

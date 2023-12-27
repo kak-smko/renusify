@@ -250,13 +250,17 @@ $color-text: var(--color-two-text);
 }
 
 .#{$prefix}app {
+  * {
+    scroll-margin: 100px;
+  }
+
   ol, ul {
     margin: 0 15px;
   }
 
-    pre {
-      border-left: 5px solid var(--color-one);
-    }
+  pre {
+    border-left: 5px solid var(--color-one);
+  }
 
   pre {
     direction: ltr;
@@ -286,19 +290,20 @@ $color-text: var(--color-two-text);
     color: white;
   }
 
-    $background: #e2ece2;
-    blockquote {
+  $background: #e2ece2;
+
+  blockquote {
+    background-color: $background;
+    border: 5px solid var(--color-one);
+
+    &::before {
       background-color: $background;
-      border: 5px solid var(--color-one);
-
-      &::before {
-        background-color: $background;
-      }
-
-      &::after {
-        color: var(--color-one);
-      }
     }
+
+    &::after {
+      color: var(--color-one);
+    }
+  }
 
   blockquote {
     font-family: Georgia, Times, "Times New Roman", serif;

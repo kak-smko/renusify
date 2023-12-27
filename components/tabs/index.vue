@@ -1,17 +1,6 @@
 <template>
-  <nav :class="$r.prefix+'tabs'">
-    <div class="btn-tabs d-flex h-end v-center">
-      <r-btn @click.stop="isRtl?scroll_right():scroll_left()"
-             icon
-             text
-             v-if="isRtl?!disableRight:!disableLeft">
-        <r-icon v-html="$r.icons.chevron_left"></r-icon>
-      </r-btn>
-    </div>
-
-    <div :class="[wrapperClass,{
-    'tabs-hidden':$r.breakpoint.width>960
-    }]" class="tabs-wrap" ref="tabs">
+  <div :class="$r.prefix+'tabs'">
+    <div ref="tabs" :class="[wrapperClass]" class="tabs-wrap">
       <button
           v-for="tab in items"
           :key="tab.title"
@@ -33,16 +22,7 @@
           :style="{ width: `${activeLineWidth}px`, transform: `translateX(${activeLineOffset}px)` }"
           class="tabs__active-line"></div>
     </div>
-    <div class="btn-tabs d-flex h-start v-center">
-      <r-btn @click.stop="isRtl?scroll_left():scroll_right()"
-             icon
-             text
-             v-if="isRtl?!disableLeft:!disableRight">
-        <r-icon v-html="$r.icons.chevron_right"></r-icon>
-      </r-btn>
-    </div>
-
-  </nav>
+  </div>
 </template>
 
 <script>
@@ -77,15 +57,12 @@ export default {
   emits: ['update:modelValue'],
   data() {
     return {
-      disableLeft: true,
-      disableRight: true,
       activeLineWidth: 0,
       activeLineOffset: 0
     }
   },
   mounted() {
     setTimeout(() => {
-      this.offset()
       if (this.modelValue) {
         this.moveActiveLine(this.modelValue.toString())
       }
@@ -95,46 +72,12 @@ export default {
     modelValue(newCurrentTab, o) {
       if (o === newCurrentTab) return
       setTimeout(() => {
-        this.offset()
         this.moveActiveLine(newCurrentTab)
       }, 100)
     }
   },
-  computed: {
-    isRtl() {
-      return this.$r.rtl
-    }
-  },
-  methods: {
-    scroll_left() {
-      this.$refs.tabs.scrollLeft -= this.$refs.tabs.clientWidth * 3 / 4
-      this.offset()
-    },
-    scroll_right() {
-      this.$refs.tabs.scrollLeft += this.$refs.tabs.clientWidth * 3 / 4
-      this.offset()
-    },
-    offset() {
-      const div = this.$refs.tabs
-      this.disableLeft = true
-      this.disableRight = true
-      if (!div) {
-        return false
-      }
 
-      setTimeout(() => {
-        if (div.clientWidth === div.scrollWidth) {
-          this.disableLeft = true
-          this.disableRight = true
-        } else if (div.scrollLeft === 0) {
-          this.disableLeft = true
-          this.disableRight = false
-        } else if (div.scrollLeft + div.clientWidth === div.scrollWidth) {
-          this.disableRight = true
-          this.disableLeft = false
-        }
-      }, 100)
-    },
+  methods: {
     handleClick(value) {
       this.$emit('update:modelValue', value)
       this.moveActiveLine(value.toString())
@@ -168,10 +111,6 @@ $btnTabsWidth: 50px;
     white-space: nowrap;
     width: calc(100% - #{$btnTabsWidth*2});
     overflow: auto;
-
-    &.tabs-hidden {
-      overflow: hidden;
-    }
 
     scroll-behavior: smooth;
   }

@@ -6,7 +6,7 @@ export default {
             }
             text = text.trim()
             text = text.replace(/ +(?= )/g, '');
-            text = text.replace(/[\r|\n|\t]/g, '');
+            text = text.replace(/[\r\n\t]/g, '');
             let r = ''
             text = text.split('<')
             let numopen = 0
@@ -22,7 +22,7 @@ export default {
                     }
                 }
             })
-            r = r.replace(/<([^/].*)>+[\r|\n|\t]+<\//g, '<$1></');
+            r = r.replace(/<([^/].*)>+[\r\n\t]+<\//g, '<$1></');
             return r
         },
         pretty_js(text) {
@@ -31,8 +31,8 @@ export default {
             }
             text = text.trim()
             text = text.replace(/ +(?= )/g, '');
-            text = text.replace(/[\r|\n|\t]/g, '');
-            text = text.replace(/([,|;|{|(|\[])+[\s]/g, '$1');
+            text = text.replace(/[\r\n\t]/g, '');
+            text = text.replace(/([,;{(\[])+[\s]/g, '$1');
             let r = ''
             text = text.split('')
             let numopen = 0
@@ -176,7 +176,7 @@ export default {
 
 
             //function like $r $d()
-            regex = /(\$([a-zA-z0-9]*)[.|(])/g;
+            regex = /(\$([a-zA-z0-9]*)[.(])/g;
             res = res.replace(regex, '<span class="color-func code-editor-span">$1</span>')
 
 

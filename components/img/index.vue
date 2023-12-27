@@ -130,6 +130,8 @@ export default {
             if (p0 && p1) {
               wPH = p0 / p1
             }
+          } else {
+            wPH = 1
           }
         }
       }
