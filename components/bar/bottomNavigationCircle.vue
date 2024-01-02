@@ -43,7 +43,7 @@ export default {
   height: 56px;
   z-index: map_get($z-index, "default");
   background-color: var(--color-sheet);
-  color: var(--color-text-primary);
+  color: var(--color-on-sheet);
 
 
   .navigation-item {

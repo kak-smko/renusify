@@ -57,7 +57,10 @@ $btn-sizes: (
   max-width: 100%;
   white-space: nowrap;
   transition: 1s $primary-transition;
-  color: var(--color-disabled);
+
+  * {
+    color: var(--color-border);
+  }
 
   .color-rating * {
     color: #fbc02d !important;

@@ -1,36 +1,57 @@
 @import "./_include";
-
+//Surface – A role used for backgrounds and large, low-emphasis areas of the screen.
+//Primary, Secondary, Tertiary – Accent color roles used to emphasize or de-emphasize foreground elements.
+//Container – Roles used as a fill color for foreground elements like buttons. They should not be used for text or icons.
+//On – Roles starting with this term indicate a color for text or icons on top of its paired parent color. For example, on primary is used for text and icons against the primary fill color.
+//Variant – Roles ending with this term offer a lower emphasis alternative to its non-variant pair. For example, outline variant is a less emphasized version of the outline color.
 $colorsList: (
-        'one': #00acc1,
-        'one_l': #5ddef4,
-        'one_d': #007c91,
-        'two': #e8098f,
-        'error':#D50000,
-        'info':#0878f6,
-        'warning':#fbc02d,
-        'success':#04c40d,
-        'link':#4f98ec,
-        'background-one':#fafafa,
-        'background-two':#e0e0e0,
-        'divider':rgba(#444, 0.2),
-        'text-primary':#515151,
-        'text-secondary':#888,
-        'disabled':rgba(#000, 0.26),
-        'focused':rgba(#000, 0.12),
-        'pressed':rgba(#999, 0.4),
-        'border': rgba(#000, 0.24),
-        'sheet': #fff,
-        'sheet-active': #f5f5f5,
-        'sheet-hover': #eeeeee,
-        'overlay': rgba(225, 225, 225, 0.5)
+        "one": #415F91,
+        "on-one": #FFFFFF,
+        "one-container": #D6E3FF,
+        "on-one-container": #001B3E,
+        "two": #565F71,
+        "on-two": #FFFFFF,
+        "two-container": #DAE2F9,
+        "on-two-container": #131C2B,
+        "three": #705575,
+        "on-three": #FFFFFF,
+        "three-container": #FAD8FD,
+        "on-three-container": #28132E,
+        "error": #BA1A1A,
+        "on-error": #FFFFFF,
+        "error-container": #FFDAD6,
+        "on-error-container": #410002,
+        "success": #246b0f,
+        "on-success": #FFFFFF,
+        "success-container": #e3ffd6,
+        "on-success-container": #1d4100,
+        "warning": #a45104,
+        "on-warning": #FFFFFF,
+        "warning-container": #ffe8d6,
+        "on-warning-container": #411f00,
+        "info": #1a5aba,
+        "on-info": #FFFFFF,
+        "info-container": #d6e9ff,
+        "on-info-container": #002341,
+        "sheet": #F9F9FF,
+        "sheet-dark": #D9D9E0,
+        "sheet-light": #F9F9FF,
+        "on-sheet": #191C20,
+        "sheet-low": #E0E2EC,
+        "on-sheet-low": #44474E,
+        "sheet-container-lowest": #FFFFFF,
+        "sheet-container-low": #F3F3FA,
+        "sheet-container": #EDEDF4,
+        "sheet-container-high": #E7E8EE,
+        "sheet-container-highest": #E2E2E9,
+        "border": #74777F,
+        "border-low": #C4C6D0,
+        "overlay": #F6FAFE7f,
 ) !default;
 
 :root {
   @each $color_name, $color_value in $colorsList {
     --color-#{$color_name}: #{$color_value};
-  }
-  @each $color_name, $color_value in $colorMain {
-    --color-#{$color_name}-text: #{$color_value};
   }
 }
 
@@ -72,7 +93,7 @@ $colorsList: (
 @each $color_name, $color_value in $colorMain {
   .color-#{$color_name} {
     @include background-color(var(--color-#{$color_name}), true);
-    @include text-color(var(--color-#{$color_name}-text));
+    @include text-color(var(--color-on-#{$color_name}), true);
   }
   .color-#{$color_name}-text {
     @include text-color(var(--color-#{$color_name}), true);
@@ -93,18 +114,6 @@ $colorsList: (
 
 .shadow-warning {
   --box-shadow: rgba(250, 150, 10, 0.2)
-}
-
-.color-primary-text {
-  @include text-color(var(--color-text-primary), true);
-}
-
-.color-secondary-text {
-  @include text-color(var(--color-text-secondary), true);
-}
-
-.color-disabled-text {
-  @include text-color(var(--color-disabled), true);
 }
 
 

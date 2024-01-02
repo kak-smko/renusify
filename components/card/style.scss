@@ -71,11 +71,9 @@
   transition: box-shadow .3s cubic-bezier(0.4, 0, 0.2, 1);
   @include elevation('md');
   border-radius: map_get($borders, 'md');
-
-
   background-color: var(--color-sheet);
   border-color: var(--color-sheet);
-  color: var(--color-text-primary);
+  color: var(--color-on-sheet);
 
 
   &-tile {

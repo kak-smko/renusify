@@ -2,7 +2,7 @@
   <div :class="`${$r.prefix}code-editor`">
     <div class="code-action text-right">
       <r-btn
-          class="image-copy"
+          class="color-white-text"
           icon
           text
           @click.prevent="$helper.copy($refs.codeView.innerText)"
@@ -10,18 +10,18 @@
         <r-icon v-html="$r.icons.copy"></r-icon>
       </r-btn>
       <r-btn
-          class="image-copy"
+          class="color-white-text"
           icon
           text
           @click.prevent="pretty"
       >
         P
       </r-btn>
-      <r-btn v-if="show === 'code' && runnable" text @click="show = 'run'">
+      <r-btn v-if="show === 'code' && runnable" class="color-white-text" text @click="show = 'run'">
         run
         <r-icon v-html="$r.icons.play" exact></r-icon>
       </r-btn>
-      <r-btn v-if="show === 'run'" text @click="show = 'code'">
+      <r-btn v-if="show === 'run'" class="color-white-text" text @click="show = 'code'">
         <r-icon v-html="$r.icons.code_tags" exact></r-icon>
       </r-btn>
     </div>
@@ -137,6 +137,7 @@ export default {
   background-color: #15212e;
   color: #fff;
   padding: 10px;
+  font-size: 14px;
 
   .code-script,
   .code-template {

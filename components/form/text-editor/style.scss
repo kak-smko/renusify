@@ -3,14 +3,14 @@
 .#{$prefix}text-editor {
 
 
-    .editor-content {
-      border: 1px solid var(--color-border);
-    }
+  .editor-content {
+    border: 1px solid var(--color-border);
+  }
 
-  @include typography($headings, 'body-1');
+  @include typography($headings, 'body-2');
 
   a {
-    color: var(--color-link)
+    color: var(--color-one)
   }
 
   img {
@@ -18,7 +18,7 @@
   }
 
   .editor-content {
-    color: var(--color-text-primary);
+    color: var(--color-on-sheet);
     transition: all .3s ease;
     min-height: 200px;
     max-height: 60vh;

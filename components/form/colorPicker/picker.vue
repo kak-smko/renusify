@@ -170,7 +170,8 @@ export default {
   box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.16);
   z-index: 1;
 
-  background: #f7f8f9;
+  background: var(--color-sheet-container-lowest);
+  color: var(--color-on-sheet-container-lowest);
 
   canvas {
     vertical-align: top;
@@ -212,13 +213,13 @@ export default {
 
 
     .name {
-      color: #999;
-      background: #e7e8e9;
+      color: var(--color-on-sheet-container);
+      background: var(--color-sheet-container)
     }
 
     .value {
-      color: #666;
-      background: #eceef0;
+      color: var(--color-on-sheet);
+      background: var(--color-sheet)
     }
   }
 }

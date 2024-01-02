@@ -179,7 +179,7 @@
                 </r-col>
             </r-row>
         </r-container>
-      <r-progress-line color="color-two" v-if="loading"></r-progress-line>
+      <r-progress-line v-if="loading" color="color-one"></r-progress-line>
         <r-confirm
                 hard
                 v-model="showConfirm"

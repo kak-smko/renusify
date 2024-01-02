@@ -53,15 +53,28 @@ $icon-sizes: (
   transition-duration: $chip-transition-duration;
   transition-timing-function: $chip-transition-fn;
   vertical-align: middle;
-
-
-  border-color: var(--color-divider);
+  border-color: var(--color-border);
 
   &:not(.chip-active) {
-    background: #e0e0e0;
+    background: var(--color-two-container);
+    color: var(--color-on-two-container);
   }
 
   @include states();
+
+  &.chip-disabled {
+    @include disable-states();
+
+    &:not(.chip-text):not(.chip-outlined) {
+      background-color: var(--color-#{map-metro-get($states, 'disabled','state','color')}) !important;
+    }
+
+    &.btn-text, &.btn-outlined {
+      &::before {
+        opacity: 0 !important;
+      }
+    }
+  }
 
   &:before {
     background-color: currentColor;
@@ -108,16 +121,13 @@ $icon-sizes: (
   }
 
   &.chip-active {
+    background-color: var(--color-one);
+    color: var(--color-on-one);
+
     .#{$prefix}icon {
       color: inherit;
       padding: 0 3px;
     }
-  }
-
-  &.chip-disabled {
-    opacity: .4;
-    pointer-events: none;
-    user-select: none;
   }
 
   &.chip-label {

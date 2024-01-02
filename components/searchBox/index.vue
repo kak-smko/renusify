@@ -191,7 +191,7 @@ export default {
     display: flex;
     align-items: center;
     border: solid 1px var(--color-border);
-    color: var(--color-text-primary);
+    color: var(--color-on-sheet);
     position: relative;
     border-radius: map-get($borders, "md");
 
@@ -207,7 +207,7 @@ export default {
     padding: 12px;
     max-width: 100%;
     min-width: 0px;
-    caret-color: var(--color-text-primary);
+    caret-color: var(--color-on-sheet);
   }
 
   .card-search {

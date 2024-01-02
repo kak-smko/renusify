@@ -22,14 +22,15 @@
 
 <script>
 import './style.scss'
-import { roots } from '../../tools/rootable'
+import {roots} from '../../tools/rootable'
+
 export default {
   name: 'r-btn',
   mixins: [roots],
   props: {
     tag: {
       type: String,
-      default: 'span'
+      default: 'button'
     },
     size: {
       type: String,
@@ -89,8 +90,7 @@ export default {
         c += ' btn-tile'
       }
       if (this.disabled) {
-        c += ' btn-disabled'
-        c += ' disabled-text'
+        c += ` btn-disabled`
       }
       if (this.readonly) {
         c += ' btn-readonly'

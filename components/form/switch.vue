@@ -2,9 +2,6 @@
     <r-input :class="`${$r.prefix}switch`" :modelValue="lazyValue" hide>
         <div class="switch-container" :class="{'switch-active':modelValue}">
             <div class="switch-label me-1 mt-1"
-                 :class="{
-                'color-primary-text':label2?modelValue:!modelValue
-            }"
             >{{label}}
             </div>
             <div class="switch-holder" @click="toggle()">
@@ -12,9 +9,6 @@
                 <div class="switch-dot"></div>
             </div>
             <div class="switch-label ms-1 mt-1"
-                 :class="{
-                'color-primary-text':label2?!modelValue:modelValue
-            }"
                  v-if="label2">{{label2}}</div>
         </div>
     </r-input>
@@ -87,7 +81,7 @@ emits:['update:modelValue','change'],
     width: 100%;
     height: 100%;
     border-radius: 10px;
-    background-color: var(--color-disabled);
+    background-color: var(--color-sheet-container);
   }
 
   .switch-dot {

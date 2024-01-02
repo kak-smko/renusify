@@ -554,8 +554,8 @@ export default {
   }
 
   .meridiem-active {
-    background-color: var(--color-timepicker);
-    color: #fff;
+    background-color: var(--color-three-container);
+    color: var(--color-on-three-container);
   }
 
   .text-meridiem > .time-meridiem {
@@ -683,8 +683,7 @@ export default {
 
 
   .number-disabled {
-    pointer-events: none;
-    color: var(--color-disabled)
+    @include disable-states()
   }
 }
 </style>

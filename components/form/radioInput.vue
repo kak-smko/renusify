@@ -12,7 +12,7 @@
                                v-html="$r.icons.check" exact></r-icon>
                    </transition>
             </span>
-      <span class="ms-2 color-primary-text" @click="emit(item)">
+      <span class="ms-2" @click="emit(item)">
                 {{ item[text] }}
             </span>
     </div>

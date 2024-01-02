@@ -58,37 +58,36 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
   vertical-align: middle;
   white-space: nowrap;
 
-
-  &.btn-disabled {
-    color: var(--color-disabled) !important;
-
-    .btn-loading {
-      color: var(--color-disabled) !important
-    }
-
-    &:not(.btn-text):not(.btn-outlined) {
-      background-color: var(--color-focused) !important
-    }
-  }
-
   &:not(.btn-text):not(.btn-outlined) {
     background-color: var(--color-sheet);
+    color: var(--color-on-sheet);
   }
 
   &.btn-outlined.btn-text {
-    border-color: var(--color-divider)
+    border-color: var(--color-border)
   }
 
 
   @include states();
 
+  &.btn-disabled {
+    @include disable-states();
+
+    &:not(.btn-text):not(.btn-outlined) {
+      background-color: var(--color-#{map-metro-get($states, 'disabled','state','color')}) !important;
+    }
+
+    &.btn-text, &.btn-outlined {
+      &::before {
+        opacity: 0 !important;
+      }
+    }
+  }
+
   @include ltr() {
     letter-spacing: $btn-letter-spacing;
   }
 
-  &.btn-disabled {
-    pointer-events: none;
-  }
 
   &.btn-readonly {
     pointer-events: none;
@@ -107,10 +106,6 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
     top: 0;
     transition: $btn-transition;
     background-color: currentColor
-  }
-
-  &:not(.btn-disabled) {
-    will-change: box-shadow
   }
 
   &:not(.btn-round) {
@@ -221,11 +216,6 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
 
 .btn-depressed {
   box-shadow: none !important
-}
-
-.btn-disabled {
-  box-shadow: none;
-  pointer-events: none
 }
 
 .btn-icon,
@@ -351,7 +341,7 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
 
 .#{$prefix}button-group {
   position: relative;
-  color: inherit;
+  color: var(--color-on-sheet);;
   background-color: var(--color-sheet);
 
   @include states();

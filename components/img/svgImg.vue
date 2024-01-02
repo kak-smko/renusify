@@ -28,9 +28,11 @@ export default {
           const el = document.createElement('div')
           el.innerHTML = d
           let svg = el.querySelector('svg')
-          svg.setAttribute('width', that.size.width + 'px')
-          svg.setAttribute('height', that.size.height + 'px')
-          that.replace(svg)
+          if (svg) {
+            svg.setAttribute('width', that.size.width + 'px')
+            svg.setAttribute('height', that.size.height + 'px')
+            that.replace(svg)
+          }
         })
       })
     }

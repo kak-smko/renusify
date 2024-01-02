@@ -2,14 +2,15 @@
   <div :class="`${$r.prefix}toast`">
     <transition name="slide-up">
       <div class="toast-content br-sm elevation-md" :class="'color-'+type" v-if="modelValue">
-          <span class="title">
+          <span class="title-1">
             <slot></slot>
           </span>
           <r-spacer></r-spacer>
-            <r-btn text class="title font-weight-bold" :class="{
+        <r-btn :class="{
                 'color-info-text':type==='warning',
                 'color-warning-text':type!=='warning'
-            }" v-if="action" @click.prevent="action(this)">{{actionName}}</r-btn>
+            }" class="title-1 font-weight-bold" text v-if="action" @click.prevent="action(this)">{{ actionName }}
+        </r-btn>
             <r-btn @click.prevent="close()"
                    icon
                    text

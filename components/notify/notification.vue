@@ -5,8 +5,8 @@
         <div v-if="show" :class="[status, 'notify-msg']" :style="{ width: width }">
             <slot>
               <div>
-                <h3 class="title"><b>{{ content.title }}</b></h3>
-                <p class="subtitle-1 ma-0">{{ content.text }}</p>
+                <h3 class="title-1"><b>{{ content.title }}</b></h3>
+                <p class="title-2 ma-0">{{ content.text }}</p>
               </div>
             </slot>
           <r-btn class="h-end" icon text @click.prevent.stop="hideMe">

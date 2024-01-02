@@ -1,7 +1,7 @@
 <template>
   <div :class="`${$r.prefix}json-input`">
     <div class="d-flex v-center">
-      <r-btn v-if="!disableEditKey" class="me-1 mb-1" icon @click="modeForm=!modeForm">{}</r-btn>
+      <r-btn v-if="!disableEditKey" class="me-1 mb-1" icon @click.prevent="modeForm=!modeForm">{}</r-btn>
       <div v-if="label">{{ label }}</div>
     </div>
     <div v-if="modeForm">

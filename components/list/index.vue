@@ -2,7 +2,7 @@
     <div :class="classes">
       <div
           class="list-item h-space-between"
-          :class="{'list-item-active color-one-text':$helper.searchArray(list,text,item_value[text])!==false}"
+          :class="{'list-item-active':$helper.searchArray(list,text,item_value[text])!==false}"
           :key="item_key"
           @click.prevent="handle(item_value)"
           v-for="(item_value,item_key) in genItems"
@@ -52,7 +52,7 @@ export default {
                 return []
             },
             classes() {
-              let c = `${this.$r.prefix}list sheet sheet-tile`
+              let c = `${this.$r.prefix}list`
                 if (this.disabled) {
                     c += ' list-disabled'
                 }

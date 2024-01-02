@@ -39,7 +39,7 @@
               content: '';
               width: 1px;
               height: 40%;
-              border-right: 2px solid var(--color-divider);
+              border-right: 2px solid var(--color-border);
               position: absolute;
               bottom: -20%;
               z-index: 0;

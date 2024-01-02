@@ -41,9 +41,8 @@
                                 @update:model-value="addClass"></r-select-input>
             </r-col>
             <r-col class="col-12 ltr">
-                <span class="cursor-pointer" v-for="(item,i) in currentPath" :key="i" @click="borderd(item)">
-                    <span class="color-disabled-text" v-if="i===currentPath.length-1">{{item.nodeName}} </span>
-                    <span :class="{'color-error-text':selectElm===item}" v-else>{{item.nodeName}} > </span>
+                <span v-for="(item,i) in currentPath" :key="i" class="cursor-pointer" @click.prevent="borderd(item)">
+                    <span :class="{'color-one-text':selectElm===item}">{{ item.nodeName }} > </span>
                 </span>
             </r-col>
             <r-col class="col-12">
@@ -259,16 +258,19 @@ export default {
                   items: [{text: 'HI', value: 'display-1'},
                     {text: 'HI', value: 'display-2'},
                     {text: 'HI', value: 'display-3'},
-                    {text: 'HI', value: 'display-4'},
-                    {text: 'HI', value: 'display-5'},
-                    {text: 'HI', value: 'title'},
-                    {text: 'HI', value: 'subtitle-1'},
-                    {text: 'HI', value: 'subtitle-2'},
-                    {text: 'HI', value: 'overline'},
+                    {text: 'HI', value: 'headline-1'},
+                    {text: 'HI', value: 'headline-2'},
+                    {text: 'HI', value: 'headline-3'},
+                    {text: 'HI', value: 'title-1'},
+                    {text: 'HI', value: 'title-2'},
+                    {text: 'HI', value: 'title-3'},
+                    {text: 'HI', value: 'body-1'},
                     {text: 'HI', value: 'body-2'},
-                            {text: 'HI', value: 'body-1'},
-                            {text: 'HI', value: 'caption'},
-                        ]
+                    {text: 'HI', value: 'body-3'},
+                    {text: 'HI', value: 'label-1'},
+                    {text: 'HI', value: 'label-2'},
+                    {text: 'HI', value: 'label-3'},
+                  ]
                     },
                     'header': {
                       icon: '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M3 4h2v6h4V4h2v14H9v-6H5v6H3V4m10 4h2.31l.32-3h2l-.32 3h2l.32-3h2l-.32 3H23v2h-1.9l-.2 2H23v2h-2.31l-.32 3h-2l.32-3h-2l-.32 3h-2l.32-3H13v-2h1.9l.2-2H13V8m4.1 2l-.2 2h2l.2-2h-2Z"/></svg>',
@@ -284,8 +286,6 @@ export default {
                     'color': {
                       icon: '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M19 11.5s-2 2.17-2 3.5a2 2 0 0 0 2 2a2 2 0 0 0 2-2c0-1.33-2-3.5-2-3.5M5.21 10L10 5.21L14.79 10m1.77-1.06L7.62 0L6.21 1.41l2.38 2.38l-5.15 5.15c-.59.56-.59 1.53 0 2.12l5.5 5.5c.29.29.68.44 1.06.44s.77-.15 1.06-.44l5.5-5.5c.59-.59.59-1.56 0-2.12Z"/></svg>',
                       items: [
-                        {text: 'color', value: 'color-primary-text'},
-                        {text: 'color', value: 'color-secondary-text'},
                         {text: 'color', value: 'color-disabled-text'},
                         {text: 'color', value: 'color-one-text'},
                         {text: 'color', value: 'color-two-text'},
@@ -370,7 +370,7 @@ export default {
               return
             }
             this.selectElm = el
-                el.style.border = '1px solid red'
+            el.style.border = '1px solid var(--color-one)'
             },
             bordered() {
                 const a = this.getSelection()

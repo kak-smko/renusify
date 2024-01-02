@@ -2,23 +2,23 @@
   <teleport :to="`.${$r.prefix}app`">
     <div :style="style" class="tour-layer"></div>
     <transition name="slide-up" mode="out-in">
-      <div v-if="msg" ref="tourMsg" :style="style_msg" class="tour-msg display-4">
+      <div v-if="msg" ref="tourMsg" :style="style_msg" class="tour-msg headline-1">
         <r-container>
           <div v-html="$helper.cleanXss(steps[run].msg)"></div>
           <div class="d-flex">
             <div><span
-                class="subtitle-1 color-success br-lg py-1 px-2 ltr">{{ steps.length }} / {{ run + 1 }}</span>
+                class="title-2 color-success br-lg py-1 px-2 ltr">{{ steps.length }} / {{ run + 1 }}</span>
             </div>
             <r-spacer></r-spacer>
-            <r-btn v-if="has_prev" :disabled="disable_prev" class="color-warning tour-clickable" @click.prevent="prev">
+            <r-btn v-if="has_prev" :disabled="disable_prev" class="color-info tour-clickable" @click.prevent="prev">
               {{ $t('prev', 'renusify') }}
             </r-btn>
-            <r-btn v-if="has_next" :disabled="disable_next" class="color-warning mx-1 tour-clickable"
+            <r-btn v-if="has_next" :disabled="disable_next" class="color-info mx-1 tour-clickable"
                    @click.prevent="next">
               {{ $t('next', 'renusify') }}
             </r-btn>
             <r-btn v-if="steps.length===run+1||canFinish" :disabled="disable_finish"
-                   class="color-warning mx-1 tour-clickable"
+                   class="color-success mx-1 tour-clickable"
                    @click.prevent="finish">{{ $t('finish', 'renusify') }}
             </r-btn>
           </div>

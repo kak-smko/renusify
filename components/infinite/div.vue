@@ -20,9 +20,9 @@
                 </div>
 
             </r-col>
-            <r-col class="col-12 text-center title"
+            <r-col class="col-12 text-center title-1"
                    v-if="noItem"
-            >{{$t('no_item','renusify')}}
+            >{{ $t('no_item', 'renusify') }}
             </r-col>
         </r-row>
     </r-container>

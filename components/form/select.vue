@@ -16,7 +16,7 @@
             :class="{'px-0':!multiple}"
             :close="multiple&&!textChip"
             :text="textChip || !multiple"
-            class="my-0 ms-0 color-primary-text"
+            class="my-0 ms-0"
             selectable
             @update:modelValue="handleChip($event,key)">
           {{ item ? item[text] : '' }}

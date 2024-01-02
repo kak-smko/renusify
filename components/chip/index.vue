@@ -43,7 +43,7 @@ export default {
         c += ' chip-selectable'
       }
       if (this.modelValue) {
-        c += ' chip-active ps-0 color-one'
+        c += ' chip-active ps-0'
       }
 
       if (this.close) {

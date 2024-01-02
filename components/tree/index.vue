@@ -123,7 +123,6 @@ $distance: 20px;
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: var(--color-background-one);
 
   &.tree-searchable {
     .#{$prefix}float {

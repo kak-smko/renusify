@@ -24,10 +24,10 @@
 }
 
 @mixin typography($headings,$key) {
-  font-size: map-metro-get($headings, $key, 'size') !important;
+  font-size: map-metro-get($headings, $key, 'size');
   font-weight: map-metro-get($headings, $key, 'weight');
   line-height: map-metro-get($headings, $key, 'line-height');
-  letter-spacing: map-metro-get($headings, $key, 'letter-spacing') !important;
+  letter-spacing: map-metro-get($headings, $key, 'letter-spacing');
 }
 
 @mixin elevation($name, $important: false) {
@@ -37,10 +37,10 @@
 
 @mixin states() {
   &:hover::before {
-    opacity: map-get($states, 'hover')
+    opacity: map-metro-get($states, 'hover', 'state', 'opacity')
   }
   &:focus::before {
-    opacity: map-get($states, 'focus')
+    opacity: map-metro-get($states, 'focus', 'state', 'opacity')
   }
   &-active {
     @include active-states()
@@ -49,11 +49,22 @@
 
 @mixin active-states() {
   &:hover::before, &::before {
-    opacity: map-get($states, 'activated')
+    opacity: map-metro-get($states, 'activated', 'state', 'opacity')
   }
   &:focus::before {
-    opacity: map-get($states, 'pressed')
+    opacity: map-metro-get($states, 'pressed', 'state', 'opacity')
   }
+}
+
+@mixin disable-states() {
+  &::before {
+    opacity: map-metro-get($states, 'disabled', 'state', 'opacity') !important;
+  }
+  opacity: map-metro-get($states, 'disabled', 'text', 'opacity') !important;
+  color: var(--color-#{map-metro-get($states, 'disabled','text','color')}) !important;
+  pointer-events: none;
+  user-select: none;
+  box-shadow: none;
 }
 
 @mixin firefox() {

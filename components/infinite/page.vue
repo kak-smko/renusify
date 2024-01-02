@@ -7,9 +7,9 @@
                          v-show="loading"
 
         ></r-progress-line>
-        <div class="text-center subtitle-1"
+        <div class="text-center title-2"
              v-if="noItem"
-        >{{noItemMsg}}
+        >{{ noItemMsg }}
         </div>
     </div>
 </template>

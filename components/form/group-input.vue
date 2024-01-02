@@ -3,7 +3,7 @@
            :model-value="modelValue"
            hide>
     <div class="w-full">
-      <span v-if="label" class="color-primary-text">{{ label }}</span>
+      <span v-if="label">{{ label }}</span>
       <div class="group-holder" v-for="(item,i) in modelValue" :key="i">
         <div class="group-slot">
           <slot :item="item" :index="i" :disableDel="disDel">

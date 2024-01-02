@@ -66,7 +66,7 @@ export default {
     },
     validateOnBlur: {type: Boolean, default: undefined}
   },
-  emits:['pre-icon','icon','update:modelValue'],
+  emits: ['pre-icon', 'icon', 'update:modelValue'],
   data() {
     return {
       uid: 'input_' + this.$helper.uniqueId(),
@@ -304,31 +304,30 @@ export default {
     }
   }
 
-    &:not(.input-disabled) {
-      input,
-      textarea, .label, .#{$prefix}icon, .#{$prefix}btn {
-        color: var(--color-text-primary)
-      }
+  &:not(.input-disabled) {
+    input,
+    textarea, .label, .#{$prefix}icon, .#{$prefix}btn {
+      color: var(--color-on-sheet)
     }
+  }
 
-    input::placeholder,
-    textarea::placeholder {
-      color: var(--color-disabled)
-    }
-
-    &.input-disabled {
-      * {
-        color: var(--color-disabled)
-      }
-    }
-
-    .input-control {
-      border: solid 1px var(--color-border)
-    }
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-on-three-container)
+  }
 
   &.input-disabled {
+    * {
+      color: var(--color-border)
+    }
+
     pointer-events: none;
   }
+
+  .input-control {
+    border: solid 1px var(--color-border)
+  }
+
 
   input {
     max-height: 32px
@@ -369,6 +368,7 @@ export default {
     align-items: flex-start;
     justify-content: center;
     position: relative;
+
     .after-icon {
       position: absolute;
       cursor: pointer;
@@ -380,6 +380,7 @@ export default {
       }
 
     }
+
     .pre-icon {
       position: absolute;
       cursor: pointer;

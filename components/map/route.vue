@@ -8,7 +8,7 @@
       <r-col :style="'height: '+height" class="overflow-y-auto col-12 sm-3">
         <div class="pa-2">
           <slot :distance="distance" :time="time" name="header">
-            <div class="title">{{ $helper.ifHas(modelValue, '------', 'summary', 'name') }}</div>
+            <div class="bodey-1">{{ $helper.ifHas(modelValue, '------', 'summary', 'name') }}</div>
             <r-divider class="my-3"></r-divider>
             <div>{{ time || '---' }}</div>
             <div>{{ distance || '0 km' }}</div>
@@ -18,7 +18,7 @@
               <div v-for="(point,i) in points"
                    :key="i" class="route-point px-2 py-1 my-2 br-lg text-end">
                 <div class="d-flex">
-                  <span class="mt-1 title">{{ pos(points_keys.indexOf(i)) }}</span>
+                  <span class="mt-1 bodey-3">{{ pos(points_keys.indexOf(i)) }}</span>
                   <r-spacer></r-spacer>
                   <r-btn v-if="editable && i!==points_keys[0]" icon text
                          @click.prevent="to(points_keys.indexOf(i),points_keys.indexOf(i)-1)">

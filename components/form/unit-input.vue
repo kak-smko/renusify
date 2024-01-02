@@ -78,7 +78,7 @@ emits:['update:modelValue'],
 
 .#{$prefix}unit-input {
   .input-shadow, .input-shadow * {
-    color: var(--color-disabled) !important
+    @include disable-states()
   }
 
   input {
@@ -94,7 +94,7 @@ emits:['update:modelValue'],
     overflow-x: clip;
 
     * {
-      font-size: map-metro-get($headings, 'overline', 'size') !important;
+      font-size: map-metro-get($headings, 'label-3', 'size') !important;
     }
 
     .input-control {

@@ -12,14 +12,18 @@ $item-height: 48px;
   max-width: 100%;
 
   .list-item {
-    &.list-item-active {
-      background-color: var(--color-sheet-active)
-      }
-
-      &:hover {
-        background-color: var(--color-sheet-hover)
-      }
+    &:hover {
+      background-color: var(--color-sheet-container);
+      color: var(--color-on-sheet-container);
     }
+
+    &.list-item-active {
+      background-color: var(--color-one-container);
+      color: var(--color-on-one-container)
+    }
+
+
+  }
 
   &.list-subheader {
     align-items: center;

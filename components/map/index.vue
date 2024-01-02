@@ -25,7 +25,7 @@
     <r-btn
         v-if="meLocation"
         :loading="loading"
-        class="map-location color-white color-primary-text"
+        class="map-location color-white color-black-text"
         icon
         @click.prevent="showConfirm"
     >

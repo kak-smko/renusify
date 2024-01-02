@@ -4,9 +4,9 @@
       <r-container class="container-fluid">
         <r-row>
           <r-col class="col-12 text-center">
-             <h2 class="display-5">
-            {{title||$t('confirm_title','renusify')}}
-          </h2>
+             <h2 class="title-1">
+               {{ title || $t('confirm_title', 'renusify') }}
+             </h2>
             <r-divider class="my-3 color-warning"></r-divider>
           </r-col>
           <r-col class="col-12">

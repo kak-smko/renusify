@@ -51,10 +51,8 @@ export default {
       type: String
     },
     defaultCountry: {
-      // Default country code, ie: 'AU'
-      // Will override the current country of user
       type: String,
-      default: ''
+      default: 'US'
     },
     tile: {type: Boolean, default: undefined},
     required: Boolean,
@@ -100,37 +98,12 @@ export default {
   },
   methods: {
     initializeCountry() {
-      /**
-       * 1. Use default country if passed from parent
-       */
       if (this.defaultCountry) {
         const defaultCountry = this.findCountry(this.defaultCountry)
         if (defaultCountry) {
           this.activeCountry = defaultCountry
-          return
         }
       }
-      /**
-       * 2. Check if fetching country based on user's IP is allowed, set it as the default country
-       */
-      fetch('http://ip-api.com/json/', {
-        method: 'get'
-      }).then((response) => {
-        const that = this
-        response.json().then(function (data) {
-          that.activeCountry = that.findCountry(data.countryCode) || that.activeCountry
-        })
-      }).catch((error) => {
-        return Promise.reject(error)
-      })
-    },
-    /**
-     * Get the list of countries from the list of iso2 code
-     */
-    getCountries(list = []) {
-      return list
-          .map(countryCode => this.findCountry(countryCode))
-          .filter(Boolean)
     },
     findCountry(iso = '') {
       return allCountries.find(country => country.iso2 === iso)
@@ -166,9 +139,6 @@ export default {
     },
     toggleDropdown() {
       this.open = !this.open
-    },
-    clickedOutside() {
-      this.open = false
     }
   }
 }

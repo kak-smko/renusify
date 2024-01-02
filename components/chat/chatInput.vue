@@ -37,7 +37,7 @@
         <r-icon v-html="$r.icons.send"></r-icon>
       </r-btn>
       <br>
-      <span class="caption color-error-text" v-if="remain<30">{{ remain }}</span>
+      <span v-if="remain<30" class="label-1 color-error-text">{{ remain }}</span>
     </div>
     <input accept="*"
            @change="addFile()"
@@ -118,7 +118,7 @@ export default {
   display: flex;
 
   box-shadow: black 0px 8px 15px;
-  background: var(--color-background-two);
+  background: var(--color-sheet-container);
   border-top: 1px solid var(--color-border);
 
   .chat-input {

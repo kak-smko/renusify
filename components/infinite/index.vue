@@ -3,7 +3,7 @@
         <r-container full-width class="pa-0">
             <r-row class="v-center h-space-between" :class="color">
                 <r-col class="col-auto">
-                    <h3 class="title px-2">{{ title }}</h3>
+                    <h3 class="title-1 px-2">{{ title }}</h3>
                 </r-col>
                 <r-col class="col-auto">
                     <r-switch-input

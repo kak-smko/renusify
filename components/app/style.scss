@@ -3,16 +3,8 @@
 .#{$prefix}app {
   display: flex;
 
-  background: var(--color-background-one);
-  color: var(--color-text-primary);
-
-  .background-one {
-    background: var(--color-background-one);
-  }
-
-  .background-two {
-    background: var(--color-background-two);
-  }
+  background: var(--color-sheet-container-lowest);
+  color: var(--color-on-sheet-container-lowest);
 
 
   &.app-rtl {

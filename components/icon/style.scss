@@ -5,10 +5,7 @@
   vertical-align: -.5rem;
 
   &.icon-disabled {
-    pointer-events: none;
-    opacity: .6;
-    color: var(--color-disabled) !important
-
+    @include disable-states();
   }
 
   @include rtl() {

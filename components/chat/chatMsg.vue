@@ -18,7 +18,7 @@
                             'in-line-btm':i===message.list.length-1&&message.list.length>1
                  }">
         <div class="message-text body-1">
-          <div class="message-username subtitle-2" v-if="!isMe">{{ user.name }}
+          <div v-if="!isMe" class="message-username title-3">{{ user.name }}
           </div>
           <div v-if="msg.type==='file'" @click="$helper.download('/'+msg.link)">
             <div class="mx-n2 mt-n1" v-if="isImg(msg.link)">
@@ -32,7 +32,7 @@
             </div>
           </div>
           <div v-html="msg.content"></div>
-          <div class="message-info text-end caption">
+          <div class="message-info text-end label-1">
             {{ msg.timestamp }}
           </div>
         </div>
@@ -170,7 +170,7 @@ export default {
       height: 30px;
       border-radius: 50%;
 
-      background-color: var(--color-background-two);
+      background-color: var(--color-sheet-container);
 
       position: absolute;
       top: -15px;

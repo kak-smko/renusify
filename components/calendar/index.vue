@@ -329,9 +329,8 @@ export default {
       border: 1px solid var(--color-border);
     }
     .cell {
-      &.today {
-        color: var(--color-one);
 
+      &.today {
         .cellContent {
           border: solid 1px var(--color-one);
         }
@@ -345,8 +344,8 @@ export default {
 
     }
     .cell.disabled {
-      background-color: var(--color-disabled);
-      opacity: 0.5;
+      background-color: var(--color-border);
+      opacity: 0.3;
     }
 
 

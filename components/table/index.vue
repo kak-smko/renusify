@@ -1,5 +1,6 @@
 <template>
   <div
+      v-bind="$attrs"
       :class="{
         [`${$r.prefix}table`]:true,
         'table-editable':editable,
@@ -13,7 +14,7 @@
       <svg class="table-svg" height="18" width="18">
         <path class="table-svg-path" d="M 0 0 l 0 18 l 18 0 q -18 0 -18 -18"/>
       </svg>
-      <span class="color-info-text table-editable-icon px-2"
+      <span class="table-editable-icon px-2"
             @click.prevent="open_modal()">
                 <r-icon v-html="$r.icons.setting"></r-icon>
             </span>
@@ -57,7 +58,7 @@
                     class="tr-hidden">
                   <td :colspan="($helper.size(th)||th.length)">
                     <div v-for="(v,h) in hidden" :key="key+h" class="pa-2">
-                      <span class="title">{{ getText(h) }}: </span>
+                      <span class="title-1">{{ getText(h) }}: </span>
                       <span>{{ item[h] }}</span>
                     </div>
                   </td>
@@ -85,7 +86,7 @@
         >
           <r-col>
             <r-card class="pa-4 ma-1 d-flex h-space-between" tile>
-                <span class="title">
+                <span class="title-1">
                   <r-btn class="drag-btn" icon text>
                     <r-icon v-html="$r.icons.drag"></r-icon>
                   </r-btn>

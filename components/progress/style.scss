@@ -86,19 +86,19 @@ $progress-circle-overlay-transition: all .6s ease-in-out !default;
   text-align: center;
 
   &.progress-outlined {
-    color: var(--color-divider)
+    color: var(--color-border)
   }
 
   .line-determinate {
-    background-color: var(--color-text-primary);
+    background-color: var(--color-on-sheet);
   }
 
   .line-indeterminate {
-    background-color: var(--color-text-primary);
+    background-color: var(--color-on-sheet);
   }
 
     .progress-background {
-      background-color: var(--color-divider);
+      background-color: var(--color-sheet-container);
     }
 
   &.progress-outlined {

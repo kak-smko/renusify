@@ -41,8 +41,8 @@ body {
   background: rgba(100, 100, 100, 0.6);
 }
 
-$color: var(--color-two);
-$color-text: var(--color-two-text);
+$color: var(--color-one);
+$color-text: var(--color-on-one);
 
 ::-moz-selection {
   color: $color-text;
@@ -82,7 +82,7 @@ $color-text: var(--color-two-text);
 }
 
 .router-link-exact-active, a:hover {
-  color: var(--color-link)
+  color: var(--color-one)
 }
 
 //curser
@@ -124,65 +124,73 @@ $color-text: var(--color-two-text);
 
 //typography
 .#{$prefix}app {
-  @include typography($headings, 'body-1');
+  @include typography($headings, 'body-2');
 
   .display-1 {
-    @include typography($headings, 'h1')
+    @include typography($headings, 'display-1')
   }
 
   .display-2 {
-    @include typography($headings, 'h2')
+    @include typography($headings, 'display-2')
   }
 
   .display-3 {
-    @include typography($headings, 'h3')
+    @include typography($headings, 'display-3')
   }
 
-  .display-4 {
-    @include typography($headings, 'h4')
+  .headline-1 {
+    @include typography($headings, 'headline-1')
   }
 
-  .display-5 {
-    @include typography($headings, 'h5')
+  .headline-2 {
+    @include typography($headings, 'headline-2')
   }
 
-  .title {
-    @include typography($headings, 'h6')
+  .headline-3 {
+    @include typography($headings, 'headline-3')
   }
 
-  .subtitle-1 {
-    @include typography($headings, 'subtitle-1');
+  .title-1 {
+    @include typography($headings, 'title-1')
   }
 
-  .subtitle-2 {
-    @include typography($headings, 'subtitle-2');
+  .title-2 {
+    @include typography($headings, 'title-2');
   }
 
-  .body-2 {
-    @include typography($headings, 'body-2');
+  .title-3 {
+    @include typography($headings, 'title-3');
   }
 
   .body-1 {
     @include typography($headings, 'body-1');
   }
 
-  .caption {
-    @include typography($headings, 'caption')
+  .body-2 {
+    @include typography($headings, 'body-2');
   }
 
-  .overline {
-    @include typography($headings, 'overline');
-    text-transform: uppercase
+  .body-3 {
+    @include typography($headings, 'body-3');
+  }
+
+
+  .label-1 {
+    @include typography($headings, 'label-1')
+  }
+
+  .label-2 {
+    @include typography($headings, 'label-2')
+  }
+
+  .label-3 {
+    @include typography($headings, 'label-3')
   }
 
   p {
     margin-bottom: $spacer * 4
   }
 
-}
-
-.subtitle-1, .subtitle-2, .body-2, .caption, .overline {
-  @include text-color(var(--color-text-secondary));
 }
 
 //width
@@ -290,18 +298,16 @@ $color-text: var(--color-two-text);
     color: white;
   }
 
-  $background: #e2ece2;
-
   blockquote {
-    background-color: $background;
-    border: 5px solid var(--color-one);
+    background-color: var(--color-one-container);
+    border: 5px solid var(--color-border);
 
     &::before {
-      background-color: $background;
+      background-color: var(--color-one-container);
     }
 
     &::after {
-      color: var(--color-one);
+      color: var(--color-on-one-container);
     }
   }
 

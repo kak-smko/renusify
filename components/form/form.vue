@@ -1,5 +1,5 @@
 <template>
-  <form :class="`${$r.prefix}form`">
+  <form :class="`${$r.prefix}form`" @submit.prevent="submit">
     <slot></slot>
   </form>
 </template>
@@ -18,7 +18,7 @@ export default {
   props: {
     modelValue: Boolean
   },
-  emits:['update:modelValue'],
+  emits: ['update:modelValue', 'submit'],
   data: () => ({
     inputs: [],
     watchers: [],
@@ -26,7 +26,7 @@ export default {
   }),
   watch: {
     errorBag: {
-      handler (val) {
+      handler(val) {
         const errors = Object.values(val).includes(true)
         this.$emit('update:modelValue', !errors)
       },
@@ -36,7 +36,10 @@ export default {
     }
   },
   methods: {
-    watchInput (input) {
+    submit() {
+      this.$emit('submit', true)
+    },
+    watchInput(input) {
       const watcher = input => {
         return input.$watch('hasError', val => {
           this.errorBag[input.uid] = val

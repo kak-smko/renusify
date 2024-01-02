@@ -398,7 +398,7 @@ export default {
     &.selectable:hover {
       .cellContent {
 
-        color: #fff;
+        color: var(--color-on-one);
         background: var(--color-one);
 
       }
@@ -466,9 +466,7 @@ export default {
   }
 
   .cell.disabled {
-
-    opacity: 0.5;
-
+    opacity: 0.38;
   }
 
 }

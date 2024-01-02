@@ -1,6 +1,6 @@
 @import "../../../style/include";
 
-$bottom-nav-btn-font-size: map-metro-get($headings, 'caption', 'size') !default;
+$bottom-nav-btn-font-size: map-metro-get($headings, 'label-1', 'size') !default;
 
 .#{$prefix}bottom-navigation {
   bottom: 0;
@@ -12,7 +12,7 @@ $bottom-nav-btn-font-size: map-metro-get($headings, 'caption', 'size') !default;
 
 
   background-color: var(--color-sheet);
-  color: var(--color-text-primary);
+  color: var(--color-on-sheet);
 
   .router-link-exact-active {
     color: var(--color-one) !important

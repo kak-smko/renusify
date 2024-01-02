@@ -3,8 +3,8 @@ class Request {
         this._baseURL = '/';
         this._headers={
             common:{
-                'Accept': 'application/json, text/plain, */*',
-                'X-Requested-With':'XMLHttpRequest'
+                'Accept': '*/*',
+                'X-Requested-With': 'XMLHttpRequest'
             },
             get:{
                 'Content-Type':'application/x-www-form-urlencoded;charset=utf-8'
@@ -49,7 +49,7 @@ class Request {
                     xhr.setRequestHeader(key, opts.headers[key]);
                 });
             }
-            var params = opts.params;
+            let params = opts.params;
             // We'll need to stringify if we've been given an object
             // If we have a string, this is skipped.
             if (params && typeof params === "object") {

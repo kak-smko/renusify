@@ -1,7 +1,7 @@
 $prefix: 'r-' !default;
 $body-font-family: IRANSans, 'Roboto', sans-serif !default;
 $font-size-root: 16px !default;
-$font-size-root-mobile: 14px !default;
+$font-size-root-mobile: 13px !default;
 $line-height-root: 1.5rem !default;
 
 $spacer: 4px !default;
@@ -26,7 +26,7 @@ $borders: (
         'circle': 50%
 ) !default;
 
-$cursor:('pointer','auto','grab','grabbing')!default;
+$cursor: ('pointer', 'auto', 'grab', 'grabbing') !default;
 
 $widths: (
         'full': 100%,
@@ -97,12 +97,12 @@ $grid-gutters: (
 
 $box-shadows: (
         'none': none,
-        'xs': var(--box-shadow,rgb(0 0 0 / 0.05)) 0 .06rem .125rem,
-        'sm': var(--box-shadow,rgb(0 0 0 / 0.05)) 0 .125rem .25rem,
-        'md': var(--box-shadow,rgb(0 0 0 / 0.1)) 0 .25rem .5rem ,
-        'lg': var(--box-shadow,rgb(0 0 0 / 0.1)) 0 .5rem 1rem,
-        'xl': var(--box-shadow,rgb(0 0 0 / 0.1)) 0 .75rem 2rem ,
-        '2xl': var(--box-shadow,rgb(0 0 0 / 0.2)) 0 1.5rem 4rem,
+        'xs': var(--box-shadow, rgb(0 0 0 / 0.05)) 0 .06rem .125rem,
+        'sm': var(--box-shadow, rgb(0 0 0 / 0.05)) 0 .125rem .25rem,
+        'md': var(--box-shadow, rgb(0 0 0 / 0.1)) 0 .25rem .5rem,
+        'lg': var(--box-shadow, rgb(0 0 0 / 0.1)) 0 .5rem 1rem,
+        'xl': var(--box-shadow, rgb(0 0 0 / 0.1)) 0 .75rem 2rem,
+        '2xl': var(--box-shadow, rgb(0 0 0 / 0.2)) 0 1.5rem 4rem,
 ) !default;
 
 $container-max-widths: (
@@ -138,95 +138,109 @@ $font-weights: (
 
 
 $headings: (
-        'h1': (
-                'size': 6rem,
-                'weight': 300,
-                'line-height': 7rem,
-                'letter-spacing': -.015625em,
+        'display-1': (
+                'size': 4.75rem,
+                'weight': 400,
+                'line-height': 5.33rem,
+                'letter-spacing': -0.02rem,
                 'text-transform': false
         ),
-        'h2': (
+        'display-2': (
                 'size': 3.75rem,
-                'weight': 300,
-                'line-height': 4.25rem,
-                'letter-spacing': -.0083333333em,
+                'weight': 400,
+                'line-height': 4.33rem,
+                'letter-spacing': 0,
                 'text-transform': false
         ),
-        'h3': (
+        'display-3': (
                 'size': 3rem,
                 'weight': 400,
-                'line-height': 3.75rem,
-                'letter-spacing': normal,
+                'line-height': 3.66rem,
+                'letter-spacing': 0,
                 'text-transform': false
         ),
-        'h4': (
-                'size': 2.125rem,
+        'headline-1': (
+                'size': 2.66rem,
                 'weight': 400,
-                'line-height': 2.75rem,
-                'letter-spacing': .0073529412em,
+                'line-height': 3.33rem,
+                'letter-spacing': 0,
                 'text-transform': false
         ),
-        'h5': (
-                'size': 1.5rem,
+        'headline-2': (
+                'size': 2.33rem,
                 'weight': 400,
-                'line-height': 2rem,
-                'letter-spacing': normal,
+                'line-height': 3rem,
+                'letter-spacing': 0,
                 'text-transform': false
         ),
-        'h6': (
-                'size': 1.25rem,
+        'headline-3': (
+                'size': 2rem,
+                'weight': 400,
+                'line-height': 2.66rem,
+                'letter-spacing': 0,
+                'text-transform': false
+        ),
+        'title-1': (
+                'size': 1.66rem,
+                'weight': 400,
+                'line-height': 2.33rem,
+                'letter-spacing': 0,
+                'text-transform': false
+        ),
+        'title-2': (
+                'size': 1.33rem,
                 'weight': 500,
                 'line-height': 2rem,
-                'letter-spacing': .0125em,
+                'letter-spacing': 0.0125rem,
                 'text-transform': false
         ),
-        'subtitle-1': (
-                'size': 1rem,
-                'weight': normal,
-                'line-height': 1.75rem,
-                'letter-spacing': .009375em,
-                'text-transform': false
-        ),
-        'subtitle-2': (
-                'size': .875rem,
+        'title-3': (
+                'size': 1.15rem,
                 'weight': 500,
-                'line-height': 1.375rem,
-                'letter-spacing': .0071428571em,
+                'line-height': 1.66rem,
+                'letter-spacing': 0.008rem,
                 'text-transform': false
         ),
         'body-1': (
-                'size': 1rem,
+                'size': 1.33rem,
                 'weight': 400,
-                'line-height': 1.5rem,
-                'letter-spacing': .03125em,
+                'line-height': 2rem,
+                'letter-spacing': 0.042rem,
                 'text-transform': false
         ),
         'body-2': (
-                'size': .875rem,
+                'size': 1.15rem,
                 'weight': 400,
-                'line-height': 1.25rem,
-                'letter-spacing': .0178571429em,
+                'line-height': 1.66rem,
+                'letter-spacing': 0.02rem,
                 'text-transform': false
         ),
-        'button': (
-                'size': .875rem,
+        'body-3': (
+                'size': 1rem,
+                'weight': 400,
+                'line-height': 1.33rem,
+                'letter-spacing': 0.033rem,
+                'text-transform': false
+        ),
+        'label-1': (
+                'size': 1.15rem,
                 'weight': 500,
-                'line-height': 2.25rem,
-                'letter-spacing': .0892857143em,
+                'line-height': 1.66rem,
+                'letter-spacing': 0.008rem,
                 'text-transform': uppercase
         ),
-        'caption': (
-                'size': .75rem,
-                'weight': 400,
-                'line-height': 1.25rem,
-                'letter-spacing': .0333333333em,
-                'text-transform': false
-        ),
-        'overline': (
-                'size': .75rem,
+        'label-2': (
+                'size':1rem,
                 'weight': 500,
-                'line-height': 2rem,
-                'letter-spacing': .1666666667em,
+                'line-height': 1.33rem,
+                'letter-spacing': 0.042rem,
+                'text-transform': uppercase
+        ),
+        'label-3': (
+                'size': 0.85rem,
+                'weight': 500,
+                'line-height': 1.33rem,
+                'letter-spacing': 0.042rem,
                 'text-transform': uppercase
         )
 ) !default;
@@ -270,10 +284,11 @@ $bottom-nav-height: 56px !default;
 $navbar-width: 300px !default;
 
 $states: (
-        'hover': 0.04,
-        'focus': 0.12,
-        'selected': 0.08,
-        'activated': 0.12,
-        'pressed': 0.16,
-        'dragged': 0.08
-)!default;
+        'hover':('state':('opacity':0.08)),
+        'focus': ('state':('opacity':0.1)),
+        'selected': ('state':('opacity':0.08)),
+        'activated': ('state':('opacity':0.12)),
+        'pressed': ('state':('opacity':0.1)),
+        'disabled': ('state':('opacity':0.12, 'color':'sheet'), 'text':('opacity':0.38, 'color':'on-sheet')),
+        'dragged': ('state':('opacity':0.16))
+) !default;
