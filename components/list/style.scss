@@ -11,20 +11,6 @@ $item-height: 48px;
   position: relative;
   max-width: 100%;
 
-  .list-item {
-    &:hover {
-      background-color: var(--color-sheet-container);
-      color: var(--color-on-sheet-container);
-    }
-
-    &.list-item-active {
-      background-color: var(--color-one-container);
-      color: var(--color-on-one-container)
-    }
-
-
-  }
-
   &.list-subheader {
     align-items: center;
     display: flex;
@@ -49,12 +35,16 @@ $item-height: 48px;
     position: relative;
     text-decoration: none;
     margin-bottom: 4px;
-
     &:hover {
       cursor: pointer;
+      background-color: var(--color-sheet-container);
+      color: var(--color-on-sheet);
     }
 
     &.list-item-active {
+      background-color: var(--color-one-container);
+      color: var(--color-on-one-container);
+
       .#{$prefix}icon {
         color: inherit;
       }

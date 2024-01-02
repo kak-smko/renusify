@@ -111,7 +111,7 @@ export default {
     year: Number,
     month: Number,
   },
-  emits:['change','select'],
+  emits: ['change', 'select'],
   data() {
     return {
       tab: 'day',
@@ -322,31 +322,33 @@ export default {
   position: relative;
   display: inline-block;
   font-size: 10px;
-  color: #303030;
   overflow-x: auto;
   max-width: 100%;
-    .cell, .headCell {
-      border: 1px solid var(--color-border);
-    }
-    .cell {
 
-      &.today {
-        .cellContent {
-          border: solid 1px var(--color-one);
-        }
+  .cell, .headCell {
+    border: 1px solid var(--color-border);
+  }
+
+  .cell {
+
+    &.today {
+      .cellContent {
+        border: solid 1px var(--color-one);
       }
+    }
 
-      &.selectable:hover {
-        .cellContent {
-          border: solid 1px var(--color-one);
-        }
+    &.selectable:hover {
+      .cellContent {
+        border: solid 1px var(--color-one);
       }
+    }
 
-    }
-    .cell.disabled {
-      background-color: var(--color-border);
-      opacity: 0.3;
-    }
+  }
+
+  .cell.disabled {
+    background-color: var(--color-border);
+    opacity: 0.3;
+  }
 
 
   .table {

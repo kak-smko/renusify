@@ -110,7 +110,7 @@ export default {
   flex-direction: column;
   align-items: stretch;
   overflow: hidden;
-  background: var(--color-sheet-container);
-  color: var(--color-on-sheet-container);
+  background: var(--color-sheet);
+  color: var(--color-on-sheet);
 }
 </style>

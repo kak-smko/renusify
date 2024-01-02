@@ -2,17 +2,19 @@
 
 .#{$prefix}toolbar {
   flex: 1 1 auto;
+  background-color: var(--color-sheet);
+  color: var(--color-on-sheet);
 
   .toolbar-mobile {
-    .toolbar-close{
+    .toolbar-close {
       width: 40px;
       height: 40px;
       position: absolute;
       transition: 2s all map-get($transition, 'swing');
-      @include rtl(){
+      @include rtl() {
         right: -40px;
       }
-      @include ltr(){
+      @include ltr() {
         left: -40px;
       }
     }

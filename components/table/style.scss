@@ -10,7 +10,7 @@ $data-table-regular-header-height: 38px !default;
 
     .table-wrapper {
       background-color: var(--color-sheet-container-lowest);
-      color: var(--color-on-sheet-container-lowest);
+      color: var(--color-on-sheet);
     }
     .table-svg-path {
       fill: var(--color-sheet);
@@ -53,7 +53,7 @@ $data-table-regular-header-height: 38px !default;
         &:hover {
           td:first-child {
             background: var(--color-sheet-container);
-            color: var(--color-on-sheet-container)
+            color: var(--color-on-sheet)
           }
         }
       }

@@ -306,26 +306,33 @@ export default {
 
   &:not(.input-disabled) {
     input,
-    textarea, .label, .#{$prefix}icon, .#{$prefix}btn {
+    textarea {
       color: var(--color-on-sheet)
+    }
+  }
+
+  &:not(.input-disabled) {
+    .label, .#{$prefix}icon, .#{$prefix}btn {
+      color: var(--color-on-sheet-low)
     }
   }
 
   input::placeholder,
   textarea::placeholder {
-    color: var(--color-on-three-container)
+    color: var(--color-on-sheet-low)
   }
 
   &.input-disabled {
+    opacity: 0.38;
+    pointer-events: none;
+
     * {
-      color: var(--color-border)
+      color: var(--color-on-sheet)
     }
 
-    pointer-events: none;
-  }
-
-  .input-control {
-    border: solid 1px var(--color-border)
+    .input-control {
+      background-color: var(--color-sheet-container);
+    }
   }
 
 
@@ -368,6 +375,8 @@ export default {
     align-items: flex-start;
     justify-content: center;
     position: relative;
+    border: solid 1px var(--color-sheet-low);
+    background-color: var(--color-sheet-container-highest);
 
     .after-icon {
       position: absolute;
@@ -410,6 +419,7 @@ export default {
       border: unset !important;
       height: auto;
       padding: 0;
+      background-color: unset !important;
     }
   }
 

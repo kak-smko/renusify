@@ -155,7 +155,7 @@ export default {
 
   .btn-country {
     width: 120px;
-    border-color: var(--color-border)
+    border-color: var(--color-sheet-low)
 
   }
 

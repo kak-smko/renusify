@@ -72,7 +72,7 @@ emits:['update:modelValue'],
   cursor: pointer;
 
   .checkbox-input {
-    border: 1px solid var(--color-border)
+    border: 1px solid var(--color-on-sheet-low)
   }
 
   .#{$prefix}icon {
@@ -145,6 +145,7 @@ emits:['update:modelValue'],
 
   .checkbox-select {
     background-color: currentColor;
+    border: 0;
   }
 }
 </style>

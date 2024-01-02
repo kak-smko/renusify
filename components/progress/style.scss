@@ -85,8 +85,8 @@ $progress-circle-overlay-transition: all .6s ease-in-out !default;
 .#{$prefix}progress {
   text-align: center;
 
-  &.progress-outlined {
-    color: var(--color-border)
+  .progress-outlined {
+    color: var(--color-sheet-container-highest)
   }
 
   .line-determinate {
@@ -98,7 +98,7 @@ $progress-circle-overlay-transition: all .6s ease-in-out !default;
   }
 
     .progress-background {
-      background-color: var(--color-sheet-container);
+      background-color: var(--color-sheet-container-highest);
     }
 
   &.progress-outlined {

@@ -2,13 +2,13 @@
   <r-input class="mt-5" :model-value="modelValue" hide labelControlClass="label-active"
            :class="`${$r.prefix}color-picker`">
     <div @click="open=true" class="shower" :style="{'background-color':modelValue||'#ffffff'}"></div>
-    <r-modal v-model="open" maxWidth="260px" :closebtn="false" closable>
+    <r-modal v-model="open" :closebtn="false" class="color-picker-modal" closable maxWidth="260px">
       <picker :color="modelValue" @changeColor="emit"></picker>
       <div class="d-flex h-space-between">
-        <r-btn class="color-success flex-grow-1 me-1" @click.prevent="close()">
+        <r-btn class="color-success flex-grow-1 me-1" outlined @click.prevent="close()">
           <r-icon v-html="$r.icons.check" exact></r-icon>
         </r-btn>
-        <r-btn class=" color-error flex-grow-1 ms-1" @click.prevent="clear()" exact>
+        <r-btn class=" color-error flex-grow-1 ms-1" exact outlined @click.prevent="clear()">
           <r-icon v-html="$r.icons.delete"></r-icon>
         </r-btn>
       </div>
@@ -61,6 +61,11 @@ export default {
     height: 30px;
     cursor: pointer;
     border: 1px solid black;
+  }
+
+  .color-picker-modal {
+    background-color: var(--color-sheet-container-high);
+    color: var(--color-on-sheet);
   }
 }
 </style>

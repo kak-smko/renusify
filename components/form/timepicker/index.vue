@@ -94,6 +94,8 @@ export default {
 <style lang="scss">
 .modal-timepicker {
   .modal-mini {
+    background-color: var(--color-sheet-container-high);
+    color: var(--color-on-sheet);
     max-width: 285px !important;
   }
 }

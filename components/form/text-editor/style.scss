@@ -4,7 +4,7 @@
 
 
   .editor-content {
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-sheet-low);
   }
 
   @include typography($headings, 'body-2');

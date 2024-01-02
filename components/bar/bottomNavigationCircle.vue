@@ -44,7 +44,7 @@ export default {
   z-index: map_get($z-index, "default");
   background-color: var(--color-sheet);
   color: var(--color-on-sheet);
-
+  @include typography($headings, 'body-3');
 
   .navigation-item {
     width: 100%;
@@ -80,15 +80,15 @@ export default {
     .navigation-item-icon {
       transition: 0.3s all ease-in-out;
       bottom: 31px;
-      background-color: currentColor;
+      background-color: var(--color-one);
       border-radius: 50%;
       padding: 12px;
       width: 50px;
       height: 50px;
-      border: 3px solid white;
+      border: 3px solid var(--color-on-one);
 
       .#{$prefix}icon {
-        color: white;
+        color: var(--color-on-one);
       }
     }
   }

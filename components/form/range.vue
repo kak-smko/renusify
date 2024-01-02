@@ -252,7 +252,7 @@ export default {
         @include ltr() {
           transform: translate(-2px, -2px);
         }
-        border: 3px solid var(--color-two) !important;
+        border: 3px solid var(--color-one) !important;
       }
     }
 
@@ -315,7 +315,7 @@ export default {
         @include ltr {
           transform: translate(-2px, -2px);
         }
-        border: 3px solid var(--color-two) !important;
+        border: 3px solid var(--color-one) !important;
       }
     }
 

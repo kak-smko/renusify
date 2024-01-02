@@ -578,7 +578,7 @@ export default {
     cursor: pointer;
 
     &:hover {
-      color: var(--color-link);
+      color: var(--color-one);
     }
   }
 }

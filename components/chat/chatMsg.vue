@@ -170,7 +170,7 @@ export default {
       height: 30px;
       border-radius: 50%;
 
-      background-color: var(--color-sheet-container);
+      background-color: var(--color-sheet);
 
       position: absolute;
       top: -15px;

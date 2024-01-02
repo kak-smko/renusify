@@ -74,7 +74,7 @@ export default {
   cursor: pointer;
 
   .radio-input-item {
-    border: 1px solid var(--color-border)
+    border: 1px solid var(--color-on-sheet-low)
   }
 
   .#{$prefix}icon {

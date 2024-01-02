@@ -119,6 +119,7 @@ export default {
 
   box-shadow: black 0px 8px 15px;
   background: var(--color-sheet-container);
+  color: var(--color-on-sheet);
   border-top: 1px solid var(--color-border);
 
   .chat-input {

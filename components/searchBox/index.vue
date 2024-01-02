@@ -234,11 +234,11 @@ export default {
       border-radius: 0;
       min-height: 30px;
       @include ltr() {
-        border-right: 1px solid var(--color-border) !important;
+        border-right: 1px solid var(--color-sheet-container-low) !important;
       }
 
       @include rtl() {
-        border-left: 1px solid var(--color-border) !important;
+        border-left: 1px solid var(--color-sheet-container-low) !important;
       }
     }
 

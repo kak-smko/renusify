@@ -9,13 +9,12 @@ $bottom-nav-btn-font-size: map-metro-get($headings, 'label-1', 'size') !default;
   justify-content: center;
   width: 100%;
   height: $bottom-nav-height;
-
-
   background-color: var(--color-sheet);
   color: var(--color-on-sheet);
+  @include typography($headings, 'body-3');
 
   .router-link-exact-active {
-    color: var(--color-one) !important
+    color: var(--color-one)
   }
 
   .#{$prefix}btn {

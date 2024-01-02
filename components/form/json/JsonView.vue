@@ -87,10 +87,10 @@ export default {
 
 .#{$prefix}json-view {
   @include rtl() {
-    border-right: 1px solid var(--color-border);
+    border-right: 1px solid var(--color-sheet-low);
   }
   @include ltr() {
-    border-left: 1px solid var(--color-border);
+    border-left: 1px solid var(--color-sheet-low);
   }
 }
 </style>

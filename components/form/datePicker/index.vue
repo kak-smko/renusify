@@ -375,7 +375,8 @@ export default {
   position: relative;
   display: inline-block;
   font-size: 10px;
-  color: #303030;
+  color: var(--color-on-sheet);
+  background-color: var(--color-sheet-container-high);
 
   .cell {
     &.today {
@@ -388,8 +389,7 @@ export default {
 
     &.selected {
       .cellContent {
-
-        color: #fff;
+        color: var(--color-on-one);
         background: var(--color-one);
 
       }
@@ -439,7 +439,7 @@ export default {
 
     font-size: 1.3em;
     font-weight: normal;
-    color: #848484;
+    color: var(--color-on-sheet-low);
 
   }
 
@@ -456,7 +456,7 @@ export default {
   }
 
   .cell.outOfRange {
-    color: #c7c7c7;
+    color: var(--color-sheet-low);
   }
 
   .cell.selectable {

@@ -56,8 +56,8 @@ $icon-sizes: (
   border-color: var(--color-border);
 
   &:not(.chip-active) {
-    background: var(--color-two-container);
-    color: var(--color-on-two-container);
+    background: var(--color-sheet-container-low);
+    color: var(--color-on-sheet);
   }
 
   @include states();
@@ -123,6 +123,10 @@ $icon-sizes: (
   &.chip-active {
     background-color: var(--color-one);
     color: var(--color-on-one);
+
+    .chip-close {
+      color: var(--color-on-one);
+    }
 
     .#{$prefix}icon {
       color: inherit;

@@ -210,7 +210,7 @@ export default {
 .#{$prefix}json-input {
   textarea {
     outline: none;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-sheet-low);
   }
 
   .state-error {
@@ -236,9 +236,9 @@ export default {
 
     textarea {
       &::selection {
-        background-color: var(--color-two);
-        -webkit-text-fill-color: var(--color-two-text);
-        color: var(--color-two-text);
+        background-color: var(--color-one);
+        -webkit-text-fill-color: var(--color-one-text);
+        color: var(--color-one-text);
       }
 
       padding: 12px;

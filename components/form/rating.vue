@@ -59,7 +59,7 @@ $btn-sizes: (
   transition: 1s $primary-transition;
 
   * {
-    color: var(--color-border);
+    color: var(--color-on-sheet-low);
   }
 
   .color-rating * {

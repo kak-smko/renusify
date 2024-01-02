@@ -9,7 +9,7 @@
       <r-search-box
           :label="$t('search','renusify')"
           :notFoundMsg="$t('map_not_found','renusify')"
-          inputClass="sheet"
+          inputControlClass="sheet"
           no-overlay
           query="q"
           url="https://nominatim.openstreetmap.org/search.php?polygon_geojson=0&accept-language=fa&countrycodes=IR&format=jsonv2"

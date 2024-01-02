@@ -86,7 +86,7 @@ emits:['update:modelValue'],
   }
 
 
-  --c-unit: var(--color-border);
+  --c-unit: var(--color-sheet-low);
 
 
   .select-unit {

@@ -70,7 +70,7 @@ $divider-inset-margin: 72px !default;
   max-height: 0px;
   transition: inherit;
 
-  border-top: solid thin var(--color-border);
+  border-top: solid thin var(--color-border-low);
 
   &.divider-inset:not(.divider-vertical) {
     max-width: calc(100% - #{$divider-inset-margin});
