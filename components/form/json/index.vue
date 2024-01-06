@@ -1,5 +1,5 @@
 <template>
-  <div :class="`${$r.prefix}json-input`">
+  <div :class="[`${$r.prefix}json-input`,{'input-tile':c_tile}]">
     <div class="d-flex v-center">
       <r-btn v-if="!disableEditKey" class="me-1 mb-1" icon @click.prevent="modeForm=!modeForm">{}</r-btn>
       <div v-if="label">{{ label }}</div>
@@ -29,15 +29,15 @@
             :tile="tile"
             class="w-30 pe-1"></r-text-input>
         <div class="w-20" v-if="!valueType">
-            <r-select-input v-model="info.type"
-                            :tile="tile"
-                            class="me-1"
-                            :items="['text','number','boolean','json','array']"
-                            just-value
-                            disableSearch
-                            :translate="translate"
-                            @update:model-value="info.value=null"
-                            firstSelect></r-select-input>
+          <r-select-input v-model="info.type"
+                          :items="['text','number','boolean','json','array']"
+                          :tile="tile"
+                          :translate="translate"
+                          class="me-1"
+                          disableSearch
+                          firstSelect
+                          just-value
+                          @update:model-value="info.value=null"></r-select-input>
         </div>
         <r-text-input v-if="info.type==='text'"
                       :tile="tile"
@@ -91,7 +91,7 @@ export default {
     template: Object,
     baseArray: Boolean,
     disableAdd: Boolean,
-    tile: Boolean,
+    tile: {type: Boolean, default: undefined},
     disableEditKey: Boolean,
     disableDel: Boolean,
     translate: Boolean
@@ -131,6 +131,12 @@ export default {
     },
   },
   computed: {
+    c_tile() {
+      if (this.tile === undefined && this.$r.inputs.tile) {
+        return this.$r.inputs.tile
+      }
+      return this.tile
+    },
     build() {
       if (!this.lazyValue) {
         return "";
@@ -208,6 +214,21 @@ export default {
 @import "~renusify/style/include";
 
 .#{$prefix}json-input {
+  background: var(--color-sheet-container);
+  padding: 5px;
+
+  &.input-tile {
+    border-radius: map-get($borders, 'sm');
+  }
+
+  &:not(.input-tile) {
+    border-radius: map-get($borders, 'xl');
+  }
+
+  .input-control {
+    background: var(--color-sheet-container-low);
+  }
+
   textarea {
     outline: none;
     border: 1px solid var(--color-sheet-low);
@@ -264,16 +285,16 @@ export default {
     }
 
     .color-orange {
-      color: orange;
+      color: var(--color-error);
     }
 
     .color-green {
-      color: #0cde27;
+      color: var(--color-success);
     }
 
 
     .color-blue {
-      color: #7ad5ff;
+      color: var(--color-info);
     }
   }
 }

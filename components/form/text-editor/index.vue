@@ -197,7 +197,7 @@ export default {
         }
       }
     },
-    tile: Boolean,
+    tile: {type: Boolean, default: undefined},
     headers: Object
   },
   emits: ['update:modelValue'],

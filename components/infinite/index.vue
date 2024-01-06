@@ -5,7 +5,7 @@
                 <r-col class="col-auto">
                     <h3 class="title-1 px-2">{{ title }}</h3>
                 </r-col>
-                <r-col class="col-auto px-1">
+                <r-col class="col-auto mx-1">
                   <r-switch-input
                       label="live"
                       v-model="live"

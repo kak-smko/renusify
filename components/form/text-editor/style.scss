@@ -4,6 +4,10 @@
   background-color: var(--color-sheet-container);
   margin-top: 20px;
 
+  &.input-tile {
+    border-radius: map-get($borders, 'sm');
+  }
+
   &:not(.input-tile) {
     border-radius: map-get($borders, 'xl');
 

@@ -1,7 +1,8 @@
 <template>
   <component :class="`${$r.prefix}btn ${classes} size-${size}`"
              v-bind="att"
-               :is="route.tag"
+             :is="route.tag"
+             :type="type"
              v-ripple>
       <span class="btn-content">
         <slot></slot>
@@ -9,7 +10,7 @@
           <span class="label d-flex v-center h-center px-1 overflow-hidden" :class="labelClass" v-if="label">
               <transition name="counter-up" mode="out-in">
                   <span :key="label">
-                  {{label}}
+                  {{ label }}
                       </span>
               </transition>
           </span>
@@ -32,6 +33,10 @@ export default {
       type: String,
       default: 'button'
     },
+    type: {
+      type: String,
+      default: 'button'
+    },
     size: {
       type: String,
       default: 'default',
@@ -39,8 +44,8 @@ export default {
         return ['x-small', 'small', 'default', 'large', 'x-large'].indexOf(value) !== -1
       }
     },
-    label: [String,Number],
-    labelClass: [String,Array,Object],
+    label: [String, Number],
+    labelClass: [String, Array, Object],
     block: Boolean,
     depressed: Boolean,
     outlined: Boolean,
@@ -54,22 +59,22 @@ export default {
     loading: Boolean
   },
   computed: {
-      att(){
-                let res={}
-                if(this.href){
-                    res['href']=this.route.data.attrs.href
-                }
+    att() {
+      let res = {}
+      if (this.href) {
+        res['href'] = this.route.data.attrs.href
+      }
 
-                if(this.target){
-                    res['rel']='noreferrer'
-                    res['target']=this.route.data.attrs.target
-                }
-                if(this.to){
-                    res['to']=this.route.data.props.to
-                }
-                return res
-            },
-    classes () {
+      if (this.target) {
+        res['rel'] = 'noreferrer'
+        res['target'] = this.route.data.attrs.target
+      }
+      if (this.to) {
+        res['to'] = this.route.data.props.to
+      }
+      return res
+    },
+    classes() {
       let c = ''
       if (!this.depressed && !this.text && !this.outlined && !this.disabled) {
         c += 'btn-contained'
