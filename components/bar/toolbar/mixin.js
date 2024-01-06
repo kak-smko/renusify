@@ -37,8 +37,6 @@ export const toolbar= {
                     'elevation-md': !this.flat
                 }
                 a[this.$r.prefix + 'toolbar'] = true
-                a['sheet'] = true
-                a['sheet-tile'] = this.tile
                 return a
             }
         }

@@ -12,6 +12,21 @@
   overflow-wrap: break-word;
   white-space: normal;
 
+  &.card-sheet {
+    display: block;
+    transition: box-shadow .3s cubic-bezier(0.4, 0, 0.2, 1);
+    @include elevation('md');
+    border-radius: map_get($borders, 'md');
+    background-color: var(--color-sheet-container);
+    border-color: var(--color-sheet-container);
+    color: var(--color-on-sheet);
+  }
+
+  &.card-tile {
+    border-radius: 0;
+    @include elevation('none');
+  }
+
   &.card-outlined {
     border: 1px solid var(--color-border)
   }
@@ -61,24 +76,6 @@
   &.card-outlined, &.card-flat {
     background-color: transparent;
     box-shadow: none
-  }
-}
-
-//sheet
-
-.sheet {
-  display: block;
-  transition: box-shadow .3s cubic-bezier(0.4, 0, 0.2, 1);
-  @include elevation('md');
-  border-radius: map_get($borders, 'md');
-  background-color: var(--color-sheet-container-low);
-  border-color: var(--color-sheet-container-low);
-  color: var(--color-on-sheet);
-
-
-  &-tile {
-    border-radius: 0;
-    @include elevation('none');
   }
 }
 

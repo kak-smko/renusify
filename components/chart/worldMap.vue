@@ -20,7 +20,7 @@
         class="map-tooltip"
     >
       <slot :tooltip="tooltip">
-        <div class="pa-3 sheet">
+        <div class="pa-3">
           {{ tooltip.country }}
         </div>
       </slot>
@@ -1103,6 +1103,8 @@ export default {
   }
 
   .map-tooltip {
+    background-color: var(--color-sheet-container);
+    color: var(--color-on-sheet);
     position: absolute;
     z-index: 1;
   }

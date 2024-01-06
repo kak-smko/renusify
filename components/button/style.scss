@@ -341,9 +341,8 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
 
 .#{$prefix}button-group {
   position: relative;
-  color: var(--color-on-sheet);;
-  background-color: var(--color-sheet-low);
-
+  color: var(--color-on-sheet);
+  background-color: var(--color-sheet-container);
   @include states();
 
   .btn-container {

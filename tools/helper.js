@@ -296,7 +296,7 @@ export function randomString(len, an) {
         min = an === "a" ? 10 : 0,
         max = an === "n" ? 10 : 62;
     for (; i++ < len;) {
-        const r = Math.random() * (max - min) + min << 0;
+        let r = Math.random() * (max - min) + min << 0;
         str += String.fromCharCode(r += r > 9 ? r < 36 ? 55 : 61 : 48);
     }
     return str;
@@ -390,10 +390,11 @@ export function changeColor(vars) {
     }
     let style = document.createElement('style');
     style.setAttribute("c", "color");
+    style.setAttribute("type", "text/css");
     head.appendChild(style);
     let css = ':root{';
     for (let k in vars) {
-        css += k + ':' + vars[k] + ';'
+        css += '--color-' + k + ':' + vars[k] + ';'
     }
     css += '}'
     style.appendChild(document.createTextNode(css));

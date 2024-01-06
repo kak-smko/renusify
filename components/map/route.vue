@@ -1,5 +1,5 @@
 <template>
-  <r-container :class="`${$r.prefix}map-route sheet sheet-tile pa-0`">
+  <r-container :class="`${$r.prefix}map-route pa-0`">
     <r-row class="no-gutters">
       <r-col class="col-12 sm-9">
         <r-map :dark-mode="darkMode" :height="height" :model-value="center" :zoom="15" search-box
@@ -569,6 +569,8 @@ export default {
 
 .#{$prefix}map-route {
   display: flex;
+  background-color: var(--color-sheet-container);
+  color: var(--color-on-sheet);
 
   .route-point {
     border: 1px solid #cdcaca;

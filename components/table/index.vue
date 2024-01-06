@@ -71,7 +71,6 @@
     </div>
   </div>
   <r-modal v-if="editable" v-model="showModal">
-    <r-card>
       <r-container
           v-sortable="{
             items: cols,
@@ -100,7 +99,6 @@
           </r-col>
         </r-row>
       </r-container>
-    </r-card>
   </r-modal>
 </template>
 

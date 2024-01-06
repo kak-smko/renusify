@@ -9,7 +9,7 @@ $bottom-nav-btn-font-size: map-metro-get($headings, 'label-1', 'size') !default;
   justify-content: center;
   width: 100%;
   height: $bottom-nav-height;
-  background-color: var(--color-sheet);
+  background-color: var(--color-sheet-container);
   color: var(--color-on-sheet);
   @include typography($headings, 'body-3');
 

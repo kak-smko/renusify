@@ -41,10 +41,8 @@
            v-if="showFile"
     >
     <r-modal v-model="showCrop" maxWidth="300px">
-      <r-card>
         <r-cropper v-if="wPH&&file" :imgSrc="file" :selectImg="false" :w-p-h="wPH" get-blob showCropped
                    @cropped="file=$event,checkSave()"></r-cropper>
-      </r-card>
     </r-modal>
   </div>
 </template>

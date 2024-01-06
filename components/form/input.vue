@@ -376,7 +376,7 @@ export default {
     justify-content: center;
     position: relative;
     border: solid 1px var(--color-sheet-low);
-    background-color: var(--color-sheet-container-highest);
+    background-color: var(--color-sheet-container);
 
     .after-icon {
       position: absolute;

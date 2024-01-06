@@ -16,7 +16,7 @@
                                v-html="$r.icons.check" exact></r-icon>
                    </transition>
             </span>
-        <span class="ms-2" @click="emit">
+        <span class="ms-2" @click.prevent="emit">
                 <span class="color-error-text" v-if="isRequired">*</span>
           <slot name="label">{{ label }}</slot>
             </span>

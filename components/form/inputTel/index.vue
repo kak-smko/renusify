@@ -3,7 +3,7 @@
     <r-modal
         v-model="open"
     >
-      <r-card class="pa-2">
+      <div class="pa-2">
         <r-text-input
             :label="$t('search','renusify')"
             v-model="search"
@@ -18,7 +18,7 @@
             <span class="ltr">+{{ item.dialCode }}</span>
           </template>
         </r-list>
-      </r-card>
+      </div>
     </r-modal>
     <r-btn class="btn-country ltr ms-1"
            :rounded="!c_tile" :disabled="!select||readonly" @click.stop="toggleDropdown" outlined>

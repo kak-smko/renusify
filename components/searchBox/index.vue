@@ -68,7 +68,7 @@
         <div v-if="open" class="search-shadow"></div>
       </transition>
     </template>
-    <r-btn v-else class="mt-5" icon @click="show = !show">
+    <r-btn v-else class="mt-5" icon @click.prevent="show = !show">
       <r-icon v-html="$r.icons.search"></r-icon>
     </r-btn>
   </div>
@@ -194,10 +194,6 @@ export default {
     color: var(--color-on-sheet);
     position: relative;
     border-radius: map-get($borders, "md");
-
-    .sheet {
-      transition: 0.5s all ease;
-    }
   }
 
 

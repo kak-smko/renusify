@@ -2,7 +2,7 @@
   <div :class="`${$r.prefix}rating size-${size} ms-n1`">
     <r-btn :key="i" :class="`${Math.round(modelValue)>=i?'color-rating':''}`"
            :readonly="readonly"
-           @click="select(i)"
+           @click.prevent="select(i)"
            icon
            text
            v-for="i in count">

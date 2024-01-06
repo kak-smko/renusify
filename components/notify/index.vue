@@ -8,8 +8,9 @@
         'flex-column-reverse':!top,
         'flex-column':top,
     }" :style="{ 'min-width': width }">
-        <r-btn v-if="list.length>0" @click="handleClose(list[list.length-1].on_close_all)" class="color-error" rounded>
-            {{$t('clear','renusify')}}
+        <r-btn v-if="list.length>0" class="color-error" rounded
+               @click.prevent="handleClose(list[list.length-1].on_close_all)">
+          {{ $t('clear', 'renusify') }}
         </r-btn>
         <notification v-for="item in list" :key="item.id"
                       :pos="left?'left':'right'"

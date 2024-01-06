@@ -1,5 +1,5 @@
 <template>
-  <r-card :class="`${$r.prefix}table-manage`">
+  <div :class="`${$r.prefix}table-manage`">
     <r-modal bottom full-width v-model="showForm">
       <slot name="form" :autoSend="autoSend"
             :method="method"
@@ -19,7 +19,7 @@
       </slot>
     </r-modal>
     <r-modal v-model="showCopy" bottom full-width>
-      <r-card class="pa-3">
+      <div class="pa-3">
         <div :key="key" class="mb-5"
              v-for="(item,key) in table.option">
           <template v-if="item['formInput']!==false">
@@ -42,9 +42,12 @@
                   <r-number-input v-if="copyItem['t']==='copy'" :label="$t('count_copy','renusify')"
                                   v-model="copyItem['c']"></r-number-input>
                 </span>
-          <r-btn class="color-success" :loading="loading" @click="copyAll()">{{ $t('send', 'renusify') }}</r-btn>
+          <r-btn :loading="loading" class="color-success" @click.prevent="copyAll()">{{
+              $t('send', 'renusify')
+            }}
+          </r-btn>
         </div>
-      </r-card>
+      </div>
     </r-modal>
     <manage-header v-model="search" @update:modelValue="searching()"
                    :header-table="table.headers"
@@ -154,7 +157,7 @@
         v-on:accept="accept"
         v-on:cancel="showConfirm = false"
     />
-  </r-card>
+  </div>
 </template>
 
 <script>

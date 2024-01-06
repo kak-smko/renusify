@@ -23,7 +23,7 @@
         <r-card>
           <div class="dropdown-menu-item pa-2" v-for="(item,i) in list" :key="i"
                :class="{'menu-selected':selected===item[value]}"
-               @click="emit(item)">
+               @click.prevent="emit(item)">
             <slot :item="item">
               {{ item }}
             </slot>

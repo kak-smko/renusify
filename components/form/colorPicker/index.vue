@@ -1,7 +1,7 @@
 <template>
   <r-input class="mt-5" :model-value="modelValue" hide labelControlClass="label-active"
            :class="`${$r.prefix}color-picker`">
-    <div @click="open=true" class="shower" :style="{'background-color':modelValue||'#ffffff'}"></div>
+    <div :style="{'background-color':modelValue||'#ffffff'}" class="shower" @click.prevent="open=true"></div>
     <r-modal v-model="open" :closebtn="false" class="color-picker-modal" closable maxWidth="260px">
       <picker :color="modelValue" @changeColor="emit"></picker>
       <div class="d-flex h-space-between">

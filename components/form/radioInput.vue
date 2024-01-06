@@ -6,13 +6,13 @@
             <span class="radio-input-item" :class="{
                    'br-circle':rounded,
                    'radio-input-select':current===item.value
-               }" @click="emit(item)">
+               }" @click.prevent="emit(item)">
                    <transition name="scale">
                        <r-icon v-if="current===item.value" class="color-white-text"
                                v-html="$r.icons.check" exact></r-icon>
                    </transition>
             </span>
-      <span class="ms-2" @click="emit(item)">
+      <span class="ms-2" @click.prevent="emit(item)">
                 {{ item[text] }}
             </span>
     </div>

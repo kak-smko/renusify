@@ -8,7 +8,7 @@
         <r-breadcrumb-item :href="item.href"
                            :item="item"
                            :to="item.to"
-                           @click="go(item)"></r-breadcrumb-item>
+                           @click.prevent="go(item)"></r-breadcrumb-item>
       </li>
     </ul>
   </transition>
@@ -36,11 +36,10 @@ export default {
   },
   emits:['click'],
   computed: {
-    classes(){
-      let a={'mb-1':true}
-      a[`sheet`]=this.sheet
-      a[`sheet-tile`]=true
-      a[`${this.$r.prefix}breadcrumbs`]=true
+    classes() {
+      let a = {}
+      a[`breadcrumbs-sheet`] = this.sheet
+      a[`${this.$r.prefix}breadcrumbs`] = true
       return a
     },
     genItems () {

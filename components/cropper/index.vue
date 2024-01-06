@@ -26,7 +26,7 @@
     </div>
     <div class="action d-flex">
       <template v-if="show">
-        <r-btn @click="getCrop">{{ $t("crop", "renusify") }}</r-btn>
+        <r-btn @click.prevent="getCrop">{{ $t("crop", "renusify") }}</r-btn>
         <r-spacer></r-spacer>
         <r-btn icon tile @click.prevent="zoomIn()">+</r-btn>
         <r-btn icon tile @click.prevent="zoomOut()">-</r-btn>

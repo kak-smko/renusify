@@ -1,20 +1,20 @@
 <template>
-    <div class="sheet sheet-tile">
-        <r-container class="container-fluid">
-            <r-row class="h-start h-space-between">
-                <r-col class="col-auto">
-                    <r-btn @click.prevent="newItem"
-                           v-if="!disableAdd"
-                           class="color-success-text"
-                           outlined
-                           rounded>{{$t('new','renusify')}}
-                    </r-btn>
-                </r-col>
+    <div>
+      <r-container class="container-fluid">
+        <r-row class="h-start h-space-between">
+          <r-col class="col-auto">
+            <r-btn @click.prevent="newItem"
+                   v-if="!disableAdd"
+                   class="color-success-text"
+                   outlined
+                   rounded>{{ $t('new', 'renusify') }}
+            </r-btn>
+          </r-col>
                 <r-col class="col-auto">
                     <template v-if="mcud">
-                        <r-btn icon class="color-error mx-1" @click="showConfirm=true">
-                            <r-icon v-html="$r.icons.delete"></r-icon>
-                        </r-btn>
+                      <r-btn class="color-error mx-1" icon @click.prevent="showConfirm=true">
+                        <r-icon v-html="$r.icons.delete"></r-icon>
+                      </r-btn>
                         <r-btn icon class="color-success mx-1" @click.prevent="$emit('copy',true)">
                             <r-icon v-html="$r.icons.copy"></r-icon>
                         </r-btn>
@@ -121,7 +121,7 @@
                             </r-col>
                           <r-col class="col-6 md-8">
                             <r-select-input v-model="item.advance.search" :label="item.text" :items="item.option.items"
-                                            disableSearch multiple tags></r-select-input>
+                                            justValue multiple tags></r-select-input>
                           </r-col>
                           <r-col class="col-1">
                             <r-btn class="color-error" icon @click.prevent="del(i)">

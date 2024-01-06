@@ -22,7 +22,7 @@
         :closebtn="false"
         :no-overlay="noOverlay"
     >
-      <r-card class="pt-3 pb-1">
+      <div class="pt-3 pb-1">
         <timepicker
             class="mb-2 mx-3"
             :disableTime="disableTime"
@@ -34,7 +34,7 @@
           <r-btn
               class="color-success-text"
               outlined
-              @click="show_modal = false,emit()"
+              @click.prevent="show_modal = false,emit()"
           >
             {{ $t('accept', 'renusify') }}
           </r-btn
@@ -42,13 +42,13 @@
           <r-btn
               class="color-warning-text"
               outlined
-              @click="(show_modal = false), (lazyValue = null),emit()"
+              @click.prevent="(show_modal = false), (lazyValue = null),emit()"
           >
             {{ $t('cancel', 'renusify') }}
           </r-btn
           >
         </div>
-      </r-card>
+      </div>
     </r-modal>
   </div>
 </template>

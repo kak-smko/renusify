@@ -54,7 +54,7 @@
                          today: item.today
                                     }"
               :key="item.date"
-              @click="item.date!==0 &&!readonly&& selectDateItem(item)"
+              @click.prevent="item.date!==0 &&!readonly&& selectDateItem(item)"
           >
             <div
                 class="cellContent"
@@ -71,7 +71,7 @@
     </table>
 
     <r-modal :model-value="tab!=='day'" @update:model-value="tab='day'">
-      <r-card class="py-5">
+      <div class="py-5">
         <year-tab v-if="tab==='year'"
                   :model-value='currentPeriod.year'
                   @update:model-value="(tab='month',setYear($event))"
@@ -84,7 +84,7 @@
                    :timezoneOffset="lang_zone_offset-timezoneOffset"
                    :locale="locale"
                    :year="currentPeriod.year"></month-tab>
-      </r-card>
+      </div>
     </r-modal>
   </div>
 

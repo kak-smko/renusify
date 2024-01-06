@@ -3,7 +3,7 @@
        v-for="(value,key) in modelValue"
        :key="key">
     <div class="d-flex v-center me-1">
-      <r-btn v-if="!disableDel" icon class="color-error-text" text @click="del(key)">
+      <r-btn v-if="!disableDel" class="color-error-text" icon text @click.prevent="del(key)">
         <r-icon v-html="$r.icons.delete"></r-icon>
       </r-btn>
       <div v-if="typeof value==='object'">{{ t(key) }}</div>

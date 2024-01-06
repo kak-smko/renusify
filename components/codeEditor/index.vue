@@ -17,11 +17,11 @@
       >
         P
       </r-btn>
-      <r-btn v-if="show === 'code' && runnable" class="color-white-text" text @click="show = 'run'">
+      <r-btn v-if="show === 'code' && runnable" class="color-white-text" text @click.prevent="show = 'run'">
         run
         <r-icon v-html="$r.icons.play" exact></r-icon>
       </r-btn>
-      <r-btn v-if="show === 'run'" class="color-white-text" text @click="show = 'code'">
+      <r-btn v-if="show === 'run'" class="color-white-text" text @click.prevent="show = 'code'">
         <r-icon v-html="$r.icons.code_tags" exact></r-icon>
       </r-btn>
     </div>

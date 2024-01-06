@@ -6,7 +6,7 @@
   </r-input>
   <r-modal :model-value="show" @update:model-value="close()" :closebtn="false" closable class="text-center">
     <div v-if="!showTime" :class="`${$r.prefix}date-input`">
-      <div class="sheet">
+      <div>
         <r-container>
           <r-row>
             <r-col class="col-auto">
@@ -75,7 +75,7 @@
                          today: item.today
                                     }"
                   :key="item.date"
-                  @click="item.date!==0 &&!readonly&& selectDateItem(item)"
+                  @click.prevent="item.date!==0 &&!readonly&& selectDateItem(item)"
               >
                 <div
                     class="cellContent d-flex h-center v-center"
@@ -97,8 +97,8 @@
           v-model="time"
       ></timepicker>
       <div class="mt-5">
-        <r-btn class="color-success mx-5" @click="selectTime">{{ $t('ok', 'renusify') }}</r-btn>
-        <r-btn class="color-error mx-5" @click="close">{{ $t('cancel', 'renusify') }}</r-btn>
+        <r-btn class="color-success mx-5" @click.prevent="selectTime">{{ $t('ok', 'renusify') }}</r-btn>
+        <r-btn class="color-error mx-5" @click.prevent="close">{{ $t('cancel', 'renusify') }}</r-btn>
       </div>
 
     </div>

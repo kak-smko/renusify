@@ -3,8 +3,8 @@
         <header>
             <r-container class="pa-0">
                 <div class="toolbar-content">
-                    <r-btn icon text @click="open=!open">
-                        <r-icon v-html="$r.icons.menu"></r-icon>
+                    <r-btn icon text @click.prevent="open=!open">
+                      <r-icon v-html="$r.icons.menu"></r-icon>
                     </r-btn>
                     <r-spacer></r-spacer>
                     <div v-if="search" class="mt-n5">

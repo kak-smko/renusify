@@ -1,10 +1,20 @@
 @import '../../../style/include';
 
 .#{$prefix}text-editor {
+  background-color: var(--color-sheet-container);
+  margin-top: 20px;
 
+  &:not(.input-tile) {
+    border-radius: map-get($borders, 'xl');
 
-  .editor-content {
+    .editor-content {
+      border-radius: map-get($borders, 'lg');
+    }
+  }
+
+  .editor-content, .input-control {
     border: 1px solid var(--color-sheet-low);
+    background-color: var(--color-sheet-container-low);
   }
 
   @include typography($headings, 'body-2');

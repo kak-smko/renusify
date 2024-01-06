@@ -14,7 +14,7 @@
               :height="height"
               controls
           ></video>
-          <r-btn @click="dlt(vid)" icon>
+          <r-btn icon @click.prevent="dlt(vid)">
             <r-icon v-html="$r.icons.delete" class="color-error-text"></r-icon>
           </r-btn>
         </span>
@@ -79,7 +79,7 @@
                   </svg>
                 </r-icon>
               </r-btn>
-              <r-btn v-else class="color-error-text" icon @click="stop">
+              <r-btn v-else class="color-error-text" icon @click.prevent="stop">
                 <r-icon>
                   <svg
                       xmlns="http://www.w3.org/2000/svg"

@@ -21,7 +21,7 @@
         :closebtn="false"
         :no-overlay="noOverlay"
     >
-      <r-card class="pt-3">
+      <div class="pt-3">
         <div class="px-2 title">
           <span>{{ $t('from', 'renusify') }}: </span>
           <span v-if="lazyValue[0]">{{ lazyValue[0] }} - </span>
@@ -46,7 +46,7 @@
         <r-btn
             class="color-success-text ml-7 mr-9 mb-3 mt-3"
             outlined
-            @click="accept"
+            @click.prevent="accept"
         >
           {{ $t('accept', 'renusify') }}
         </r-btn
@@ -54,12 +54,12 @@
         <r-btn
             class="color-warning-text mr-7 ml-4 mb-3 mt-3"
             outlined
-            @click="(show_modal = false), (lazyValue = []),emit()"
+            @click.prevent="(show_modal = false), (lazyValue = []),emit()"
         >
           {{ $t('cancel', 'renusify') }}
         </r-btn
         >
-      </r-card>
+      </div>
     </r-modal>
   </div>
 </template>

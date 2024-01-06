@@ -5,7 +5,7 @@
            class="w-30 ma-2"
            :class="{'color-one-text':modelValue+i-6===modelValue}"
            outlined
-           @click="emit(modelValue+i-6)">
+           @click.prevent="emit(modelValue+i-6)">
       {{
         $d(new Date(modelValue + i - 6, month, 1, 0, timezoneOffset), 'year', locale)
       }}

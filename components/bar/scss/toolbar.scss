@@ -2,7 +2,7 @@
 
 .#{$prefix}toolbar {
   flex: 1 1 auto;
-  background-color: var(--color-sheet);
+  background-color: var(--color-sheet-container);
   color: var(--color-on-sheet);
 
   .toolbar-mobile {

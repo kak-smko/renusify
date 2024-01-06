@@ -4,9 +4,9 @@
             <div class="switch-label me-1 mt-1"
             >{{label}}
             </div>
-            <div class="switch-holder" @click="toggle()">
-                <div class="switch-line"></div>
-                <div class="switch-dot"></div>
+            <div class="switch-holder" @click.prevent="toggle()">
+              <div class="switch-line"></div>
+              <div class="switch-dot"></div>
             </div>
             <div class="switch-label ms-1 mt-1"
                  v-if="label2">{{label2}}</div>

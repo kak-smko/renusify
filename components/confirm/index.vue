@@ -1,6 +1,5 @@
 <template>
   <r-modal :closebtn="false" :model-value="modelValue">
-    <r-card>
       <r-container class="container-fluid">
         <r-row>
           <r-col class="col-12 text-center">
@@ -38,7 +37,6 @@
           </r-btn>
         </r-row>
       </r-container>
-    </r-card>
   </r-modal>
 </template>
 

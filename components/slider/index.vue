@@ -10,10 +10,10 @@
                 'right':$r.rtl?next:prev
             }">
 
-    <r-btn v-if="arrow" icon @click="prev" class="btn-left-arrow">
+    <r-btn v-if="arrow" class="btn-left-arrow" icon @click.prevent="prev">
       <r-icon v-html="$r.icons.chevron_left"></r-icon>
     </r-btn>
-    <r-btn v-if="arrow" icon @click="next" class="btn-right-arrow">
+    <r-btn v-if="arrow" class="btn-right-arrow" icon @click.prevent="next">
       <r-icon v-html="$r.icons.chevron_right"></r-icon>
     </r-btn>
     <transition :appear="appear" :mode="mode" :name="direction">

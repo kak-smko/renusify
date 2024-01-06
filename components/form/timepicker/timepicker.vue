@@ -10,7 +10,7 @@
             ref="number"
             :class="['number' + i,{'number-disabled':disableTime(parseInt(i),show,hour,min,sec)}]"
             class="number"
-            @click="set(i)"
+            @click.prevent="set(i)"
         >
           {{ num }}
         </div>
@@ -20,14 +20,14 @@
       <div
           :class="{ 'meridiem-active': meridiem === 'AM' }"
           class="time-meridiem overflow-hidden"
-          @click="(meridiem = 'AM'),emit()"
+          @click.prevent="(meridiem = 'AM'),emit()"
       >
         {{ $t('timepicker_am', 'renusify') }}
       </div>
       <div
           :class="{ 'meridiem-active': meridiem === 'PM' }"
           class="time-meridiem overflow-hidden"
-          @click="(meridiem = 'PM'),emit()"
+          @click.prevent="(meridiem = 'PM'),emit()"
       >
         {{ $t('timepicker_pm', 'renusify') }}
       </div>

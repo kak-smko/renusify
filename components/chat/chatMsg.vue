@@ -20,7 +20,7 @@
         <div class="message-text body-1">
           <div v-if="!isMe" class="message-username title-3">{{ user.name }}
           </div>
-          <div v-if="msg.type==='file'" @click="$helper.download('/'+msg.link)">
+          <div v-if="msg.type==='file'" @click.prevent="$helper.download('/'+msg.link)">
             <div class="mx-n2 mt-n1" v-if="isImg(msg.link)">
               <r-img class="br-sm" :src="'/'+msg.link" alt="img" width="250" :w-p-h="isImg(msg.link)"></r-img>
             </div>

@@ -7,20 +7,20 @@
 </template>
 
 <script>
-    import {roots} from '../../tools/rootable';
-    import './style.scss';
+import {roots} from '../../tools/rootable';
+import './style.scss';
 
-    export default {
-        name: 'r-card',
-        mixins: [roots],
-        props: {
-            flat: Boolean,
-            hover: Boolean,
-            tile: Boolean,
-            outlined: Boolean,
-            isRipple: {
-                type:Boolean,
-                default:true
+export default {
+  name: 'r-card',
+  mixins: [roots],
+  props: {
+    flat: Boolean,
+    hover: Boolean,
+    tile: Boolean,
+    outlined: Boolean,
+    isRipple: {
+      type: Boolean,
+      default: true
             },
             draggable:{
                 type:Boolean,
@@ -48,7 +48,7 @@
                 if (this.flat) {
                     c += ' card-flat';
                 }else{
-                    c += ' sheet';
+                  c += ' card-sheet';
                 }
                 if (this.hover) {
                     c += ' card-hover';
@@ -57,7 +57,7 @@
                     c += ' card-outlined';
                 }
                 if (this.tile) {
-                    c += ' sheet-tile';
+                  c += ' card-tile';
                 }
                 if (this.isClickable) {
                     c += ' card-link';

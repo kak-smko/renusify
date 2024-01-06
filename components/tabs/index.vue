@@ -13,7 +13,7 @@
           :disabled="tab.disabled || false"
           class="tabs__item"
           type="button"
-          @click="handleClick(tab.value)"
+          @click.prevent="handleClick(tab.value)"
       >
         <slot :item="tab">{{ tab.title }}</slot>
       </button>
