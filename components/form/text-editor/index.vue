@@ -61,7 +61,7 @@
           </template>
         </r-input>
       </r-col>
-      <r-col v-if="files.length>0" class="col-12">
+      <r-col v-if="files&&files.length>0" class="col-12">
         <div v-for="(img,i) in files" :key="i"
              class="ma-1 img-holder">
           <r-btn class="color-error-text" icon @click.prevent="deleteImage(img,i)">

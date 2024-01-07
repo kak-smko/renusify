@@ -3,6 +3,7 @@
              v-bind="att"
              :is="route.tag"
              :type="type"
+             :aria-label="icon?'icon':undefined"
              v-ripple>
       <span class="btn-content">
         <slot></slot>

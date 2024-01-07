@@ -49,7 +49,7 @@
         <r-switch-input v-else-if="info.type==='boolean'"
                         :tile="tile"
                         v-model="info.value" :label="valueLabel||$t('value','renusify')"></r-switch-input>
-        <r-btn @click.prevent="add" class="ms-1 color-success" rounded>{{ $t('add', 'renusify') }}</r-btn>
+        <r-btn :rounded="!c_tile" class="ms-1 color-success" @click.prevent="add">{{ $t('add', 'renusify') }}</r-btn>
       </div>
     </div>
     <div v-else :class="{'state-error':error}" class="json-highlight ltr">
