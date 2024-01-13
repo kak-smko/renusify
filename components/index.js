@@ -1,6 +1,5 @@
 const list = {
     'r-app': {'p': 'app/index.vue', 'c': ['r-btn', 'r-icon', 'r-spacer'], 'd': []},
-    'r-notify': {'p': 'notify/index.vue', 'c': ['r-btn', 'r-icon'], 'd': []},
     'r-avatar': {'p': 'avatar/index.vue', 'c': ['r-btn', 'r-icon'], 'd': []},
     'r-toolbar': {
         'p': 'bar/toolbar/index.vue',
@@ -140,6 +139,8 @@ const list = {
     'r-message': {'p': 'message/index.vue', 'c': ['r-container', 'r-row', 'r-col'], 'd': []},
     'r-meta': {'p': 'meta/index.js', 'c': [], 'd': []},
     'r-modal': {'p': 'modal/index.vue', 'c': ['r-btn', 'r-icon'], 'd': []},
+    'r-nestable': {'p': 'nestable/index.vue', 'c': [], 'd': []},
+    'r-notify': {'p': 'notify/index.vue', 'c': ['r-btn', 'r-icon'], 'd': []},
     'r-progress-circle': {'p': 'progress/circle.vue', 'c': [], 'd': []},
     'r-progress-line': {'p': 'progress/line.vue', 'c': [], 'd': []},
     'r-search-box': {

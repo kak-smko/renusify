@@ -71,34 +71,27 @@
     </div>
   </div>
   <r-modal v-if="editable" v-model="showModal">
-      <r-container
-          v-sortable="{
+    <div
+        v-sortable="{
             items: cols,
             end: store_db,
             grab: '.drag-btn'
           }"
-      >
-        <r-row
-            v-for="(col, i) in cols"
-            :key="col.value+i"
-            class="no-gutters"
-        >
-          <r-col>
-            <r-card class="pa-4 ma-1 d-flex h-space-between" tile>
+    >
+      <r-card v-for="(col, i) in cols"
+              :key="i" class="pa-4 ma-1 d-flex h-space-between" tile>
                 <span class="title-1">
                   <r-btn class="drag-btn" icon text>
                     <r-icon v-html="$r.icons.drag"></r-icon>
                   </r-btn>
                   {{ col.text }}
                 </span>
-              <span>
-                                <r-switch-input :label="$t('show','renusify')" v-model="col.show"
-                                                @update:model-value="store_db(cols)"></r-switch-input>
+        <span>
+          <r-switch-input v-model="col.show" :label="$t('show','renusify')"
+                          @update:model-value="store_db(cols)"></r-switch-input>
                 </span>
-            </r-card>
-          </r-col>
-        </r-row>
-      </r-container>
+      </r-card>
+    </div>
   </r-modal>
 </template>
 

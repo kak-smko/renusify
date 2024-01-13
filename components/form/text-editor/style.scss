@@ -1,8 +1,10 @@
 @import '../../../style/include';
 
 .#{$prefix}text-editor {
-  background-color: var(--color-sheet-container);
-  margin-top: 20px;
+  &:not(.text-editor-preview) {
+    background-color: var(--color-sheet-container);
+    margin-top: 20px;
+  }
 
   &.input-tile {
     border-radius: map-get($borders, 'sm');

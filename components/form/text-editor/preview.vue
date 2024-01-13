@@ -1,21 +1,22 @@
 <template>
-    <div ref="editorPreview" :class="`${$r.prefix}text-editor`" v-html="$helper.cleanXss(text)"></div>
+    <div ref="editorPreview" :class="`${$r.prefix}text-editor text-editor-preview`"
+         v-html="$helper.cleanXss(text)"></div>
 </template>
 
 <script>
-    import './style.scss'
+import './style.scss'
 
-    export default {
-        name: "law",
-        props: {
-            text: String
-        },
-        data(){
-          return{
-              id:null,
-              imgs:[]
-          }
-        },
+export default {
+  name: "law",
+  props: {
+    text: String
+  },
+  data() {
+    return {
+      id: null,
+      imgs: []
+    }
+  },
         mounted() {
             this.id=setTimeout(() => {
                 this.imgs = this.$refs.editorPreview.querySelectorAll('img')

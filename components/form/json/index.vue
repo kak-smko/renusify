@@ -258,8 +258,8 @@ export default {
     textarea {
       &::selection {
         background-color: var(--color-one);
-        -webkit-text-fill-color: var(--color-one-text);
-        color: var(--color-one-text);
+        -webkit-text-fill-color: var(--color-on-one);
+        color: var(--color-on-one);
       }
 
       padding: 12px;
