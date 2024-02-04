@@ -1,5 +1,5 @@
 //https://github.com/troxler/headful/blob/master/src/headful.js
-export default {
+export const rMeta= {
     name: "r-meta",
     created(){
         this.build()

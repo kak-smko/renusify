@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~renusify/style/include";
+@import "../../style/include";
 
 .#{$prefix}skeleton {
   .sk-card, .sk-line, .sk-avatar {

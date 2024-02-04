@@ -1,20 +1,19 @@
-const list = {
-    'animate': 'animate',
-    'click-outside': 'clickOutSide',
-    'drag': 'drag',
-    'intersect': 'intersect',
-    'mask': 'mask',
-    'parallax': 'parallax',
-    'resize': 'resize',
-    'ripple': 'ripple',
-    'scroll': 'scroll',
-    'sortable': 'sortable',
-    'touch': 'touch',
-    'title': 'title',
-    'skeleton': 'skeleton',
-}
+export * as animate from './animate/index'
+export * as clickOutside from './clickOutSide/index'
+export * as drag from './drag/index'
+export * as intersect from './intersect/index'
+export * as mask from './mask/index'
+export * as parallax from './parallax/index'
+export * as resize from './resize/index'
+export * as ripple from './ripple/index'
+export * as scroll from './scroll/index'
+export * as sortable from './sortable/index'
+export * as touch from './touch/index'
+export * as title from './title/index'
+export * as skeleton from './skeleton/index'
+
 export const registers = (app, directives) => {
-    directives.forEach((item) => {
-        app.directive(item, require('./' + list[item]).default)
-    })
+    for (const arrayKey in directives) {
+        app.directive(arrayKey,directives[arrayKey].default)
+    }
 }

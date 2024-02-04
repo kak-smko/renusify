@@ -1,0 +1,1 @@
+export * as rIcon from './index.vue'

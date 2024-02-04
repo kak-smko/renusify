@@ -1,0 +1,1 @@
+export * as rSkeleton from './index.vue'

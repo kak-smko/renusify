@@ -16,11 +16,9 @@
 
 <script>
 import './style.scss'
-import RBreadcrumbItem from "./bredcrumbItem";
 
 export default {
   name: 'r-breadcrumbs',
-  components: {RBreadcrumbItem},
   props: {
     sheet: {
       type: Boolean,

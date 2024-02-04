@@ -1,0 +1,1 @@
+export * as rContent from './index.vue'

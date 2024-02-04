@@ -6,6 +6,7 @@
   position: fixed;
   left: 0;
   right: 0;
+  top:0;
   z-index: map_get($z-index, 'important');
   background-color: var(--color-overlay);
   backdrop-filter: blur(3px) grayscale(30%);

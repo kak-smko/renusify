@@ -1,0 +1,1 @@
+export * as rSpacer from './spacer.vue'

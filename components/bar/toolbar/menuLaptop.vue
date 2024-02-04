@@ -15,11 +15,11 @@
     </div>
 </template>
 <script>
-import MenuChilds from "./menuChilds";
+import {defineAsyncComponent} from 'vue'
 
 export default {
   name: 'menu-laptop',
-  components: {MenuChilds},
+  components: {MenuChilds:defineAsyncComponent(()=>import('./menuChilds.vue'))},
   props: {menu: Array},
   data() {
     return {}

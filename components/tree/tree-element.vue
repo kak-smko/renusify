@@ -2,11 +2,8 @@
   <r-container v-if="show" full-width :class="`${$r.prefix}tree-element px-0`" ref="tree">
     <r-row class="h-center flex-nowrap no-gutters">
       <r-col class="text-center">
-        <div class="d-flex h-center mb-1 node-info">
-          <component :is="componentElm" :node="node[nodeKey]"
-                     @fire="$emit('fire',$event)"
-                     @click.prevent="$emit('select',{key:nodeKey,item:node[nodeKey]})"
-          ></component>
+        <div class="d-flex h-center mb-1 node-info" @click.prevent="$emit('select',{key:nodeKey,item:node[nodeKey]})">
+          <slot :item="node[nodeKey]" :nodeKey="nodeKey"></slot>
         </div>
         <span v-if="size>0||(link &&(node[nodeKey]['childs_total']>0))"
               class="btn-extend"
@@ -32,17 +29,17 @@
                         @expand="handleExpand"
                         :expand="expand"
                         :openAll="openAll"
-                        :component-name="componentElm"
-                        @fire="$emit('fire',$event)"
                         @select="$emit('select',$event)"
         >
+         <template v-slot="{ item,nodeKey }">
+            <slot :item="item" :nodeKey="nodeKey" itemscope></slot>
+          </template>
         </r-tree-element>
       </r-col>
     </r-row>
   </r-container>
 </template>
 <script>
-import {markRaw} from "vue";
 
 export default {
   name: 'r-tree-element',
@@ -63,7 +60,6 @@ export default {
       default: 'childs'
     },
     openAll: Boolean,
-    componentName: Object,
     headers: Object
   },
   emits:['update:modelValue','fire','select','expand'],
@@ -84,15 +80,6 @@ export default {
     }
   },
   computed: {
-    componentElm() {
-      if (!this.componentName) {
-        return
-      }
-      if (this.componentName.__v_skip) {
-        return this.componentName
-      }
-      return markRaw(this.componentName)
-    },
     node() {
       return this.modelValue
     },

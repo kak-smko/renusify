@@ -2,8 +2,8 @@
     <div ref="containerMessage"
          class="container-message-list" v-scroll="handle">
         <div v-for="message in messages" :key="message._id" class="message-container">
-            <r-chat-msg @see="$emit('see', $event)" :message="message" :is-me="message.user_id===myself.id"
-                        :user="message.user_id===myself.id?myself:participants[message.user_id]"></r-chat-msg>
+            <r-chat-message @see="$emit('see', $event)" :message="message" :is-me="message.user_id===myself.id"
+                        :user="message.user_id===myself.id?myself:participants[message.user_id]"></r-chat-message>
         </div>
     </div>
     <transition name="scale" v-if="!hideBottomBtn">
@@ -14,12 +14,8 @@
 </template>
 
 <script>
-import RChatMsg from "./chatMsg";
 
 export default {
-  components: {
-    RChatMsg
-  },
   emits: ["see"],
   props: {
     newMsg: {

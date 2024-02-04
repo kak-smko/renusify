@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import * as Chart from './apexcharts'
 
 export default {
   name: "r-chart",
@@ -12,15 +11,19 @@ export default {
   },
   data() {
     return {
-      chartShape: null
+      chartShape: null,
+      Chart: null
     };
   },
-  mounted() {
-    this.build();
+  mounted(){
+    import('./apexcharts').then((d)=>{
+      this.Chart=d.default;
+      this.build()
+    })
   },
   methods: {
     build() {
-      this.chartShape = new Chart(this.$refs.chart, this.options);
+      this.chartShape = new this.Chart(this.$refs.chart, this.options);
       this.chartShape.render()
     }
   },

@@ -28,7 +28,7 @@
     }
 </script>
 <style lang="scss">
-    @import "~renusify/style/include";
+    @import "../../style/include";
 
     .#{$prefix}timeline {
         .timeline-item {

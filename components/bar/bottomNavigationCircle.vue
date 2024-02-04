@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~renusify/style/include";
+@import "../../style/include";
 
 .#{$prefix}bottom-navigation-circle {
   position: fixed;

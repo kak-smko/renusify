@@ -49,7 +49,7 @@
   </div>
 </template>
 <script>
-import file from "../form/fileUploader/file";
+import file from "../form/fileInput/file";
 
 export default {
   name: 'r-chat-input',

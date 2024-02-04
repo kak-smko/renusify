@@ -565,7 +565,7 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "~renusify/style/include";
+@import "../../style/include";
 
 .#{$prefix}map-route {
   display: flex;

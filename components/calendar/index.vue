@@ -72,18 +72,18 @@
 
     <r-modal :model-value="tab!=='day'" @update:model-value="tab='day'">
       <div class="py-5">
-        <year-tab v-if="tab==='year'"
+        <r-calendar-year-tab v-if="tab==='year'"
                   :model-value='currentPeriod.year'
                   @update:model-value="(tab='month',setYear($event))"
                   :timezoneOffset="lang_zone_offset-timezoneOffset"
                   :locale="locale"
-                  :month="currentPeriod.month"></year-tab>
-        <month-tab v-if="tab==='month'"
+                  :month="currentPeriod.month"></r-calendar-year-tab>
+        <r-calendar-month-tab v-if="tab==='month'"
                    :model-value='currentPeriod.month'
                    @update:model-value="(tab='day',setMonth($event))"
                    :timezoneOffset="lang_zone_offset-timezoneOffset"
                    :locale="locale"
-                   :year="currentPeriod.year"></month-tab>
+                   :year="currentPeriod.year"></r-calendar-month-tab>
       </div>
     </r-modal>
   </div>
@@ -91,12 +91,9 @@
 </template>
 
 <script>
-import YearTab from "./year";
-import MonthTab from "./month";
 
 export default {
   name: 'calendar',
-  components: {MonthTab, YearTab},
   inheritAttrs: false,
   props: {
     lang: {

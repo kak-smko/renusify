@@ -13,11 +13,9 @@
 
 <script>
 import './style.scss'
-import RToast from './toast/index.vue'
 
 export default {
   name: 'r-app',
-  components: {RToast},
   props: {
     id: {
       type: [String, Number],

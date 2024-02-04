@@ -7,14 +7,13 @@
   max-width: 100%;
   outline: none;
   text-decoration: none;
-  transition-property: box-shadow, opacity;
   word-break: break-word;
   overflow-wrap: break-word;
   white-space: normal;
+  transition: $primary-transition;
+  transition-property: box-shadow, opacity;
 
   &.card-sheet {
-    display: block;
-    transition: box-shadow .3s cubic-bezier(0.4, 0, 0.2, 1);
     @include elevation('md');
     border-radius: map_get($borders, 'md');
     background-color: var(--color-sheet-container);

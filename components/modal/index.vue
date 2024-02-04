@@ -1,5 +1,5 @@
 <template>
-  <teleport :to="`.${$r.prefix}app`">
+  <teleport v-if="show" :to="`.${$r.prefix}app`">
     <div v-if="modelValue&&!noOverlay" :class="{
       [`${$r.prefix}modal-overlay`]:true
     }"></div>
@@ -64,7 +64,8 @@ export default {
   data() {
     return {
       state: null,
-      run_animate: false
+      run_animate: false,
+      show: false,
     }
   },
   created() {
@@ -74,6 +75,9 @@ export default {
         this.$emit('update:modelValue', true)
       }
     }
+    setTimeout(()=>{
+      this.show=true
+    },10)
   },
   watch: {
     '$route': function (n) {

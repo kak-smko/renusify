@@ -30,11 +30,11 @@
     </div>
 </template>
 <script>
-import Notification from './notification.vue'
+import {defineAsyncComponent} from 'vue'
 
 export default {
   components: {
-    notification: Notification
+    notification: defineAsyncComponent(()=>import('./notification.vue'))
   },
   props: {
     permanent: {

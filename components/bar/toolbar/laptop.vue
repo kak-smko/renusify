@@ -21,11 +21,11 @@
     </div>
 </template>
 <script>
+import {defineAsyncComponent} from 'vue'
 import {toolbar} from "./mixin";
-import MenuLaptop from "./menuLaptop";
 
 export default {
-        components: {MenuLaptop},
+        components: {MenuLaptop:defineAsyncComponent(()=>import('./menuLaptop.vue'))},
         mixins: [toolbar]
     }
 </script>

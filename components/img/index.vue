@@ -24,11 +24,11 @@
   </div>
 </template>
 <script>
-import SvgImg from "./svgImg";
+import {defineAsyncComponent} from 'vue'
 
 export default {
   name: 'r-img',
-  components: {SvgImg},
+  components: {SvgImg:defineAsyncComponent(()=>import('./svgImg.vue'))},
   props: {
     src: {
       type: String,

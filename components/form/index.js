@@ -1,0 +1,1 @@
+export * as rForm from './index.vue'

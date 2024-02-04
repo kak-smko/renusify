@@ -33,14 +33,14 @@
 </template>
 
 <script>
-import NestableItem from "./NestableItem.vue";
+import {defineAsyncComponent} from 'vue'
 import methods from "./methods";
 import editable from "./editable";
 
 export default {
   name: "r-nestable",
   components: {
-    NestableItem,
+    NestableItem:defineAsyncComponent(()=>import('./NestableItem.vue')),
   },
   mixins: [methods, editable],
   props: {
@@ -87,7 +87,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "~renusify/style/include";
+@import "../../style/include";
 
 .#{$prefix}nestable {
   .nestable-handle {

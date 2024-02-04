@@ -23,11 +23,11 @@
     </div>
 </template>
 <script>
+import {defineAsyncComponent} from 'vue'
 import {toolbar} from "./mixin";
-import MenuMobile from "./menuMob";
 
 export default {
-        components: {MenuMobile},
+        components: {MenuMobile:defineAsyncComponent(()=>import('./menuMob.vue'))},
         mixins:[toolbar]
     }
 </script>

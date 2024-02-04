@@ -292,7 +292,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~renusify/style/include";
+@import "../../style/include";
 
 .#{$prefix}cropper {
   width: 300px;

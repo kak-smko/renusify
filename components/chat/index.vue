@@ -1,12 +1,12 @@
 <template>
   <div :class="$r.prefix+'chat'">
     <div class="chat-header" v-if="title">{{ title }}</div>
-    <message-list ref="msgList" @see="$emit('see', $event)" :messages="msgs" :myself="myself"
+    <r-chat-message-list ref="msgList" @see="$emit('see', $event)" :messages="msgs" :myself="myself"
                   :participants="participants"
                   :newMsg="newMsg"
                   :hideBottomBtn="hideBottomBtn"
     >
-    </message-list>
+    </r-chat-message-list>
     <r-chat-input v-if="!hideSend"
                   @update:model-value="onMsgSubmit"
                   :send-by-enter="sendByEnter"
@@ -19,12 +19,9 @@
   </div>
 </template>
 <script>
-import MessageList from "./MessageList";
-import RChatInput from "./chatInput";
 
 export default {
   name: 'r-chat',
-  components: {RChatInput, MessageList},
   props: {
     sendByEnter: Boolean,
     placeholder: {type: String, default: 'type here'},
