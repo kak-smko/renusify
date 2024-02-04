@@ -103,7 +103,7 @@ export const _register = (app, components) => {
                 }
 
             } catch (e) {
-                console.error('component not found', c, e)
+                console.error('component not found', name, e)
             }
         }
     }
