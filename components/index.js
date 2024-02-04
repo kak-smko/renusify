@@ -82,7 +82,7 @@ export * as rTimeline from './timeline/index.js'
 export * as rTour from './tour/index.js'
 export * as rTree from './tree/index.js'
 
-export const register = (app, components) => {
+export const _register = (app, components) => {
     let d = {}
     let s = {}
     const setup = (ls) => {

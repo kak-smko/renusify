@@ -8,8 +8,8 @@ import Notify from './components/notify/notify.js';
 import valid from './plugins/validation/Validate';
 import Toast from './components/app/toast/toast.js';
 import event from './plugins/event';
-import {register} from './components';
-import {registers} from './directive';
+import {_register} from './components';
+import {_registers} from './directive';
 import {Icons} from "./tools/icons";
 
 window.renusifyBus = event;
@@ -123,16 +123,12 @@ export default {
         app.config.globalProperties.$v = (names) => v.checkType(names)
 
         // install components
-        let required_directive = register(app, options['components'] || []);
+        let required_directive = _register(app, options['components'] || {});
         if (options['directives']) {
-            options['directives'].forEach((i) => {
-                if (!required_directive.includes(i)) {
-                    required_directive.push(i)
-                }
-            })
+            Object.assign(required_directive,options['directives'])
         }
         // install directives
-        registers(app, required_directive);
+        _registers(app, required_directive);
 
 
         // renusify breakpoint

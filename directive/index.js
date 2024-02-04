@@ -12,7 +12,7 @@ export * as touch from './touch/index'
 export * as title from './title/index'
 export * as skeleton from './skeleton/index'
 
-export const registers = (app, directives) => {
+export const _registers = (app, directives) => {
     for (const arrayKey in directives) {
         app.directive(arrayKey,directives[arrayKey].default)
     }
