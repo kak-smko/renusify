@@ -1,1 +1,1 @@
-export * as rMeta from './index.js'
+export * as rMeta from './meta.js'

@@ -72,17 +72,17 @@ export default class Validate {
 
   checkType(names) {
     let filters = [];
-    if (typeof names === 'object') {
-      names.forEach((name) => {
-        let res = name.split(':');
-        let par1 = res[1] ? res[1] : null;
-        let par2 = res[2] ? res[2] : null;
-        let par3 = res[3] ? res[3] : null;
-        if (this[res[0]]) {
-          if (par3 === null && par2 === null) {
-            filters.push(this[res[0]](par1))
-          } else if (par3 === null) {
-            filters.push(this[res[0]](par1, par2))
+    if (Array.isArray(names)) {
+        names.forEach((name) => {
+            let res = name.split(':');
+            let par1 = res[1] ? res[1] : null;
+            let par2 = res[2] ? res[2] : null;
+            let par3 = res[3] ? res[3] : null;
+            if (this[res[0]]) {
+                if (par3 === null && par2 === null) {
+                    filters.push(this[res[0]](par1))
+                } else if (par3 === null) {
+                    filters.push(this[res[0]](par1, par2))
           } else {
             filters.push(this[res[0]](par1, par2, par3))
           }
