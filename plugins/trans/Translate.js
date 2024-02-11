@@ -99,7 +99,7 @@ export default class Translate {
             return val;
         } else if (this.$r && this.$r.autoAddTranslate && pack && this._count < 100 && /^([0-9a-z_.])*$/.test(key)) {
             if (!this._store.includes(key)) {
-                let url = '/translate/' + pack + '/' + key + '?v=';
+                let url = '/api/translate/' + pack + '/' + key + '?v=';
                 const lng = variable.length
                 for (let i = 0; i < lng; i++) {
                     url += '{' + i + '}';

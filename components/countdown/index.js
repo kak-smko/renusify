@@ -1,1 +1,1 @@
-export * as rContDown from './index.vue'
+export * as rCountDown from './index.vue'
