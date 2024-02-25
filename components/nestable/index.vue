@@ -22,12 +22,14 @@
       </template>
     </div>
     <div v-if="editable" class="d-flex v-end w-full">
-      <div class="pe-1 flex-grow-1">
-        <r-text-input v-model="name" :label="labelInput"></r-text-input>
-      </div>
-      <r-btn :disabled="!name" class="color-success" icon @click="add">
-        <r-icon v-html="$r.icons.plus"></r-icon>
-      </r-btn>
+      <slot :add="add" :form="form" name="form">
+        <div class="pe-1 flex-grow-1">
+          <r-text-input v-model="form.title" :label="labelInput"></r-text-input>
+        </div>
+        <r-btn :disabled="!form.title" class="color-success" icon @click="add">
+          <r-icon v-html="$r.icons.plus"></r-icon>
+        </r-btn>
+      </slot>
     </div>
   </div>
 </template>

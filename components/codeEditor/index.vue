@@ -44,14 +44,14 @@
         >&lt;script&gt;<br/>export default {</span
         >
                 <highlight-script ref="h-js" v-model="scr"></highlight-script>
-                <span v-show="scriptShow" class="color-orange">}<br/>&lt;script&gt;</span>
+                <span v-show="scriptShow" class="color-orange">}<br/>&lt;/script&gt;</span>
             </div>
             <div>
         <span v-show="styleShow" class="color-orange"
         >&lt;style lang<span class="color-green">="css"</span>&gt;</span
         >
                 <highlight-css ref="h-css" v-model="sty"></highlight-css>
-                <span v-show="styleShow" class="color-orange">&lt;style&gt;</span>
+              <span v-show="styleShow" class="color-orange">&lt;/style&gt;</span>
             </div>
         </div>
     </div>

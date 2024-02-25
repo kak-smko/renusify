@@ -183,7 +183,7 @@ export default {
       })
     },
     getValue() {
-      if (!this.searchLink && this.modelValue !== undefined && this.modelValue !== null) {
+      if (!this.searchLink && !this.tags && this.modelValue !== undefined && this.modelValue !== null) {
         if (typeof this.modelValue === 'string' || typeof this.modelValue === 'number') {
           const index = this.$helper.searchArray(this.genItems, this.value, this.modelValue)
           if (index === false) {

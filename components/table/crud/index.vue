@@ -31,7 +31,7 @@
                             :is="item['type']"
                             :label="$t(key,'renusify')"
                             v-model="copyItem['d'][key]"
-                            v-bind="getAttr(table.option[key],copyItem['t'])"
+                            v-bind="getAttr(table.option[key],copyItem['t'])['props']"
                         ></component>
                     </template>
                 </div>

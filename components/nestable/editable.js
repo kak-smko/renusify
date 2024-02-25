@@ -1,7 +1,7 @@
 export default {
     data() {
         return {
-            name: null,
+            form: {},
         };
     },
     methods: {
@@ -20,13 +20,13 @@ export default {
         },
         add() {
             let items = this.modelValue;
-            items.push({
-                title: this.name,
+            Object.assign(this.form, {
                 [this.keyProp]: this.lastId(items) + 1,
                 [this.childrenProp]: [],
-            });
+            })
+            items.push(this.form);
             this.$emit("update:model-value", items);
-            this.name = null;
+            this.form = {};
         },
         del(item) {
             const removePath = this.getSplicePath(

@@ -23,7 +23,7 @@
       >
         <r-icon v-html="$r.icons.delete"></r-icon>
       </r-btn-confirm>
-      <slot :item="item"></slot>
+      <slot :item="item">{{ item }}</slot>
     </div>
 
     <div v-if="hasChildren" class="nestable-list ms-5">
@@ -54,7 +54,7 @@
             >
               <r-icon v-html="$r.icons.delete"></r-icon>
             </r-btn-confirm>
-            <slot :item="item" itemscope></slot>
+            <slot :item="item" itemscope>{{ item }}</slot>
           </template>
         </NestableItem>
       </template>
