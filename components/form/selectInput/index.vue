@@ -51,7 +51,7 @@
               :multiple="multiple"
               :modelValue="chips"
               :text="text"
-              :val="value"
+              :value="value"
               @update:modelValue="listInput"
               checked>
         <template v-slot="props">
