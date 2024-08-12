@@ -16,7 +16,7 @@
                                v-html="$r.icons.check" exact></r-icon>
                    </transition>
             </span>
-        <span class="ms-2" @click.prevent="emit">
+        <span class="ms-2 checkbox-label" @click.prevent="emit">
                 <span class="color-error-text" v-if="isRequired">*</span>
           <slot name="label">{{ label }}</slot>
             </span>
@@ -40,7 +40,7 @@ export default {
       }
     },
   },
-emits:['update:modelValue'],
+  emits: ['update:modelValue'],
   data() {
     return {
       lazyValue: this.modelValue
@@ -70,6 +70,10 @@ emits:['update:modelValue'],
 .#{$prefix}checkbox {
   width: 100%;
   cursor: pointer;
+
+  .checkbox-label {
+    color: var(--color-on-sheet);
+  }
 
   .checkbox-input {
     border: 1px solid var(--color-on-sheet-low)

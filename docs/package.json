@@ -1,0 +1,34 @@
+{
+  "name": "renusify",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serv": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "core-js": "^3.35.0",
+    "register-service-worker": "^1.7.2",
+    "renusify": "^2.1.8",
+    "vue": "^3.4.3",
+    "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.7",
+    "@babel/eslint-parser": "^7.23.3",
+    "@vue/cli-plugin-babel": "^5.0.8",
+    "@vue/cli-plugin-eslint": "^5.0.8",
+    "@vue/cli-plugin-pwa": "^5.0.8",
+    "@vue/cli-plugin-router": "^5.0.8",
+    "@vue/cli-service": "^5.0.8",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.2",
+    "eslint-plugin-vue": "^9.19.2",
+    "prettier": "^3.1.1",
+    "sass": "^1.69.6",
+    "sass-loader": "^13.3.3"
+  }
+}

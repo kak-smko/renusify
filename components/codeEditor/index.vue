@@ -29,7 +29,7 @@
             <r-code-editor-run
                 :id="id"
                 :script="scr"
-                :style="sty"
+                :css="sty"
                 :template="temp"
             ></r-code-editor-run>
         </div>
@@ -47,11 +47,11 @@
                 <span v-show="scriptShow" class="color-orange">}<br/>&lt;/script&gt;</span>
             </div>
             <div>
-        <span v-show="styleShow" class="color-orange"
+        <span v-show="cssShow" class="color-orange"
         >&lt;style lang<span class="color-green">="css"</span>&gt;</span
         >
                 <highlight-css ref="h-css" v-model="sty"></highlight-css>
-              <span v-show="styleShow" class="color-orange">&lt;/style&gt;</span>
+              <span v-show="cssShow" class="color-orange">&lt;/style&gt;</span>
             </div>
         </div>
     </div>
@@ -77,12 +77,12 @@ export default {
         runnable: Boolean,
         templateShow: {type: Boolean, default: true},
         scriptShow: {type: Boolean, default: true},
-        styleShow: {type: Boolean, default: true},
+      cssShow: {type: Boolean, default: true},
         template: String,
         script: String,
-        style: String,
+      css: String,
     },
-    emits: ["update:template", "update:script", "update:style"],
+  emits: ["update:template", "update:script", "update:css"],
     data() {
         return {
             show: "code",
@@ -90,7 +90,7 @@ export default {
             edited: false,
             temp: this.template,
             scr: this.script,
-            sty: this.style,
+          sty: this.css,
             id: this.$helper.uniqueId(),
         };
     },
@@ -111,7 +111,7 @@ export default {
         script: function (n) {
             this.scr = n
         },
-        style: function (n) {
+      css: function (n) {
             this.sty = n
         },
         temp: function () {
@@ -121,7 +121,7 @@ export default {
             this.$emit("update:script", this.scr);
         },
         sty: function () {
-            this.$emit("update:style", this.sty);
+          this.$emit("update:css", this.sty);
         },
     },
     methods: {

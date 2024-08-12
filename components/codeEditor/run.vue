@@ -9,12 +9,12 @@ export default {
   props: {
     template: String,
     script: String,
-    style: String,
+    css: String,
     id: String,
   },
   computed: {
     page() {
-      if (this.style) {
+      if (this.css) {
         let children = document.querySelectorAll(`[f='${this.id}']`);
         if (children) {
           let childArray = Array.prototype.slice.call(children);
@@ -24,7 +24,7 @@ export default {
           });
         }
         let s = document.createElement("style");
-        s.innerText = this.style;
+        s.innerText = this.css;
         s.setAttribute("f", this.id);
         s.setAttribute("type", "text/css");
         window.document.head.append(s);

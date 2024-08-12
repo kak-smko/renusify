@@ -3,7 +3,7 @@
         [$r.prefix+'img']:true,
         'img-hoverZoom':hoverZoom,'img-hoverDark':hoverDark,'img-hoverTitle':hoverTitle}"
        ref="rImg">
-    <div v-if="hoverTitle" class="title-3 color-white-text img-title w-full"
+    <div v-if="hoverTitle" class="title-3 color-white-text img-title w-full pa-1"
          :class="{
             'title-hs':titleHs,
             'title-hc':titleHc,

@@ -59,7 +59,9 @@ emits:['update:modelValue','change'],
 @import "../../../style/include";
 
 .#{$prefix}switch {
-
+  .switch-label {
+    color: var(--color-on-sheet);
+  }
   .switch-container {
     display: flex;
     flex-direction: row;

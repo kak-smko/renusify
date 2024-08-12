@@ -2,7 +2,7 @@
   <div class="h-center">
     <template v-for="(item,i) in items"
               :key="i">
-      <slot>
+      <slot :item="item" :k="i">
         <div :class="`color-${type}`"
              class="mb-2 br-md">
           <r-container>

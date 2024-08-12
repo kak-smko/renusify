@@ -3,7 +3,7 @@
            :model-value="modelValue"
            hide>
     <div class="w-full">
-      <span v-if="label">{{ label }}</span>
+      <span v-if="label" class="group-input-label">{{ label }}</span>
       <div class="group-holder" v-for="(item,i) in modelValue" :key="i">
         <div class="group-slot">
           <slot :item="item" :index="i" :disableDel="disDel">
@@ -24,7 +24,7 @@
             <r-icon v-html="$r.icons.chevron_down" :class="{'icon-disabled':i===modelValue.length-1}"
                     @click.prevent="down(i)"></r-icon>
           </r-btn>
-          <r-btn v-if="!disableItems.includes(item[itemKey])" icon text @click.prevent="del(i)">
+          <r-btn v-if="!disableItems.includes(itemKey?item[itemKey]:'')" icon text @click.prevent="del(i)">
             <r-icon v-html="$r.icons.delete" class="color-error-text"></r-icon>
           </r-btn>
         </div>
@@ -137,6 +137,9 @@ export default {
 @import "../../../style/include";
 
 .#{$prefix}group-input {
+  .group-input-label {
+    color: var(--color-on-sheet);
+  }
   .group-holder {
     position: relative;
 

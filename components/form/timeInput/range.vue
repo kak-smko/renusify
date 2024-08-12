@@ -43,22 +43,22 @@
             :disableTime="disableTime"
             v-model="lazyValue[1]"
         ></timepicker>
+        <div class="mt-3 d-flex h-space-between">
         <r-btn
-            class="color-success-text ml-7 mr-9 mb-3 mt-3"
+            class="color-success-text"
             outlined
             @click.prevent="accept"
         >
           {{ $t('accept', 'renusify') }}
-        </r-btn
-        >
+        </r-btn>
         <r-btn
-            class="color-warning-text mr-7 ml-4 mb-3 mt-3"
+            class="color-warning-text"
             outlined
             @click.prevent="(show_modal = false), (lazyValue = []),emit()"
         >
           {{ $t('cancel', 'renusify') }}
-        </r-btn
-        >
+        </r-btn>
+        </div>
       </div>
     </r-modal>
   </div>

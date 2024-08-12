@@ -394,7 +394,7 @@ export function changeColor(vars) {
     head.appendChild(style);
     let css = ':root{';
     for (let k in vars) {
-        css += '--color-' + k + ':' + vars[k] + ';'
+        css += k + ':' + vars[k] + ';'
     }
     css += '}'
     style.appendChild(document.createTextNode(css));
