@@ -17,7 +17,7 @@ const routes = [
         props: true,
       },
       {
-        path: "/:version?/:lang?/:path?",
+        path: "/:lang?/:path?",
         name: "pages",
         component: pages,
         props: true,

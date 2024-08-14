@@ -10,7 +10,7 @@
         <r-container class="pt-12 mt-12 pb-0">
           <r-row class="mt-12 pt-12">
             <r-col class="col-12">
-              <h1 class="line-btm display-4">صفحه مورد نظر یافت نشد:(</h1>
+              <h1 class="line-btm display-4">Page Not Found :(</h1>
             </r-col>
             <r-col class="col-12"></r-col>
           </r-row>

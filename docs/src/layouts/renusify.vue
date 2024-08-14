@@ -54,13 +54,11 @@ export default {
     return {
       open: false,
       lang: "en",
-      version: "en",
       menu: [],
     };
   },
   created() {
-    this.lang = this.$route.params.lang || this.$storage.get("lang");
-    this.version = this.$route.params.version || "v1";
+    this.lang = this.$route.params.lang || this.$storage.get("lang", "en");
 
     if (this.lang === "fa") {
       this.$r.rtl = true;
@@ -68,7 +66,7 @@ export default {
     this.$r.lang = this.lang;
 
     import(
-    "../views/index/" + this.version + "/menu/" + this.lang + ".json"
+    "../views/index/menu/" + this.lang + ".json"
         ).then((data) => {
       this.menu = data.default;
       this.$r.store.menu = this.menu;
@@ -79,7 +77,7 @@ export default {
       this.open = false;
     },
     lang: function (n) {
-      const lang = this.$route.params.lang || this.$storage.get("lang");
+      const lang = this.$route.params.lang || this.$storage.get("lang", "en");
       this.$storage.set("lang", n);
       if (n !== lang) {
         window.location = window.location.href.replace(`/${lang}/`, `/${n}/`);

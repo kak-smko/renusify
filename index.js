@@ -101,35 +101,39 @@ export default {
                 }
             }
         }
-        app.provide('$r', app.config.globalProperties.$r)
         // renusify toast
         app.config.globalProperties.$toast = function (message, options) {
             Toast.show(message, options);
         }
-        app.provide('$toast', app.config.globalProperties.$toast)
         // renusify storage
         app.config.globalProperties.$storage = Storage
-        app.provide('$storage', app.config.globalProperties.$storage)
 
         // renusify helper
         app.config.globalProperties.$helper = helper
-        app.provide('$helper', app.config.globalProperties.$helper)
         // renusify translate
         app.config.globalProperties.$translate = new Translate(app.config.globalProperties.$r, app.config.globalProperties.$storage)
-        app.provide('$translate', app.config.globalProperties.$translate)
         app.config.globalProperties.$dateTime = new DateTime(app.config.globalProperties.$r, app.config.globalProperties.$r.langs)
-        app.provide('$dateTime', app.config.globalProperties.$dateTime)
         app.config.globalProperties.$t = (key, package_name = null, lang = null) => app.config.globalProperties.$translate.get(key, package_name, lang)
-        app.provide('$t', app.config.globalProperties.$t)
         app.config.globalProperties.$d = (value, key = 'long', local = null) => app.config.globalProperties.$dateTime.formatLocal(value, key, local)
-        app.provide('$d', app.config.globalProperties.$d)
         const c = new Currency(app.config.globalProperties.$r)
         app.config.globalProperties.$n = (value) => c.formatLocal(value)
-        app.provide('$n', app.config.globalProperties.$n)
         // renusify validation
         const v = new valid(app.config.globalProperties.$t)
         app.config.globalProperties.$v = (names) => v.checkType(names)
-        app.provide('$v', app.config.globalProperties.$v)
+
+        app.provide('renusify', {
+            $r: app.config.globalProperties.$r,
+            $toast: app.config.globalProperties.$toast,
+            $storage: app.config.globalProperties.$storage,
+            $helper: app.config.globalProperties.$helper,
+            $translate: app.config.globalProperties.$translate,
+            $dateTime: app.config.globalProperties.$dateTime,
+            $t: app.config.globalProperties.$t,
+            $d: app.config.globalProperties.$d,
+            $n: app.config.globalProperties.$n,
+            $v: app.config.globalProperties.$v,
+        })
+
         // install components
         let required_directive = _register(app, options['components'] || {});
         if (options['directives']) {

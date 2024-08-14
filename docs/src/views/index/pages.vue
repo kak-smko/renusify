@@ -18,8 +18,7 @@ export default {
   name: "pages",
   props: {
     lang: String,
-    path: String,
-    version: String,
+    path: String
   },
   data() {
     return {
@@ -28,15 +27,12 @@ export default {
   },
   computed: {
     page() {
-      let lang = this.lang || this.$storage.get("lang");
+      let lang = this.lang || this.$storage.get("lang", "en");
       let path = this.path || "introduction-whyRenusify";
-      let version = this.version || "v1";
       return defineAsyncComponent({
         loader: () =>
             import(
             "../index/" +
-            version +
-            "/" +
             this.$helper.replacer(path, "-", "/") +
             "/" +
             lang +

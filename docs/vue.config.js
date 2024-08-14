@@ -20,11 +20,11 @@ module.exports = defineConfig({
   },
   pwa: {
     iconPaths: {
-      favicon32: '/pwa/favicon-32x32.png',
-      favicon16: '/pwa/favicon-16x16.png',
-      appleTouchIcon: '/pwa/apple-touch-icon.png',
-      msTileImage: '/pwa/mstile-150x150.png',
-      maskIcon: '/pwa/safari-pinned-tab.svg',
+      favicon32: 'pwa/favicon-32x32.png',
+      favicon16: 'pwa/favicon-16x16.png',
+      appleTouchIcon: 'pwa/apple-touch-icon.png',
+      msTileImage: 'pwa/mstile-150x150.png',
+      maskIcon: 'pwa/safari-pinned-tab.svg',
     },
     name: "renusify",
     themeColor: "#fff",
