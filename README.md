@@ -79,7 +79,7 @@ want to check.
 
 ### 📑 License
 
-Renusify is available under the [MIT](http://opensource.org/licenses/MIT) software license.
+Renusify is available under the [BSD](./LICENSE) software license.
 
   
 ----  
