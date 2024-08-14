@@ -1,5 +1,5 @@
 {
-  "name": "renusify",
+  "name": "renusify_documrnt",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,7 +11,7 @@
     "axios": "^1.6.0",
     "core-js": "^3.35.0",
     "register-service-worker": "^1.7.2",
-    "renusify": "^2.1.8",
+    "renusify": "^2.2.0",
     "vue": "^3.4.3",
     "vue-router": "^4.2.5"
   },

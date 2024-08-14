@@ -1,3 +1,4 @@
+//todo complete
 class Request {
     constructor() {
         this._baseURL = '/';
