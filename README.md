@@ -12,7 +12,7 @@
     <img src="https://img.shields.io/npm/dm/renusify.svg" alt="Downloads">  
   </a>  
   <br>  
-  <a href="https://github.com/kak-smko/renusify/blob/master/LICENSE.md">  
+  <a href="https://github.com/kak-smko/renusify/blob/master/LICENSE">  
     <img src="https://img.shields.io/npm/l/renusify.svg" alt="License">  
   </a>  
   <a href="https://www.npmjs.com/package/renusify">  
