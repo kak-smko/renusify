@@ -12,7 +12,7 @@
                                v-html="$r.icons.check" exact></r-icon>
                    </transition>
             </span>
-      <span class="ms-2" @click.prevent="emit(item)">
+      <span class="ms-2 radio-label" @click.prevent="emit(item)">
                 {{ item[text] }}
             </span>
     </div>
@@ -34,7 +34,7 @@ export default {
     translate: Boolean,
     modelValue: [String, Number, Object]
   },
-  emits:['update:modelValue'],
+  emits: ['update:modelValue'],
   computed: {
     current() {
       if (!this.modelValue) {
@@ -72,6 +72,10 @@ export default {
 .#{$prefix}radio-input {
   width: 100%;
   cursor: pointer;
+
+  .radio-label {
+    color: var(--color-on-sheet);
+  }
 
   .radio-input-item {
     border: 1px solid var(--color-on-sheet-low)

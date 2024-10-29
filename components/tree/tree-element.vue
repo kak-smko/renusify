@@ -222,8 +222,8 @@ $distance: 20px;
         position: absolute;
         left: 50%;
         right: 50%;
-        top: $distance - 8px;
-        height: $distance;
+        top: 0;
+        height: $distance - 8px;
         border-left: 2px solid #ccc;
       }
 

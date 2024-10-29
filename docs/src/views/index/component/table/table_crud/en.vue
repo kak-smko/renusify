@@ -23,6 +23,7 @@
     "disableDelete": false,
     "disableUpdate": false,
     "mcud": null,
+    "itemId": "_id",
     "headers": null
 }
 },
@@ -31,7 +32,7 @@ methods:{
   console.log(name,e)
  }
 }'
-        template='<r-table-crud :link="link" :actions="actions" :cast="cast" :per-Page="perPage" :query="query" :responsive="responsive" :disable-Add="disableAdd" :advance-Search="advanceSearch" :disable-Delete="disableDelete" :disable-Update="disableUpdate" :mcud="mcud" :headers="headers" @actions="log(`actions`,$event)" ></r-table-crud>'
+        template='<r-table-crud :link="link" :actions="actions" :cast="cast" :per-Page="perPage" :query="query" :responsive="responsive" :disable-Add="disableAdd" :advance-Search="advanceSearch" :disable-Delete="disableDelete" :disable-Update="disableUpdate" :mcud="mcud" :itemId="itemId" :headers="headers" @actions="log(`actions`,$event)" ></r-table-crud>'
     ></r-code-editor>
   </section>
   <br/>
@@ -203,6 +204,13 @@ export default {
           default: "null",
           description:
               "It takes a link address. It allows you to perform specific operations simultaneously for multiple tables",
+        },
+        {
+          prop: "itemId",
+          type: "String",
+          default: "_id",
+          description:
+              "Id field of item",
         },
         {
           prop: "headers",

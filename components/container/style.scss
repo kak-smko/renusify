@@ -40,6 +40,37 @@
       padding: div($form-grid-gutter, 2) !important;
     }
   }
+
+  &.row-grid {
+    overflow: hidden;
+  }
+
+  &.row-grid .col {
+    position: relative;
+    margin: 0;
+  }
+
+  &.row-grid .col:before, &.row-grid .col:after {
+    box-sizing: border-box;
+    content: '';
+    position: absolute;
+  }
+
+  &.row-grid .col:before {
+    height: 100%;
+    top: 0;
+    left: -1px;
+    border-left: 1px solid var(--color-border-low);
+  }
+
+  &.row-grid .col:after {
+    width: 100%;
+    height: 0;
+    top: auto;
+    left: 0;
+    bottom: -1px;
+    border-bottom: 1px solid var(--color-border-low);
+  }
 }
 
 // Remove the negative margin from default .row, then the horizontal padding

@@ -15,6 +15,7 @@
         script='data(){
  return {
     "dense": false,
+    "grid": false,
     "noGutters": false
 }
 }'
@@ -143,6 +144,11 @@ export default {
           type: "Boolean",
           default: "null",
           description: "فشرده کردن ردیف ها",
+        }, {
+          prop: "grid",
+          type: "Boolean",
+          default: "null",
+          description: "شبکه ای کردن ستون ها",
         },
         {
           prop: "noGutters",

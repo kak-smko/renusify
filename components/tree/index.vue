@@ -2,12 +2,12 @@
     <r-container ref="tree" :class="classes" full-width>
         <r-row v-if="searchLink">
             <r-col>
-                <r-select
+              <r-select-input
                     :label="$t('search','renusify')"
                     :model-value="search"
                     :searchLink="searchLink"
                     @update:model-value="change($event)"
-                ></r-select>
+              ></r-select-input>
             </r-col>
         </r-row>
         <r-float v-if="show" :minZoom="0.01" :zoom="0.7" bordered>

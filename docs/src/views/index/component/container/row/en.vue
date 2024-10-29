@@ -15,6 +15,7 @@
         script='data(){
  return {
     "dense": false,
+    "grid": false,
     "noGutters": false
 }
 }'
@@ -143,6 +144,11 @@ export default {
           type: "Boolean",
           default: "null",
           description: "grid dense",
+        }, {
+          prop: "grid",
+          type: "Boolean",
+          default: "null",
+          description: "grid column",
         },
         {
           prop: "noGutters",
