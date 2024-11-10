@@ -56,7 +56,7 @@ export default {
                 let wPH = []
                 if (is_array) {
                     this.wPH.forEach((item) => {
-                        item = item.split('/')
+                        item = item.toString().split('/')
                         if (item.length === 2) {
                             wPH.push(parseFloat(item[0]) / parseFloat(item[1]))
 

@@ -1,5 +1,5 @@
 <template>
-  <div v-intersect[modifier]="check" :class="{
+  <div v-intersect.[modifier]="check" :class="{
         [$r.prefix+'img']:true,
         'img-hoverZoom':hoverZoom,'img-hoverDark':hoverDark,'img-hoverTitle':hoverTitle}"
        ref="rImg">

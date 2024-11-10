@@ -5,7 +5,7 @@
           v-for="(item, i) in allWPH"
           :key="i"
           :class="{ 'color-one-text': item === currentWPH }"
-          class="me-1 mb-1 cursor-pointer"
+          class="ma-1 cursor-pointer"
           label
           outlined
           @click.prevent="changeWPH(item)"

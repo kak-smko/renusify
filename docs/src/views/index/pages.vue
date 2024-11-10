@@ -1,13 +1,7 @@
 <template>
   <r-container>
-    <r-row>
-      <r-col class="col-12 md-9">
-        <component :is="page" :key="lang + '-' + path"></component>
+    <component :is="page" :key="lang + '-' + path"></component>
         <buttom-next-page></buttom-next-page>
-      </r-col>
-
-      <r-col class="col-12 md-3"></r-col>
-    </r-row>
   </r-container>
 </template>
 <script>

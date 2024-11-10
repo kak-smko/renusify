@@ -1,6 +1,6 @@
 <template>
     <div ref="containerMessage"
-         class="container-message-list" v-scroll="handle">
+         v-scroll.window="handle" class="container-message-list">
         <div v-for="message in messages" :key="message._id" class="message-container">
             <r-chat-message @see="$emit('see', $event)" :message="message" :is-me="message.user_id===myself.id"
                         :user="message.user_id===myself.id?myself:participants[message.user_id]"></r-chat-message>

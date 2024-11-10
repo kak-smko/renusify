@@ -1,5 +1,19 @@
 <template>
   <div :class="`${$r.prefix}input-tel`">
+    <r-btn :disabled="!select||readonly"
+           :rounded="!c_tile" class="btn-country ltr ms-1" outlined @click.stop="toggleDropdown">
+      <div :class="activeCountry.iso2.toLowerCase()" class="iti-flag"></div>
+      <span class="country-code pa-1"> +{{ activeCountry.dialCode }} </span>
+      <span class="dropdown-arrow">{{ open ? "▲" : "▼" }}</span>
+    </r-btn>
+    <r-text-input v-model="tel.phone" :label="label?label:$t('phone','renusify')"
+                  :readonly="readonly"
+                  :rules="required?['required','number']:['number']"
+                  :tile="c_tile"
+                  class="input-phone"
+                  @update:model-value="emit"
+    >
+    </r-text-input>
     <r-modal
         v-model="open"
     >
@@ -20,21 +34,6 @@
         </r-list>
       </div>
     </r-modal>
-    <r-btn class="btn-country ltr ms-1"
-           :rounded="!c_tile" :disabled="!select||readonly" @click.stop="toggleDropdown" outlined>
-      <div :class="activeCountry.iso2.toLowerCase()" class="iti-flag"></div>
-      <span class="country-code pa-1"> +{{ activeCountry.dialCode }} </span>
-      <span class="dropdown-arrow">{{ open ? "▲" : "▼" }}</span>
-    </r-btn>
-    <r-text-input class="input-phone" :label="label?label:$t('phone','renusify')"
-                  @update:model-value="emit"
-                  :tile="c_tile"
-                  :readonly="readonly"
-                  :rules="required?['required','number']:['number']"
-                  v-model="tel.phone"
-    >
-    </r-text-input>
-
   </div>
 </template>
 
@@ -62,7 +61,7 @@ export default {
     }
 
   },
-  emits:['update:modelValue'],
+  emits: ['update:modelValue'],
   data() {
     return {
       tel: {
@@ -75,19 +74,19 @@ export default {
       open: false
     }
   },
-  mounted() {
-    import('./assets/all-countries.js').then((d)=>{
-      this.countries = d.default;
-      this.initializeCountry()
-    })
-  },
   created() {
-    if (this.modelValue) {
-      let a = this.modelValue.split(' ')
-      this.tel.country_code = a[0]
-      this.tel.phone = a[1]
-      this.activeCountry.dialCode = this.tel.country_code
-    }
+    import('./assets/all-countries.js').then((d) => {
+      this.countries = d.default;
+      if (this.modelValue) {
+        let a = this.modelValue.split(' ')
+        this.tel.country_code = a[0]
+        this.tel.phone = a[1]
+        this.activeCountry = this.findCountryByCode(this.tel.country_code)
+      } else {
+        this.initializeCountry()
+      }
+    })
+
   },
   computed: {
     c_tile() {
@@ -108,6 +107,9 @@ export default {
     },
     findCountry(iso = '') {
       return this.countries.find(country => country.iso2 === iso)
+    },
+    findCountryByCode(code = '') {
+      return this.countries.find(country => country.dialCode === code)
     },
 
     choose(country) {
@@ -152,15 +154,16 @@ export default {
   display: flex;
   align-items: baseline;
   direction: ltr;
-
+  flex-wrap: wrap;
   .btn-country {
-    width: 120px;
+    width: 100px;
     border-color: var(--color-sheet-low)
 
   }
 
   .input-phone {
-    width: calc(100% - 120px);
+    width: calc(100% - 104px);
+    min-width: 150px;
   }
 }
 </style>

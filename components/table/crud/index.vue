@@ -400,7 +400,7 @@ export default {
         params.a_search = JSON.stringify(this.a_search)
       }
 
-      this.setup('/' + this.link, params)
+      this.setup(this.link, params)
     },
     searching() {
       clearTimeout(this.time_out_id)

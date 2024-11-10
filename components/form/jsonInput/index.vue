@@ -21,7 +21,8 @@
           @click.prevent="open">
         <r-icon v-html="$r.icons.plus"></r-icon>
       </r-btn>
-      <div v-else-if="show" class="d-flex v-baseline">
+      <div v-else-if="show" class="d-flex v-baseline flex-wrap">
+        <slot :add="add" :info="info">
         <r-text-input
             v-if="!is_array"
             v-model="info.key"
@@ -50,6 +51,7 @@
                         :tile="tile"
                         v-model="info.value" :label="valueLabel||$t('value','renusify')"></r-switch-input>
         <r-btn :rounded="!c_tile" class="ms-1 color-success" @click.prevent="add">{{ $t('add', 'renusify') }}</r-btn>
+        </slot>
       </div>
     </div>
     <div v-else :class="{'state-error':error}" class="json-highlight ltr">

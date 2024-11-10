@@ -21,6 +21,7 @@
         script='data(){
  return {
     "required": false,
+    "stepShow": false,
     "allowCountries": null,
     "hideState": false,
     "hideCity": false,
@@ -179,7 +180,13 @@ export default {
           type: "Boolean",
           default: "null",
           description:
-              "Input قبل از ارسال به سمت سرور حتما باید دارای مقدار باشد",
+              "وروذی را اجباری می کند",
+        }, {
+          prop: "stepShow",
+          type: "Boolean",
+          default: "null",
+          description:
+              "نمایش ورودی ها قدم به قدم",
         },
         {
           prop: "allowCountries",

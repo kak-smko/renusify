@@ -3,7 +3,12 @@ function mounted (el, binding) {
   const options = binding.options || {
     passive: true
   }
-  const target = binding.arg ? document.querySelector(binding.arg) : window
+    let target = el
+    if (binding.modifiers.window) {
+        target = window
+    } else if (binding.arg) {
+        target = document.querySelector(binding.arg)
+    }
   if (!target) return
   target.addEventListener('scroll', callback, options)
   el._onScroll = {

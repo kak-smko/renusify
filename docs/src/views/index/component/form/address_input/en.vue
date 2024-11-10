@@ -21,6 +21,7 @@
         script='data(){
  return {
     "required": false,
+    "stepShow": false,
     "allowCountries": null,
     "hideState": false,
     "hideCity": false,
@@ -180,6 +181,12 @@ export default {
           default: "null",
           description:
               "The Input must have a value before being sent to the server.",
+        }, {
+          prop: "stepShow",
+          type: "Boolean",
+          default: "null",
+          description:
+              "Show Input step by step",
         },
         {
           prop: "allowCountries",

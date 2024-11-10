@@ -15,7 +15,7 @@
                   v-model="state"
                   :disabled="!country"
                   :key="country&&country['id']"
-                  v-if="!hideState"
+                  v-if="show_state"
                   @update:model-value="emit(false,true)"
                   :searchLink="country&&`https://codenus.com/api/apps/address/${country['id']}?lang=${$r.lang}`"
                   :rules="required?['required']:[]"
@@ -25,7 +25,7 @@
                   :tile="tile">
 
   </r-select-input>
-  <r-select-input v-if="!hideCity"
+  <r-select-input v-if="show_city"
                   v-model="city"
                   :disabled="!state"
                   :key="state&&(country['id']+'-'+state['id'])"
@@ -39,13 +39,13 @@
                   :tile="tile">
 
   </r-select-input>
-  <r-text-input v-if="!hideZipCode" @update:model-value="emit(false,false)"
+  <r-text-input v-if="show_zip" @update:model-value="emit(false,false)"
                 :label="$t('zip_code','renusify')"
                 v-model="zip_code"
                 :tile="tile"
                 :readonly="readonly"
                 :rules="required?['required']:[]"></r-text-input>
-  <r-text-area v-if="!hideStreet" @update:model-value="emit(false,false)"
+  <r-text-area v-if="show_street" @update:model-value="emit(false,false)"
                :label="$t('street','renusify')"
                v-model="street"
                :tile="tile"
@@ -59,6 +59,7 @@ export default {
   inheritAttrs: false,
   props: {
     required: Boolean,
+    stepShow: Boolean,
     allowCountries: Array,
     hideState: Boolean,
     hideCity: Boolean,
@@ -81,11 +82,41 @@ export default {
   },
   watch: {
     modelValue() {
-      this.country = this.modelValue ? this.modelValue.country : null
+      this.country = this.modelValue ? this.modelValue.country : (this.defaultCountry ? this.defaultCountry : null)
       this.state = this.modelValue ? this.modelValue.state : null
       this.city = this.modelValue ? this.modelValue.city : null
       this.zip_code = this.modelValue ? this.modelValue.zip_code : null
       this.street = this.modelValue ? this.modelValue.street : null
+    }
+  },
+  computed: {
+    show_state() {
+      if (this.stepShow) {
+        return !this.hideState && this.country
+      } else {
+        return !this.hideState
+      }
+    },
+    show_city() {
+      if (this.stepShow) {
+        return !this.hideCity && this.state
+      } else {
+        return !this.hideCity
+      }
+    },
+    show_street() {
+      if (this.stepShow) {
+        return !this.hideStreet && this.city
+      } else {
+        return !this.hideStreet
+      }
+    },
+    show_zip() {
+      if (this.stepShow) {
+        return !this.hideZipCode && this.city
+      } else {
+        return !this.hideZipCode
+      }
     }
   },
   methods: {

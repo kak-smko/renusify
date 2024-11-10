@@ -1,6 +1,6 @@
 <template>
     <div class="infinite-page">
-        <div class="infinite-page-container" v-scroll="onScroll">
+      <div v-scroll.window="onScroll" class="infinite-page-container">
             <slot :items="datacollection" :total="total"></slot>
         </div>
         <r-progress-line color="color-two"

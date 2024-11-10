@@ -305,6 +305,8 @@ export default {
     list-style: none;
     padding: 0;
     white-space: nowrap;
+    max-width: 100%;
+    overflow: auto;
   }
 
   .slider-dot {

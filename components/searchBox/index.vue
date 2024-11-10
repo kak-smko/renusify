@@ -34,7 +34,7 @@
               @focusout="active = false"
               @input="handle"
           />
-          <r-icon v-html="$r.icons.search"></r-icon>
+          <r-icon class="mx-1" v-html="$r.icons.search"></r-icon>
         </span>
       </div>
       <r-card

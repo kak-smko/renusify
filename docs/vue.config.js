@@ -14,7 +14,7 @@ module.exports = defineConfig({
   configureWebpack: {
     resolve: {
       alias: {
-        app_root: path.resolve(__dirname, "../")
+        renusify: path.resolve(__dirname, "../")
       }
     }
   },
