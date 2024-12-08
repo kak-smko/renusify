@@ -21,6 +21,7 @@
     "responsive": true,
     "disableAdd": false,
     "advanceSearch": true,
+    "card": false,
     "disableDelete": false,
     "disableUpdate": false,
     "mcud": null,
@@ -173,6 +174,11 @@ export default {
           type: "Boolean",
           default: "true",
           description: "ریسپانسیو است",
+        }, {
+          prop: "card",
+          type: "Boolean",
+          default: "false",
+          description: "نمایش به صورت کارت",
         },
         {
           prop: "disableAdd",

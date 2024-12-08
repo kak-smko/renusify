@@ -176,6 +176,13 @@ export default {
       info: {},
       props: [
         {
+          prop: "baseUrl",
+          type: "String",
+          default: "https://codenus.com/api/apps/address",
+          description:
+              "Get location information's",
+        },
+        {
           prop: "required",
           type: "Boolean",
           default: "null",
@@ -192,31 +199,37 @@ export default {
           prop: "allowCountries",
           type: "Array",
           default: "null",
-          description: "Grant access to all countries.",
+          description: "Grant access to specific countries.",
+        },
+        {
+          prop: "hideCountry",
+          type: "Boolean",
+          default: "null",
+          description: "Hide country field",
         },
         {
           prop: "hideState",
           type: "Boolean",
           default: "null",
-          description: "Lack of access to a State.",
+          description: "Hide state field",
         },
         {
           prop: "hideCity",
           type: "Boolean",
           default: "null",
-          description: "Lack of access to a City.",
+          description: "Hide city field",
         },
         {
           prop: "hideZipCode",
           type: "Boolean",
           default: "null",
-          description: "Postcode-based access denial.",
+          description: "Hide zip-code field",
         },
         {
           prop: "hideStreet",
           type: "Boolean",
           default: "null",
-          description: "Lack of access to a Street.",
+          description: "Hide street field",
         },
         {
           prop: "tile",

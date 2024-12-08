@@ -21,6 +21,7 @@
     "disableAdd": false,
     "advanceSearch": true,
     "disableDelete": false,
+    "card": false,
     "disableUpdate": false,
     "mcud": null,
     "itemId": "_id",
@@ -172,6 +173,11 @@ export default {
           type: "Boolean",
           default: "true",
           description: "Responsive",
+        }, {
+          prop: "card",
+          type: "Boolean",
+          default: "false",
+          description: "Show as a card",
         },
         {
           prop: "disableAdd",

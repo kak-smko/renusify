@@ -286,7 +286,9 @@ $data-table-regular-header-height: 38px !default;
 
     .manage-footer {
       .btn-page {
-        border: solid 1px var(--color-border);
+        color: var(--color-on-sheet);
+        border: solid 1px var(--color-sheet-low);
+        background-color: var(--color-sheet-container);
       }
     }
 

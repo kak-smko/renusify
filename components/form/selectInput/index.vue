@@ -46,7 +46,7 @@
                     width:$refs.select&&$refs.select.getBoundingClientRect().width+'px'
                 }"
     >
-      <r-list :filter="inputVal&&inputVal.trim()"
+      <r-list :filter="!searchLink?(inputVal&&inputVal.trim()):''"
               :items="genItems"
               :multiple="multiple"
               :modelValue="chips"

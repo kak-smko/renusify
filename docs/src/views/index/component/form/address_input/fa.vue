@@ -176,6 +176,12 @@ export default {
       info: {},
       props: [
         {
+          prop: "baseUrl",
+          type: "String",
+          default: "https://codenus.com/api/apps/address",
+          description:
+              "آدرس دریافت اطلاعات مکان ها",
+        }, {
           prop: "required",
           type: "Boolean",
           default: "null",
@@ -192,31 +198,37 @@ export default {
           prop: "allowCountries",
           type: "Array",
           default: "null",
-          description: "اجازه دادن دسترسی به همه کشورها",
+          description: "دسترسی به کشورهای این لیست",
+        },
+        {
+          prop: "hideCountry",
+          type: "Boolean",
+          default: "null",
+          description: "مخفی کردن کشور",
         },
         {
           prop: "hideState",
           type: "Boolean",
           default: "null",
-          description: "عدم دسترسی ایالتی",
+          description: "مخفی کردن استان",
         },
         {
           prop: "hideCity",
           type: "Boolean",
           default: "null",
-          description: "عدم دسترسی شهری",
+          description: "مخفی کردن شهز",
         },
         {
           prop: "hideZipCode",
           type: "Boolean",
           default: "null",
-          description: "عدم دسترسی براساس کد پستی",
+          description: "مخفی کردن کد پستی",
         },
         {
           prop: "hideStreet",
           type: "Boolean",
           default: "null",
-          description: "عدم دسترسی براساس خیابان  ",
+          description: "مخفی کردن خیابان",
         },
         {
           prop: "tile",

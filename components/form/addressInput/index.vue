@@ -2,10 +2,10 @@
   <r-select-input
       :label="$t('country','renusify')"
       v-model="country"
-      v-if="!defaultCountry"
+      v-if="!hideCountry"
       @update:model-value="emit(true,true)"
       value="id"
-      :searchLink="`https://codenus.com/api/apps/address?lang=${$r.lang}`"
+      :searchLink="`${baseUrl}?lang=${$r.lang}`"
       :rules="required?['required']:[]"
       :headers="{'Authorization':''}"
       :readonly="readonly"
@@ -17,7 +17,7 @@
                   :key="country&&country['id']"
                   v-if="show_state"
                   @update:model-value="emit(false,true)"
-                  :searchLink="country&&`https://codenus.com/api/apps/address/${country['id']}?lang=${$r.lang}`"
+                  :searchLink="country&&`${baseUrl}/${country['id']}?lang=${$r.lang}`"
                   :rules="required?['required']:[]"
                   value="id"
                   :headers="{'Authorization':''}"
@@ -31,7 +31,7 @@
                   :key="state&&(country['id']+'-'+state['id'])"
                   @update:model-value="emit(false,false)"
                   :label="$t('city','renusify')"
-                  :searchLink="state&&`https://codenus.com/api/apps/address/${country['id']}/${state['id']}?lang=${$r.lang}`"
+                  :searchLink="state&&`${baseUrl}/${country['id']}/${state['id']}?lang=${$r.lang}`"
                   :rules="required?['required']:[]"
                   value="id"
                   :headers="{'Authorization':''}"
@@ -61,12 +61,14 @@ export default {
     required: Boolean,
     stepShow: Boolean,
     allowCountries: Array,
+    hideCountry: Boolean,
     hideState: Boolean,
     hideCity: Boolean,
     hideZipCode: Boolean,
     hideStreet: Boolean,
     readonly: Boolean,
     tile: {type: Boolean, default: undefined},
+    baseUrl: {type: String, default: "https://codenus.com/api/apps/address"},
     defaultCountry: Object,
     modelValue: Object
   },

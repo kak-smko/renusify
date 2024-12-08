@@ -155,7 +155,9 @@ export default class Translate {
                         this.local = locale;
                         this.setMessages({});
                     }
+                    setTimeout(() => {
                     this.$r.store['langs_loaded'][pack] = true;
+                    }, 50)
                 } else {
                     this.$r.store['langs_loaded'][pack] = true;
                 }

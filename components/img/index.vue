@@ -94,7 +94,7 @@ export default {
         res += this.query
       }
       if (this.isSvg && this.svgCache) {
-        res += 'c=' + this.svgCache
+        res += '&c=' + this.svgCache
       }
       if (!this.isSvg && ((this.autoSize && this.size.width > 0) || this.width)) {
         res += `&w=${this.size.width}`

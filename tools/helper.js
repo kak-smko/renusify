@@ -399,3 +399,10 @@ export function changeColor(vars) {
     css += '}'
     style.appendChild(document.createTextNode(css));
 }
+
+export function fix_url(url) {
+    if (url.startsWith("/") || url.startsWith("http:") || url.startsWith("https:")) {
+        return url
+    }
+    return "/" + url
+}

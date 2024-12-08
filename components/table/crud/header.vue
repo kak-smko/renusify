@@ -1,7 +1,7 @@
 <template>
   <div>
-    <r-container class="container-fluid">
-      <r-row class="h-start h-space-between">
+    <r-container class="container-fluid pa-0 mb-3">
+      <r-row class="h-start h-space-between" no-gutter>
         <r-col class="col-auto">
           <r-btn v-if="!disableAdd"
                  class="color-success-text"
@@ -30,7 +30,7 @@
         </r-col>
         <r-col v-if="!show" class="col-12">
           <r-text-input :label="$t('search','renusify')"
-                        :model-value="search"
+                        :model-value="modelValue"
                         @update:modelValue="$emit('update:modelValue',$event)"></r-text-input>
         </r-col>
         <r-col v-else class="col-12">
@@ -42,18 +42,18 @@
                                 :items="headers[0]"
                                 :label="$t('name','renusify')"
                                 just-value></r-select-input>
-                <div v-if="info.key" :key="info.key">
-                  <r-select-input v-model="info.action"
-                                  :items="[
+
+                <r-select-input v-if="info.key" :key="info.key" v-model="info.action"
+                                :items="[
                                           {name:$t('advance_search_equal','renusify'),value:'e'},
                                           {name:$t('advance_search_not_equal','renusify'),value:'ne'},
                                           {name:$t('advance_search_gt','renusify'),value:'gt'},
                                           {name:$t('advance_search_lt','renusify'),value:'lt'}]"
-                                  :label="$t('advance_search_operator','renusify')"
-                                  disableSearch
-                                  firstSelect
-                                  justValue></r-select-input>
-                </div>
+                                :label="$t('advance_search_operator','renusify')"
+                                disableSearch
+                                firstSelect
+                                justValue></r-select-input>
+
                 <div v-if="info.key" :key="info.key">
                   <component :is="headers[1][info.key].type" v-if="headers[1][info.key].type"
                              v-model="info.value"
@@ -92,7 +92,7 @@ export default {
     advanceSearch: Boolean,
     mcud: Boolean,
     newItem: Function,
-    search: String
+    modelValue: String
   },
   emits: ['update:modelValue', 'copy', 'edit', 'delete', 'a-search'],
   data() {
@@ -109,6 +109,9 @@ export default {
       for (let i = 0; i < this.headerTable.length; i++) {
         r.push({'name': this.$t(this.headerTable[i].text), 'value': this.headerTable[i].value})
         r2[this.headerTable[i].value] = this.headerTable[i].option
+        if (this.headerTable[i].option.type === 'r-date-input' || this.headerTable[i].option.type === 'r-time-ago') {
+          r2[this.headerTable[i].value]['withTime'] = true
+        }
       }
       return [r, r2]
     }

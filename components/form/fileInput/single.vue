@@ -14,7 +14,7 @@
         >
           {{ `% ${uploadPercentage}` }}
         </r-progress-circle>
-        <r-btn :href="'/'+fileLink" class="image-copy" icon target="_blank">
+        <r-btn :href="fileLink" class="image-copy" icon target="_blank">
           <r-icon v-html="$r.icons.eye"></r-icon>
         </r-btn>
         <img v-if="isImg()" :class="`image ${imageStatus} `" :src="getUrl(file)">
@@ -89,7 +89,7 @@ export default {
   methods: {
     setValue() {
       if (this.modelValue) {
-        this.fileLink = this.meta ? this.modelValue['url'] : this.modelValue
+        this.fileLink = this.$helper.fix_url(this.meta ? this.modelValue['url'] : this.modelValue)
         this.metaList = this.meta ? this.modelValue['meta'] : {}
         this.showAdd = false
         this.imageStatus = 'finished'
@@ -99,7 +99,7 @@ export default {
     },
     getUrl(value) {
       if (this.modelValue) {
-        return '/' + this.fileLink
+        return this.fileLink
       } else {
         return URL.createObjectURL(value)
       }
