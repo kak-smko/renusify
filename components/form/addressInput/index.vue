@@ -2,7 +2,7 @@
   <r-select-input
       :label="$t('country','renusify')"
       v-model="country"
-      v-if="!hideCountry"
+      v-if="!hideCountry||!country"
       @update:model-value="emit(true,true)"
       value="id"
       :searchLink="`${baseUrl}?lang=${$r.lang}`"

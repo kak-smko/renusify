@@ -316,7 +316,8 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
 
 .btn-outlined,
 .btn-text {
-  background-color: transparent
+  background-color: transparent;
+  color: inherit;
 }
 
 .btn-round,

@@ -67,6 +67,9 @@ emits:['update:modelValue'],
       this.$refs.input.focus()
     },
     emit() {
+      if (this.unit === null) {
+        this.unit = this.units[0]
+      }
       this.$emit('update:modelValue', {value: this.lazyValue, unit: this.unit})
     }
   }
