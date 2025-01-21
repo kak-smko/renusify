@@ -57,7 +57,7 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
-
+  color: inherit;
   &:not(.btn-text):not(.btn-outlined) {
     background-color: var(--color-sheet-container-low);
     color: var(--color-on-sheet);

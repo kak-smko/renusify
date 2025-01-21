@@ -43,7 +43,7 @@
                                 :label="$t('name','renusify')"
                                 just-value></r-select-input>
 
-                <r-select-input v-if="info.key" :key="info.key" v-model="info.action"
+                <r-select-input v-if="info.key" :key="info.key" v-model="info.action" style="min-width: 30px"
                                 :items="[
                                           {name:$t('advance_search_equal','renusify'),value:'e'},
                                           {name:$t('advance_search_not_equal','renusify'),value:'ne'},
@@ -66,7 +66,7 @@
               </template>
             </r-json-input>
 
-            <r-btn :loading="loading" block class="color-info mt-2" rounded @click.prevent="send">
+            <r-btn :disabled="!advance" :loading="loading" block class="color-info mt-2" rounded @click.prevent="send">
               {{ $t('search', 'renusify') }}
             </r-btn>
           </r-container>
@@ -119,8 +119,10 @@ export default {
   methods: {
     added(info, add) {
       let item = this.headers[1][info.key]
-      if (info.key === '_id' || item.is_object_id) {
+      if (info.key === '_id' || item.is_object_id === true) {
         info.value = {'$oid': info.value}
+      } else if (item.is_object_id) {
+        info.value[item.is_object_id] = {'$oid': info.value[item.is_object_id]}
       } else if (item.type === 'r-date-input' || item.type === 'r-time-ago') {
         if (info.action === 'eq') {
           info.value = {'$date': info.value}

@@ -7,7 +7,7 @@
            outlined
            @click.prevent="emit(modelValue+i-6)">
       {{
-        $d(new Date(modelValue + i - 6, month, 1, 0, timezoneOffset), 'year', locale)
+        $d(new Date(modelValue + i - 6, 1, 1, 0, timezoneOffset), 'year', locale)
       }}
     </r-btn>
   </div>

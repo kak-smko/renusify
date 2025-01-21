@@ -135,6 +135,7 @@ $btnTabsWidth: 50px;
     border-bottom: 2px solid transparent;
     cursor: pointer;
     transition: all 0.25s;
+    color: inherit;
 
     &:focus {
       outline: none;

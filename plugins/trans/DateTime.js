@@ -12,26 +12,26 @@ export default class DateTime {
                 month: 'short'
             },
             year: {
-            year: 'numeric'
-        },
-        short: {
-            year: 'numeric', month: 'short', day: 'numeric'
-        },
-        medium: {
-            year: 'numeric', month: 'numeric', day: 'numeric'
-        },
-        weekday: {
-            weekday: 'short'
-        },
-        long: {
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric',
-            weekday: 'short',
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric'
-        }
+                year: 'numeric'
+            },
+            short: {
+                year: 'numeric', month: 'short', day: 'numeric'
+            },
+            medium: {
+                year: 'numeric', month: 'numeric', day: 'numeric'
+            },
+            weekday: {
+                weekday: 'short'
+            },
+            long: {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                weekday: 'short',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric'
+            }
         }
 
         this.langs = langs;

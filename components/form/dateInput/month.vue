@@ -19,6 +19,7 @@ export default {
     modelValue: Number,
     timezoneOffset: Number,
     locale: String,
+    month: Number,
     year: Number
   },
   emits:['update:modelValue'],
@@ -30,7 +31,7 @@ export default {
   beforeMount() {
     const c = this.$d(new Date(this.year, 1, 1, 0, this.timezoneOffset), 'me', this.locale)
     if (c > 1) {
-      this.p = (13 - c)
+      this.p = (1 - c)
     }
   },
   methods: {

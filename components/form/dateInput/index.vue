@@ -51,6 +51,7 @@
                            @update:model-value="(tab='day',setMonth($event))"
                            :timezoneOffset="lang_zone_offset-timezoneOffset"
                            :locale="locale"
+                           :month="currentPeriod.month"
                            :year="currentPeriod.year"></month-tab>
                 <table v-if="tab==='day'" class="table">
                     <thead>

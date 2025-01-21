@@ -121,7 +121,7 @@ export default {
 
     &-active {
       transition: 0.3s all ease-in;
-      max-height: 2000px;
+      max-height: 20000px;
     }
   }
 
