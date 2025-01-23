@@ -97,9 +97,9 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../style/include";
+@use "../../style/variables/base";
 
-.#{$prefix}chat {
+.#{base.$prefix}chat {
   position: relative;
   display: flex;
   width: 100%;

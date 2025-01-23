@@ -1,12 +1,15 @@
-@import "../../style/include";
+@use "sass:map";
+@use "../../style/variables/base";
+@use "../../style/variables/color";
+
 
 $progress-circle-rotate-animation: progress-circle-rotate 1.4s linear infinite !default;
 $progress-circle-rotate-dash: progress-circle-dash 1.4s ease-in-out infinite !default;
 $process-circle-intermediate-svg-transition: all .2s ease-in-out !default;
-$progress-circle-underlay-stroke: rgba(map-get($shades, 'black'), 0.1) !default;
+$progress-circle-underlay-stroke: rgba(map.get(color.$shades, 'black'), 0.1) !default;
 $progress-circle-overlay-transition: all .6s ease-in-out !default;
 
-.#{$prefix}progress-circle {
+.#{base.$prefix}progress-circle {
   position: relative;
   display: inline-flex;
   vertical-align: middle;
@@ -32,7 +35,7 @@ $progress-circle-overlay-transition: all .6s ease-in-out !default;
       transition: $process-circle-intermediate-svg-transition;
     }
 
-    .#{$prefix}progress-circle-overlay {
+    .#{base.$prefix}progress-circle-overlay {
       animation: $progress-circle-rotate-dash;
       stroke-linecap: round;
       stroke-dasharray: 80, 200;
@@ -82,7 +85,7 @@ $progress-circle-overlay-transition: all .6s ease-in-out !default;
 
 //line
 
-.#{$prefix}progress {
+.#{base.$prefix}progress {
   text-align: center;
 
   .progress-outlined {

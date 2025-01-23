@@ -342,10 +342,12 @@ export default {
 
 </script>
 <style lang="scss">
-@import "../../../style/include";
+@use "sass:map";
+@use "../../../style/variables/base";
+
 
 $min-height: 40px;
-.#{$prefix}select-container {
+.#{base.$prefix}select-container {
   position: relative;
   scroll-margin: $min-height;
 
@@ -376,7 +378,7 @@ $min-height: 40px;
     position: relative;
   }
 
-  .#{$prefix}chip {
+  .#{base.$prefix}chip {
     flex: 0 1 auto;
     margin: 4px;
   }
@@ -385,10 +387,10 @@ $min-height: 40px;
     max-height: 0;
     overflow: auto;
     opacity: .5;
-    transition: all .3s $primary-transition;
+    transition: all .3s base.$primary-transition;
     position: absolute;
     left: 0;
-    z-index: map_get($z-index, 'default');
+    z-index: map.get(base.$z-index, 'default');
   }
 
   .to-top {
@@ -396,7 +398,7 @@ $min-height: 40px;
   }
 
   .card-select-active {
-    transition: all 0.3s $primary-transition;
+    transition: all 0.3s base.$primary-transition;
     max-height: 300px;
     opacity: 1;
   }

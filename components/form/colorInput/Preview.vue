@@ -2,7 +2,7 @@
   <canvas ref="canvas" :width="width" :height="height"/>
 </template>
 <script>
-import {color} from "./mixin";
+import {color} from "./mixin.js";
 
 export default {
   props: {

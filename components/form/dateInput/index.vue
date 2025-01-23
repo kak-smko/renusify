@@ -372,9 +372,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../style/include";
+@use "../../../style/variables/base";
 
-.#{$prefix}date-input {
+.#{base.$prefix}date-input {
     position: relative;
     display: inline-block;
     font-size: 10px;

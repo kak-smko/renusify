@@ -62,16 +62,18 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../style/include";
+@use "sass:map";
+@use "../../style/variables/base";
+
 
 .notify-msg {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   padding: 10px;
-  border-radius: map-get($borders, 'md');
+  border-radius: map.get(base.$borders, 'md');
   position: relative;
-  z-index: map_get($z-index, 'important');
+  z-index: map.get(base.$z-index, 'important');
   margin: 0.3rem 0;
 }
 </style>

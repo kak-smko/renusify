@@ -513,9 +513,10 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../style/include";
+@use "../../../style/variables/base";
+@use "../../../style/mixins";
 
-.#{$prefix}timepicker-clock {
+.#{base.$prefix}timepicker-clock {
 
   --color-timepicker: var(--color-one);
 
@@ -683,7 +684,7 @@ export default {
 
 
   .number-disabled {
-    @include disable-states()
+    @include mixins.disable-states()
   }
 }
 </style>

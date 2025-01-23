@@ -24,7 +24,7 @@
 
 <script>
 import './style.scss'
-import {roots} from '../../tools/rootable'
+import {roots} from '../../tools/rootable.js'
 
 export default {
   name: 'r-btn',

@@ -1,7 +1,12 @@
-@import "renusify/style/_include.scss";
+@use "sass:map";
+@use "sass:math";
+@use "../../style/variables/base";
+@use "../../style/mixins";
+@use "../../style/functions";
+
 
 $btn-active-opacity: 0.18 !default;
-$btn-border-radius: map-get($borders, 'sm') !default;
+$btn-border-radius: map.get(base.$borders, 'sm') !default;
 $btn-focus-opacity: 0.24 !default;
 $btn-font-size: .875rem !default;
 $btn-font-weight: 500 !default;
@@ -33,10 +38,10 @@ $fab-icon-sizes: (
         'x-large': 32
 ) !default;
 $btn-transition-duration: 0.28s !default;
-$btn-transition-fn: map-get($transition, 'fast-out-slow-in') !default;
-$btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
+$btn-transition-fn: map.get(base.$transition, 'fast-out-slow-in') !default;
+$btn-transition: opacity 0.2s map.get(base.$transition, 'ease-in-out') !default;
 
-.#{$prefix}btn {
+.#{base.$prefix}btn {
   cursor: pointer;
   align-items: center;
   border-radius: $btn-border-radius;
@@ -68,13 +73,13 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
   }
 
 
-  @include states();
+  @include mixins.states();
 
   &.btn-disabled {
-    @include disable-states();
+    @include mixins.disable-states();
 
     &:not(.btn-text):not(.btn-outlined) {
-      background-color: var(--color-#{map-metro-get($states, 'disabled','state','color')}) !important;
+      background-color: var(--color-#{functions.map-metro-get(base.$states, 'disabled','state','color')}) !important;
     }
 
     &.btn-text, &.btn-outlined {
@@ -84,7 +89,7 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
     }
   }
 
-  @include ltr() {
+  @include mixins.ltr() {
     letter-spacing: $btn-letter-spacing;
   }
 
@@ -110,7 +115,7 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
 
   &:not(.btn-round) {
     @each $name, $size in $btn-sizes {
-      $p: div($size, 2.25);
+      $p: math.div($size, 2.25);
       &.size-#{$name} {
         height: #{$size}px;
         min-width: #{round($size * 1.7)}px;
@@ -119,7 +124,7 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
     }
   }
 
-  > .btn-content .#{$prefix}icon {
+  > .btn-content .#{base.$prefix}icon {
     color: inherit
   }
 
@@ -160,7 +165,7 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
   width: 100%;
 }
 
-.#{$prefix}btn:not(.btn-text):not(.btn-outlined) {
+.#{base.$prefix}btn:not(.btn-text):not(.btn-outlined) {
   &.btn-active:before {
     opacity: $btn-active-opacity
   }
@@ -179,19 +184,19 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
   position: absolute;
 
   &.btn-right {
-    right: map-get($grid-gutters, 'lg')
+    right: map.get(base.$grid-gutters, 'lg')
   }
 
   &.btn-left {
-    left: map-get($grid-gutters, 'lg')
+    left: map.get(base.$grid-gutters, 'lg')
   }
 
   &.btn-top {
-    top: map-get($grid-gutters, 'lg')
+    top: map.get(base.$grid-gutters, 'lg')
   }
 
   &.btn-bottom {
-    bottom: map-get($grid-gutters, 'lg')
+    bottom: map.get(base.$grid-gutters, 'lg')
   }
 }
 
@@ -203,14 +208,14 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
 }
 
 .btn-contained {
-  @include elevation('sm');
+  @include mixins.elevation('sm');
 
   &:after {
-    @include elevation('md')
+    @include mixins.elevation('md')
   }
 
   &:active {
-    @include elevation('lg')
+    @include mixins.elevation('lg')
   }
 }
 
@@ -225,7 +230,7 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
   padding: 0;
   @each $name, $size in $fab-icon-sizes {
     &.size-#{$name} {
-      .#{$prefix}icon {
+      .#{base.$prefix}icon {
         height: #{$size}px;
         font-size: #{$size}px;
         width: #{$size}px;
@@ -246,14 +251,14 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
 
 .btn-fab {
   &.btn-contained {
-    @include elevation('md') ;
+    @include mixins.elevation('md') ;
 
     &:after {
-      @include elevation('lg')
+      @include mixins.elevation('lg')
     }
 
     &:active {
-      @include elevation('xl')
+      @include mixins.elevation('xl')
     }
   }
 
@@ -269,11 +274,11 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
 
       &.btn-absolute {
         &.btn-bottom {
-          bottom: #{div($size,-2)}px
+          bottom: #{math.div($size,-2)}px
         }
 
         &.btn-top {
-          top: #{div($size,-2)}px
+          top: #{math.div($size,-2)}px
         }
       }
 
@@ -308,7 +313,7 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
 .btn-outlined,
 .btn-round {
   .btn-content {
-    .#{$prefix}icon {
+    .#{base.$prefix}icon {
       color: currentColor
     }
   }
@@ -340,11 +345,11 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
 }
 
 
-.#{$prefix}button-group {
+.#{base.$prefix}button-group {
   position: relative;
   color: var(--color-on-sheet);
   background-color: var(--color-sheet-container);
-  @include states();
+  @include mixins.states();
 
   .btn-container {
     display: inline-flex;
@@ -367,25 +372,25 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
     vertical-align: middle;
     white-space: nowrap;
 
-    .#{$prefix}btn {
+    .#{base.$prefix}btn {
       border-radius: 0;
     }
 
-    @include rtl() {
-      .#{$prefix}btn:not(:first-child):not(:last-child) {
+    @include mixins.rtl() {
+      .#{base.$prefix}btn:not(:first-child):not(:last-child) {
         border-left: currentColor 1px solid;
       }
 
-      .#{$prefix}btn:first-child {
+      .#{base.$prefix}btn:first-child {
         border-left: currentColor 1px solid;
       }
     }
-    @include ltr() {
-      .#{$prefix}btn:not(:first-child):not(:last-child) {
+    @include mixins.ltr() {
+      .#{base.$prefix}btn:not(:first-child):not(:last-child) {
         border-right: currentColor 1px solid;
       }
 
-      .#{$prefix}btn:first-child {
+      .#{base.$prefix}btn:first-child {
         border-right: currentColor 1px solid;
       }
     }
@@ -395,7 +400,7 @@ $btn-transition: opacity 0.2s map-get($transition, 'ease-in-out') !default;
     position: absolute;
     top: 0;
     width: 100%;
-    z-index: map_get($z-index, 'default');
+    z-index: map.get(base.$z-index, 'default');
     height: 300px;
     overflow: auto;
 

@@ -148,9 +148,9 @@ export default {
 
 <style src="./assets/sprite.css"></style>
 <style lang="scss">
-@import "../../../style/include";
+@use "../../../style/variables/base";
 
-.#{$prefix}input-tel {
+.#{base.$prefix}input-tel {
   display: flex;
   align-items: baseline;
   direction: ltr;

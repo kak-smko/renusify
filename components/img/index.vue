@@ -180,9 +180,9 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../style/include";
+@use "../../style/variables/base";
 
-.#{$prefix}img {
+.#{base.$prefix}img {
   position: relative;
   display: inline-flex;
   max-width: 100%;

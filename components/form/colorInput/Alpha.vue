@@ -8,7 +8,7 @@
 
 <script>
 
-import {color} from "./mixin";
+import {color} from "./mixin.js";
 
 export default {
   props: {

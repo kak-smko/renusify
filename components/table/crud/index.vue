@@ -221,9 +221,9 @@ export default {
   name: 'r-table-crud',
   components: {
     ManageHeader: defineAsyncComponent(() =>
-        import("./header")
+        import("./header.vue")
     ), ManageFooter: defineAsyncComponent(() =>
-        import("./footer")
+        import("./footer.vue")
     )
   },
   props: {

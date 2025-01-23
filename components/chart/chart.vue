@@ -16,7 +16,7 @@ export default {
     };
   },
   mounted(){
-    import('./apexcharts').then((d)=>{
+    import('./apexcharts.js').then((d) => {
       this.Chart=d.default;
       this.build()
     })
@@ -33,9 +33,9 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "../../style/include";
+@use "../../style/variables/base";
 
-.#{$prefix}chart {
+.#{base.$prefix}chart {
   position: relative;
   direction: ltr;
   text-align: left;

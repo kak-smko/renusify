@@ -1,5 +1,5 @@
 import './style.scss'
-import {cleanArray, ifHas} from '../../tools/helper'
+import {cleanArray, ifHas} from '../../tools/helper.js'
 
 let scopeObj;
 

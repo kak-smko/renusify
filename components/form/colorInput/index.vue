@@ -53,9 +53,9 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../../style/include";
+@use "../../../style/variables/base";
 
-.#{$prefix}color-picker {
+.#{base.$prefix}color-picker {
   .shower {
     width: 100%;
     height: 30px;

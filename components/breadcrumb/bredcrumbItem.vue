@@ -10,9 +10,9 @@
 </template>
 
 <script>
-    import {roots} from '../../tools/rootable'
+import {roots} from '../../tools/rootable.js'
 
-    export default {
+export default {
       name: 'rBreadcrumbItem',
       mixins: [roots],
       props: {

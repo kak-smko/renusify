@@ -1,5 +1,5 @@
 <template>
-    <div :class="{
+  <div :class="{
         [$r.prefix+'notify']:true,
         'top-pos':top,
         'bottom-pos':!top,
@@ -8,33 +8,33 @@
         'flex-column-reverse':!top,
         'flex-column':top,
     }" :style="{ 'min-width': width }">
-        <r-btn v-if="list.length>0" class="color-error" rounded
-               @click.prevent="handleClose(list[list.length-1].on_close_all)">
-          {{ $t('clear', 'renusify') }}
-        </r-btn>
-        <notification v-for="item in list" :key="item.id"
-                      :pos="left?'left':'right'"
-                      :permanent="item.permanent"
-                      :status="`color-${item.status}`"
-                      :width="item.width"
-                      :timeout="item.timeout"
-                      :content="item.content"
-                      @click.prevent="handle(item.on_click)"
-                      @hide="hideChild(item.id,item.on_close)">
+    <r-btn v-if="list.length>0" class="color-error" rounded
+           @click.prevent="handleClose(list[list.length-1].on_close_all)">
+      {{ $t('clear', 'renusify') }}
+    </r-btn>
+    <notification v-for="item in list" :key="item.id"
+                  :content="item.content"
+                  :permanent="item.permanent"
+                  :pos="left?'left':'right'"
+                  :status="`color-${item.status}`"
+                  :timeout="item.timeout"
+                  :width="item.width"
+                  @hide="hideChild(item.id,item.on_close)"
+                  @click.prevent="handle(item.on_click)">
 
-          <slot :data="item">
-            {{ item }}
-          </slot>
+      <slot :data="item">
+        {{ item }}
+      </slot>
 
-        </notification>
-    </div>
+    </notification>
+  </div>
 </template>
 <script>
 import {defineAsyncComponent} from 'vue'
 
 export default {
   components: {
-    notification: defineAsyncComponent(()=>import('./notification.vue'))
+    notification: defineAsyncComponent(() => import('./notification.vue'))
   },
   props: {
     permanent: {
@@ -61,24 +61,24 @@ export default {
       default: 4000
     }
   },
-  data () {
+  data() {
     return {
       list: []
     }
   },
   methods: {
-    handleClose (close) {
+    handleClose(close) {
       if (close !== null) {
         close()
       }
       this.$notify()
     },
-    handle (click) {
+    handle(click) {
       if (click !== null) {
         click()
       }
     },
-    showMe (obj) {
+    showMe(obj) {
       const item = {
         id: this.$helper.uniqueId(),
         permanent: obj.permanent || this.permanent,
@@ -93,10 +93,10 @@ export default {
       }
       this.list.push(item)
     },
-    hideMe () {
+    hideMe() {
       this.list = []
     },
-    hideChild (id, close) {
+    hideChild(id, close) {
       if (close !== null) {
         close()
       }
@@ -108,46 +108,48 @@ export default {
         }
       }
     },
-    registerBusMethods () {
+    registerBusMethods() {
       window.renusifyBus.on('r-notify', this.showMe)
       window.renusifyBus.on('hide-r-notify', this.hideMe)
     }
   },
-  created () {
+  created() {
     this.registerBusMethods()
   }
 }
 </script>
-<style lang="scss" scoped>
-@import '../../style/include';
+<style lang="scss">
+@use "sass:map";
+@use "../../style/variables/base";
 
-    .#{$prefix}notify {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      position: fixed;
-      width: auto;
-      height: auto;
-      z-index: map_get($z-index, 'medium');
-      overflow-y: auto;
-      max-height: 100%;
 
-      &.bottom-pos {
-        bottom: 0;
-      }
+.#{base.$prefix}notify {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  position: fixed;
+  width: auto;
+  height: auto;
+  z-index: map.get(base.$z-index, 'medium');
+  overflow-y: auto;
+  max-height: 100%;
 
-      &.top-pos {
-        top: 0;
-      }
+  &.bottom-pos {
+    bottom: 0;
+  }
 
-        &.right-pos {
-            right: 0;
-        }
+  &.top-pos {
+    top: 0;
+  }
 
-        &.left-pos {
-            left: 0;
-        }
+  &.right-pos {
+    right: 0;
+  }
 
-    }
+  &.left-pos {
+    left: 0;
+  }
+
+}
 
 </style>

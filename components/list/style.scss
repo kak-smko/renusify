@@ -1,9 +1,10 @@
-@import "../../style/include";
+@use "sass:map";
+@use "../../style/variables/base";
 
 $item-height: 48px;
 
-.#{$prefix}list {
-  border-radius: map-get($borders, 'sm');
+.#{base.$prefix}list {
+  border-radius: map.get(base.$borders, 'sm');
   display: block;
   padding: 8px 0;
   will-change: box-shadow;
@@ -45,7 +46,7 @@ $item-height: 48px;
       background-color: var(--color-one-container);
       color: var(--color-on-one-container);
 
-      .#{$prefix}icon {
+      .#{base.$prefix}icon {
         color: inherit;
       }
     }
@@ -59,7 +60,7 @@ $item-height: 48px;
 
   &.list-rounded {
     .list-item {
-      border-radius: map-get($borders, 'xl');
+      border-radius: map.get(base.$borders, 'xl');
     }
   }
 }

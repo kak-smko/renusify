@@ -1,4 +1,7 @@
-@import "../../style/include";
+@use "sass:map";
+@use "../../style/variables/base";
+@use "../../style/mixins";
+
 
 .r-directive-sortable {
   position: relative;
@@ -16,11 +19,12 @@
   .sortable-holder {
     background-color: rgba(20, 200, 255, 0.5);
   }
+
   .on-drag {
     position: fixed;
     z-index: 100;
-    @include elevation('xl');
-    border-radius: map_get($borders, 'md');
+    @include mixins.elevation('xl');
+    border-radius: map.get(base.$borders, 'md');
     user-select: none;
     cursor: grabbing;
   }

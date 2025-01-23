@@ -12,17 +12,17 @@
 </template>
 
 <script>
-    import '../scss/toolbar.scss'
-    import {defineAsyncComponent} from 'vue'
+import '../scss/toolbar.scss'
+import {defineAsyncComponent} from 'vue'
 
-    export default {
+export default {
         name: 'r-toolbar',
         components: {
             Laptop: defineAsyncComponent(() =>
-                import("./laptop")
+                import("./laptop.vue")
             ),
             Mobile: defineAsyncComponent(() =>
-                import("./mobile")
+                import("./mobile.vue")
             )
         }
     }

@@ -351,9 +351,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../style/include";
+@use "../../../style/variables/base";
 
-.#{$prefix}cam-input {
+.#{base.$prefix}cam-input {
   video {
     border: 1px solid var(--color-border);
   }

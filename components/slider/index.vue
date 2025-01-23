@@ -187,7 +187,10 @@ export default {
 }
 </script>
 <style lang="scss">
-@import '../../style/include';
+@use "sass:map";
+@use "../../style/variables/base";
+@use "../../style/mixins";
+
 
 .slider-progress {
   width: 100%;
@@ -199,25 +202,25 @@ export default {
 .btn-left-arrow {
   position: absolute;
   top: 50%;
-  @include ltr() {
+  @include mixins.ltr() {
     left: 20px;
   }
-  @include rtl() {
+  @include mixins.rtl() {
     right: 20px
   }
-  z-index: map-get($z-index, 'low');
+  z-index: map.get(base.$z-index, 'low');
 }
 
 .btn-right-arrow {
   position: absolute;
   top: 50%;
-  @include rtl() {
+  @include mixins.rtl() {
     left: 20px;
   }
-  @include ltr() {
+  @include mixins.ltr() {
     right: 20px
   }
-  z-index: map-get($z-index, 'low');
+  z-index: map.get(base.$z-index, 'low');
 }
 
 .slider-right {
@@ -230,10 +233,10 @@ export default {
   }
 
   &-enter-from {
-    @include rtl() {
+    @include mixins.rtl() {
       transform: translateX(-200px);
     }
-    @include ltr() {
+    @include mixins.ltr() {
       transform: translateX(200px);
     }
 
@@ -241,10 +244,10 @@ export default {
   }
 
   &-leave-to {
-    @include rtl() {
+    @include mixins.rtl() {
       transform: translateX(200px);
     }
-    @include ltr() {
+    @include mixins.ltr() {
       transform: translateX(-200px);
     }
 
@@ -262,10 +265,10 @@ export default {
   }
 
   &-enter-from {
-    @include rtl() {
+    @include mixins.rtl() {
       transform: translateX(200px);
     }
-    @include ltr() {
+    @include mixins.ltr() {
       transform: translateX(-200px);
     }
 
@@ -273,10 +276,10 @@ export default {
   }
 
   &-leave-to {
-    @include rtl() {
+    @include mixins.rtl() {
       transform: translateX(-200px);
     }
-    @include ltr() {
+    @include mixins.ltr() {
       transform: translateX(200px);
     }
 

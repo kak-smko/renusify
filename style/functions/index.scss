@@ -1,20 +1,20 @@
-@use 'sass:math';
-@function div($value,$value2){
-  @return math.div($value , $value2)
-}
+@use "../variables/base";
 
-@function breakpoint-min-width($name, $breakpoints: $grid-breakpoints) {
-  $min: map-get($breakpoints, $name);
+@use "sass:map";
+
+
+@function breakpoint-min-width($name, $breakpoints: base.$grid-breakpoints) {
+  $min: map.get($breakpoints, $name);
   @return if($min != 0, $min, null)
 }
 
-@function breakpoint-min-name($name, $breakpoints: $grid-breakpoints,$prefix:'-') {
+@function breakpoint-min-name($name, $breakpoints: base.$grid-breakpoints,$prefix:'-') {
   @return if(breakpoint-min-width($name, $breakpoints) == null, "", "#{$prefix}#{$name}")
 }
 
 @function map-metro-get($map, $keys...) {
   @each $key in $keys {
-    $map: map-get($map, $key);
+    $map: map.get($map, $key);
   }
   @return $map
 }

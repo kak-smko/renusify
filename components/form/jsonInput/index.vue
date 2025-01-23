@@ -23,34 +23,34 @@
       </r-btn>
       <div v-else-if="show" class="d-flex v-baseline flex-wrap">
         <slot :add="add" :info="info">
-        <r-text-input
-            v-if="!is_array"
-            v-model="info.key"
-            :label="keyLabel||$t('key','renusify')"
-            :tile="tile"
-            class="w-30 pe-1"></r-text-input>
-        <div class="w-20" v-if="!valueType">
-          <r-select-input v-model="info.type"
-                          :items="['text','number','boolean','json','array']"
-                          :tile="tile"
-                          :translate="translate"
-                          class="me-1"
-                          disableSearch
-                          firstSelect
-                          just-value
-                          @update:model-value="info.value=null"></r-select-input>
-        </div>
-        <r-text-input v-if="info.type==='text'"
-                      :tile="tile"
-                      :label="valueLabel||$t('value','renusify')"
-                      v-model="info.value"></r-text-input>
-        <r-number-input v-else-if="info.type==='number'"
-                        :tile="tile"
-                        v-model="info.value" :label="valueLabel||$t('value','renusify')"></r-number-input>
-        <r-switch-input v-else-if="info.type==='boolean'"
-                        :tile="tile"
-                        v-model="info.value" :label="valueLabel||$t('value','renusify')"></r-switch-input>
-        <r-btn :rounded="!c_tile" class="ms-1 color-success" @click.prevent="add">{{ $t('add', 'renusify') }}</r-btn>
+          <r-text-input
+              v-if="!is_array"
+              v-model="info.key"
+              :label="keyLabel||$t('key','renusify')"
+              :tile="tile"
+              class="w-30 pe-1"></r-text-input>
+          <div v-if="!valueType" class="w-20">
+            <r-select-input v-model="info.type"
+                            :items="['text','number','boolean','json','array']"
+                            :tile="tile"
+                            :translate="translate"
+                            class="me-1"
+                            disableSearch
+                            firstSelect
+                            just-value
+                            @update:model-value="info.value=null"></r-select-input>
+          </div>
+          <r-text-input v-if="info.type==='text'"
+                        v-model="info.value"
+                        :label="valueLabel||$t('value','renusify')"
+                        :tile="tile"></r-text-input>
+          <r-number-input v-else-if="info.type==='number'"
+                          v-model="info.value"
+                          :label="valueLabel||$t('value','renusify')" :tile="tile"></r-number-input>
+          <r-switch-input v-else-if="info.type==='boolean'"
+                          v-model="info.value"
+                          :label="valueLabel||$t('value','renusify')" :tile="tile"></r-switch-input>
+          <r-btn :rounded="!c_tile" class="ms-1 color-success" @click.prevent="add">{{ $t('add', 'renusify') }}</r-btn>
         </slot>
       </div>
     </div>
@@ -71,11 +71,11 @@
 </template>
 <script>
 import {defineAsyncComponent} from 'vue'
-import mixin from '../../codeEditor/mixin'
+import mixin from '../../codeEditor/mixin.js'
 
 export default {
   name: 'r-json',
-  components: {JsonView:defineAsyncComponent(()=>import('./JsonView.vue'))},
+  components: {JsonView: defineAsyncComponent(() => import('./JsonView.vue'))},
   mixins: [mixin],
   props: {
     label: String,
@@ -213,18 +213,20 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../../style/include";
+@use "sass:map";
+@use "../../../style/variables/base";
 
-.#{$prefix}json-input {
+
+.#{base.$prefix}json-input {
   background: var(--color-sheet-container);
   padding: 5px;
 
   &.input-tile {
-    border-radius: map-get($borders, 'sm');
+    border-radius: map.get(base.$borders, 'sm');
   }
 
   &:not(.input-tile) {
-    border-radius: map-get($borders, 'xl');
+    border-radius: map.get(base.$borders, 'xl');
   }
 
   .input-control {

@@ -1,9 +1,17 @@
-@import "./_include";
+@use "sass:map";
+@use "sass:meta";
+@use "functions";
+@use "mixins";
+@use "mixins/container";
+@use "mixins/utilities" as utilities2;
+@use "variables/base";
+@use "variables/utilities";
+
 
 html {
-  font-size: $font-size-root;
-  @include media-breakpoint-down('md') {
-    font-size: $font-size-root-mobile;
+  font-size: base.$font-size-root;
+  @include container.media-breakpoint-down('md') {
+    font-size: base.$font-size-root-mobile;
   }
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -29,12 +37,12 @@ body {
 
 ::-webkit-scrollbar-track:hover {
   border: 1px solid rgba(100, 100, 100, 0.4);
-  border-radius: map-get($borders, 'sm');
+  border-radius: map.get(base.$borders, 'sm');
 }
 
 ::-webkit-scrollbar-thumb {
   background: rgba(100, 100, 100, 0.4);
-  border-radius: map-get($borders, 'sm');
+  border-radius: map.get(base.$borders, 'sm');
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -54,9 +62,9 @@ $color-text: var(--color-on-one);
   background: $color;
 }
 
-.#{$prefix}app {
-  font-family: $body-font-family;
-  line-height: $line-height-root;
+.#{base.$prefix}app {
+  font-family: base.$body-font-family;
+  line-height: base.$line-height-root;
 
 
   ::-ms-clear,
@@ -86,8 +94,8 @@ $color-text: var(--color-on-one);
 }
 
 //curser
-.#{$prefix}app {
-  @each $name in $cursor {
+.#{base.$prefix}app {
+  @each $name in base.$cursor {
     .cursor-#{$name} {
       cursor: #{$name};
     }
@@ -95,8 +103,8 @@ $color-text: var(--color-on-one);
 }
 
 //display
-.#{$prefix}app {
-  @each $size, $media_query in $display-breakpoints {
+.#{base.$prefix}app {
+  @each $size, $media_query in base.$display-breakpoints {
     .hidden {
       &-#{$size} {
         @media #{$media_query}{
@@ -108,8 +116,8 @@ $color-text: var(--color-on-one);
 }
 
 //text
-.#{$prefix}app {
-  @each $name, $weight in $font-weights {
+.#{base.$prefix}app {
+  @each $name, $weight in base.$font-weights {
     .font-weight {
       &-#{$name} {
         font-weight: $weight !important
@@ -123,84 +131,84 @@ $color-text: var(--color-on-one);
 }
 
 //typography
-.#{$prefix}app {
-  @include typography($headings, 'body-2');
+.#{base.$prefix}app {
+  @include mixins.typography(base.$headings, 'body-2');
 
   .display-1 {
-    @include typography($headings, 'display-1')
+    @include mixins.typography(base.$headings, 'display-1')
   }
 
   .display-2 {
-    @include typography($headings, 'display-2')
+    @include mixins.typography(base.$headings, 'display-2')
   }
 
   .display-3 {
-    @include typography($headings, 'display-3')
+    @include mixins.typography(base.$headings, 'display-3')
   }
 
   .headline-1 {
-    @include typography($headings, 'headline-1')
+    @include mixins.typography(base.$headings, 'headline-1')
   }
 
   .headline-2 {
-    @include typography($headings, 'headline-2')
+    @include mixins.typography(base.$headings, 'headline-2')
   }
 
   .headline-3 {
-    @include typography($headings, 'headline-3')
+    @include mixins.typography(base.$headings, 'headline-3')
   }
 
   .title-1 {
-    @include typography($headings, 'title-1')
+    @include mixins.typography(base.$headings, 'title-1')
   }
 
   .title-2 {
-    @include typography($headings, 'title-2');
+    @include mixins.typography(base.$headings, 'title-2');
   }
 
   .title-3 {
-    @include typography($headings, 'title-3');
+    @include mixins.typography(base.$headings, 'title-3');
   }
 
   .body-1 {
-    @include typography($headings, 'body-1');
+    @include mixins.typography(base.$headings, 'body-1');
   }
 
   .body-2 {
-    @include typography($headings, 'body-2');
+    @include mixins.typography(base.$headings, 'body-2');
   }
 
   .body-3 {
-    @include typography($headings, 'body-3');
+    @include mixins.typography(base.$headings, 'body-3');
   }
 
 
   .label-1 {
-    @include typography($headings, 'label-1')
+    @include mixins.typography(base.$headings, 'label-1')
   }
 
   .label-2 {
-    @include typography($headings, 'label-2')
+    @include mixins.typography(base.$headings, 'label-2')
   }
 
   .label-3 {
-    @include typography($headings, 'label-3')
+    @include mixins.typography(base.$headings, 'label-3')
   }
 
   p {
-    margin-bottom: $spacer * 4
+    margin-bottom: base.$spacer * 4
   }
 
 }
 
 //width
-.#{$prefix}app {
-  @each $name, $value in $widths {
+.#{base.$prefix}app {
+  @each $name, $value in base.$widths {
     .w-#{$name} {
       width: $value !important
     }
   }
-  @each $name, $value in $heights {
+  @each $name, $value in base.$heights {
     .h-#{$name} {
       height: $value !important
     }
@@ -208,8 +216,8 @@ $color-text: var(--color-on-one);
 }
 
 //transition
-.#{$prefix}app {
-  @each $name, $bezier in $transition {
+.#{base.$prefix}app {
+  @each $name, $bezier in base.$transition {
     .timing-#{$name} {
       transition-timing-function: $bezier !important
     }
@@ -217,8 +225,8 @@ $color-text: var(--color-on-one);
 }
 
 //z-index
-.#{$prefix}app {
-  @each $name, $value in $z-index {
+.#{base.$prefix}app {
+  @each $name, $value in base.$z-index {
     .z-#{$name} {
       z-index: $value !important;
     }
@@ -226,12 +234,12 @@ $color-text: var(--color-on-one);
 }
 
 // Utilities
-@each $breakpoint in map-keys($grid-breakpoints) {
-  @include media-breakpoint-up($breakpoint) {
-    $infix: breakpoint-min-name($breakpoint, $grid-breakpoints);
-    @each $key, $utility in $utilities {
-      @if type-of($utility) == "map" and (map-get($utility, responsive) or $infix == "") {
-        @include build-utility($utility, $infix)
+@each $breakpoint in map.keys(base.$grid-breakpoints) {
+  @include container.media-breakpoint-up($breakpoint) {
+    $infix: functions.breakpoint-min-name($breakpoint, base.$grid-breakpoints);
+    @each $key, $utility in utilities.$utilities {
+      @if meta.type-of($utility) == "map" and (map.get($utility, responsive) or $infix == "") {
+        @include utilities2.build-utility($utility, $infix)
       }
     }
   }
@@ -241,23 +249,23 @@ $color-text: var(--color-on-one);
 
 // Print utilities
 @media print {
-  @each $key, $utility in $utilities {
-    @if type-of($utility) == "map" and map-get($utility, print) == true {
-      @include build-utility($utility, "-print")
+  @each $key, $utility in utilities.$utilities {
+    @if meta.type-of($utility) == "map" and map.get($utility, print) == true {
+      @include utilities2.build-utility($utility, "-print")
     }
 
   }
 }
 
-.#{$prefix}app {
-  @each $name, $value in $box-shadows {
+.#{base.$prefix}app {
+  @each $name, $value in base.$box-shadows {
     .elevation-#{$name} {
-      @include elevation($name, $important: true);
+      @include mixins.elevation($name, $important: true);
     }
   }
 }
 
-.#{$prefix}app {
+.#{base.$prefix}app {
   * {
     scroll-margin: 100px;
   }
@@ -277,7 +285,7 @@ $color-text: var(--color-on-one);
     font-size: 17px;
     line-height: 22px;
     border: 2px solid grey;
-    border-radius: map-get($borders, 'sm');
+    border-radius: map.get(base.$borders, 'sm');
     background-color: #283739;
     color: white;
     padding: 0em 1em;
@@ -349,7 +357,7 @@ $color-text: var(--color-on-one);
       transition: .2s all ease-in-out, .4s transform ease-in-out;
     }
 
-    @include ltr() {
+    @include mixins.ltr() {
       border-right-width: 0;
       border-bottom-width: 0;
       border-top-width: 0;
@@ -360,7 +368,7 @@ $color-text: var(--color-on-one);
         left: -0.5em;
       }
     }
-    @include rtl() {
+    @include mixins.rtl() {
       border-bottom-width: 0;
       border-left-width: 0;
       border-top-width: 0;

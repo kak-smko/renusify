@@ -96,9 +96,9 @@ emits:['update:modelValue','data'],
 
 </script>
 <style lang="scss">
-@import "../../../style/include";
+@use "../../../style/variables/base";
 
-.#{$prefix}check-input {
+.#{base.$prefix}check-input {
   .check-input-container {
     display: flex;
     width: 100%;

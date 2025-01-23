@@ -116,21 +116,21 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../style/include";
+@use "../../style/variables/base";
 
 $distance: 20px;
-.#{$prefix}tree {
+.#{base.$prefix}tree {
     position: relative;
     width: 100%;
     height: 100%;
 
     &.tree-searchable {
-        .#{$prefix}float {
+      .#{base.$prefix}float {
             height: calc(100% - 70px)
         }
     }
 
-    .#{$prefix}float {
+  .#{base.$prefix}float {
         direction: ltr;
     }
 

@@ -1,11 +1,13 @@
-@import "renusify/style/_include.scss";
+@use "sass:math";
+@use "../../style/variables/base";
+@use "../../style/mixins/container" as mixins;
 
-.#{$prefix}container {
-  padding: $container-padding-x;
+.#{base.$prefix}container {
+  padding: base.$container-padding-x;
   margin-right: auto;
   margin-left: auto;
 
-  @include make-container-max-widths;
+  @include mixins.make-container-max-widths;
 
   &.container-fluid {
     max-width: 100%;
@@ -23,7 +25,7 @@
 //
 // Rows contain and clear the floats of your columns.
 .row {
-  @include make-row ;
+  @include mixins.make-row ;
 
   .col {
     &.h-center, &.h-start, &.h-end,
@@ -33,11 +35,11 @@
   }
 
   &-dense {
-    margin-right: div($form-grid-gutter, -2);
-    margin-left: div($form-grid-gutter, -2);
+    margin-right: math.div(base.$form-grid-gutter, -2);
+    margin-left: math.div(base.$form-grid-gutter, -2);
 
     .col {
-      padding: div($form-grid-gutter, 2) !important;
+      padding: math.div(base.$form-grid-gutter, 2) !important;
     }
   }
 
@@ -87,13 +89,13 @@
 // Columns
 //
 // Common styles for small and large grid columns
-@include make-grid-columns;
+@include mixins.make-grid-columns;
 
 
 //divider
 $divider-inset-margin: 72px !default;
 
-.#{$prefix}divider {
+.#{base.$prefix}divider {
   display: block;
   flex: 1 1 0px;
   max-width: 100%;

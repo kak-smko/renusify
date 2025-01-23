@@ -41,7 +41,7 @@ export default {
     },
     btnText: Boolean
   },
-  emits:['update:modelValue'],
+  emits: ['update:modelValue'],
   data() {
     return {
       number: this.setSplit(this.modelValue),
@@ -101,9 +101,12 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../style/include";
+@use "sass:map";
+@use "../../../style/variables/base";
+@use "../../../style/mixins";
 
-.#{$prefix}add-btn {
+
+.#{base.$prefix}add-btn {
   position: relative;
 
   input::-webkit-outer-spin-button,
@@ -135,20 +138,20 @@ export default {
     height: 36px !important;
   }
 
-  .#{$prefix}input-container:not(.input-focused) {
+  .#{base.$prefix}input-container:not(.input-focused) {
     .label:not(.label-active) {
-      @include ltr() {
+      @include mixins.ltr() {
         margin-left: 24px;
       }
-      @include rtl() {
+      @include mixins.rtl() {
         margin-right: 24px;
       }
     }
   }
 
   .input-tile {
-    .#{$prefix}btn {
-      border-radius: map-get($borders, 'sm');
+    .#{base.$prefix}btn {
+      border-radius: map.get(base.$borders, 'sm');
     }
   }
 }

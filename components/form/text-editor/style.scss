@@ -1,20 +1,23 @@
-@import '../../../style/include';
+@use "sass:map";
+@use "../../../style/variables/base";
+@use "../../../style/mixins";
 
-.#{$prefix}text-editor {
+
+.#{base.$prefix}text-editor {
   &:not(.text-editor-preview) {
     background-color: var(--color-sheet-container);
     margin-top: 20px;
   }
 
   &.input-tile {
-    border-radius: map-get($borders, 'sm');
+    border-radius: map.get(base.$borders, 'sm');
   }
 
   &:not(.input-tile) {
-    border-radius: map-get($borders, 'xl');
+    border-radius: map.get(base.$borders, 'xl');
 
     .editor-content {
-      border-radius: map-get($borders, 'lg');
+      border-radius: map.get(base.$borders, 'lg');
     }
   }
 
@@ -23,7 +26,7 @@
     background-color: var(--color-sheet-container-low);
   }
 
-  @include typography($headings, 'body-2');
+  @include mixins.typography(base.$headings, 'body-2');
 
   a {
     color: var(--color-one)
@@ -54,7 +57,7 @@
     display: inline-block;
     position: relative;
 
-    .#{$prefix}btn {
+    .#{base.$prefix}btn {
       position: absolute;
       top: 0;
       left: 0;

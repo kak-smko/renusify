@@ -36,8 +36,8 @@
 
 <script>
 import {defineAsyncComponent} from 'vue'
-import methods from "./methods";
-import editable from "./editable";
+import methods from "./methods.js";
+import editable from "./editable.js";
 
 export default {
   name: "r-nestable",
@@ -89,9 +89,9 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "../../style/include";
+@use "../../style/variables/base";
 
-.#{$prefix}nestable {
+.#{base.$prefix}nestable {
   .nestable-handle {
     cursor: grab;
   }

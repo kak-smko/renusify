@@ -1,14 +1,15 @@
-@import "../../style/include";
+@use "../../style/variables/base";
+@use "../../style/mixins";
 
-.#{$prefix}icon {
+.#{base.$prefix}icon {
   display: inline-flex;
   vertical-align: -.5rem;
 
   &.icon-disabled {
-    @include disable-states();
+    @include mixins.disable-states();
   }
 
-  @include rtl() {
+  @include mixins.rtl() {
     &:not(.exact-icon) {
       transform: scale(-1, 1);
     }

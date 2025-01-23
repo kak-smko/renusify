@@ -313,9 +313,10 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../style/include";
+@use "../../style/variables/base";
+@use "../../style/mixins/container" as mixins;
 
-.#{$prefix}calendar {
+.#{base.$prefix}calendar {
   position: relative;
   display: inline-block;
   font-size: 10px;
@@ -353,7 +354,7 @@ export default {
     position: relative;
     z-index: 1;
     border-collapse: collapse;
-    @include media-breakpoint-up('lg') {
+    @include mixins.media-breakpoint-up('lg') {
       table-layout: fixed;
     }
   }

@@ -49,7 +49,7 @@
   </div>
 </template>
 <script>
-import file from "../form/fileInput/file";
+import file from "../form/fileInput/file.js";
 
 export default {
   name: 'r-chat-input',
@@ -112,9 +112,9 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../style/include";
+@use "../../style/variables/base";
 
-.#{$prefix}chat-input {
+.#{base.$prefix}chat-input {
   display: flex;
 
   box-shadow: black 0px 8px 15px;

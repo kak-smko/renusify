@@ -1,16 +1,16 @@
 import {reactive} from 'vue'
-import * as helper from './tools/helper';
-import Translate from './plugins/trans/Translate';
-import Storage from './plugins/storage/index';
-import DateTime from './plugins/trans/DateTime';
-import Currency from './plugins/trans/Currency';
+import * as helper from './tools/helper.js';
+import Translate from './plugins/trans/Translate.js';
+import Storage from './plugins/storage/index.js';
+import DateTime from './plugins/trans/DateTime.js';
+import Currency from './plugins/trans/Currency.js';
 import Notify from './components/notify/notify.js';
-import valid from './plugins/validation/Validate';
+import valid from './plugins/validation/Validate.js';
 import Toast from './components/app/toast/toast.js';
-import event from './plugins/event';
-import {_register} from './components';
-import {_registers} from './directive';
-import {Icons} from "./tools/icons";
+import event from './plugins/event.js';
+import {_register} from './components/index.js';
+import {_registers} from './directive/index.js';
+import {Icons} from "./tools/icons.js";
 
 window.renusifyBus = event;
 

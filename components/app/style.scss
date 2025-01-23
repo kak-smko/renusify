@@ -1,6 +1,8 @@
-@import '../../style/style.scss';
+@use '../../style/style';
+@use "../../style/variables/base";
+@use "../../style/mixins";
 
-.#{$prefix}app {
+.#{base.$prefix}app {
   display: flex;
 
   background: var(--color-sheet);
@@ -25,9 +27,9 @@
 }
 
 // Firefox overrides
-@include firefox() {
+@include mixins.firefox() {
   @media print {
-    .#{$prefix}app {
+    .#{base.$prefix}app {
       display: block;
 
       &-wrap {

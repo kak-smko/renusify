@@ -565,9 +565,9 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../style/include";
+@use "../../style/variables/base";
 
-.#{$prefix}map-route {
+.#{base.$prefix}map-route {
   display: flex;
   background-color: var(--color-sheet-container);
   color: var(--color-on-sheet);

@@ -1,6 +1,8 @@
-@import "../../../style/include";
+@use "sass:map";
+@use "../../../style/variables/base";
+@use "../../../style/mixins";
 
-.#{$prefix}toolbar {
+.#{base.$prefix}toolbar {
   flex: 1 1 auto;
   background-color: var(--color-sheet-container);
   color: var(--color-on-sheet);
@@ -10,11 +12,11 @@
       width: 40px;
       height: 40px;
       position: absolute;
-      transition: 2s all map-get($transition, 'swing');
-      @include rtl() {
+      transition: 2s all map.get(base.$transition, 'swing');
+      @include mixins.rtl() {
         right: -40px;
       }
-      @include ltr() {
+      @include mixins.ltr() {
         left: -40px;
       }
     }
@@ -23,11 +25,11 @@
       height: 100%;
       overflow: auto;
       position: absolute;
-      transition: .5s all map-get($transition, 'swing');
-      @include rtl(){
+      transition: .5s all map.get(base.$transition, 'swing');
+      @include mixins.rtl() {
         right: -300px;
       }
-      @include ltr(){
+      @include mixins.ltr() {
         left: -300px;
       }
     }
@@ -36,14 +38,14 @@
       top: 0;
       width: 0;
       height: 100vh;
-      z-index: map_get($z-index, 'important');
+      z-index: map.get(base.$z-index, 'important');
       background-color: var(--color-overlay);
-      transition: 1s width map-get($transition, 'swing');
+      transition: 1s width map.get(base.$transition, 'swing');
       overflow: hidden;
-      @include rtl() {
+      @include mixins.rtl() {
         right: 0;
       }
-      @include ltr() {
+      @include mixins.ltr() {
         left: 0;
       }
     }
@@ -52,19 +54,19 @@
         width: 100vw;
       }
       .toolbar-side {
-        transition: 2s all map-get($transition, 'swing');
-        @include rtl() {
+        transition: 2s all map.get(base.$transition, 'swing');
+        @include mixins.rtl() {
           right: 0;
         }
-        @include ltr() {
+        @include mixins.ltr() {
           left: 0;
         }
       }
       .toolbar-close{
-        @include rtl() {
+        @include mixins.rtl() {
           right: 300px;
         }
-        @include ltr() {
+        @include mixins.ltr() {
           left: 300px;
         }
       }
@@ -72,12 +74,12 @@
   }
 
   .toolbar-content {
-    height: $toolbar-height;
-    padding: $toolbar-content-padding-y $toolbar-content-padding-x;
+    height: base.$toolbar-height;
+    padding: base.$toolbar-content-padding-y base.$toolbar-content-padding-x;
     align-items: center;
     display: flex;
     position: relative;
-    z-index: map_get($z-index, 'medium');
+    z-index: map.get(base.$z-index, 'medium');
   }
 
   .toolbar-items {
@@ -93,24 +95,24 @@
       content: '-';
       position: absolute;
       color: #9e9e9e;
-      @include rtl() {
+      @include mixins.rtl() {
         right: -8px;
       }
-      @include ltr() {
+      @include mixins.ltr() {
         left: -8px;
       }
     }
   }
 
   .menu-list {
-    transition: 1s map-get($transition, 'swing');
+    transition: 1s map.get(base.$transition, 'swing');
     min-width: 200px;
     max-height: 500px;
     overflow-y: auto;
-    @include rtl() {
+    @include mixins.rtl() {
       border-right: 1px solid #9e9e9e;
     }
-    @include ltr() {
+    @include mixins.ltr() {
       border-left: 1px solid #9e9e9e;
     }
   }
@@ -127,16 +129,16 @@
     position: relative;
 
     .toolbar-childs {
-      transition: 1s map-get($transition, 'swing');
+      transition: 1s map.get(base.$transition, 'swing');
       position: absolute;
       top: 40px;
       max-height: 0;
       overflow: hidden;
-      z-index: map_get($z-index, 'important');
+      z-index: map.get(base.$z-index, 'important');
     }
 
     &:before {
-      transition: $primary-transition;
+      transition: base.$primary-transition;
       content: '';
       width: 0;
       position: absolute;
@@ -161,12 +163,12 @@
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: map_get($z-index, 'medium');
+    z-index: map.get(base.$z-index, 'medium');
   }
 
   &.toolbar-sticky {
     position: sticky;
     top: 0;
-    z-index: map_get($z-index, 'medium');
+    z-index: map.get(base.$z-index, 'medium');
   }
 }

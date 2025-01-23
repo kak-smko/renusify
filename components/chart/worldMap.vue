@@ -1082,9 +1082,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../style/include";
+@use "../../style/variables/base";
 
-.#{$prefix}world-map {
+.#{base.$prefix}world-map {
   position: relative;
   background-color: #e7f2fe;
 

@@ -284,10 +284,12 @@ export default {
 
 </script>
 <style lang="scss">
-@import '../../../style/include';
+@use "sass:map";
+@use "../../../style/variables/base";
+@use "../../../style/mixins";
 
 
-.#{$prefix}input-container {
+.#{base.$prefix}input-container {
   position: relative;
   align-items: flex-start;
   display: flex;
@@ -312,7 +314,7 @@ export default {
   }
 
   &:not(.input-disabled) {
-    .label, .#{$prefix}icon, .#{$prefix}btn {
+    .label, .#{base.$prefix}icon, .#{base.$prefix}btn {
       color: var(--color-on-sheet-low)
     }
   }
@@ -381,10 +383,10 @@ export default {
     .after-icon {
       position: absolute;
       cursor: pointer;
-      @include ltr() {
+      @include mixins.ltr() {
         right: 5px;
       }
-      @include rtl() {
+      @include mixins.rtl() {
         left: 5px;
       }
 
@@ -393,10 +395,10 @@ export default {
     .pre-icon {
       position: absolute;
       cursor: pointer;
-      @include ltr() {
+      @include mixins.ltr() {
         left: 5px;
       }
-      @include rtl() {
+      @include mixins.rtl() {
         right: 5px;
       }
 
@@ -404,12 +406,12 @@ export default {
 
     &:not(.input-tile) {
       padding: 0 16px;
-      border-radius: map-get($borders, 'xl');
+      border-radius: map.get(base.$borders, 'xl');
     }
 
     &.input-tile {
       padding: 0 8px;
-      border-radius: map-get($borders, 'sm');
+      border-radius: map.get(base.$borders, 'sm');
     }
   }
 
@@ -428,14 +430,14 @@ export default {
     position: absolute;
     z-index: 0;
     top: 8px;
-    transition: $primary-transition;
+    transition: base.$primary-transition;
 
-    @include ltr() {
+    @include mixins.ltr() {
       left: 15px;
       transform-origin: top left;
     }
 
-    @include rtl() {
+    @include mixins.rtl() {
       right: 15px;
       transform-origin: top right;
     }
@@ -443,36 +445,36 @@ export default {
 
   :not(.input-tile) {
     .label-active {
-      @include ltr() {
+      @include mixins.ltr() {
         transform: translateY(-27px) translateX(5px) scale(.9);
       }
-      @include rtl() {
+      @include mixins.rtl() {
         transform: translateY(-27px) translateX(-5px) scale(.9);
       }
-      transition: $primary-transition
+      transition: base.$primary-transition
     }
   }
 
   .label-fixed {
     transform: none !important;
     top: -20px !important;
-    @include ltr() {
+    @include mixins.ltr() {
       left: 0 !important;
     }
-    @include rtl() {
+    @include mixins.rtl() {
       right: 0 !important;
     }
   }
 
   .input-tile {
     .label-active {
-      @include ltr() {
+      @include mixins.ltr() {
         transform: translateY(-27px) translateX(-8px) scale(.9);
       }
-      @include rtl() {
+      @include mixins.rtl() {
         transform: translateY(-27px) translateX(8px) scale(.9);
       }
-      transition: $primary-transition
+      transition: base.$primary-transition
     }
   }
 
@@ -481,33 +483,33 @@ export default {
       border: solid 1px currentColor;
     }
 
-    .#{$prefix}icon, .#{$prefix}btn {
+    .#{base.$prefix}icon, .#{base.$prefix}btn {
       color: currentColor !important;
     }
 
     :not(.input-tile) {
       .label {
         color: currentColor !important;
-        @include ltr() {
+        @include mixins.ltr() {
           transform: translateY(-27px) translateX(5px) scale(.9);
         }
-        @include rtl() {
+        @include mixins.rtl() {
           transform: translateY(-27px) translateX(-5px) scale(.9);
         }
-        transition: $primary-transition
+        transition: base.$primary-transition
       }
     }
 
     .input-tile {
       .label {
         color: currentColor !important;
-        @include ltr() {
+        @include mixins.ltr() {
           transform: translateY(-27px) translateX(-8px) scale(.9);
         }
-        @include rtl() {
+        @include mixins.rtl() {
           transform: translateY(-27px) translateX(8px) scale(.9);
         }
-        transition: $primary-transition
+        transition: base.$primary-transition
       }
     }
   }
@@ -532,12 +534,12 @@ export default {
     }
   }
 
-  &.#{$prefix}text-area {
+  &.#{base.$prefix}text-area {
     .input-control {
       height: auto;
 
       &:not(.input-tile) {
-        border-radius: map-get($borders, 'xl');
+        border-radius: map.get(base.$borders, 'xl');
       }
     }
 

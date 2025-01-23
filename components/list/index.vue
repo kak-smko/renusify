@@ -24,7 +24,7 @@
 
 <script>
 import './style.scss'
-import Ripple from '../../directive/ripple/index'
+import Ripple from '../../directive/ripple/index.js'
 
 export default {
   name: 'r-list',

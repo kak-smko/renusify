@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import {roots} from '../../tools/rootable';
+import {roots} from '../../tools/rootable.js';
 import './style.scss';
 
 export default {

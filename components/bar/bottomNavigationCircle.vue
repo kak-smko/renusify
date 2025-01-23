@@ -31,9 +31,11 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../style/include";
+@use "sass:map";
+@use "../../style/variables/base";
+@use "../../style/mixins";
 
-.#{$prefix}bottom-navigation-circle {
+.#{base.$prefix}bottom-navigation-circle {
   position: fixed;
   bottom: 0;
   display: flex;
@@ -41,10 +43,10 @@ export default {
   justify-content: center;
   width: 100%;
   height: 56px;
-  z-index: map_get($z-index, "default");
+  z-index: map.get(base.$z-index, "default");
   background-color: var(--color-sheet);
   color: var(--color-on-sheet);
-  @include typography($headings, 'body-3');
+  @include mixins.typography(base.$headings, 'body-3');
 
   .navigation-item {
     width: 100%;
@@ -87,7 +89,7 @@ export default {
       height: 50px;
       border: 3px solid var(--color-on-one);
 
-      .#{$prefix}icon {
+      .#{base.$prefix}icon {
         color: var(--color-on-one);
       }
     }

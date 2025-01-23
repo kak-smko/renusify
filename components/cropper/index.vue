@@ -292,9 +292,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../style/include";
+@use "../../style/variables/base";
 
-.#{$prefix}cropper {
+.#{base.$prefix}cropper {
   width: 300px;
 
   .image-box {

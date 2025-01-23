@@ -1,5 +1,9 @@
-@import "utilities";
-@import 'container';
+@use "sass:map";
+@use "utilities";
+@use 'container';
+@use "../functions";
+@use "../variables/base";
+
 
 @mixin rtl() {
   .app-rtl & {
@@ -24,23 +28,23 @@
 }
 
 @mixin typography($headings,$key) {
-  font-size: map-metro-get($headings, $key, 'size');
-  font-weight: map-metro-get($headings, $key, 'weight');
-  line-height: map-metro-get($headings, $key, 'line-height');
-  letter-spacing: map-metro-get($headings, $key, 'letter-spacing');
+  font-size: functions.map-metro-get($headings, $key, 'size');
+  font-weight: functions.map-metro-get($headings, $key, 'weight');
+  line-height: functions.map-metro-get($headings, $key, 'line-height');
+  letter-spacing: functions.map-metro-get($headings, $key, 'letter-spacing');
 }
 
 @mixin elevation($name, $important: false) {
-  box-shadow: map-get($box-shadows, $name) if($important, !important, null);
-  -webkit-box-shadow: map-get($box-shadows, $name) if($important, !important, null)
+  box-shadow: map.get(base.$box-shadows, $name) if($important, !important, null);
+  -webkit-box-shadow: map.get(base.$box-shadows, $name) if($important, !important, null)
 }
 
 @mixin states() {
   &:hover::before {
-    opacity: map-metro-get($states, 'hover', 'state', 'opacity')
+    opacity: functions.map-metro-get(base.$states, 'hover', 'state', 'opacity')
   }
   &:focus::before {
-    opacity: map-metro-get($states, 'focus', 'state', 'opacity')
+    opacity: functions.map-metro-get(base.$states, 'focus', 'state', 'opacity')
   }
   &-active {
     @include active-states()
@@ -49,19 +53,19 @@
 
 @mixin active-states() {
   &:hover::before, &::before {
-    opacity: map-metro-get($states, 'activated', 'state', 'opacity')
+    opacity: functions.map-metro-get(base.$states, 'activated', 'state', 'opacity')
   }
   &:focus::before {
-    opacity: map-metro-get($states, 'pressed', 'state', 'opacity')
+    opacity: functions.map-metro-get(base.$states, 'pressed', 'state', 'opacity')
   }
 }
 
 @mixin disable-states() {
   &::before {
-    opacity: map-metro-get($states, 'disabled', 'state', 'opacity') !important;
+    opacity: functions.map-metro-get(base.$states, 'disabled', 'state', 'opacity') !important;
   }
-  opacity: map-metro-get($states, 'disabled', 'text', 'opacity') !important;
-  color: var(--color-#{map-metro-get($states, 'disabled','text','color')}) !important;
+  opacity: functions.map-metro-get(base.$states, 'disabled', 'text', 'opacity') !important;
+  color: var(--color-#{functions.map-metro-get(base.$states, 'disabled','text','color')}) !important;
   pointer-events: none;
   user-select: none;
   box-shadow: none;

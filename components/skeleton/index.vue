@@ -27,9 +27,11 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../style/include";
+@use "sass:map";
+@use "../../style/variables/base";
 
-.#{$prefix}skeleton {
+
+.#{base.$prefix}skeleton {
   .sk-card, .sk-line, .sk-avatar {
     background: rgba(0, 0, 0, 0.12);
     overflow: hidden;
@@ -55,7 +57,7 @@ export default {
   }
 
   .sk-card {
-    border-radius: map-get($borders, 'sm');
+    border-radius: map.get(base.$borders, 'sm');
   }
 
   .sk-line {

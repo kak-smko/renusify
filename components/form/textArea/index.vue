@@ -54,9 +54,9 @@ emits:['update:modelValue'],
 
 </script>
 <style lang="scss">
-@import "../../../style/include";
+@use "../../../style/variables/base";
 
-.#{$prefix}text-area {
+.#{base.$prefix}text-area {
   .no-resize {
     resize: none;
   }

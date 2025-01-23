@@ -56,9 +56,11 @@ emits:['update:modelValue','change'],
 
 </script>
 <style lang="scss">
-@import "../../../style/include";
+@use "sass:map";
+@use "../../../style/variables/base";
+@use "../../../style/mixins";
 
-.#{$prefix}switch {
+.#{base.$prefix}switch {
   .switch-label {
     color: var(--color-on-sheet);
   }
@@ -92,11 +94,11 @@ emits:['update:modelValue','change'],
     height: 20px;
     border-radius: 50%;
     background-color: #cdcbcb;
-    transition: .3s map_get($transition,'fast-in-fast-out');
-    @include rtl() {
+    transition: .3s map.get(base.$transition, 'fast-in-fast-out');
+    @include mixins.rtl() {
       right: 0;
     }
-    @include ltr() {
+    @include mixins.ltr() {
       left: 0;
     }
   }
@@ -109,10 +111,10 @@ emits:['update:modelValue','change'],
 
     .switch-dot {
       background-color: currentColor;
-      @include rtl() {
+      @include mixins.rtl() {
         right: 25px;
       }
-      @include ltr() {
+      @include mixins.ltr() {
         left: 25px;
       }
     }

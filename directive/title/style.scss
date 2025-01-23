@@ -1,4 +1,6 @@
-@import "../../style/include";
+@use "sass:map";
+@use "../../style/variables/base";
+
 
 #r-directive-title {
   transition: all .2s ease-in-out;
@@ -7,7 +9,7 @@
   background: #181818;
   color: #FFF;
   position: fixed;
-  border-radius: map-get($borders, 'sm');
+  border-radius: map.get(base.$borders, 'sm');
   font-size: 14px;
   font-family: inherit;
   transform: translateX(-50%);

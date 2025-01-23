@@ -1,99 +1,104 @@
-@import "../../style/include";
+@use "sass:map";
+@use "../../style/variables/base";
+@use "../../style/mixins";
 
 $data-table-thin-header-height: 38px !default;
 $data-table-thin-row-height: 32px !default;
 $data-table-regular-row-height: 42px !default;
 $data-table-regular-header-height: 38px !default;
 
-.#{$prefix}table {
+.#{base.$prefix}table {
   position: relative;
 
-    .table-wrapper {
-      background-color: var(--color-sheet-container-lowest);
-      color: var(--color-on-sheet);
+  .table-wrapper {
+    background-color: var(--color-sheet-container-lowest);
+    color: var(--color-on-sheet);
+  }
+
+  .table-svg-path {
+    fill: var(--color-sheet);
+  }
+
+  .table-editable-icon {
+    background-color: var(--color-sheet);
+    color: var(--color-on-sheet);
+  }
+
+  &.table-fixed-header {
+    thead th {
+      box-shadow: inset 0 -2px var(--color-border)
     }
-    .table-svg-path {
-      fill: var(--color-sheet);
-    }
-    .table-editable-icon {
-      background-color: var(--color-sheet);
-      color: var(--color-on-sheet);
-    }
-    &.table-fixed-header {
-      thead th {
-        box-shadow: inset 0 -2px var(--color-border)
+  }
+
+  thead {
+    tr {
+      &:last-child th {
+        border-bottom: 1px solid var(--color-border)
+      }
+
+      th {
+        background-color: var(--color-sheet);
+        color: var(--color-on-sheet)
       }
     }
+  }
 
-    thead {
-      tr {
-        &:last-child th {
-          border-bottom: 1px solid var(--color-border)
-        }
-
-        th {
-          background-color: var(--color-sheet);
-          color: var(--color-on-sheet)
-        }
+  &.table-fixed-first-columns {
+    tr {
+      th:first-child {
+        background: var(--color-sheet);
+        color: var(--color-on-sheet)
       }
-    }
 
-    &.table-fixed-first-columns {
-      tr {
-        th:first-child {
-          background: var(--color-sheet);
-          color: var(--color-on-sheet)
-        }
+      td:first-child {
+        background: var(--color-sheet);
+        color: var(--color-on-sheet)
+      }
 
+      &:hover {
         td:first-child {
-          background: var(--color-sheet);
+          background: var(--color-sheet-container);
           color: var(--color-on-sheet)
         }
-
-        &:hover {
-          td:first-child {
-            background: var(--color-sheet-container);
-            color: var(--color-on-sheet)
-          }
-        }
       }
     }
+  }
 
-    &.table-stripped {
-      tbody {
-        tr:nth-child(2n):not(:hover) {
-          td {
-            background: var(--color-sheet-container-low)
-          }
-        }
-      }
-    }
-
+  &.table-stripped {
     tbody {
-      tr {
-        &:active {
-          background: var(--color-sheet-container)
-        }
-
-        &:hover {
-          background: var(--color-sheet-container)
-        }
-      }
-
-      tr:not(:last-child) {
+      tr:nth-child(2n):not(:hover) {
         td {
-          border-bottom: 1px solid var(--color-border)
+          background: var(--color-sheet-container-low)
         }
       }
     }
+  }
 
-    &.table-bordered .table-wrapper {
-      border: 1px solid var(--color-border);
-      border-collapse: collapse;
+  tbody {
+    tr {
+      &:active {
+        background: var(--color-sheet-container)
+      }
+
+      &:hover {
+        background: var(--color-sheet-container)
+      }
     }
+
+    tr:not(:last-child) {
+      td {
+        border-bottom: 1px solid var(--color-border)
+      }
+    }
+  }
+
+  &.table-bordered .table-wrapper {
+    border: 1px solid var(--color-border);
+    border-collapse: collapse;
+  }
 
   .table-wrapper {
-    border-radius: map_get($borders, 'lg');
+    border-radius: map.get(base.$borders, 'lg');
     overflow: hidden;
   }
 
@@ -105,10 +110,10 @@ $data-table-regular-header-height: 38px !default;
 
   td, th {
     padding: 0 16px;
-    @include ltr() {
+    @include mixins.ltr() {
       text-align: left
     }
-    @include rtl() {
+    @include mixins.rtl() {
       text-align: right
     }
   }
@@ -174,26 +179,26 @@ $data-table-regular-header-height: 38px !default;
         min-width: 300px !important;
         position: sticky;
         width: 300px;
-        @include rtl() {
+        @include mixins.rtl() {
           right: 0;
         }
-        @include ltr() {
+        @include mixins.ltr() {
           left: 0;
         }
-        z-index: map_get($z-index, 'medium');
+        z-index: map.get(base.$z-index, 'medium');
       }
 
       td:first-child {
         position: sticky;
         width: 300px;
-        @include rtl() {
+        @include mixins.rtl() {
           right: 0;
         }
-        @include ltr() {
+        @include mixins.ltr() {
           left: 0;
         }
         height: auto;
-        z-index: map_get($z-index, 'low');
+        z-index: map.get(base.$z-index, 'low');
       }
     }
   }
@@ -217,16 +222,16 @@ $data-table-regular-header-height: 38px !default;
     }
 
     .table-wrapper {
-      @include rtl() {
+      @include mixins.rtl() {
         border-top-left-radius: 0;
       }
-      @include ltr() {
+      @include mixins.ltr() {
         border-top-right-radius: 0;
       }
     }
 
     .table-svg {
-      @include ltr() {
+      @include mixins.ltr() {
         transform: rotateY(180deg);
       }
     }
@@ -276,21 +281,21 @@ $data-table-regular-header-height: 38px !default;
   }
 }
 
-.#{$prefix}table-manage {
+.#{base.$prefix}table-manage {
   white-space: nowrap;
 
-  .table-checkbox{
+  .table-checkbox {
     width: 17px;
     height: 17px;
   }
 
-    .manage-footer {
-      .btn-page {
-        color: var(--color-on-sheet);
-        border: solid 1px var(--color-sheet-low);
-        background-color: var(--color-sheet-container);
-      }
+  .manage-footer {
+    .btn-page {
+      color: var(--color-on-sheet);
+      border: solid 1px var(--color-sheet-low);
+      background-color: var(--color-sheet-container);
     }
+  }
 
   th {
     position: relative;

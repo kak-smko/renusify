@@ -162,10 +162,10 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../style/include";
+@use "../../style/variables/base";
 
 $distance: 20px;
-.#{$prefix}tree-element {
+.#{base.$prefix}tree-element {
   direction: ltr;
   position: relative;
   display: table;

@@ -1,4 +1,8 @@
-@import "./_include";
+@use "sass:map";
+@use "mixins";
+@use "variables/base";
+@use "variables/color";
+
 //Surface – A role used for backgrounds and large, low-emphasis areas of the screen.
 //Primary, Secondary, Tertiary – Accent color roles used to emphasize or de-emphasize foreground elements.
 //Container – Roles used as a fill color for foreground elements like buttons. They should not be used for text or icons.
@@ -55,48 +59,48 @@ $colorsList: (
   }
 }
 
-@each $color_name, $color_value in $gradient {
-  .#{$prefix}app .color-gradient-#{$color_name} {
-    background: linear-gradient(map_get($color_value, '0'), map_get($color_value, '1')) !important;
+@each $color_name, $color_value in color.$gradient {
+  .#{base.$prefix}app .color-gradient-#{$color_name} {
+    background: linear-gradient(map.get($color_value, '0'), map.get($color_value, '1')) !important;
     color: white !important;
   }
-  .#{$prefix}app .color-gradient-#{$color_name}-45 {
-    background: linear-gradient(45deg, map_get($color_value, '0'), map_get($color_value, '1')) !important;
+  .#{base.$prefix}app .color-gradient-#{$color_name}-45 {
+    background: linear-gradient(45deg, map.get($color_value, '0'), map.get($color_value, '1')) !important;
     color: white !important;
   }
-  .#{$prefix}app .color-gradient-#{$color_name}-90 {
-    background: linear-gradient(90deg, map_get($color_value, '0'), map_get($color_value, '1')) !important;
+  .#{base.$prefix}app .color-gradient-#{$color_name}-90 {
+    background: linear-gradient(90deg, map.get($color_value, '0'), map.get($color_value, '1')) !important;
     color: white !important;
   }
 }
 
-@each $color_name, $color_value in $shades {
-  .#{$prefix}app .color-#{$color_name} {
-    @include background-color($color_value, true);
+@each $color_name, $color_value in color.$shades {
+  .#{base.$prefix}app .color-#{$color_name} {
+    @include mixins.background-color($color_value, true);
   }
 
-  .#{$prefix}app .color-#{$color_name}-text {
-    @include text-color($color_value, true);
-  }
-}
-
-@each $color_name, $color_value in $grey {
-  .#{$prefix}app .color-grey-#{$color_name} {
-    @include background-color($color_value, true);
-  }
-
-  .#{$prefix}app .color-grey-#{$color_name}-text {
-    @include text-color($color_value, true);
+  .#{base.$prefix}app .color-#{$color_name}-text {
+    @include mixins.text-color($color_value, true);
   }
 }
 
-@each $color_name, $color_value in $colorMain {
+@each $color_name, $color_value in color.$grey {
+  .#{base.$prefix}app .color-grey-#{$color_name} {
+    @include mixins.background-color($color_value, true);
+  }
+
+  .#{base.$prefix}app .color-grey-#{$color_name}-text {
+    @include mixins.text-color($color_value, true);
+  }
+}
+
+@each $color_name, $color_value in color.$colorMain {
   .color-#{$color_name} {
-    @include background-color(var(--color-#{$color_name}), true);
-    @include text-color(var(--color-on-#{$color_name}), true);
+    @include mixins.background-color(var(--color-#{$color_name}), true);
+    @include mixins.text-color(var(--color-on-#{$color_name}), true);
   }
   .color-#{$color_name}-text {
-    @include text-color(var(--color-#{$color_name}), true);
+    @include mixins.text-color(var(--color-#{$color_name}), true);
   }
 }
 

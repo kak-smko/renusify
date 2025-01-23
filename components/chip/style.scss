@@ -1,4 +1,9 @@
-@import "renusify/style/_include.scss";
+@use "sass:math";
+@use "sass:map";
+@use "../../style/variables/base";
+@use "../../style/mixins";
+@use "../../style/functions";
+
 
 $chip-avatar-size: 24px !default;
 $chip-close-size: 18px !default;
@@ -7,14 +12,14 @@ $chip-icon-margin-before: -6px !default;
 $chip-icon-right-margin-after: -4px !default;
 $chip-icon-right-margin-before: 8px !default;
 $chip-icon-size: 24px !default;
-$chip-label-border-radius: map-get($borders, 'sm') !default;
+$chip-label-border-radius: map.get(base.$borders, 'sm') !default;
 $chip-link-focus-opacity: 0.32 !default;
 $chip-pill-avatar-margin-after: 8px !default;
 $chip-pill-avatar-margin-before: -12px !default;
 $chip-pill-avatar-size: 32px !default;
 $chip-pill-filter-margin: 0 16px 0 0 !default;
 $chip-transition-duration: 0.28s !default;
-$chip-transition-fn: map-get($transition, 'fast-out-slow-in') !default;
+$chip-transition-fn: map.get(base.$transition, 'fast-out-slow-in') !default;
 $icon-outlined-border-width: thin !default;
 $icon-sizes: (
         'x-small': (
@@ -40,7 +45,7 @@ $icon-sizes: (
 ) !default;
 
 
-.#{$prefix}chip {
+.#{base.$prefix}chip {
   align-items: center;
   cursor: default;
   white-space: nowrap;
@@ -60,13 +65,13 @@ $icon-sizes: (
     color: var(--color-on-sheet);
   }
 
-  @include states();
+  @include mixins.states();
 
   &.chip-disabled {
-    @include disable-states();
+    @include mixins.disable-states();
 
     &:not(.chip-text):not(.chip-outlined) {
-      background-color: var(--color-#{map-metro-get($states, 'disabled','state','color')}) !important;
+      background-color: var(--color-#{functions.map-metro-get(base.$states, 'disabled','state','color')}) !important;
     }
 
     &.btn-text, &.btn-outlined {
@@ -92,13 +97,13 @@ $icon-sizes: (
     cursor: pointer;
   }
 
-  .#{$prefix}icon {
+  .#{base.$prefix}icon {
     font-size: $chip-icon-size;
     transition: none;
   }
 
   .chip-close {
-    .#{$prefix}icon {
+    .#{base.$prefix}icon {
       font-size: $chip-close-size;
       max-height: $chip-close-size;
       max-width: $chip-close-size;
@@ -113,7 +118,7 @@ $icon-sizes: (
   }
 
   .chip-content {
-    transition: $secondary-transition;
+    transition: base.$secondary-transition;
     transition-duration: 0.05s;
     align-items: center;
     display: inline-flex;
@@ -128,7 +133,7 @@ $icon-sizes: (
       color: var(--color-on-one);
     }
 
-    .#{$prefix}icon {
+    .#{base.$prefix}icon {
       color: inherit;
       padding: 0 3px;
     }
@@ -151,7 +156,7 @@ $icon-sizes: (
       opacity: 0.08
     }
 
-    .#{$prefix}icon {
+    .#{base.$prefix}icon {
       color: inherit
     }
 
@@ -169,7 +174,7 @@ $icon-sizes: (
       opacity: 0.08
     }
 
-    .#{$prefix}icon {
+    .#{base.$prefix}icon {
       color: inherit
     }
 
@@ -185,9 +190,9 @@ $icon-sizes: (
 
   @each $name, $size in $icon-sizes {
     &.chip-size-#{$name} {
-      border-radius: #{div(map-get($size, 'height') , 2)}px;
-      font-size: #{map-get($size, 'font-size')}px;
-      min-height: #{map-get($size, 'height')}px;
+      border-radius: #{math.div(map.get($size, 'height') , 2)}px;
+      font-size: #{map.get($size, 'font-size')}px;
+      min-height: #{map.get($size, 'height')}px;
     }
   }
 }

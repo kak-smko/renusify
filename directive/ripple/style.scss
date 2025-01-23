@@ -1,8 +1,10 @@
-@import "../../style/include";
+@use "sass:map";
+@use "../../style/variables/base";
 
-$ripple-animation-transition-in: transform .25s map-get($transition, 'fast-in-slow-out'),
-opacity .1s map-get($transition, 'fast-in-slow-out') !default;
-$ripple-animation-transition-out: opacity .3s map-get($transition, 'fast-in-slow-out') !default;
+
+$ripple-animation-transition-in: transform .25s map.get(base.$transition, 'fast-in-slow-out'),
+opacity .1s map.get(base.$transition, 'fast-in-slow-out') !default;
+$ripple-animation-transition-out: opacity .3s map.get(base.$transition, 'fast-in-slow-out') !default;
 
 .ripple {
   &-container {

@@ -67,9 +67,11 @@ export default {
 
 </script>
 <style lang="scss">
-@import "../../../style/include";
+@use "sass:map";
+@use "../../../style/variables/base";
 
-.#{$prefix}radio-input {
+
+.#{base.$prefix}radio-input {
   width: 100%;
   cursor: pointer;
 
@@ -81,7 +83,7 @@ export default {
     border: 1px solid var(--color-on-sheet-low)
   }
 
-  .#{$prefix}icon {
+  .#{base.$prefix}icon {
     width: 20px;
     height: 20px;
   }
@@ -90,7 +92,7 @@ export default {
     text-align: center;
     width: 25px;
     height: 25px;
-    border-radius: map-get($borders, 'sm');
+    border-radius: map.get(base.$borders, 'sm');
     transition: .3s all ease-in-out;
   }
 

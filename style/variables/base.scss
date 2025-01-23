@@ -1,3 +1,5 @@
+@use "sass:map";
+@use "sass:math";
 $prefix: 'r-' !default;
 $body-font-family: IRANSans, 'Roboto', sans-serif !default;
 $font-size-root: 16px !default;
@@ -7,12 +9,12 @@ $line-height-root: 1.5rem !default;
 $spacer: 4px !default;
 $spacers: ();
 @for $i from 0 through 24 {
-  $spacers: map-merge($spacers, ($i: $spacer * $i))
+        $spacers: map.merge($spacers, ($i: $spacer * $i))
 }
 
 $negative-spacers: ();
 @for $i from 1 through 24 {
-  $negative-spacers: map-merge($negative-spacers, ("n" + $i: -$spacer * $i))
+        $negative-spacers: map.merge($negative-spacers, ("n" + $i: -$spacer * $i))
 }
 
 $borders: (
@@ -85,13 +87,13 @@ $grid-gutter: $spacer * 6 !default;
 $form-grid-gutter: $spacer * 2 !default;
 $grid-columns: 12 !default;
 
-$container-padding-x: div($grid-gutter, 2) !default;
+$container-padding-x: math.div($grid-gutter, 2) !default;
 
 $grid-gutters: (
-        'xs': div($grid-gutter, 12),
-        'sm': div($grid-gutter, 6),
-        'md': div($grid-gutter, 3),
-        'lg': div($grid-gutter * 2, 3),
+        'xs': math.div($grid-gutter, 12),
+        'sm': math.div($grid-gutter, 6),
+        'md': math.div($grid-gutter, 3),
+        'lg': math.div($grid-gutter * 2, 3),
         'xl': $grid-gutter
 ) !default;
 
@@ -106,25 +108,25 @@ $box-shadows: (
 ) !default;
 
 $container-max-widths: (
-        'md': map-get($grid-breakpoints, 'md')-60,
-        'lg': map-get($grid-breakpoints, 'lg')-80,
-        'xl': map-get($grid-breakpoints, 'xl')-120
+        'md': map.get($grid-breakpoints, 'md')-60,
+        'lg': map.get($grid-breakpoints, 'lg')-80,
+        'xl': map.get($grid-breakpoints, 'xl')-120
 ) !default;
 
 $display-breakpoints: (
         'print-only': 'only print',
         'screen-only': 'only screen',
-        'xs-only': 'only screen and (max-width: #{map-get($grid-breakpoints, 'sm') - 1})',
-        'sm-only': 'only screen and (min-width: #{map-get($grid-breakpoints, 'sm')}) and (max-width: #{map-get($grid-breakpoints, 'md') - 1})',
-        'sm-and-down': 'only screen and (max-width: #{map-get($grid-breakpoints, 'md') - 1})',
-        'sm-and-up': 'only screen and (min-width: #{map-get($grid-breakpoints, 'sm')})',
-        'md-only': 'only screen and (min-width: #{map-get($grid-breakpoints, 'md')}) and (max-width: #{map-get($grid-breakpoints, 'lg') - 1})',
-        'md-and-down': 'only screen and (max-width: #{map-get($grid-breakpoints, 'lg') - 1})',
-        'md-and-up': 'only screen and (min-width: #{map-get($grid-breakpoints, 'md')})',
-        'lg-only': 'only screen and (min-width: #{map-get($grid-breakpoints, 'lg')}) and (max-width: #{map-get($grid-breakpoints, 'xl') - 1})',
-        'lg-and-down': 'only screen and (max-width: #{map-get($grid-breakpoints, 'xl') - 1})',
-        'lg-and-up': 'only screen and (min-width: #{map-get($grid-breakpoints, 'lg')})',
-        'xl-only': 'only screen and (min-width: #{map-get($grid-breakpoints, 'xl')})'
+        'xs-only': 'only screen and (max-width: #{map.get($grid-breakpoints, 'sm') - 1})',
+        'sm-only': 'only screen and (min-width: #{map.get($grid-breakpoints, 'sm')}) and (max-width: #{map.get($grid-breakpoints, 'md') - 1})',
+        'sm-and-down': 'only screen and (max-width: #{map.get($grid-breakpoints, 'md') - 1})',
+        'sm-and-up': 'only screen and (min-width: #{map.get($grid-breakpoints, 'sm')})',
+        'md-only': 'only screen and (min-width: #{map.get($grid-breakpoints, 'md')}) and (max-width: #{map.get($grid-breakpoints, 'lg') - 1})',
+        'md-and-down': 'only screen and (max-width: #{map.get($grid-breakpoints, 'lg') - 1})',
+        'md-and-up': 'only screen and (min-width: #{map.get($grid-breakpoints, 'md')})',
+        'lg-only': 'only screen and (min-width: #{map.get($grid-breakpoints, 'lg')}) and (max-width: #{map.get($grid-breakpoints, 'xl') - 1})',
+        'lg-and-down': 'only screen and (max-width: #{map.get($grid-breakpoints, 'xl') - 1})',
+        'lg-and-up': 'only screen and (min-width: #{map.get($grid-breakpoints, 'lg')})',
+        'xl-only': 'only screen and (min-width: #{map.get($grid-breakpoints, 'xl')})'
 ) !default;
 
 $font-weights: (
@@ -254,8 +256,8 @@ $transition: (
         'swing': cubic-bezier(0.25, 0.8, 0.5, 1),
         'wave': cubic-bezier(.175, .885, .275, 1.275)
 ) !default;
-$primary-transition: 0.3s map-get($transition, 'swing') !default;
-$secondary-transition: 0.2s map-get($transition, 'ease-in-out') !default;
+$primary-transition: 0.3s map.get($transition, 'swing') !default;
+$secondary-transition: 0.2s map.get($transition, 'ease-in-out') !default;
 
 $z-index: (
         'low':1,
@@ -273,7 +275,7 @@ $toolbar-content-padding-x: 16px !default;
 $toolbar-height: 80px !default;
 
 //modal
-$border-modal: map-get($borders, 'md') !default;
+$border-modal: map.get($borders, 'md') !default;
 
 //bottom navigation
 $bottom-nav-btn-min-width: 56px !default;

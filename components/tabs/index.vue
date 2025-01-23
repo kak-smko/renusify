@@ -96,11 +96,11 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../style/include";
+@use "../../style/variables/base";
 
 $btnTabsWidth: 50px;
 
-.#{$prefix}tabs {
+.#{base.$prefix}tabs {
   max-width: 100%;
   display: flex;
   flex-direction: row;

@@ -20,36 +20,39 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../style/_include';
+@use "sass:map";
+@use "../../style/variables/base";
+@use "../../style/mixins";
 
-.#{$prefix}content {
-  --belowHeader: #{$toolbar-height};
+
+.#{base.$prefix}content {
+  --belowHeader: #{base.$toolbar-height};
   width: 100%;
   max-width: 100%;
-  transition: 0.2s map-get($transition, 'fast-out-slow-in');
+  transition: 0.2s map.get(base.$transition, 'fast-out-slow-in');
   position: relative;
-  @include firefox() {
+  @include mixins.firefox() {
     @media print {
       display: block
     }
   }
 
   &.flipped {
-    @include rtl() {
-      padding-right: $navbar-width;
+    @include mixins.rtl() {
+      padding-right: base.$navbar-width;
     }
-    @include ltr() {
-      padding-left: $navbar-width;
+    @include mixins.ltr() {
+      padding-left: base.$navbar-width;
     }
   }
 
   &.moved {
-    width: calc(100% + #{$navbar-width});
-    @include rtl() {
-      margin-right: $navbar-width;
+    width: calc(100% + #{base.$navbar-width});
+    @include mixins.rtl() {
+      margin-right: base.$navbar-width;
     }
-    @include ltr() {
-      margin-left: $navbar-width;
+    @include mixins.ltr() {
+      margin-left: base.$navbar-width;
     }
   }
 

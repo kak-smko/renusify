@@ -302,7 +302,7 @@ export default {
     },
     add() {
       import('./leaflet.css')
-      import('./leaflet').then(()=>{
+      import('./leaflet.js').then(() => {
         this.L = global.L
         this.run();
       })
@@ -312,9 +312,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../style/include";
+@use "../../style/variables/base";
 
-.#{$prefix}map {
+.#{base.$prefix}map {
   position: relative;
 
   .leaflet-popup {

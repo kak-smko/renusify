@@ -86,7 +86,9 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../style/include";
+@use "sass:map";
+@use "../../style/variables/base";
+@use "../../style/mixins";
 
 .message-body {
   display: flex;
@@ -119,7 +121,7 @@ export default {
     background: #fff;
     color: black;
     padding: 5px 10px;
-    border-radius: map-get($borders, 'lg');
+    border-radius: map.get(base.$borders, 'lg');
     max-width: 80%;
     overflow-wrap: break-word;
     white-space: pre-wrap;
@@ -146,7 +148,7 @@ export default {
     .message-text {
       margin-top: 0px;
       margin-bottom: 2px;
-      border-radius: map-get($borders, 'sm') !important;
+      border-radius: map.get(base.$borders, 'sm') !important;
     }
   }
 
@@ -180,37 +182,37 @@ export default {
   &:not(.is-me) {
     .is-end {
       background-color: #fff;
-      @include ltr() {
+      @include mixins.ltr() {
         left: -15px;
       }
-      @include rtl() {
+      @include mixins.rtl() {
         right: -15px;
       }
 
       &:after {
-        @include ltr() {
+        @include mixins.ltr() {
           left: -15px;
         }
-        @include rtl() {
+        @include mixins.rtl() {
           right: -15px;
         }
       }
     }
 
     .message-content {
-      @include ltr() {
+      @include mixins.ltr() {
         align-items: flex-end;
       }
-      @include rtl() {
+      @include mixins.rtl() {
         align-items: flex-start;
       }
     }
 
     .message-text {
-      @include ltr() {
+      @include mixins.ltr() {
         border-bottom-left-radius: 0px;
       }
-      @include rtl() {
+      @include mixins.rtl() {
         border-bottom-right-radius: 0px;
       }
     }
@@ -218,27 +220,27 @@ export default {
 
   &.is-me {
     flex-direction: row-reverse;
-    @include rtl() {
+    @include mixins.rtl() {
       margin-left: 15px;
     }
-    @include ltr() {
+    @include mixins.ltr() {
       margin-right: 15px;
     }
 
     .is-end {
       background-color: #4f98ec;
-      @include rtl() {
+      @include mixins.rtl() {
         left: -15px;
       }
-      @include ltr() {
+      @include mixins.ltr() {
         right: -15px;
       }
 
       &:after {
-        @include rtl() {
+        @include mixins.rtl() {
           left: -15px;
         }
-        @include ltr() {
+        @include mixins.ltr() {
           right: -15px;
         }
       }
@@ -247,10 +249,10 @@ export default {
     .message-text {
       background-color: #4f98ec;
       color: white;
-      @include ltr() {
+      @include mixins.ltr() {
         border-bottom-right-radius: 0px;
       }
-      @include rtl() {
+      @include mixins.rtl() {
         border-bottom-left-radius: 0px;
       }
     }
@@ -260,11 +262,11 @@ export default {
     }
 
     .message-content {
-      @include ltr() {
+      @include mixins.ltr() {
         align-items: flex-start;
 
       }
-      @include rtl() {
+      @include mixins.rtl() {
         align-items: flex-end;
 
       }

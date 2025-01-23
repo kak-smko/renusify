@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import mixin from './mixin'
+import mixin from './mixin.js'
 
 export default {
   name: "highlight-css",

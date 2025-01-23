@@ -24,7 +24,7 @@
 </template>
 <script>
 import {defineAsyncComponent} from 'vue'
-import {toolbar} from "./mixin";
+import {toolbar} from "./mixin.js";
 
 export default {
         components: {MenuMobile:defineAsyncComponent(()=>import('./menuMob.vue'))},

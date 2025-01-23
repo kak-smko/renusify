@@ -83,13 +83,14 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../../style/include";
+@use "../../../style/variables/base";
+@use "../../../style/mixins";
 
-.#{$prefix}json-view {
-  @include rtl() {
+.#{base.$prefix}json-view {
+  @include mixins.rtl() {
     border-right: 1px solid var(--color-sheet-low);
   }
-  @include ltr() {
+  @include mixins.ltr() {
     border-left: 1px solid var(--color-sheet-low);
   }
 }

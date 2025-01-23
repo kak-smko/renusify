@@ -64,13 +64,13 @@ export default {
     name: "r-code-editor",
     components: {
         HighlightCss: defineAsyncComponent(() =>
-            import("./highlightCss")
+            import("./highlightCss.vue")
         ), HighlightScript: defineAsyncComponent(() =>
-            import("./highlightJs")
+          import("./highlightJs.vue")
         ), highlightHtml: defineAsyncComponent(() =>
-            import("./highlightHtml")
+          import("./highlightHtml.vue")
         ), RCodeEditorRun: defineAsyncComponent(() =>
-            import("./run")
+          import("./run.vue")
         )
     },
     props: {
@@ -135,9 +135,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../style/include";
+@use "../../style/variables/base";
 
-.#{$prefix}code-editor {
+.#{base.$prefix}code-editor {
     position: relative;
     white-space: break-spaces;
     caret-color: white;

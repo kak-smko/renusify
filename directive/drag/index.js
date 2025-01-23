@@ -1,4 +1,4 @@
-import {ifHas} from '../../tools/helper'
+import {ifHas} from '../../tools/helper.js'
 
 let wrapper = {}
 let current=null

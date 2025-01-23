@@ -22,7 +22,7 @@
 </template>
 <script>
 import {defineAsyncComponent} from 'vue'
-import {toolbar} from "./mixin";
+import {toolbar} from "./mixin.js";
 
 export default {
         components: {MenuLaptop:defineAsyncComponent(()=>import('./menuLaptop.vue'))},

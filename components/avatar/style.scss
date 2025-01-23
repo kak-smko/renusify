@@ -1,6 +1,6 @@
-@import "../../style/include";
+@use "../../style/variables/base";
 
-.#{$prefix}avatar {
+.#{base.$prefix}avatar {
   position: relative;
   display: inline-flex;
   justify-content: center;

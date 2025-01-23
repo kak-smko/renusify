@@ -65,9 +65,10 @@ export default {
 
 </script>
 <style lang="scss">
-@import "../../../style/include";
+@use "sass:map";
+@use "../../../style/variables/base";
 
-.#{$prefix}checkbox {
+.#{base.$prefix}checkbox {
   width: 100%;
   cursor: pointer;
 
@@ -79,7 +80,7 @@ export default {
     border: 1px solid var(--color-on-sheet-low)
   }
 
-  .#{$prefix}icon {
+  .#{base.$prefix}icon {
     width: 100%;
     height: 100%;
     display: flex;
@@ -89,7 +90,7 @@ export default {
 
   .checkbox-input {
     text-align: center;
-    border-radius: map-get($borders, 'sm');
+    border-radius: map.get(base.$borders, 'sm');
     transition: .3s all ease-in-out;
 
     &.x-small {

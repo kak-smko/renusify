@@ -88,7 +88,11 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~renusify/style/_include";
+@use "sass:map";
+@use "../../../style/variables/base";
+@use "../../../style/mixins";
+@use "../../../style/mixins/container" as mixins2;
+
 
 $menu-width: 300px;
 .template-main {
@@ -100,8 +104,8 @@ $menu-width: 300px;
     position: fixed;
     top: 0;
     width: 100%;
-    height: $toolbar-height;
-    z-index: map_get($z-index, "medium");
+    height: base.$toolbar-height;
+    z-index: map.get(base.$z-index, "medium");
   }
 
   &.menu-open {
@@ -114,24 +118,24 @@ $menu-width: 300px;
     .hover-div {
       width: calc(100% - #{$menu-width});
       max-width: calc(100% - #{$menu-width});
-      min-height: calc(100vh - #{$toolbar-height});
+      min-height: calc(100vh - #{base.$toolbar-height});
       transition: 0.1s all ease-in-out;
       position: absolute;
       top: 0;
       z-index: 2;
-      @include rtl() {
+      @include mixins.rtl() {
         left: 0;
       }
-      @include ltr() {
+      @include mixins.ltr() {
         right: 0;
       }
     }
 
     .list {
-      @include rtl() {
+      @include mixins.rtl() {
         right: 0 !important;
       }
-      @include ltr() {
+      @include mixins.ltr() {
         left: 0 !important;
       }
     }
@@ -139,15 +143,15 @@ $menu-width: 300px;
 
   .menu-main {
     transition: 0.3s all ease-in-out;
-    height: calc(100vh - #{$toolbar-height});
-    top: $toolbar-height;
+    height: calc(100vh - #{base.$toolbar-height});
+    top: base.$toolbar-height;
     position: fixed;
-    z-index: map_get($z-index, "medium");
+    z-index: map.get(base.$z-index, "medium");
     opacity: 0;
-    @include rtl() {
+    @include mixins.rtl() {
       right: 0;
     }
-    @include ltr() {
+    @include mixins.ltr() {
       left: 0;
     }
 
@@ -159,10 +163,10 @@ $menu-width: 300px;
       height: 100%;
       position: absolute;
       top: 0;
-      @include rtl() {
+      @include mixins.rtl() {
         right: -$menu-width;
       }
-      @include ltr() {
+      @include mixins.ltr() {
         left: -$menu-width;
       }
       font-weight: bold;
@@ -171,20 +175,20 @@ $menu-width: 300px;
 
   .router-div {
     position: fixed;
-    top: $toolbar-height;
+    top: base.$toolbar-height;
     width: 100%;
     max-width: 100%;
     overflow-y: auto;
-    height: calc(100vh - #{$toolbar-height});
-    @include rtl() {
+    height: calc(100vh - #{base.$toolbar-height});
+    @include mixins.rtl() {
       left: 0;
     }
-    @include ltr() {
+    @include mixins.ltr() {
       right: 0;
     }
   }
 
-  @include media-breakpoint-up("lg") {
+  @include mixins2.media-breakpoint-up("lg") {
     .btn-menu {
       display: none;
     }
@@ -201,10 +205,10 @@ $menu-width: 300px;
       width: 0 !important;
     }
     .list {
-      @include rtl() {
+      @include mixins.rtl() {
         right: 0 !important;
       }
-      @include ltr() {
+      @include mixins.ltr() {
         left: 0 !important;
       }
     }

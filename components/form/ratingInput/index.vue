@@ -44,7 +44,7 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../../style/include";
+@use "../../../style/variables/base";
 
 $btn-sizes: (
     'x-small': 20,
@@ -53,10 +53,10 @@ $btn-sizes: (
     'large': 35,
     'x-large': 40
 ) !default;
-.#{$prefix}rating {
+.#{base.$prefix}rating {
   max-width: 100%;
   white-space: nowrap;
-  transition: 1s $primary-transition;
+  transition: 1s base.$primary-transition;
 
   * {
     color: var(--color-on-sheet-low);
@@ -68,12 +68,12 @@ $btn-sizes: (
 
   @each $name, $size in $btn-sizes {
     &.size-#{$name} {
-      .#{$prefix}btn {
+      .#{base.$prefix}btn {
         height: #{$size}px;
         width: #{$size}px
       }
 
-      .#{$prefix}icon {
+      .#{base.$prefix}icon {
         height: #{$size - 4px};
         width: #{$size - 4px}
       }

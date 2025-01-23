@@ -77,11 +77,13 @@ emits:['update:modelValue'],
 
 </script>
 <style lang="scss">
-@import "../../../style/include";
+@use "../../../style/variables/base";
+@use "../../../style/mixins";
+@use "../../../style/functions";
 
-.#{$prefix}unit-input {
+.#{base.$prefix}unit-input {
   .input-shadow, .input-shadow * {
-    @include disable-states()
+    @include mixins.disable-states()
   }
 
   input {
@@ -97,17 +99,17 @@ emits:['update:modelValue'],
     overflow-x: clip;
 
     * {
-      font-size: map-metro-get($headings, 'label-3', 'size') !important;
+      font-size: functions.map-metro-get(base.$headings, 'label-3', 'size') !important;
     }
 
     .input-control {
       border-radius: 0;
       padding: 4px;
-      @include rtl() {
+      @include mixins.rtl() {
         border-right: 1px solid var(--c-unit) !important;
       }
 
-      @include ltr() {
+      @include mixins.ltr() {
         border-left: 1px solid var(--c-unit) !important;
       }
     }

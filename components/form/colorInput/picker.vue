@@ -52,14 +52,14 @@
 
 <script>
 import {defineAsyncComponent} from 'vue'
-import {color} from './mixin'
+import {color} from './mixin.js'
 
 export default {
   components: {
-    Saturation:defineAsyncComponent(()=>import('./Saturation.vue')),
-    Hue:defineAsyncComponent(()=>import('./Hue.vue')),
-    Alpha:defineAsyncComponent(()=>import('./Alpha.vue')),
-    Preview:defineAsyncComponent(()=>import('./Preview.vue'))
+    Saturation: defineAsyncComponent(() => import('./Saturation.vue')),
+    Hue: defineAsyncComponent(() => import('./Hue.vue')),
+    Alpha: defineAsyncComponent(() => import('./Alpha.vue')),
+    Preview: defineAsyncComponent(() => import('./Preview.vue'))
   },
   mixins: [color],
   props: {
@@ -68,7 +68,7 @@ export default {
       default: '#2F1DCC',
     }
   },
-  emits:['changeColor'],
+  emits: ['changeColor'],
   data() {
     return {
       r: 0,
@@ -158,11 +158,13 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../style/include";
+@use "sass:map";
+@use "../../../style/variables/base";
+
 
 .color-box {
   padding: 10px;
-  border-radius: map-get($borders, 'sm');
+  border-radius: map.get(base.$borders, 'sm');
   box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.16);
   z-index: 1;
 

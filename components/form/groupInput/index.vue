@@ -134,9 +134,10 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../../style/include";
+@use "../../../style/variables/base";
+@use "../../../style/mixins";
 
-.#{$prefix}group-input {
+.#{base.$prefix}group-input {
   .group-input-label {
     color: var(--color-on-sheet);
   }
@@ -146,10 +147,10 @@ export default {
     .group-action {
       position: absolute;
       top: 0;
-      @include ltr() {
+      @include mixins.ltr() {
         right: 0;
       }
-      @include rtl() {
+      @include mixins.rtl() {
         left: 0;
       }
     }

@@ -209,9 +209,10 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../../style/include";
+@use "../../../style/variables/base";
+@use "../../../style/mixins";
 
-.#{$prefix}range {
+.#{base.$prefix}range {
   height: 30px;
   position: relative;
 
@@ -246,10 +247,10 @@ export default {
       &:hover {
         width: 16px;
         height: 16px;
-        @include rtl() {
+        @include mixins.rtl() {
           transform: translate(2px, -2px);
         }
-        @include ltr() {
+        @include mixins.ltr() {
           transform: translate(-2px, -2px);
         }
         border: 3px solid var(--color-one) !important;
@@ -274,10 +275,10 @@ export default {
       width: auto;
       height: 30px;
       min-width: 30px;
-      @include rtl() {
+      @include mixins.rtl() {
         transform: translateX(calc(50% - 5px));
       }
-      @include ltr() {
+      @include mixins.ltr() {
         transform: translateX(calc(-50% + 5px));
       }
     }
@@ -309,10 +310,10 @@ export default {
       &:hover {
         width: 16px;
         height: 16px;
-        @include rtl() {
+        @include mixins.rtl() {
           transform: translate(2px, -2px);
         }
-        @include ltr {
+        @include mixins.ltr() {
           transform: translate(-2px, -2px);
         }
         border: 3px solid var(--color-one) !important;
@@ -337,10 +338,10 @@ export default {
       width: auto;
       height: 30px;
       min-width: 30px;
-      @include rtl() {
+      @include mixins.rtl() {
         transform: translateX(calc(50% - 5px));
       }
-      @include ltr() {
+      @include mixins.ltr() {
         transform: translateX(calc(-50% + 5px));
       }
     }

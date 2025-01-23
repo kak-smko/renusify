@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import file from "./file";
+import file from "./file.js";
 
 export default {
   name: 'inputFile',
@@ -128,9 +128,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../style/include";
+@use "../../../style/variables/base";
 
-.#{$prefix}file-uploader {
+.#{base.$prefix}file-uploader {
   .image-card {
     position: relative;
     width: auto;

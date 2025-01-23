@@ -158,15 +158,18 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "../../style/include";
+@use "sass:map";
+@use "../../style/variables/base";
+@use "../../style/mixins";
 
-.#{$prefix}search-box {
+
+.#{base.$prefix}search-box {
   position: relative;
 
   &.to-top {
     .card-search {
       bottom: 47px;
-      border-radius: map-get($borders, "md") map-get($borders, "md") 0 0;
+      border-radius: map.get(base.$borders, "md") map.get(base.$borders, "md") 0 0;
     }
 
     .search-open {
@@ -178,7 +181,7 @@ export default {
   &:not(&.to-top) {
     .card-search {
       top: 47px;
-      border-radius: 0 0 map-get($borders, "md") map-get($borders, "md");
+      border-radius: 0 0 map.get(base.$borders, "md") map.get(base.$borders, "md");
     }
 
     .search-open {
@@ -193,7 +196,7 @@ export default {
     border: solid 1px var(--color-border);
     color: var(--color-on-sheet);
     position: relative;
-    border-radius: map-get($borders, "md");
+    border-radius: map.get(base.$borders, "md");
   }
 
 
@@ -219,33 +222,33 @@ export default {
     position: fixed;
     width: 100vw;
     height: 100vh;
-    z-index: map_get($z-index, "medium");
+    z-index: map.get(base.$z-index, "medium");
     top: 0;
     left: 0;
     backdrop-filter: blur(3px) grayscale(30%);
   }
 
-  .#{$prefix}select-container {
+  .#{base.$prefix}select-container {
     .input-control {
       border-radius: 0;
       min-height: 30px;
-      @include ltr() {
+      @include mixins.ltr() {
         border-right: 1px solid var(--color-sheet-container-low) !important;
       }
 
-      @include rtl() {
+      @include mixins.rtl() {
         border-left: 1px solid var(--color-sheet-container-low) !important;
       }
     }
 
     .card-select {
       top: -6px;
-      border-radius: map-get($borders, "md");
-      @include ltr() {
+      border-radius: map.get(base.$borders, "md");
+      @include mixins.ltr() {
         border-top-right-radius: 0 !important;
       }
 
-      @include rtl() {
+      @include mixins.rtl() {
         border-top-left-radius: 0 !important;
       }
     }

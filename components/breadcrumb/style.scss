@@ -1,7 +1,7 @@
-@import "../../style/include";
+@use "../../style/variables/base";
+@use "../../style/mixins/container" as mixins;
 
-
-.#{$prefix}breadcrumbs {
+.#{base.$prefix}breadcrumbs {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
@@ -15,7 +15,7 @@
     color: var(--color-on-sheet);
   }
 
-  .breadcrumb-divider, .breadcrumb-item-disabled, .#{$prefix}icon {
+  .breadcrumb-divider, .breadcrumb-item-disabled, .#{base.$prefix}icon {
     color: var(--color-border)
   }
 
@@ -29,7 +29,7 @@
       padding: 0 12px
     }
 
-    @include media-breakpoint-down('md') {
+    @include mixins.media-breakpoint-down('md') {
       &:nth-child(even) {
         padding: 0 4px
       }
@@ -41,7 +41,7 @@
     align-items: center;
     display: inline-flex;
     text-decoration: none;
-    transition: 0.3s $primary-transition;
+    transition: 0.3s base.$primary-transition;
     cursor: pointer;
 
     &-disabled {

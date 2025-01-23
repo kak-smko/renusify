@@ -131,10 +131,11 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../style/include";
+@use "sass:map";
+@use "../../style/variables/base";
 
 
-.#{$prefix}menu {
+.#{base.$prefix}menu {
   position: relative;
 
   .menu-selected {
@@ -174,7 +175,7 @@ export default {
     max-height: 200px;
     overflow-y: auto;
     background-clip: padding-box;
-    border-radius: map-get($borders, 'sm');
+    border-radius: map.get(base.$borders, 'sm');
 
     &-item {
       cursor: pointer;

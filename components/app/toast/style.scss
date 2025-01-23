@@ -1,13 +1,14 @@
-@import "../../../style/include";
+@use "sass:map";
+@use "../../../style/variables/base";
 
-.#{$prefix}toast {
+.#{base.$prefix}toast {
   max-width: 500px;
   width: 95vw;
   position: fixed;
   bottom: 15px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: map-get($z-index, 'veryImportant');
+  z-index: map.get(base.$z-index, 'veryImportant');
 
   .toast-content {
     padding: 15px;

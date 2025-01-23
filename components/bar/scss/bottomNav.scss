@@ -1,30 +1,33 @@
-@import "../../../style/include";
+@use "sass:map";
+@use "../../../style/variables/base";
+@use "../../../style/functions";
+@use "../../../style/mixins";
 
-$bottom-nav-btn-font-size: map-metro-get($headings, 'label-1', 'size') !default;
+$bottom-nav-btn-font-size: functions.map-metro-get(base.$headings, 'label-1', 'size') !default;
 
-.#{$prefix}bottom-navigation {
+.#{base.$prefix}bottom-navigation {
   bottom: 0;
   display: flex;
   left: 0;
   justify-content: center;
   width: 100%;
-  height: $bottom-nav-height;
+  height: base.$bottom-nav-height;
   background-color: var(--color-sheet-container);
   color: var(--color-on-sheet);
-  @include typography($headings, 'body-3');
+  @include mixins.typography(base.$headings, 'body-3');
 
   .router-link-exact-active {
     color: var(--color-one)
   }
 
-  .#{$prefix}btn {
+  .#{base.$prefix}btn {
     border-radius: 0;
     box-shadow: none;
     flex: 0 1 auto;
     font-size: $bottom-nav-btn-font-size;;
     height: inherit !important;
-    max-width: $bottom-nav-btn-max-width;
-    min-width: $bottom-nav-btn-min-width;
+    max-width: base.$bottom-nav-btn-max-width;
+    min-width: base.$bottom-nav-btn-min-width;
     position: relative;
     text-transform: none;
 
@@ -37,11 +40,11 @@ $bottom-nav-btn-font-size: map-metro-get($headings, 'label-1', 'size') !default;
       height: inherit;
     }
 
-    .#{$prefix}icon {
+    .#{base.$prefix}icon {
       margin-bottom: 4px
     }
 
-    > *:not(.#{$prefix}icon) {
+    > *:not(.#{base.$prefix}icon) {
       line-height: 1.2
     }
 
@@ -52,11 +55,11 @@ $bottom-nav-btn-font-size: map-metro-get($headings, 'label-1', 'size') !default;
 
   &.bottom-navigation-fixed {
     position: fixed;
-    z-index: map_get($z-index, 'default')
+    z-index: map.get(base.$z-index, 'default')
   }
 
   &.bottom-navigation-grow {
-    .#{$prefix}btn {
+    .#{base.$prefix}btn {
       width: 100%;
       max-width: 100%;
     }
