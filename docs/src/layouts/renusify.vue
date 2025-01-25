@@ -11,7 +11,13 @@
         <r-icon v-else v-html="$r.icons.close"></r-icon>
       </r-btn>
       <router-link target="_blank" to="/">
-        <img alt="renusify" class="me-2" height="60" src="/logo.jpg" width="210"/>
+        <img
+            alt="renusify"
+            class="me-2"
+            height="60"
+            src="/logo.jpg"
+            width="210"
+        />
       </router-link>
       <r-spacer></r-spacer>
       <r-select-input
@@ -65,9 +71,7 @@ export default {
     }
     this.$r.lang = this.lang;
 
-    import(
-    "../views/index/menu/" + this.lang + ".json"
-        ).then((data) => {
+    import("../views/index/menu/" + this.lang + ".json").then((data) => {
       this.menu = data.default;
       this.$r.store.menu = this.menu;
     });
@@ -92,7 +96,6 @@ export default {
 @use "../../../style/variables/base";
 @use "../../../style/mixins";
 @use "../../../style/mixins/container" as mixins2;
-
 
 $menu-width: 300px;
 .template-main {

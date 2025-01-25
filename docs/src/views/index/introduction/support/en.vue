@@ -1,4 +1,5 @@
-<template><!--  todo translate-->
+<template>
+  <!--  todo translate-->
   <section id="support">
     <h1 class="display-4 mb-5">ارتقا</h1>
     <p class="body-1">
@@ -52,4 +53,3 @@ export default {
   },
 };
 </script>
-

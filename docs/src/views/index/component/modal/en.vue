@@ -7,9 +7,9 @@
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         The
         <r-btn readonly size="small"> r-modal</r-btn>
-        component is actually
-        the component that displays the desired information inside a box as a
-        popup without refreshing the page when clicking on a button or link.
+        component is actually the component that displays the desired
+        information inside a box as a popup without refreshing the page when
+        clicking on a button or link.
       </p>
     </div>
 

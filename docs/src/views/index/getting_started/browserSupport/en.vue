@@ -1,4 +1,5 @@
-<template><!--  todo translate-->
+<template>
+  <!--  todo translate-->
   <section id="browserSupport" class="body-1">
     <h1 class="display-4 mb-5">مرورگرهای قابل استفاده</h1>
     <p>
@@ -27,4 +28,3 @@ export default {
   },
 };
 </script>
-

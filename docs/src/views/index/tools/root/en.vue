@@ -1,4 +1,5 @@
-<template><!--  todo translate-->
+<template>
+  <!--  todo translate-->
   <section>
     <h1 class="display-3 font-weight-light color-white ps-4 pb-1 pt-1 br-lg">
       r-root
@@ -125,4 +126,3 @@ export default {
   },
 };
 </script>
-

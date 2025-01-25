@@ -37,16 +37,13 @@
     <section class="d-flex h-space-around pt-6 ps-20 pe-20">
       <r-progress-circle :model-value="80" class="color-warning-text" size="80">
         80%
-      </r-progress-circle
-      >
+      </r-progress-circle>
       <r-progress-circle :model-value="60" class="color-info-text" size="60">
         60%
-      </r-progress-circle
-      >
+      </r-progress-circle>
       <r-progress-circle :model-value="40" class="color-success-text" size="40">
         40%
-      </r-progress-circle
-      >
+      </r-progress-circle>
     </section>
     <p class="caption">Press run Button</p>
     <r-code-editor

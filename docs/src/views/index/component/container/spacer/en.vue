@@ -7,8 +7,7 @@
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         A
         <r-btn readonly size="small"> r-spacer</r-btn>
-        grid is one of the most
-        important structural components .
+        grid is one of the most important structural components .
       </p>
     </div>
 

@@ -7,8 +7,7 @@
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         کامپوننت
         <r-btn readonly size="small"> r-unit-input</r-btn>
-        یک فیلد
-        ورودی است , برای ورودی های واحد مورد استفاده قرار می گیرد .
+        یک فیلد ورودی است , برای ورودی های واحد مورد استفاده قرار می گیرد .
       </p>
     </div>
     <table-props :items="props"></table-props>

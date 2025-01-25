@@ -15,7 +15,7 @@
   </section>
   <section class="mt-10">
     <r-tree v-model="modelValue" style="height: 600px">
-      <template v-slot="{nodeKey,item}">
+      <template v-slot="{ nodeKey, item }">
         <r-card class="pa-5 title-1 mx-1">{{ nodeKey }}:{{ item.name }}</r-card>
       </template>
     </r-tree>
@@ -93,7 +93,6 @@ methods:{
   </section>
 </template>
 <script>
-
 export default {
   name: "tree",
   data() {

@@ -4,8 +4,7 @@
       <h1 class="display-3 font-weight-light ps-4 pb-1 pt-1 br-lg">r-col</h1>
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         <r-btn readonly size="small">r-col</r-btn>
-        دارای محتوای متنی است . باید
-        مستقیم فرزند
+        دارای محتوای متنی است . باید مستقیم فرزند
         <r-btn readonly size="small">r-row</r-btn>
         باشد.
       </p>

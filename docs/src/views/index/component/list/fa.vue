@@ -50,20 +50,18 @@ methods:{
   <section class="pa-3 color-white">
     <h1 class="font-weight-bold title ps-4 pt-1 pb-1 br-sm">List</h1>
     <section class="d-flex h-space-between pt-3 px-20">
-
       <r-list
           v-model="valid"
           :items="[
-            { name: 'one', value: 1, family: 'first' },
-            { name: 'two', value: 2, family: 'second' },
-            { name: 'three', value: 3, family: 'third' },
-          ]"
+          { name: 'one', value: 1, family: 'first' },
+          { name: 'two', value: 2, family: 'second' },
+          { name: 'three', value: 3, family: 'third' },
+        ]"
       >
         <template v-slot="{ item }">
           {{ item }}
         </template>
       </r-list>
-
     </section>
     <p class="caption">Press run Button</p>
     <r-code-editor

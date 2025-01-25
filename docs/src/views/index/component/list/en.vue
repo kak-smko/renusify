@@ -7,8 +7,7 @@
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         The
         <r-btn readonly size="small"> r-list</r-btn>
-        property specifies the
-        type of list item marker.
+        property specifies the type of list item marker.
       </p>
     </div>
 

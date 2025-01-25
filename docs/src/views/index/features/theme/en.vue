@@ -1,4 +1,5 @@
-<template><!--  todo translate-->
+<template>
+  <!--  todo translate-->
   <section>
     <h1 class="display-4">تم</h1>
     <p class="title mt-5">
@@ -142,4 +143,3 @@ export default {
   },
 };
 </script>
-

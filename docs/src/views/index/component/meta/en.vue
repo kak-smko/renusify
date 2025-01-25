@@ -6,8 +6,7 @@
       </h1>
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         <r-btn readonly size="small"> r-meta</r-btn>
-        data is data (information)
-        about data
+        data is data (information) about data
       </p>
     </div>
 

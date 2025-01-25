@@ -1,4 +1,5 @@
-<template><!--  todo translate-->
+<template>
+  <!--  todo translate-->
   <section id="introduction">
     <h2 class="display-4">معرفی</h2>
     <p class="my-5 body-1">
@@ -43,4 +44,3 @@ export default {
   },
 };
 </script>
-

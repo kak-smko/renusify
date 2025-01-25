@@ -13,7 +13,9 @@ html {
   @include container.media-breakpoint-down('md') {
     font-size: base.$font-size-root-mobile;
   }
-  text-rendering: optimizeLegibility;
+
+  & {
+    text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -21,7 +23,9 @@ html {
   overflow-y: scroll;
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
+  }
+;
 }
 
 body {

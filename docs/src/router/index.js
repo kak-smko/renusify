@@ -30,7 +30,7 @@ const router = createRouter({
   history: createWebHistory(
     process.env.NODE_ENV === "production"
       ? process.env.API_production_URL
-      : process.env.API_URL
+      : process.env.API_URL,
   ),
   routes,
   scrollBehavior(to, from, savedPosition) {

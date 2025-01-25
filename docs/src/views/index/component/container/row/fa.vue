@@ -144,7 +144,8 @@ export default {
           type: "Boolean",
           default: "null",
           description: "فشرده کردن ردیف ها",
-        }, {
+        },
+        {
           prop: "grid",
           type: "Boolean",
           default: "null",

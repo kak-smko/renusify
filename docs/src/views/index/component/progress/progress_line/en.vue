@@ -7,8 +7,7 @@
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         The
         <r-btn readonly size="small"> r-progress-line</r-btn>
-        represents the
-        completion progress of a task.
+        represents the completion progress of a task.
       </p>
     </div>
 

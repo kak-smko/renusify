@@ -7,9 +7,8 @@
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         The
         <r-btn readonly size="small"> r-file-input</r-btn>
-        component is
-        input that provides for selecting files, showing detailed selection
-        information and upload progress.
+        component is input that provides for selecting files, showing detailed
+        selection information and upload progress.
       </p>
     </div>
     <table-props :items="props"></table-props>

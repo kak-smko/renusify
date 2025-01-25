@@ -179,8 +179,7 @@ export default {
           prop: "baseUrl",
           type: "String",
           default: "https://codenus.com/api/apps/address",
-          description:
-              "Get location information's",
+          description: "Get location information's",
         },
         {
           prop: "required",
@@ -188,12 +187,12 @@ export default {
           default: "null",
           description:
               "The Input must have a value before being sent to the server.",
-        }, {
+        },
+        {
           prop: "stepShow",
           type: "Boolean",
           default: "null",
-          description:
-              "Show Input step by step",
+          description: "Show Input step by step",
         },
         {
           prop: "allowCountries",

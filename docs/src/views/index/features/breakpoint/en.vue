@@ -62,7 +62,7 @@
         :script="`this.$r.breakpoint=${JSON.stringify(
         $r.breakpoint,
         undefined,
-        2
+        2,
       )}`"
         :script-show="false"
         :style-show="false"
@@ -131,4 +131,3 @@ export default {
   },
 };
 </script>
-

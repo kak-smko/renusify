@@ -144,7 +144,8 @@ export default {
           type: "Boolean",
           default: "null",
           description: "grid dense",
-        }, {
+        },
+        {
           prop: "grid",
           type: "Boolean",
           default: "null",

@@ -1,7 +1,7 @@
 <template>
   <r-container>
     <component :is="page" :key="lang + '-' + path"></component>
-        <buttom-next-page></buttom-next-page>
+    <buttom-next-page></buttom-next-page>
   </r-container>
 </template>
 <script>
@@ -12,7 +12,7 @@ export default {
   name: "pages",
   props: {
     lang: String,
-    path: String
+    path: String,
   },
   data() {
     return {

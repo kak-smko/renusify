@@ -6,8 +6,7 @@
       </h1>
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         <r-btn readonly size="small"> r-spacer</r-btn>
-        فاصله خالی در یک سطر را پر
-        می کند.
+        فاصله خالی در یک سطر را پر می کند.
       </p>
     </div>
     <table-props :items="items"></table-props>

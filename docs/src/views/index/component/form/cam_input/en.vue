@@ -8,8 +8,7 @@
         <r-btn readonly size="small"> r-cam-input</r-btn>
         inherits from
         <r-btn readonly size="small"> r-input</r-btn>
-        and inherits all of its
-        features.
+        and inherits all of its features.
       </p>
     </div>
 

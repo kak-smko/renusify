@@ -174,7 +174,8 @@ export default {
           type: "Boolean",
           default: "true",
           description: "ریسپانسیو است",
-        }, {
+        },
+        {
           prop: "card",
           type: "Boolean",
           default: "false",
@@ -216,8 +217,7 @@ export default {
           prop: "itemId",
           type: "String",
           default: "_id",
-          description:
-              "شناسه هر آیتم",
+          description: "شناسه هر آیتم",
         },
         {
           prop: "headers",

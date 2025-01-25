@@ -3,11 +3,13 @@
     opacity: 0 !important;
   }
 
-  -webkit-text-fill-color: transparent !important;
-
-  background-color: rgba(0, 0, 0, 0.12) !important;
-  overflow: hidden !important;
-  position: relative !important;
+  & {
+    -webkit-text-fill-color: transparent !important;
+    background-color: rgba(0, 0, 0, 0.12) !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+;
 
   &:after {
     animation: skeletonloading 1.5s infinite;

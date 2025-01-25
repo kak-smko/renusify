@@ -7,8 +7,7 @@
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         With
         <r-btn readonly size="small"> r-map</r-btn>
-        image maps, you can
-        create clickable areas on an image
+        image maps, you can create clickable areas on an image
       </p>
     </div>
 

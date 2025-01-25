@@ -7,8 +7,7 @@
       <p class="font-weight-light ps-4 pb-1 py-3 br-lg">
         A
         <r-btn readonly size="small">r-confirm</r-btn>
-        box is often used if
-        you want the user to verify or accept something.
+        box is often used if you want the user to verify or accept something.
       </p>
     </div>
     <table-props :items="props"></table-props>

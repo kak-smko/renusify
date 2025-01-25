@@ -7,8 +7,7 @@
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         مدل
         <r-btn readonly size="small"> r-time-ago</r-btn>
-        برای نمایش اطلاعات
-        زمانی به صورت زیبا و سبک استفاده می‌شود.
+        برای نمایش اطلاعات زمانی به صورت زیبا و سبک استفاده می‌شود.
       </p>
     </div>
     <table-props :items="items"></table-props>

@@ -246,14 +246,12 @@ methods:{
       <r-card class="px-10 py-4 color-info">
         <r-chip class="color-white-text font-weight-bold" text>
           used to display the Chip
-        </r-chip
-        >
+        </r-chip>
       </r-card>
       <r-card class="px-10 py-4 color-success">
         <r-chip class="color-white-text font-weight-bold" label>
           Default Chip
-        </r-chip
-        >
+        </r-chip>
       </r-card>
     </section>
     <p class="caption">Press run Button</p>

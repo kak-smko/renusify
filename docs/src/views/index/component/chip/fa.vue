@@ -65,16 +65,12 @@ methods:{
     </h1>
     <section class="d-flex h-space-around pt-12 ps-20 pe-20">
       <r-card class="pa-3 text-center" outlined>
-        <r-chip v-model="changeChip"
-        >Checking the Correct
-        </r-chip>
+        <r-chip v-model="changeChip">Checking the Correct</r-chip>
         <p>{{ changeChip }}</p>
       </r-card>
       <r-card class="pa-3 text-center">
         <p>{{ ddChip }}</p>
-        <r-chip v-model="ddChip"
-        >Checking the Correct
-        </r-chip>
+        <r-chip v-model="ddChip">Checking the Correct</r-chip>
       </r-card>
     </section>
     <p class="caption">Press run Button</p>
@@ -244,14 +240,12 @@ methods:{
       <r-card class="px-10 py-4 color-info">
         <r-chip class="color-white-text font-weight-bold" text>
           used to display the Chip
-        </r-chip
-        >
+        </r-chip>
       </r-card>
       <r-card class="px-10 py-4 color-success">
         <r-chip class="color-white-text font-weight-bold" label>
           Default Chip
-        </r-chip
-        >
+        </r-chip>
       </r-card>
     </section>
     <p class="caption">Press run Button</p>

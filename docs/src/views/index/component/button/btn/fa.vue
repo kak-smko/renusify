@@ -110,8 +110,7 @@
         <r-btn block class="my-4 mx-1 color-success">Success</r-btn>
         <r-btn block class="my-4 mx-1 color-warning" size="small"
         >Warning
-        </r-btn
-        >
+        </r-btn>
         <r-btn block class="my-4 mx-1 color-one" size="x-small">Info</r-btn>
       </r-card>
     </section>

@@ -46,6 +46,7 @@ export default {
   z-index: map.get(base.$z-index, "default");
   background-color: var(--color-sheet);
   color: var(--color-on-sheet);
+
   @include mixins.typography(base.$headings, 'body-3');
 
   .navigation-item {

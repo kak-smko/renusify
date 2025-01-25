@@ -4,8 +4,7 @@
       <h1 class="display-3 font-weight-light ps-4 pb-1 pt-1 br-lg">r-col</h1>
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         <r-btn readonly size="small">r-col</r-btn>
-        is a content holder that must
-        be a direct child of
+        is a content holder that must be a direct child of
         <r-btn readonly size="small">r-row</r-btn>
         .
       </p>

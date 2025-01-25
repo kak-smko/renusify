@@ -59,8 +59,7 @@
       <r-card class="px-5 py-8 text-center card-hover">
         <r-btn-confirm class="color-black" title="Are you sure want to continue"
         >Start Confirm
-        </r-btn-confirm
-        >
+        </r-btn-confirm>
       </r-card>
     </section>
     <p class="caption">Press run Button</p>
@@ -90,8 +89,7 @@
             class="color-info"
             title="Are you sure want to continue"
         >Start Confirm
-        </r-btn-confirm
-        >
+        </r-btn-confirm>
       </r-card>
     </section>
     <p class="caption">Press run Button</p>

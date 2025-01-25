@@ -1,4 +1,5 @@
-<template><!--  todo translate-->
+<template>
+  <!--  todo translate-->
   <section id="install" class="body-1">
     <h1 class="display-4 mb-5">نصب</h1>
     <p>
@@ -104,4 +105,3 @@ export default {
   },
 };
 </script>
-

@@ -1,4 +1,5 @@
-<template><!--  todo translate-->
+<template>
+  <!--  todo translate-->
   <section>
     <h1 class="display-4">دوجهته (rtl/ltr)</h1>
     <p class="mt-5 title">
@@ -51,4 +52,3 @@ export default {
   },
 };
 </script>
-

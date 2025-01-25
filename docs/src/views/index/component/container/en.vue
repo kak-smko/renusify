@@ -6,8 +6,8 @@
       </h1>
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         <r-btn readonly size="small">r-container</r-btn>
-        provides the ability to
-        center and horizontally pad your site’s contents.
+        provides the ability to center and horizontally pad your site’s
+        contents.
       </p>
     </div>
     <table-props :items="items"></table-props>

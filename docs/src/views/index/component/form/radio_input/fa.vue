@@ -6,8 +6,7 @@
       </h1>
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         <r-btn readonly size="small"> r-rating-input</r-btn>
-        به کاربر اجازه
-        می‌دهند تا تنها تعداد محدودی انتخاب را انجام دهند
+        به کاربر اجازه می‌دهند تا تنها تعداد محدودی انتخاب را انجام دهند
       </p>
     </div>
     <table-props :items="props"></table-props>

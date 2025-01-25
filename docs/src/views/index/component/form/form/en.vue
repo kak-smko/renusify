@@ -6,13 +6,7 @@
       </h1>
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         Form controls automatically receive some global styling with
-        <r-btn
-            readonly
-            size="small"
-        >
-          r-form
-        </r-btn
-        >
+        <r-btn readonly size="small"> r-form</r-btn>
       </p>
     </div>
 

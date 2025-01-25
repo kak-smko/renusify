@@ -7,8 +7,7 @@
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         you can add dynamic progressive images with
         <r-btn readonly size="small"> r-img</r-btn>
-        provide a better user
-        experience.
+        provide a better user experience.
       </p>
     </div>
     <table-props :items="items"></table-props>

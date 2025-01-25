@@ -7,8 +7,7 @@
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         از این
         <r-btn readonly size="small"> r-address-input</r-btn>
-        برای به
-        دست آوردن آدرس استفاده می‌شود.
+        برای به دست آوردن آدرس استفاده می‌شود.
       </p>
     </div>
     <table-props :items="props"></table-props>
@@ -179,20 +178,19 @@ export default {
           prop: "baseUrl",
           type: "String",
           default: "https://codenus.com/api/apps/address",
-          description:
-              "آدرس دریافت اطلاعات مکان ها",
-        }, {
+          description: "آدرس دریافت اطلاعات مکان ها",
+        },
+        {
           prop: "required",
           type: "Boolean",
           default: "null",
-          description:
-              "وروذی را اجباری می کند",
-        }, {
+          description: "وروذی را اجباری می کند",
+        },
+        {
           prop: "stepShow",
           type: "Boolean",
           default: "null",
-          description:
-              "نمایش ورودی ها قدم به قدم",
+          description: "نمایش ورودی ها قدم به قدم",
         },
         {
           prop: "allowCountries",

@@ -173,7 +173,8 @@ export default {
           type: "Boolean",
           default: "true",
           description: "Responsive",
-        }, {
+        },
+        {
           prop: "card",
           type: "Boolean",
           default: "false",
@@ -215,8 +216,7 @@ export default {
           prop: "itemId",
           type: "String",
           default: "_id",
-          description:
-              "Id field of item",
+          description: "Id field of item",
         },
         {
           prop: "headers",

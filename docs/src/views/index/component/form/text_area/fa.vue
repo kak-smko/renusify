@@ -6,8 +6,7 @@
       </h1>
       <p class="font-weight-light ps-4 pb-1 py-4 br-lg">
         <r-btn readonly size="small"> r-text-area</r-btn>
-        کنترل ورودی متن چند
-        خطی است .
+        کنترل ورودی متن چند خطی است .
       </p>
     </div>
 
