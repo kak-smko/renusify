@@ -43,6 +43,7 @@
                   <slot :key="key" :item="item" :open="open" :opened="opened" :show="show" :th="th"
                         name="row">
                     <td v-for="(value,k) in th" :key="`${key}- ${k}`">
+                      <slot :item="item" :value="value" :name="'td-'+value.value">
                       <div>
                         <r-btn v-if="show(k)"
                                icon text @click.prevent="open(key)">
@@ -51,6 +52,7 @@
                         </r-btn>
                         {{ item[value.value] }}
                       </div>
+                      </slot>
                     </td>
                   </slot>
                 </tr>
@@ -72,6 +74,7 @@
   </div>
   <r-modal v-if="editable" v-model="showModal">
     <div
+        :key="key"
         v-sortable="{
             items: cols,
             end: store_db,
@@ -120,6 +123,7 @@ export default {
   },
   data() {
     return {
+      key: 0,
       showTable: true,
       opened: null,
       sortKey: null,
@@ -130,14 +134,6 @@ export default {
       hidden_col: {},
       hidden: {},
       cols: []
-    }
-  },
-  created() {
-    if (!this.$r.icons.setting) {
-      this.$r.icons.setting = '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94c0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6s3.6 1.62 3.6 3.6s-1.62 3.6-3.6 3.6z"/></svg>'
-    }
-    if (!this.$r.icons.drag) {
-      this.$r.icons.drag = '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M7 19v-2h2v2H7m4 0v-2h2v2h-2m4 0v-2h2v2h-2m-8-4v-2h2v2H7m4 0v-2h2v2h-2m4 0v-2h2v2h-2m-8-4V9h2v2H7m4 0V9h2v2h-2m4 0V9h2v2h-2M7 7V5h2v2H7m4 0V5h2v2h-2m4 0V5h2v2h-2Z"/></svg>'
     }
   },
   watch: {
@@ -225,6 +221,7 @@ export default {
     },
     store_db(data) {
       this.$storage.set('table_' + this.hash_key, data)
+      this.key++
       this.check_hidden()
       if (this.responsive) {
         this.build()

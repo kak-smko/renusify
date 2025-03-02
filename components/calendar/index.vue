@@ -73,17 +73,20 @@
     <r-modal :model-value="tab!=='day'" @update:model-value="tab='day'">
       <div class="py-5">
         <r-calendar-year-tab v-if="tab==='year'"
-                  :model-value='currentPeriod.year'
-                  @update:model-value="(tab='month',setYear($event))"
-                  :timezoneOffset="lang_zone_offset-timezoneOffset"
-                  :locale="locale"
-                  :month="currentPeriod.month"></r-calendar-year-tab>
+                             :model-value='currentPeriod.year'
+                             @update:model-value="(tab='month',incrementYear($event))"
+                             :timezoneOffset="lang_zone_offset-timezoneOffset"
+                             :locale="locale"
+                             :month="currentPeriod.month"
+        ></r-calendar-year-tab>
         <r-calendar-month-tab v-if="tab==='month'"
-                   :model-value='currentPeriod.month'
-                   @update:model-value="(tab='day',setMonth($event))"
-                   :timezoneOffset="lang_zone_offset-timezoneOffset"
-                   :locale="locale"
-                   :year="currentPeriod.year"></r-calendar-month-tab>
+                              :model-value='currentPeriod.month'
+                              @update:model-value="(tab='day',setMonth($event))"
+                              :timezoneOffset="lang_zone_offset-timezoneOffset"
+                              :locale="locale"
+                              :month="currentPeriod.month"
+                              :year="currentPeriod.year"
+        ></r-calendar-month-tab>
       </div>
     </r-modal>
   </div>
@@ -114,8 +117,8 @@ export default {
       tab: 'day',
       direction: undefined,
       currentPeriod: {
-        month: this.month || (new Date()).getMonth(),
-        year: this.year || (new Date()).getFullYear()
+        month: (new Date()).getMonth() + 1,
+        year: (new Date()).getFullYear()
       }
     }
   },
@@ -127,6 +130,10 @@ export default {
       },
       'me': {
         month: 'numeric',
+        numberingSystem: 'latn'
+      },
+      'ye': {
+        year: 'numeric',
         numberingSystem: 'latn'
       }
     })
@@ -148,20 +155,16 @@ export default {
     today() {
       return new Date()
     },
-    timezoneOffset() {
-      return (new Date(this.currentPeriod.year, this.currentPeriod.month, 10)).getTimezoneOffset()
-    },
     weekDays() {
       const first = parseInt(this.firstDayOfWeek, 10)
 
-      return this.createRange(7).map(i => this.$d(new Date(2020, 2, first + i + 2, 0, this.timezoneOffset, 0), 'weekday', this.locale)) // 2017-02-02 is Sunday
+      return this.createRange(7).map(i => this.$d(new Date(2025, 2, first + i + 23, 0, this.lang_zone_offset - this.timezoneOffset, 0), 'narrow', this.locale)) // 2017-02-02 is Sunday
     },
     rangeLocalDate() {
       const {year, month} = this.currentPeriod
       let firstDay = 1
       let firstmonth = month
       let firstyear = year
-
       let first = new Date(firstyear, firstmonth, firstDay, 0, this.lang_zone_offset - this.timezoneOffset, 0)
       let lc = parseInt(this.$d(first, 'de', this.locale))
       first = new Date(firstyear, firstmonth, firstDay - lc + 1, 0, this.lang_zone_offset - this.timezoneOffset, 0)
@@ -178,7 +181,7 @@ export default {
     weekDaysBeforeFirstDayOfTheMonth() {
       const {start} = this.rangeLocalDate
       const weekDay = start.getDay()
-      return (weekDay - this.firstDayOfWeek + 7) % 7
+      return (weekDay - parseInt(this.firstDayOfWeek) + 7) % 7
     },
     currentPeriodDates() {
       const {start, end} = this.rangeLocalDate
@@ -235,15 +238,11 @@ export default {
 
       return children
     },
+    timezoneOffset() {
+      return (new Date(this.currentPeriod.year, this.currentPeriod.month, 10)).getTimezoneOffset()
+    },
     lang_zone_offset() {
-      let offset = this.$helper.ifHas(this.$dateTime.langs, 0, this.locale, 'time_zone_offset')
-      let dst = this.$helper.ifHas(this.$dateTime.langs, false, this.locale, 'daylight_saving_time')
-
-      const m = this.$d(new Date(this.currentPeriod.year, this.currentPeriod.month, 10), 'me', this.locale)
-      if (parseInt(m) < 7 && dst) {
-        offset += 60
-      }
-      return offset * -1
+      return this.$helper.ifHas(this.$dateTime.langs, 0, this.locale, 'time_zone_offset') * -1
     }
   },
   watch: {
@@ -282,13 +281,6 @@ export default {
     },
     setMonth(increment) {
       const incrementDate = new Date(this.currentPeriod.year, increment)
-      this.currentPeriod = {
-        month: incrementDate.getMonth(),
-        year: incrementDate.getFullYear()
-      }
-    },
-    setYear(increment) {
-      const incrementDate = new Date(increment, this.currentPeriod.month)
       this.currentPeriod = {
         month: incrementDate.getMonth(),
         year: incrementDate.getFullYear()

@@ -1,24 +1,24 @@
 [
   {
-    "name": "introduction",
+    "name": "معرفی",
     "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><path fill=\"currentColor\" d=\"M21 4H3a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2M3 19V6h8v13H3m18 0h-8V6h8v13m-7-9.5h6V11h-6V9.5m0 2.5h6v1.5h-6V12m0 2.5h6V16h-6v-1.5Z\"/></svg>",
     "childs": [
       {
-        "name": "why renusify?",
+        "name": "چرا رنوسیفای؟",
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "introduction-whyRenusify"
           }
         }
       },
       {
-        "name": "support",
+        "name": "پشتیبانی",
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "introduction-support"
           }
         }
@@ -26,25 +26,25 @@
     ]
   },
   {
-    "name": "starting",
+    "name": "شروع کار",
     "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><path fill=\"currentColor\" d=\"M12 12q-.425 0-.713-.288T11 11V3q0-.425.288-.713T12 2q.425 0 .713.288T13 3v8q0 .425-.288.713T12 12Zm0 9q-1.875 0-3.513-.713t-2.85-1.924q-1.212-1.213-1.924-2.85T3 12q0-1.525.5-2.963T4.95 6.4q.275-.35.7-.338t.75.338q.275.275.25.675t-.275.75Q5.7 8.725 5.35 9.8T5 12q0 2.925 2.038 4.963T12 19q2.925 0 4.963-2.038T19 12q0-1.15-.338-2.238T17.6 7.775q-.25-.325-.275-.713t.25-.662q.3-.3.725-.313t.7.313q.975 1.2 1.488 2.625T21 12q0 1.875-.713 3.513t-1.924 2.85q-1.213 1.212-2.85 1.925T12 21Z\"/></svg>",
     "childs": [
       {
-        "name": "install",
+        "name": "نصب",
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "getting_started-installation"
           }
         }
       },
       {
-        "name": "browsers",
+        "name": "مرورگرها",
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "getting_started-browserSupport"
           }
         }
@@ -60,7 +60,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "features-direction"
           }
         }
@@ -70,7 +70,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "features-breakpoint"
           }
         }
@@ -80,7 +80,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "features-internationalization"
           }
         }
@@ -90,8 +90,24 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "features-theme"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "توابع",
+    "icon": "<svg  xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" role=\"img\" aria-hidden=\"true\"><path d=\"M15.6,5.29C14.5,5.19 13.53,6 13.43,7.11L13.18,10H16V12H13L12.56,17.07C12.37,19.27 10.43,20.9 8.23,20.7C6.92,20.59 5.82,19.86 5.17,18.83L6.67,17.33C6.91,18.07 7.57,18.64 8.4,18.71C9.5,18.81 10.47,18 10.57,16.89L11,12H8V10H11.17L11.44,6.93C11.63,4.73 13.57,3.1 15.77,3.3C17.08,3.41 18.18,4.14 18.83,5.17L17.33,6.67C17.09,5.93 16.43,5.36 15.6,5.29Z\"></path></svg>",
+    "childs": [
+      {
+        "name": "مرتب ساز",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "fa",
+            "path": "directive-sortable"
           }
         }
       }
@@ -106,7 +122,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-app"
           }
         }
@@ -116,7 +132,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-avatar"
           }
         }
@@ -129,7 +145,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-bar-bottomNavigation"
               }
             }
@@ -139,7 +155,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-bar-bottomNavigationCircle"
               }
             }
@@ -149,7 +165,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-bar-toolbar"
               }
             }
@@ -161,7 +177,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-breadcrumbs"
           }
         }
@@ -174,7 +190,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-button-btn"
               }
             }
@@ -184,7 +200,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-button-btn_confirm"
               }
             }
@@ -194,7 +210,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-button-btn_group"
               }
             }
@@ -206,7 +222,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-calendar"
           }
         }
@@ -216,7 +232,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-card"
           }
         }
@@ -226,7 +242,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-chart"
           }
         }
@@ -236,7 +252,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-chart-worldMap"
           }
         }
@@ -246,7 +262,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-chat"
           }
         }
@@ -256,7 +272,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-chip"
           }
         }
@@ -266,7 +282,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-codeEditor"
           }
         }
@@ -276,7 +292,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-confirm"
           }
         }
@@ -289,7 +305,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-container"
               }
             }
@@ -299,7 +315,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-container-row"
               }
             }
@@ -309,7 +325,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-container-col"
               }
             }
@@ -319,7 +335,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-container-divider"
               }
             }
@@ -329,7 +345,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-container-spacer"
               }
             }
@@ -341,7 +357,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-content"
           }
         }
@@ -351,7 +367,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-count_down"
           }
         }
@@ -361,7 +377,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-cropper"
           }
         }
@@ -371,7 +387,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-float"
           }
         }
@@ -384,7 +400,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-form"
               }
             }
@@ -394,7 +410,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-address_input"
               }
             }
@@ -404,7 +420,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-cam_input"
               }
             }
@@ -414,7 +430,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-checkbox_input"
               }
             }
@@ -424,7 +440,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-check_input"
               }
             }
@@ -434,7 +450,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-color_input"
               }
             }
@@ -444,7 +460,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-date_input"
               }
             }
@@ -454,7 +470,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-file_input"
               }
             }
@@ -464,7 +480,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-group_input"
               }
             }
@@ -474,7 +490,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-input"
               }
             }
@@ -484,7 +500,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-json_input"
               }
             }
@@ -494,7 +510,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-mask_input"
               }
             }
@@ -504,7 +520,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-number_input"
               }
             }
@@ -514,7 +530,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-password_input"
               }
             }
@@ -524,7 +540,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-radio_input"
               }
             }
@@ -534,7 +550,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-range_input"
               }
             }
@@ -544,7 +560,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-rating_input"
               }
             }
@@ -554,7 +570,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-select_input"
               }
             }
@@ -564,7 +580,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-switch_input"
               }
             }
@@ -574,7 +590,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-tel_input"
               }
             }
@@ -584,7 +600,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-text_area"
               }
             }
@@ -594,7 +610,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-text_editor"
               }
             }
@@ -604,7 +620,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-text_editor-text_editor_preview"
               }
             }
@@ -614,7 +630,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-text_input"
               }
             }
@@ -624,7 +640,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-time_input"
               }
             }
@@ -634,7 +650,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-time_range_input"
               }
             }
@@ -644,7 +660,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-unique_input"
               }
             }
@@ -654,7 +670,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-form-unit_input"
               }
             }
@@ -666,7 +682,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-form_creator"
           }
         }
@@ -676,7 +692,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-icon"
           }
         }
@@ -686,7 +702,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-img"
           }
         }
@@ -699,7 +715,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-infinite-infinite_box"
               }
             }
@@ -709,7 +725,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-infinite-infinite_div"
               }
             }
@@ -719,7 +735,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-infinite-infinite_page"
               }
             }
@@ -731,7 +747,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-list"
           }
         }
@@ -744,7 +760,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-map"
               }
             }
@@ -754,7 +770,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-map-map_route"
               }
             }
@@ -764,7 +780,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-map-map_select"
               }
             }
@@ -776,7 +792,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-menu"
           }
         }
@@ -786,7 +802,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-message"
           }
         }
@@ -796,7 +812,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-meta"
           }
         }
@@ -806,7 +822,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-modal"
           }
         }
@@ -816,7 +832,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-notify"
           }
         }
@@ -829,7 +845,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-progress-progress_circle"
               }
             }
@@ -839,7 +855,7 @@
             "to": {
               "name": "pages",
               "params": {
-                "lang": "en",
+                "lang": "fa",
                 "path": "component-progress-progress_line"
               }
             }
@@ -851,7 +867,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-search_box"
           }
         }
@@ -861,7 +877,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-slider"
           }
         }
@@ -871,7 +887,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-swiper"
           }
         }
@@ -881,7 +897,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-table"
           }
         }
@@ -891,7 +907,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-table-table_crud"
           }
         }
@@ -901,7 +917,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-tabs"
           }
         }
@@ -911,7 +927,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-timeline"
           }
         }
@@ -921,7 +937,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-time_ago"
           }
         }
@@ -931,7 +947,7 @@
         "to": {
           "name": "pages",
           "params": {
-            "lang": "en",
+            "lang": "fa",
             "path": "component-tour"
           }
         }

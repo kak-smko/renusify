@@ -24,7 +24,8 @@
              class="mb-5">
           <template v-if="item['formInput']!==false">
 
-            <r-json-input v-if="item['type']==='file-uploader'" v-model="copyItem['d'][key]" :label="$t(key,'renusify')"
+            <r-json-input v-if="item['type']==='file-uploader'" v-model="copyItem['d'][key]"
+                          :label="$t(key,'renusify')"
                           baseArray></r-json-input>
             <component
                 :is="item['type']"
@@ -60,37 +61,44 @@
                    @a-search="(a_search=$event),(searching())"></manage-header>
     <div v-if="card" class="d-flex overflow-x-auto">
       <div class="d-flex">
-        <r-card v-for="(item,i) in table.data" :key="i" :class="{'br-lg':!$r.inputs.tile}" class="pa-3 me-3"
+        <r-card v-for="(item,i) in table.data" :key="i" :class="{'br-lg':!$r.inputs.tile}"
+                class="pa-3 me-3"
                 style="width: 300px">
-          <div v-for="(h,j) in headerTable" :key="i+'-'+j" class="d-flex text-no-wrap overflow-x-auto">
-            <slot :data="item" :header="h" name="card">
-              <div v-if="h['option']['type']==='r-date-input' && item[h['value']]!==undefined" class="py-2">
-                {{ h['text'] }}: {{ $d(new Date(item[h['value']]), h['option']['format'] || 'short') }}
-              </div>
-              <div
-                  v-else-if="h['option']['type']==='r-time-ago' && item[h['value']]!==undefined" class="py-2">
-                {{ h['text'] }}:
-                <r-time-ago :time="item[h['value']]"></r-time-ago>
-              </div>
-              <div v-else-if="h['option']['type']==='r-switch-input'" class="d-flex py-2">
-                {{ h['text'] }}:
-                <r-switch-input
-                    :modelValue="item[h['value']]"
-                    :readonly="h['option']['formInput']===false"
-                    class="mt-0"
-                    @update:modelValue="h['option']['formInput']!==false?editItem(item,true,h['value']):''"
-                ></r-switch-input>
-              </div>
-              <div v-else-if="h['option']['type'] === 'r-number-input'" class="py-2">
-                {{ h['text'] }}: {{ $n(item[h["value"]]) }}
-              </div>
-              <div v-else-if="h['option']['type']!=='action'" class="py-2">
-                {{ h['text'] }}: {{
+          <div v-for="(h,j) in headerTable" :key="i+'-'+j"
+               class="d-flex text-no-wrap overflow-x-auto">
+            <slot :editItem="editItem" :item="item" :value="h" :name="'td-'+h.value">
+              <slot :editItem="editItem" :item="item" :value="h" name="card">
+                <div v-if="h['option']['type']==='r-date-input' && item[h['value']]!==undefined"
+                     class="py-2">
+                  {{ h['text'] }}:
+                  {{ $d(new Date(item[h['value']]), h['option']['format'] || 'short') }}
+                </div>
+                <div
+                    v-else-if="h['option']['type']==='r-time-ago' && item[h['value']]!==undefined"
+                    class="py-2">
+                  {{ h['text'] }}:
+                  <r-time-ago :time="item[h['value']]"></r-time-ago>
+                </div>
+                <div v-else-if="h['option']['type']==='r-switch-input'" class="d-flex py-2">
+                  {{ h['text'] }}:
+                  <r-switch-input
+                      :modelValue="item[h['value']]"
+                      :readonly="h['option']['formInput']===false"
+                      class="mt-0"
+                      @update:modelValue="h['option']['formInput']!==false?editItem(item,true,h['value']):''"
+                  ></r-switch-input>
+                </div>
+                <div v-else-if="h['option']['type'] === 'r-number-input'" class="py-2">
+                  {{ h['text'] }}: {{ $n(item[h['value']]) }}
+                </div>
+                <div v-else-if="h['option']['type']!=='action'" class="py-2">
+                  {{ h['text'] }}: {{
                   h['value'] in cast ?
-                      $helper.ifHas(item, '', h['value'], cast[h['value']])
-                      : item[h['value']]
-                }}
-              </div>
+                  $helper.ifHas(item, '', h['value'], cast[h['value']])
+                  : item[h['value']]
+                  }}
+                </div>
+              </slot>
             </slot>
             <div v-if="h['option']['type']==='action'" class="w-full text-end">
               <r-divider class="mt-3"></r-divider>
@@ -102,7 +110,8 @@
                      icon text @click.prevent="deleteItem(item)">
                 <r-icon v-html="$r.icons.delete"></r-icon>
               </r-btn>
-              <r-btn v-for="(val,index) in actions" :key="index" :class="`color-${val.color}-text`" class="mx-0" icon
+              <r-btn v-for="(val,index) in actions" :key="index" :class="`color-${val.color}-text`"
+                     class="mx-0" icon
                      text @click.prevent="$emit(val.name,item)">
                 <r-icon exact v-html="val.icon"></r-icon>
               </r-btn>
@@ -111,7 +120,8 @@
         </r-card>
       </div>
     </div>
-    <r-table v-else :headers="headerTable" :items="table.data" :key-item="itemId" :responsive="responsive"
+    <r-table v-else :headers="headerTable" :items="table.data" :key-item="itemId"
+             :responsive="responsive"
              transition="table-row">
       <template v-slot:header="{header}">
         <th v-for="(item,key) in header"
@@ -157,33 +167,37 @@
                    icon text @click.prevent="props.open(props.key)">
               <r-icon v-html="props.opened!==props.key?$r.icons.plus:$r.icons.minus"></r-icon>
             </r-btn>
-            <slot :editItem="editItem" :item="props.item" :value="value" name="cell">
-              <div
-                  v-if="value['option']['type']==='r-date-input' && props.item[value['value']]!==undefined">
-                {{ $d(new Date(props.item[value['value']]), value['option']['format'] || 'short') }}
-              </div>
-              <div
-                  v-else-if="value['option']['type']==='r-time-ago' && props.item[value['value']]!==undefined">
-                <r-time-ago :time="props.item[value['value']]"></r-time-ago>
-              </div>
-              <div v-else-if="value['option']['type']==='r-switch-input'">
-                <r-switch-input
-                    :modelValue="props.item[value['value']]"
-                    :readonly="value['option']['formInput']===false"
-                    class="mt-0"
-                    @update:modelValue="value['option']['formInput']!==false?editItem(props.item,true,value['value']):''"
-                ></r-switch-input>
-              </div>
-              <div v-else-if="value['option']['type'] === 'r-number-input'">
-                {{ $n(props.item[value["value"]]) }}
-              </div>
-              <div v-else-if="value['option']['type']!=='action'">
-                {{
+            <slot :editItem="editItem" :item="props.item" :value="value" :name="'td-'+value.value">
+              <slot :editItem="editItem" :item="props.item" :value="value" name="cell">
+                <div
+                    v-if="value['option']['type']==='r-date-input' && props.item[value['value']]!==undefined">
+                  {{
+                  $d(new Date(props.item[value['value']]), value['option']['format'] || 'short')
+                  }}
+                </div>
+                <div
+                    v-else-if="value['option']['type']==='r-time-ago' && props.item[value['value']]!==undefined">
+                  <r-time-ago :time="props.item[value['value']]"></r-time-ago>
+                </div>
+                <div v-else-if="value['option']['type']==='r-switch-input'">
+                  <r-switch-input
+                      :modelValue="props.item[value['value']]"
+                      :readonly="value['option']['formInput']===false"
+                      class="mt-0"
+                      @update:modelValue="value['option']['formInput']!==false?editItem(props.item,true,value['value']):''"
+                  ></r-switch-input>
+                </div>
+                <div v-else-if="value['option']['type'] === 'r-number-input'">
+                  {{ $n(props.item[value['value']]) }}
+                </div>
+                <div v-else-if="value['option']['type']!=='action'">
+                  {{
                   value['value'] in cast ?
-                      $helper.ifHas(props.item, '', value['value'], cast[value['value']])
-                      : props.item[value['value']]
-                }}
-              </div>
+                  $helper.ifHas(props.item, '', value['value'], cast[value['value']])
+                  : props.item[value['value']]
+                  }}
+                </div>
+              </slot>
             </slot>
             <div v-if="value['option']['type']==='action'">
               <r-btn v-if="!disableUpdate" class="mx-0 color-success-text"
@@ -194,7 +208,8 @@
                      icon text @click.prevent="deleteItem(props.item)">
                 <r-icon v-html="$r.icons.delete"></r-icon>
               </r-btn>
-              <r-btn v-for="(val,index) in actions" :key="index" :class="`color-${val.color}-text`" class="mx-0" icon
+              <r-btn v-for="(val,index) in actions" :key="index" :class="`color-${val.color}-text`"
+                     class="mx-0" icon
                      text @click.prevent="$emit(val.name,props.item)">
                 <r-icon exact v-html="val.icon"></r-icon>
               </r-btn>
@@ -204,7 +219,8 @@
       </template>
 
     </r-table>
-    <manage-footer v-model:page="page" v-model:per-page="itemsPerPage" :total="table.total"></manage-footer>
+    <manage-footer v-model:page="page" v-model:per-page="itemsPerPage"
+                   :total="table.total"></manage-footer>
     <r-confirm
         v-model="showConfirm"
         hard
@@ -221,9 +237,9 @@ export default {
   name: 'r-table-crud',
   components: {
     ManageHeader: defineAsyncComponent(() =>
-        import("./header.vue")
+        import('./header.vue')
     ), ManageFooter: defineAsyncComponent(() =>
-        import("./footer.vue")
+        import('./footer.vue')
     )
   },
   props: {
@@ -260,7 +276,7 @@ export default {
     disableDelete: Boolean,
     disableUpdate: Boolean,
     mcud: String,
-    itemId: {type: String, default: "_id"},
+    itemId: {type: String, default: '_id'},
     headers: Object
   },
   emits: ['actions'],
@@ -532,9 +548,9 @@ export default {
         let all = []
         if (this.mcud) {
           all.push({
-            option: {type: "mcud", sortable: false, formInput: false, priority: 10},
-            text: "action",
-            value: "action"
+            option: {type: 'mcud', sortable: false, formInput: false, priority: 10},
+            text: 'action',
+            value: 'action'
           })
         }
         all = all.concat(data.headers)

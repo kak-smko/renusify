@@ -43,9 +43,7 @@ function mousestart(e, wrapper) {
     wrapper.el.insertBefore(holder, targetEl);
     wrapper.holder = holder
 
-    const y = event.y || event.pageY
-
-    targetEl.style.top = y - targetEl.clientHeight / 2 + "px";
+    targetEl.style.top = targetEl.offsetTop - targetEl.clientHeight / 2 + "px";
     targetEl.style.width = targetEl.clientWidth + "px";
     targetEl.classList.add("on-drag");
 

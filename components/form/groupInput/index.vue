@@ -4,6 +4,7 @@
            hide>
     <div class="w-full">
       <span v-if="label" class="group-input-label">{{ label }}</span>
+      <div :key="key" v-sortable="{grab:'.grab-btn-group-input',end:end}">
       <div class="group-holder" v-for="(item,i) in modelValue" :key="i">
         <div class="group-slot">
           <slot :item="item" :index="i" :disableDel="disDel">
@@ -17,17 +18,14 @@
         </slot>
       </div>
         <div class="group-action">
-          <r-btn icon text>
-            <r-icon v-html="$r.icons.chevron_up" :class="{'icon-disabled':i===0}" @click.prevent="up(i)"></r-icon>
-          </r-btn>
-          <r-btn icon text>
-            <r-icon v-html="$r.icons.chevron_down" :class="{'icon-disabled':i===modelValue.length-1}"
-                    @click.prevent="down(i)"></r-icon>
+          <r-btn icon text class="grab-btn-group-input">
+            <r-icon v-html="$r.icons.drag"></r-icon>
           </r-btn>
           <r-btn v-if="!disableItems.includes(itemKey?item[itemKey]:'')" icon text @click.prevent="del(i)">
             <r-icon v-html="$r.icons.delete" class="color-error-text"></r-icon>
           </r-btn>
         </div>
+      </div>
       </div>
       <div class="mt-5" :class="addBtnClass">
         <transition name="scale">
@@ -55,6 +53,7 @@ export default {
   emits:['update:modelValue','add','delete'],
   data() {
     return {
+      key: 0,
       disabledDel: {}
     }
   },
@@ -71,6 +70,14 @@ export default {
     }
   },
   methods: {
+    end(e) {
+      let a = []
+      for (let i = 0; i < e.length; i++) {
+        a.push(this.modelValue[parseInt(e[i])])
+      }
+      this.$emit('update:modelValue', a)
+      this.key++
+    },
     t(k) {
       if (this.translate) {
         return this.$t(k)
@@ -104,32 +111,6 @@ export default {
       this.$emit('delete', i)
       this.$emit('update:modelValue', a)
     },
-    up(i) {
-      if (i === 0) {
-        return
-      }
-      let a = this.modelValue || []
-      a = this.array_move(a, i, i - 1)
-      this.$emit('update:modelValue', a)
-    },
-    down(i) {
-      if (i === this.modelValue.length - 1) {
-        return
-      }
-      let a = this.modelValue || []
-      a = this.array_move(a, i, i + 1)
-      this.$emit('update:modelValue', a)
-    },
-    array_move(arr, old_index, new_index) {
-      if (new_index >= arr.length) {
-        let k = new_index - arr.length + 1;
-        while (k--) {
-          arr.push(undefined);
-        }
-      }
-      arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-      return arr;
-    }
   }
 }
 </script>
