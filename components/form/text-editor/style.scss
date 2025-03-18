@@ -51,6 +51,12 @@
       min-height: 20px;
       border: 1px solid rgba(150, 150, 150, 0.6);
     }
+
+    .r-highlight div {
+      min-width: unset;
+      min-height: unset;
+      border: unset;
+    }
   }
 
   .img-holder {

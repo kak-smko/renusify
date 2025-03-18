@@ -68,7 +68,6 @@ export default {
                     'en': {
                         first_day: 0,
                         time_zone_offset: -480,/*Standard timezone offset minutes -07:00*/
-                        daylight_saving_time: true,
                         localizeName: 'en-US',
                         timeZone: 'America/Los_Angeles',
                         rtl: false
@@ -76,7 +75,6 @@ export default {
                     'fa': {
                         first_day: 6,
                         time_zone_offset: 210,//Standard timezone offset minutes +03:30
-                        daylight_saving_time: false,
                         localizeName: 'fa-IR',
                         timeZone: 'Asia/Tehran',
                         calendar: 'persian',

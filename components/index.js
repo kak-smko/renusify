@@ -79,6 +79,7 @@ export * as rTimeAgo from './timeAgo/index.js'
 export * as rTimeline from './timeline/index.js'
 export * as rTour from './tour/index.js'
 export * as rTree from './tree/index.js'
+export * as rHighlight from './highlight/index.js'
 
 export const _register = (app, components) => {
     let d = {}

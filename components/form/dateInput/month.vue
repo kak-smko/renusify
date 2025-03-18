@@ -1,9 +1,9 @@
 <template>
-  <div class="d-flex flex-wrap">
+  <div class="d-flex flex-wrap h-space-around">
     <r-btn v-for="i in ls"
            :key="i"
            outlined
-           class="w-30 ma-2"
+           class="w-25 ma-1"
            :class="{'color-one':i===modelValue}"
            @click.prevent="emit(i)">
       {{

@@ -68,7 +68,7 @@
             <r-icon v-html="$r.icons.delete"></r-icon>
           </r-btn>
           <r-img
-              :src="'/'+img"
+              :src="img"
               alt="img"
               height="100"></r-img>
         </div>
@@ -117,14 +117,13 @@
                         :headers="headers"
                         :label="$t('image','renusify')"
                         :size="1"
+                        :rules="['required']"
                         :upload-link="uploadLink"
                         accept="image/*"></r-file-input>
           <r-text-input v-model="img_alt"
                         :label="$t('img_alt','renusify')"
                         :rules="['required']"></r-text-input>
           <r-number-input v-model="img_width" :label="$t('width','renusify')"
-                          :rules="['required']"></r-number-input>
-          <r-number-input v-model="img_height" :label="$t('height','renusify')"
                           :rules="['required']"></r-number-input>
           <r-row class="h-end">
             <r-col class="col-auto">
@@ -153,6 +152,7 @@
                         :headers="headers"
                         :label="$t('video','renusify')"
                         :size="1"
+                        :rules="['required']"
                         :upload-link="uploadLink"
                         accept="video/mp4,video/webm"></r-file-input>
           <r-number-input v-model="img_width" :label="$t('width','renusify')"
@@ -177,16 +177,46 @@
         </r-container>
       </r-form>
     </r-modal>
+    <r-modal v-model="showPre"
+             :closable="false"
+             :closebtn="false">
+      <r-form v-model="valid2">
+        <r-container>
+          <r-select-input v-model="lang" :items="langs"
+                          :label="$t('lang','renusify')"
+                          :rules="['required']"
+                          just-value></r-select-input>
+          <r-text-area v-model="code"
+                       :label="$t('code','renusify')"
+                       :rules="['required']"
+                       ltr></r-text-area>
+          <div class="text-end my-3">
+            <r-btn class="color-error-text"
+                   outlined
+                   @click.prevent="showPre=false">{{ $t('cancel', 'renusify') }}
+            </r-btn>
+            <r-btn :disabled="!valid2"
+                   class="color-success-text ms-2"
+                   outlined
+                   @click.prevent="handlePreForm()">{{ $t('send', 'renusify') }}
+            </r-btn>
+          </div>
+        </r-container>
+      </r-form>
+    </r-modal>
 
   </r-container>
 </template>
 
 <script>
 import './style.scss'
+import '../../highlight/style.scss'
+import mixin from "../../highlight/mixin";
 
 export default {
   name: 'r-text-editor',
   inheritAttrs: false,
+  mixins: [mixin],
   props: {
     uploadLink: {type: String, default: '/storage'},
     modelValue: {
@@ -221,12 +251,15 @@ export default {
       preSelected: null,
       currentPath: [],
       selectElm: null,
+      code: '',
+      lang: null,
+      showPre: false,
+      langs: ['asm', 'bash', 'bf', 'c', 'css', 'csv', 'diff', 'docker', 'git', 'go', 'html', 'http', 'ini', 'java', 'js', 'jsdoc', 'json', 'log', 'lua', 'make', 'pl', 'plain', 'py', 'regex', 'rs', 'sql', 'todo', 'toml', 'ts', 'uri', 'xml', 'yaml'],
       items_undo: {
         'undo': '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M12.5 8c-2.65 0-5.05 1-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88c3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8Z"/></svg>',
         'redo': '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M18.4 10.6C16.55 9 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16a8.002 8.002 0 0 1 7.6-5.5c1.95 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6Z"/></svg>',
       },
       items_handle: {
-        'DIV': '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M13 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4h-2v6H9V4h4m0 6a2 2 0 0 0 2-2a2 2 0 0 0-2-2h-2v4h2Z"/></svg>',
         'insertDIV': '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M4 6v13h16V6H4m14 11H6V8h12v9Z"/></svg>',
         'insertLINE': '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M9 7h2v8h4v2H9V7m3-5a10 10 0 0 1 10 10a10 10 0 0 1-10 10A10 10 0 0 1 2 12A10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8a8 8 0 0 0 8 8a8 8 0 0 0 8-8a8 8 0 0 0-8-8Z"/></svg>',
         'BLOCKQUOTE': '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M14 17h3l2-4V7h-6v6h3M6 17h3l2-4V7H5v6h3l-2 4Z"/></svg>',
@@ -320,7 +353,7 @@ export default {
     document.execCommand('enableInlineTableEditing', false, true);
     document.execCommand('enableAbsolutePositionEditor', false, true) */
 
-    this.format('defaultParagraphSeparator', 'div')
+    this.format('defaultParagraphSeparator', '\n')
     this.element.addEventListener('paste', function (e) {
       e.preventDefault()
       const text = (e.originalEvent || e).clipboardData.getData('text/plain')
@@ -421,7 +454,7 @@ export default {
       let sel = this.getSelection()
       sel.removeAllRanges()
       sel.addRange(this.preSelected)
-      let url = '<img src="/' + this.image[0] + '?w=' + this.img_width + '&h=' + this.img_height + '" alt="' + this.img_alt + '" width="' + this.img_width + '" height="' + this.img_height + '"/>'
+      let url = '<img src="' + this.image[0] + '?w=' + this.img_width + '" alt="' + this.img_alt + '" width="' + this.img_width + '" />'
       this.files.push(this.image[0])
       document.execCommand('insertHTML', true, url)
       this.showImg = false
@@ -434,10 +467,22 @@ export default {
       let sel = this.getSelection()
       sel.removeAllRanges()
       sel.addRange(this.preSelected)
-      let url = '<video controls="1" src="/' + this.video[0] + '" width="' + this.img_width + '" height="' + this.img_height + '"></video>'
+      let url = '<video controls="1" src="' + this.video[0] + '" width="' + this.img_width + '" height="' + this.img_height + '"></video>'
       this.files.push(this.video[0])
       document.execCommand('insertHTML', true, url)
       this.showVideo = false
+    },
+    async handlePreForm() {
+      if (!this.getSelection() || !this.code || !this.lang) {
+        this.$toast(this.$t('invalid_data', 'renusify'), {type: 'error'})
+        return
+      }
+      let sel = this.getSelection()
+      sel.removeAllRanges()
+      sel.addRange(this.preSelected)
+      let url = `<div class="${this.$r.prefix}highlight highlight-lang-${this.lang}" >${await this.highlight(this.code, this.lang)}</div>`
+      document.execCommand('insertHTML', true, url)
+      this.showPre = false
     },
     handleForm() {
       if (!this.getSelection() || !this.link) {
@@ -449,7 +494,7 @@ export default {
       sel.addRange(this.preSelected)
       let url = '<a href="' + this.link.trim() + '"'
       if (this.target) {
-        url += 'target="_blank"'
+        url += 'target="_blank" rel="nofollow"'
       }
       if (this.link.startsWith('#')) {
         url += `id="${this.link.replace('#', '')}"`
@@ -518,6 +563,11 @@ export default {
           this.target = false
           this.handleOpen(true)
           this.show = true
+        } else if (e === 'PRE') {
+          this.code = ''
+          this.lang = null
+          this.handleOpen(true)
+          this.showPre = true
         } else if (e === 'insertImage') {
           this.image = []
           this.img_alt = null

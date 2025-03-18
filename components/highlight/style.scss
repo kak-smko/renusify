@@ -1,0 +1,103 @@
+@use "../../style/variables/base";
+
+.#{base.$prefix}highlight {
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  padding: 30px 20px;
+  color: #f8f8f2;
+  background: #1a1a1c;
+  box-shadow: 0 0 5px #fff;
+  text-shadow: none;
+  font: normal 18px Consolas, "Courier New", Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  line-height: 24px;
+  box-sizing: border-box;
+
+  &::selection {
+    background: #bdf5
+  }
+
+  > div {
+    display: flex;
+    overflow: auto
+  }
+
+  > div :last-child {
+    flex: 1;
+    outline: none
+  }
+
+  &:before {
+    color: #6f9aff
+  }
+
+  .highlight-numbers {
+    padding-left: 5px;
+    counter-reset: line;
+
+    div {
+      padding-right: 5px;
+
+      &::before {
+        color: #fff;
+        display: block;
+        content: counter(line);
+        opacity: .5;
+        text-align: right;
+        margin-right: 5px;
+        counter-increment: line
+      }
+    }
+  }
+
+  .highlight-syn-cmnt {
+    font-style: italic
+  }
+
+
+  .highlight-lang-http .highlight-syn-kwd {
+    background: #25f;
+    color: #fff;
+    padding: 0px 5px;
+    border-radius: 5px
+  }
+
+  .highlight-syn-deleted,
+  .highlight-syn-err,
+  .highlight-syn-var {
+    color: #ff5261
+  }
+
+  .highlight-syn-section,
+  .highlight-syn-kwd {
+    color: #ff7cc6
+  }
+
+  .highlight-syn-class {
+    color: #eab07c
+  }
+
+  .highlight-numbers,
+  .highlight-syn-cmnt {
+    color: #7d828b
+  }
+
+  .highlight-syn-insert,
+  .highlight-syn-type,
+  .highlight-syn-func,
+  .highlight-syn-bool {
+    color: #71d58a
+  }
+
+  .highlight-syn-num {
+    color: #b581fd
+  }
+
+  .highlight-syn-oper {
+    color: #80c6ff
+  }
+
+  .highlight-syn-str {
+    color: #4dacfa
+  }
+}

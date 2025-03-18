@@ -65,7 +65,7 @@
         2,
       )}`"
         :script-show="false"
-        :style-show="false"
+        :css-show="false"
         :template-show="false"
     >
     </r-code-editor>

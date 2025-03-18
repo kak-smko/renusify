@@ -8,55 +8,44 @@
         spellcheck="false"
         @keydown="setTab"
     ></textarea>
-    <div class="text-preview" v-html="build"></div>
+    <div class="text-preview" v-html="code"></div>
   </div>
 </template>
 
 <script>
 import mixin from './mixin.js'
+import mixin_h from '../highlight/mixin.js'
 
 export default {
   name: "highlight-script",
   props: {
     modelValue: String,
   },
-  mixins: [mixin],
+  mixins: [mixin, mixin_h],
   data() {
     return {
       d: this.modelValue,
-      runnable: false,
       code: "",
     };
+  },
+  async created() {
+    if (this.modelValue) {
+      await this.build_code()
+    }
   },
   watch: {
     modelValue: function () {
       this.d = this.modelValue;
     },
-    d: function () {
+    d: async function () {
+      await this.build_code()
       this.$emit("update:modelValue", this.d);
     },
   },
-  computed: {
-    build() {
-      if (!this.d) {
-        return "";
-      }
-
-      let res = this.d;
-      res = this.$helper.replacer(res, "<", "&lt;");
-      res = this.$helper.replacer(res, ">", "&gt;");
-      res = this.re_quote(res);
-      res = this.re_special(res, /([{}\[\]])/g);
-      res = this.re_words(res, ['import', 'from', 'delete', 'window', 'new', 'var', 'let', 'const', 'return', 'true', 'false', 'this', 'null', 'String', 'Boolean', 'Object']);
-      res = this.re_comment(res);
-      res = this.re_func(res);
-      res = this.re_number(res);
-      res = this.re_special(res, /([(),])/g, 'color-func2');
-      res = res.replace(/(&lt;)/g, '<span class="color-orange code-editor-span">$1</span>')
-      res = res.replace(/(&gt;)/g, '<span class="color-orange code-editor-span">$1</span>')
-
-      return res;
-    },
+  methods: {
+    async build_code() {
+      this.code = await this.highlight(this.d, "js", true)
+    }
   }
 };
 </script>

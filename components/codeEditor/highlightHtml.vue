@@ -8,55 +8,44 @@
         spellcheck="false"
         @keydown="setKey"
     ></textarea>
-    <div class="text-preview" v-html="build"></div>
+    <div class="text-preview" v-html="code"></div>
   </div>
 </template>
 
 <script>
 import mixin from './mixin.js'
+import mixin_h from '../highlight/mixin.js'
 
 export default {
   name: "highlight-html",
   props: {
     modelValue: String,
   },
-  mixins: [mixin],
+  mixins: [mixin, mixin_h],
   data() {
     return {
       d: this.modelValue,
-      runnable: false,
-      code: "",
-      openTag: null
+      code: ""
     };
+  },
+  async created() {
+    if (this.modelValue) {
+      await this.build_code()
+    }
   },
   watch: {
     modelValue: function () {
       this.d = this.modelValue;
     },
-    d: function () {
+    d: async function () {
+      await this.build_code()
       this.$emit("update:modelValue", this.d);
     },
   },
-  computed: {
-    build() {
-      if (!this.d) {
-        return "";
-      }
-      let data = this.d;
-      data = this.$helper.replacer(data, "<", "&lt;");
-      data = this.$helper.replacer(data, ">", "&gt;");
-      let res = data;
-      res = this.re_quote(res)
-
-      res = this.re_comment(res);
-      res = this.re_func(res);
-
-      res = res.replace(/(&lt;+[\s\S]+&gt;)/g, '<span class="color-orange code-editor-span">$1</span>')
-      res = res.replace(/\{\{([^}]+)}}/g, '<span class="color-blue code-editor-span">{{$1}}</span>')
-      return res;
-    },
-  },
   methods: {
+    async build_code() {
+      this.code = await this.highlight(this.d, "html", true)
+    },
     setKey(event) {
       if (event.key === "<") {
         this.openTag = event.target.selectionEnd
@@ -82,10 +71,6 @@ export default {
         return false;
       }
       return this.setTab(event)
-    },
-    re_comment(res) {
-      let regex = /(&lt;!--+[\s\S]+--&gt;)/g;
-      return res.replace(regex, '<span class="color-comment code-editor-span">$1</span>')
     }
   },
 };

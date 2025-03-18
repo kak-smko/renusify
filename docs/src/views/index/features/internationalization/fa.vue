@@ -15,7 +15,7 @@
 
     <r-code-editor
         :script-show="false"
-        :style-show="false"
+        :css-show="false"
         :template-show="false"
         script='import {createApp} from "vue";
 import App from "./Index.vue";
@@ -25,7 +25,6 @@ DateTime.langs={
 	"en": {
 		first_day: 0,
 		time_zone_offset: -480,//Standard timezone offset minutes.
-		daylight_saving_time: true,
 		localizeName: "en-US",
 		timeZone: "America/Los_Angeles",
 		rtl: false
@@ -33,7 +32,6 @@ DateTime.langs={
 	"fa": {
 		first_day: 6,
 		time_zone_offset: 210,
-		daylight_saving_time: false,
 		localizeName: "fa-IR",
 		timeZone: "Asia/Tehran",
 		calendar: "persian",

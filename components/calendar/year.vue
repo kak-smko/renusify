@@ -1,8 +1,8 @@
 <template>
-  <div class="calendar-year-tab d-flex flex-wrap">
+  <div class="calendar-year-tab d-flex flex-wrap h-space-around">
     <r-btn v-for="i in 200"
            :key="i"
-           class="w-30 ma-2"
+           class="w-25 ma-1"
            :class="{'color-one year-select':modelValue+i-100===modelValue}"
            outlined
            @click.prevent="emit(modelValue+i-100)">

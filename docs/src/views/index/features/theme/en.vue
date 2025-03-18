@@ -83,7 +83,7 @@ methods: {
 
     <r-code-editor
         :script-show="false"
-        :style-show="false"
+        :css-show="false"
         :template-show="false"
         script=":root {
 

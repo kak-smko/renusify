@@ -16,13 +16,13 @@ html {
 
   & {
     text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  box-sizing: border-box;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
   }
 ;
@@ -150,27 +150,27 @@ $color-text: var(--color-on-one);
     @include mixins.typography(base.$headings, 'display-3')
   }
 
-  .headline-1 {
+  .headline-1, h1 {
     @include mixins.typography(base.$headings, 'headline-1')
   }
 
-  .headline-2 {
+  .headline-2, h2 {
     @include mixins.typography(base.$headings, 'headline-2')
   }
 
-  .headline-3 {
+  .headline-3, h3 {
     @include mixins.typography(base.$headings, 'headline-3')
   }
 
-  .title-1 {
+  .title-1, h4 {
     @include mixins.typography(base.$headings, 'title-1')
   }
 
-  .title-2 {
+  .title-2, h5 {
     @include mixins.typography(base.$headings, 'title-2');
   }
 
-  .title-3 {
+  .title-3, h6 {
     @include mixins.typography(base.$headings, 'title-3');
   }
 

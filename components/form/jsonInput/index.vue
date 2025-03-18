@@ -65,13 +65,13 @@
           :rows="modelValue?Object.keys(modelValue).length+5:5"
           @keydown="setTab"
       ></textarea>
-      <div class="text-preview" v-html="build"></div>
+      <div class="text-preview" v-html="code"></div>
     </div>
   </div>
 </template>
 <script>
 import {defineAsyncComponent} from 'vue'
-import mixin from '../../codeEditor/mixin.js'
+import mixin from '../../highlight/mixin.js'
 
 export default {
   name: 'r-json',
@@ -105,7 +105,13 @@ export default {
       modeForm: true,
       error: false,
       show: false,
+      code: "",
       info: {}
+    }
+  },
+  async created() {
+    if (this.modelValue) {
+      await this.build_code()
     }
   },
   watch: {
@@ -123,9 +129,10 @@ export default {
       }
 
     },
-    lazyValue: function () {
+    lazyValue: async function () {
       try {
         this.error = false
+        await this.build_code()
         this.$emit('update:modelValue', JSON.parse(this.lazyValue))
       } catch (er) {
         this.error = true
@@ -139,17 +146,6 @@ export default {
       }
       return this.tile
     },
-    build() {
-      if (!this.lazyValue) {
-        return "";
-      }
-      let res = this.lazyValue
-      res = this.re_quote(res);
-      res = this.re_words(res, [true, false, null]);
-      res = this.re_number(res);
-      res = this.re_special(res, /([{},:\[\]])/g, 'color-orange');
-      return res;
-    },
     is_array() {
       if (this.baseArray) {
         return true
@@ -158,6 +154,9 @@ export default {
     }
   },
   methods: {
+    async build_code() {
+      this.code = await this.highlight(this.lazyValue, "json", true)
+    },
     open() {
       if (this.template) {
         let d = this.modelValue
@@ -288,17 +287,28 @@ export default {
       overflow: hidden;
     }
 
-    .color-orange {
+
+    .highlight-syn-deleted,
+    .highlight-syn-err,
+    .highlight-syn-var {
       color: var(--color-error);
     }
 
-    .color-green {
-      color: var(--color-success);
+
+    .highlight-syn-insert,
+    .highlight-syn-type,
+    .highlight-syn-func,
+    .highlight-syn-bool {
+      color: var(--color-warning);
+    }
+
+    .highlight-syn-num, .highlight-numbers {
+      color: var(--color-info);
     }
 
 
-    .color-blue {
-      color: var(--color-info);
+    .highlight-syn-str {
+      color: var(--color-success);
     }
   }
 }

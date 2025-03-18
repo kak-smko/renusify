@@ -140,47 +140,6 @@ export default {
                 return false;
             }
             return true
-        },
-        re_quote(res) {
-            let regex = /"([^"]*)"/g;
-            res = res.replace(regex, '<span class="color-green code-editor-span">"$1"</span>');
-            regex = /'([^']*)'/g;
-            return res.replace(regex, "<span class=\"color-green code-editor-span\">'$1'</span>");
-        },
-        re_special(res, regex = /([{}\[\]])/g, color = "color-orange") {
-            return res.replace(regex, '<span class="' + color + ' code-editor-span">$1</span>')
-        },
-        re_number(res) {
-            return res.replace(/\b([0-9.]+)\b/g, '<span class="color-blue code-editor-span">$1</span>')
-        },
-        re_words(res, words) {
-            words.forEach((word) => {
-                res = res.replace(new RegExp("\\b(" + word + ")\\b", 'g'), '<span class="color-orange code-editor-span">$1</span>')
-            })
-
-            return res;
-        },
-        re_comment(res) {
-            //eslint-disable-next-line
-            let regex = /(\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*)$/gm;
-            return res.replace(regex, '<span class="color-comment code-editor-span">$1</span>')
-        },
-        re_func(res) {
-            //function like Date()
-            let regex = /([$a-zA-Z-0-9_\s]+)(?=\()/g;
-            res = res.replace(regex, '<span class="color-func2 code-editor-span">$1</span>')
-
-            // Object keys
-            regex = /([a-zA-Z-0-9_]+)(?=:)/g;
-            res = res.replace(regex, '<span class="color-purple code-editor-span">$1</span>')
-
-
-            //function like $r $d()
-            regex = /(\$([a-zA-z0-9]*)[.(])/g;
-            res = res.replace(regex, '<span class="color-func code-editor-span">$1</span>')
-
-
-            return res;
-        },
+        }
     }
 }

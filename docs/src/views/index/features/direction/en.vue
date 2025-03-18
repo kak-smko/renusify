@@ -18,7 +18,7 @@ window.app = createApp(App)
   })
   .mount(&quot;#app&quot;);`"
         :script-show="false"
-        :style-show="false"
+        :css-show="false"
         :template-show="false"
     >
     </r-code-editor>
