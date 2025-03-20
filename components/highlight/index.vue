@@ -1,5 +1,19 @@
 <template>
-  <div :class="`${$r.prefix}highlight highlight-lang-${lang}`" v-html='txt'></div>
+  <div :class="`${$r.prefix}highlight`">
+    <div :class="{'highlight-name':name}" class="title-3 font-weight-bold mb-3">
+      <div class="d-flex v-top">{{ name }}
+        <r-spacer></r-spacer>
+        <r-btn
+            icon
+            text
+            @click.prevent="$helper.copy(src)"
+        >
+          <r-icon v-html="$r.icons.copy"></r-icon>
+        </r-btn>
+      </div>
+    </div>
+    <div :class="`highlight-code highlight-lang-${lang}`" v-html='txt'></div>
+  </div>
 </template>
 <script>
 import './style.scss'
@@ -9,6 +23,7 @@ export default {
   name: 'highlight',
   mixins: [mixin],
   props: {
+    name: String,
     src: String,
     hideLineNumbers: Boolean,
     lang: {

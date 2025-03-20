@@ -74,4 +74,65 @@
   img:hover {
     cursor: pointer;
   }
+
+  table {
+    width: 100%;
+
+    thead {
+      tr {
+        &:last-child th {
+          border-bottom: 1px solid var(--color-border)
+        }
+
+        th {
+          background-color: var(--color-sheet);
+          color: var(--color-on-sheet)
+        }
+      }
+    }
+
+    tbody {
+      tr:nth-child(2n):not(:hover) {
+        td {
+          background: var(--color-sheet-container-low)
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        &:active {
+          background: var(--color-sheet-container)
+        }
+
+        &:hover {
+          background: var(--color-sheet-container)
+        }
+      }
+
+      tr:not(:last-child) {
+        td {
+          border-bottom: 1px solid var(--color-border)
+        }
+      }
+    }
+
+    td, th {
+      padding: 0 16px;
+    }
+
+    th {
+      user-select: none;
+      font-size: 14px;
+      font-weight: bold;
+      height: 38px;
+
+    }
+
+    td {
+      font-size: 14px;
+      font-weight: normal;
+      height: 38px;
+    }
+  }
 }

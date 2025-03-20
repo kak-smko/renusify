@@ -4,25 +4,30 @@
   direction: ltr;
   text-align: left;
   white-space: pre;
-  padding: 30px 20px;
+  padding: 20px !important;
   color: #f8f8f2;
   background: #1a1a1c;
   box-shadow: 0 0 5px #fff;
   text-shadow: none;
   font: normal 18px Consolas, "Courier New", Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  line-height: 24px;
+  line-height: 24px !important;
   box-sizing: border-box;
 
   &::selection {
     background: #bdf5
   }
 
-  > div {
+  .highlight-name {
+    border-bottom: 1px solid !important;
+    padding: 4px;
+  }
+
+  .highlight-code > div {
     display: flex;
     overflow: auto
   }
 
-  > div :last-child {
+  .highlight-code > div :last-child {
     flex: 1;
     outline: none
   }
@@ -55,7 +60,7 @@
   }
 
 
-  .highlight-lang-http .highlight-syn-kwd {
+  &.highlight-lang-http .highlight-syn-kwd {
     background: #25f;
     color: #fff;
     padding: 0px 5px;

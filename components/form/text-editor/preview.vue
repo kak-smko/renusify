@@ -5,6 +5,7 @@
 
 <script>
 import './style.scss'
+import '../../highlight/style.scss'
 
 export default {
   name: "law",

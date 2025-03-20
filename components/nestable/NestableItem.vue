@@ -23,10 +23,13 @@
       >
         <r-icon v-html="$r.icons.delete"></r-icon>
       </r-btn-confirm>
+      <r-btn v-if="hasChildren" icon text @click="closed=!closed">
+        <r-icon v-html="closed?$r.icons.plus:$r.icons.minus"></r-icon>
+      </r-btn>
+      <r-btn v-else icon text></r-btn>
       <slot :item="item">{{ item }}</slot>
     </div>
-
-    <div v-if="hasChildren" class="nestable-list ms-5">
+    <div v-if="hasChildren&&!closed" class="nestable-list ms-5">
       <template
           v-for="(child, childIndex) in item[childrenProp]"
           :key="childIndex"
@@ -90,9 +93,9 @@ export default {
     return {
       breakPoint: null,
       moveDown: false,
+      closed: false
     };
   },
-
   computed: {
     isDragging() {
       return (
@@ -116,7 +119,6 @@ export default {
       ];
     },
   },
-
   methods: {
     del(item) {
       this.$emit("delete", item);

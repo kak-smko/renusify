@@ -815,7 +815,7 @@ export default {
                 },
                 {
                     type: 'kwd',
-                    match: /\b(and|as|assert|break|class|continue|def|del|elif|else|except|finally|for|from|global|if|import|in|is|lambda|nonlocal|not|or|pass|raise|return|try|while|with|yield)\b/g
+                    match: /\b(and|as|assert|break|class|continue|def|del|elif|else|except|finally|for|from|global|if|import|in|is|lambda|nonlocal|not|or|pass|raise|return|try|while|with|yield|await)\b/g
                 },
                 {
                     type: 'bool',
@@ -1033,6 +1033,32 @@ export default {
                 {
                     type: 'var',
                     match: /[a-zA-Z]\w*(?=:)/g
+                }
+            ]
+        }
+        this.languages.http = {
+            default: [
+                {
+                    type: 'kwd',
+                    match: /^(GET|HEAD|POST|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH|PRI|SEARCH)\b/gm
+                },
+                {
+                    expand: 'str'
+                },
+                {
+                    type: 'section',
+                    match: /\bHTTP\/[\d.]+\b/g
+                },
+                {
+                    expand: 'num'
+                },
+                {
+                    type: 'oper',
+                    match: /[,;:=]/g
+                },
+                {
+                    type: 'var',
+                    match: /[a-zA-Z][\w-]*(?=:)/g
                 }
             ]
         }

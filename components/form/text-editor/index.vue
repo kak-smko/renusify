@@ -8,7 +8,7 @@
         <r-btn-group :items="menu" exact is-select @open="handleOpen" @update:modelValue="addCss">
           <template v-slot:list="{item}">
             <div :class="'color-white-text'===item['value']?'color-black '+item['value']:item['value']"
-                 class="list-title pa-2"
+                 class="list-title"
             >{{ item['text'] }}
             </div>
           </template>
@@ -182,6 +182,7 @@
              :closebtn="false">
       <r-form v-model="valid2">
         <r-container>
+          <r-text-input v-model="code_name" :label="$t('name','renusify')"></r-text-input>
           <r-select-input v-model="lang" :items="langs"
                           :label="$t('lang','renusify')"
                           :rules="['required']"
@@ -204,6 +205,30 @@
         </r-container>
       </r-form>
     </r-modal>
+    <r-modal v-model="showTable"
+             :closable="false"
+             :closebtn="false">
+      <r-form v-model="valid2">
+        <r-container>
+          <r-select-input v-model="table_form.headers"
+                          :label="$t('headers','renusify')"
+                          :rules="['required']" just-value multiple tags></r-select-input>
+          <r-number-input v-model="table_form.row" :label="$t('row','renusify')" :rules="['required']"></r-number-input>
+
+          <div class="text-end my-3">
+            <r-btn class="color-error-text"
+                   outlined
+                   @click.prevent="showTable=false">{{ $t('cancel', 'renusify') }}
+            </r-btn>
+            <r-btn :disabled="!valid2"
+                   class="color-success-text ms-2"
+                   outlined
+                   @click.prevent="handleTableForm()">{{ $t('send', 'renusify') }}
+            </r-btn>
+          </div>
+        </r-container>
+      </r-form>
+    </r-modal>
 
   </r-container>
 </template>
@@ -218,7 +243,7 @@ export default {
   inheritAttrs: false,
   mixins: [mixin],
   props: {
-    uploadLink: {type: String, default: '/storage'},
+    uploadLink: String,
     modelValue: {
       type: [Object, String], default: () => {
         return {
@@ -251,9 +276,12 @@ export default {
       preSelected: null,
       currentPath: [],
       selectElm: null,
+      code_name: null,
       code: '',
       lang: null,
       showPre: false,
+      showTable: false,
+      table_form: {},
       langs: ['asm', 'bash', 'bf', 'c', 'css', 'csv', 'diff', 'docker', 'git', 'go', 'html', 'http', 'ini', 'java', 'js', 'jsdoc', 'json', 'log', 'lua', 'make', 'pl', 'plain', 'py', 'regex', 'rs', 'sql', 'todo', 'toml', 'ts', 'uri', 'xml', 'yaml'],
       items_undo: {
         'undo': '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M12.5 8c-2.65 0-5.05 1-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88c3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8Z"/></svg>',
@@ -264,8 +292,7 @@ export default {
         'insertLINE': '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M9 7h2v8h4v2H9V7m3-5a10 10 0 0 1 10 10a10 10 0 0 1-10 10A10 10 0 0 1 2 12A10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8a8 8 0 0 0 8 8a8 8 0 0 0 8-8a8 8 0 0 0-8-8Z"/></svg>',
         'BLOCKQUOTE': '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M14 17h3l2-4V7h-6v6h3M6 17h3l2-4V7H5v6h3l-2 4Z"/></svg>',
         'PRE': '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="m12.89 3l1.96.4L11.11 21l-1.96-.4L12.89 3m6.7 9L16 8.41V5.58L22.42 12L16 18.41v-2.83L19.59 12M1.58 12L8 5.58v2.83L4.41 12L8 15.58v2.83L1.58 12Z"/></svg>',
-        'insertImage': '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h9.09c-.06-.33-.09-.66-.09-1c0-.68.12-1.36.35-2H5l3.5-4.5l2.5 3l3.5-4.5l2.23 2.97c.97-.63 2.11-.97 3.27-.97c.34 0 .67.03 1 .09V5a2 2 0 0 0-2-2H5m14 13v3h-3v2h3v3h2v-3h3v-2h-3v-3h-2Z"/></svg>',
-        'insertVideo': '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4Z"/></svg>',
+        'createTable': '<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 4L9 20M15 4L15 20M3 9H21M3 15H21M6.2 20H17.8C18.9201 20 19.4802 20 19.908 19.782C20.2843 19.5903 20.5903 19.2843 20.782 18.908C21 18.4802 21 17.9201 21 16.8V7.2C21 6.0799 21 5.51984 20.782 5.09202C20.5903 4.71569 20.2843 4.40973 19.908 4.21799C19.4802 4 18.9201 4 17.8 4H6.2C5.07989 4 4.51984 4 4.09202 4.21799C3.71569 4.40973 3.40973 4.71569 3.21799 5.09202C3 5.51984 3 6.07989 3 7.2V16.8C3 17.9201 3 18.4802 3.21799 18.908C3.40973 19.2843 3.71569 19.5903 4.09202 19.782C4.51984 20 5.07989 20 6.2 20Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
         'createLink': '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5a5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8v2m9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1c0 1.71-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5a5 5 0 0 0-5-5Z"/></svg>',
       },
       items_format: {
@@ -288,21 +315,21 @@ export default {
       menu: {
         'font': {
           icon: '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M8.5 7h2L16 21h-2.4l-1.1-3H6.3l-1.1 3H3L8.5 7m-1.4 9h4.8L9.5 9.7L7.1 16M22 5v2h-3v3h-2V7h-3V5h3V2h2v3h3Z"/></svg>',
-          items: [{text: 'HI', value: 'display-1'},
-            {text: 'HI', value: 'display-2'},
-            {text: 'HI', value: 'display-3'},
-            {text: 'HI', value: 'headline-1'},
-            {text: 'HI', value: 'headline-2'},
-            {text: 'HI', value: 'headline-3'},
-            {text: 'HI', value: 'title-1'},
-            {text: 'HI', value: 'title-2'},
-            {text: 'HI', value: 'title-3'},
-            {text: 'HI', value: 'body-1'},
-            {text: 'HI', value: 'body-2'},
-            {text: 'HI', value: 'body-3'},
-            {text: 'HI', value: 'label-1'},
-            {text: 'HI', value: 'label-2'},
-            {text: 'HI', value: 'label-3'},
+          items: [{text: 'd1', value: 'display-1'},
+            {text: 'd2', value: 'display-2'},
+            {text: 'd3', value: 'display-3'},
+            {text: 'head1', value: 'headline-1'},
+            {text: 'head2', value: 'headline-2'},
+            {text: 'head3', value: 'headline-3'},
+            {text: 'title-1', value: 'title-1'},
+            {text: 'title-2', value: 'title-2'},
+            {text: 'title-3', value: 'title-3'},
+            {text: 'body-1', value: 'body-1'},
+            {text: 'body-2', value: 'body-2'},
+            {text: 'body-3', value: 'body-3'},
+            {text: 'label-1', value: 'label-1'},
+            {text: 'label-2', value: 'label-2'},
+            {text: 'label-3', value: 'label-3'},
           ]
         },
         'header': {
@@ -348,12 +375,15 @@ export default {
       }
     }
   },
-  mounted() {
-    /* document.execCommand('enableObjectResizing', false, true);
-    document.execCommand('enableInlineTableEditing', false, true);
-    document.execCommand('enableAbsolutePositionEditor', false, true) */
+  created() {
+    if (this.uploadLink) {
+      this.items_handle['insertImage'] = '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h9.09c-.06-.33-.09-.66-.09-1c0-.68.12-1.36.35-2H5l3.5-4.5l2.5 3l3.5-4.5l2.23 2.97c.97-.63 2.11-.97 3.27-.97c.34 0 .67.03 1 .09V5a2 2 0 0 0-2-2H5m14 13v3h-3v2h3v3h2v-3h3v-2h-3v-3h-2Z"/></svg>'
+      this.items_handle['insertVideo'] = '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4Z"/></svg>'
 
-    this.format('defaultParagraphSeparator', '\n')
+    }
+  },
+  mounted() {
+    this.format('defaultParagraphSeparator', 'br')
     this.element.addEventListener('paste', function (e) {
       e.preventDefault()
       const text = (e.originalEvent || e).clipboardData.getData('text/plain')
@@ -472,6 +502,30 @@ export default {
       document.execCommand('insertHTML', true, url)
       this.showVideo = false
     },
+    handleTableForm() {
+      if (!this.getSelection() || !this.table_form.row || !this.table_form.headers) {
+        this.$toast(this.$t('invalid_data', 'renusify'), {type: 'error'})
+        return
+      }
+      let sel = this.getSelection()
+      sel.removeAllRanges()
+      sel.addRange(this.preSelected)
+      let t = '<table><thead><tr>'
+      for (let i = 0; i < this.table_form.headers.length; i++) {
+        t += `<th>${this.table_form.headers[i]}</th>`
+      }
+      t += '</tr></thead><tbody>'
+      for (let i = 0; i < this.table_form.row; i++) {
+        t += '<tr>'
+        for (let i = 0; i < this.table_form.headers.length; i++) {
+          t += `<td></td>`
+        }
+        t += '</tr>'
+      }
+      t += '</tbody></table>'
+      document.execCommand('insertHTML', true, t)
+      this.showTable = false
+    },
     async handlePreForm() {
       if (!this.getSelection() || !this.code || !this.lang) {
         this.$toast(this.$t('invalid_data', 'renusify'), {type: 'error'})
@@ -480,7 +534,12 @@ export default {
       let sel = this.getSelection()
       sel.removeAllRanges()
       sel.addRange(this.preSelected)
-      let url = `<div class="${this.$r.prefix}highlight highlight-lang-${this.lang}" >${await this.highlight(this.code, this.lang)}</div>`
+      let url = `<div class="${this.$r.prefix}highlight" >`
+      if (this.code_name) {
+        url += `<div class="highlight-name title-3 font-weight-bold mb-3">${this.code_name}</div>`
+      }
+
+      url += `<div class="highlight-code highlight-lang-${this.lang}">${await this.highlight(this.code, this.lang)}</div></div>`
       document.execCommand('insertHTML', true, url)
       this.showPre = false
     },
@@ -563,20 +622,28 @@ export default {
           this.target = false
           this.handleOpen(true)
           this.show = true
+        } else if (e === 'createTable') {
+          this.table_form = {}
+          this.handleOpen(true)
+          this.showTable = true
         } else if (e === 'PRE') {
           this.code = ''
           this.lang = null
           this.handleOpen(true)
           this.showPre = true
         } else if (e === 'insertImage') {
-          this.image = []
-          this.img_alt = null
-          this.handleOpen(true)
-          this.showImg = true
+          if (this.uploadLink) {
+            this.image = []
+            this.img_alt = null
+            this.handleOpen(true)
+            this.showImg = true
+          }
         } else if (e === 'insertVideo') {
-          this.video = []
-          this.handleOpen(true)
-          this.showVideo = true
+          if (this.uploadLink) {
+            this.video = []
+            this.handleOpen(true)
+            this.showVideo = true
+          }
         } else if (e === 'insertDIV') {
           const d = document.createElement('div')
           d.innerText = 'div'
@@ -635,7 +702,7 @@ export default {
       if (command === 'removeFormat') {
         document.execCommand('insertHTML', true, '<div>' + this.getSelection().toString() + '</div>')
       } else {
-        document.execCommand(command, false, value)
+        console.log(document.execCommand(command, false, value), command)
       }
     },
   }
