@@ -702,7 +702,7 @@ export default {
       if (command === 'removeFormat') {
         document.execCommand('insertHTML', true, '<div>' + this.getSelection().toString() + '</div>')
       } else {
-        console.log(document.execCommand(command, false, value), command)
+        document.execCommand(command, false, value)
       }
     },
   }

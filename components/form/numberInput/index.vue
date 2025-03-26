@@ -13,7 +13,8 @@
              @focusin="active=true"
              @focusout="active=false"
              ref="input"
-             type="text"
+             :step="step"
+             type="number"
              autocomplete="no"
              v-model="number"
       />
@@ -44,15 +45,13 @@ export default {
   emits: ['update:modelValue'],
   data() {
     return {
-      number: this.setSplit(this.modelValue),
+      number: this.modelValue,
       active: false
     }
   },
   watch: {
     'modelValue': function (newVal) {
-      setTimeout(() => {
-        this.number = this.setSplit(newVal)
-      })
+      this.number = newVal
     }
   },
   methods: {
@@ -66,8 +65,8 @@ export default {
       }
       return n
     },
-    removeSplit(n) {
-      return parseFloat(this.$helper.replacer(n.toString(), ',', ''))
+    set_step(number) {
+
     },
     emit() {
       if (this.number === '' || this.number === null) {
@@ -75,16 +74,16 @@ export default {
         this.$emit('update:modelValue', this.number)
         return
       }
-      let d = this.removeSplit(this.number)
+      let d = this.number
       if (this.max !== undefined && d > this.max) {
         d = this.max
       }
       if (this.min !== undefined && d < this.min) {
         d = this.min
       }
-      const n = ((1 / this.step) + '').length - 1
-      this.number = this.setSplit(d.toFixed(n))
-      this.$emit('update:modelValue', this.removeSplit(this.number))
+
+      this.number = d
+      this.$emit('update:modelValue', this.number)
     },
     plus() {
       let n = this.modelValue || 0

@@ -51,9 +51,9 @@ export default {
 emits:['update:modelValue'],
   data() {
     return {
-      lazyValue: this.modelValue.value,
+      lazyValue: this.modelValue ? this.modelValue.value : null,
       active: false,
-      unit: this.modelValue.unit
+      unit: this.modelValue ? this.modelValue.unit : null
     }
   },
   watch: {

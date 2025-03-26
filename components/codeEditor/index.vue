@@ -41,18 +41,18 @@
         <span v-show="templateShow" class="highlight-syn-func">&lt;/template&gt;</span>
       </div>
       <div>
-        <span v-show="scriptShow" class="highlight-syn-var"
+        <span v-show="scriptShow" class="highlight-syn-class"
         >&lt;script&gt;<br/>export default {</span
         >
         <highlight-script ref="h-js" v-model="scr"></highlight-script>
-        <span v-show="scriptShow" class="highlight-syn-var">}<br/>&lt;/script&gt;</span>
+        <span v-show="scriptShow" class="highlight-syn-class">}<br/>&lt;/script&gt;</span>
       </div>
       <div>
-        <span v-show="cssShow" class="highlight-syn-var"
+        <span v-show="cssShow" class="highlight-syn-class"
         >&lt;style lang<span class="color-green">="css"</span>&gt;</span
         >
         <highlight-css ref="h-css" v-model="sty"></highlight-css>
-        <span v-show="cssShow" class="highlight-syn-var">&lt;/style&gt;</span>
+        <span v-show="cssShow" class="highlight-syn-class">&lt;/style&gt;</span>
       </div>
     </div>
   </div>
@@ -141,9 +141,9 @@ export default {
 .#{base.$prefix}code-editor {
   position: relative;
   white-space: break-spaces;
-  caret-color: white;
-  background-color: #15212e;
-  color: #fff;
+  caret-color: #f8f8f2;
+  background-color: #1a1a1c;
+  color: #f8f8f2;
   padding: 10px;
   font-size: 14px;
 
