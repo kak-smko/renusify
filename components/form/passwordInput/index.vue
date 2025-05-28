@@ -15,7 +15,7 @@
              @focusin="active=true"
              @focusout="active=false"
              @input="emit"
-             autocomplete="no"
+             :autocomplete="autocomplete"
              ref="input"
              v-model="lazyValue"
       />
@@ -61,6 +61,7 @@ export default {
     specialChar: Boolean,
     number: Boolean,
     minLength: {type: Number, default: 8},
+    autocomplete: {type: String, default: "no"},
   },
   emits: ['update:modelValue'],
   data() {

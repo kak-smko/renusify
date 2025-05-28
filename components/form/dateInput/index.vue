@@ -1,8 +1,8 @@
 <template>
   <r-input v-bind="$attrs" :readonly="readonly" :model-value="modelValue" @click.prevent="show=true">
-    <input
-        :value="modelValue?$d(modelValueDate,withTime?'long':'medium',locale):null"
-    />
+    <div :class="`${$r.prefix}date-color-input`">
+      {{ modelValue ? $d(modelValueDate, withTime ? 'long' : 'medium', locale) : null }}
+    </div>
   </r-input>
   <r-modal :model-value="show" @update:model-value="close()" :closebtn="false" closable class="text-center">
     <div v-if="!showTime" :class="`${$r.prefix}date-input`">
@@ -364,6 +364,9 @@ export default {
 <style lang="scss">
 @use "../../../style/variables/base";
 
+.#{base.$prefix}date-color-input {
+  color: var(--color-on-sheet);
+}
 .#{base.$prefix}date-input {
   position: relative;
   display: inline-block;

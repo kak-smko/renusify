@@ -3,34 +3,59 @@
 </template>
 
 <script>
-
 export default {
-  name: "r-chart",
+  name: 'r-chart',
   props: {
+    url: {type: String, default: 'https://codenus.com/storage/chart/apexcharts.js'},
+    dark: Boolean,
     options: Object
   },
   data() {
     return {
       chartShape: null,
-      Chart: null
-    };
+      timeout_id: null
+    }
   },
-  mounted(){
-    import('./apexcharts.js').then((d) => {
-      this.Chart=d.default;
+  mounted() {
+    let children = document.querySelectorAll('[name=\'apexcharts\']')
+    if (children.length === 0) {
+      let el = document.createElement('script')
+      el.setAttribute('src', this.url)
+      el.setAttribute('name', 'apexcharts')
+      document.head.append(el)
+    }
+    if (this.dark) {
+      if (!this.options['theme']) {
+        this.options['theme'] = {}
+      }
+      this.options['theme']['mode'] = 'dark'
+    }
+
+    this.timeout_id = setTimeout(() => {
       this.build()
-    })
+    }, 10)
+
   },
   methods: {
-    build() {
-      this.chartShape = new this.Chart(this.$refs.chart, this.options);
-      this.chartShape.render()
+    build(n = 0) {
+      try {
+        this.chartShape = new ApexCharts(this.$refs.chart, this.options)
+        this.chartShape.render()
+      } catch (e) {
+        this.timeout_id = setTimeout(() => {
+          this.build(n + 1)
+        }, 100)
+        if (n > 30) {
+          console.error(e)
+        }
+      }
     }
   },
   beforeUnmount() {
-    this.chartShape.destroy();
+    clearTimeout(this.timeout_id)
+    this.chartShape.destroy()
   }
-};
+}
 </script>
 <style lang="scss">
 @use "../../style/variables/base";

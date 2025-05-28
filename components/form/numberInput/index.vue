@@ -51,23 +51,12 @@ export default {
   },
   watch: {
     'modelValue': function (newVal) {
-      this.number = newVal
+      if (newVal !== undefined) {
+        this.number = newVal
+      }
     }
   },
   methods: {
-    setSplit(n) {
-      if (n && this.split > 0) {
-        const x = this.split
-        n = n.toString()
-        const step = n.indexOf('.')
-        const re = '\\d(?=(\\d{' + (x) + '})+' + (step > -1 ? '\\.' : '$') + ')';
-        return n.replace(new RegExp(re, 'g'), '$&,');
-      }
-      return n
-    },
-    set_step(number) {
-
-    },
     emit() {
       if (this.number === '' || this.number === null) {
         this.number = undefined
@@ -79,7 +68,8 @@ export default {
         d = this.max
       }
       if (this.min !== undefined && d < this.min) {
-        d = this.min
+        this.$emit('update:modelValue', undefined)
+        return
       }
 
       this.number = d
@@ -95,7 +85,7 @@ export default {
       this.number = n - this.step
       this.emit()
     }
-  },
+  }
 }
 </script>
 

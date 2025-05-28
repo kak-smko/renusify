@@ -1,7 +1,8 @@
 <template>
   <div :class="`${$r.prefix}table-manage`">
     <r-modal v-model="showForm" bottom full-width>
-      <slot :autoSend="autoSend" :method="method"
+      <slot :autoSend="autoSend"
+            :method="method"
             :modelValue="editedItem"
             :ok="ok"
             :options="table.option"
@@ -444,9 +445,13 @@ export default {
       this.refresh()
     },
     ok() {
-      this.refresh()
+      this.table.startTime = false
+      this.page = 1;
+      this.sortBy = null;
+      this.sortType = 0;
       this.autoSend = false
       this.showForm = false
+      this.refresh()
     },
     refresh(e) {
       this.loading = true

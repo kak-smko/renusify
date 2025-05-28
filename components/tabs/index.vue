@@ -98,8 +98,6 @@ export default {
 <style lang="scss">
 @use "../../style/variables/base";
 
-$btnTabsWidth: 50px;
-
 .#{base.$prefix}tabs {
   max-width: 100%;
   display: flex;
@@ -109,7 +107,7 @@ $btnTabsWidth: 50px;
     position: relative;
     margin: 0 auto;
     white-space: nowrap;
-    width: calc(100% - #{$btnTabsWidth*2});
+    width: 100%;
     overflow: auto;
 
     scroll-behavior: smooth;
@@ -148,10 +146,6 @@ $btnTabsWidth: 50px;
     &:last-child {
       margin-right: 0;
     }
-  }
-
-  .btn-tabs {
-    width: $btnTabsWidth;
   }
 }
 </style>
