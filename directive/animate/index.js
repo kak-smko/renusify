@@ -1,4 +1,4 @@
-import './style.scss'
+import 'renusify/directive/animate/style.scss'
 
 function mounted(el, binding) {
     const modifiers = binding.modifiers || {}
@@ -17,15 +17,18 @@ function mounted(el, binding) {
         observer
     ) => {
         if (!el._observe) return
-        const isIntersecting = Boolean(entries.find(entry => entry.isIntersecting))
-
+        if (el._observe.loading) return
+        const isIntersecting = entries[0].isIntersecting
         if (isIntersecting) {
+            el._observe.init = true
+            el._observe.loading = true
             setTimeout(() => {
                 if (timing) {
                     el.classList.add(timing)
                 }
                 el.classList.add('du-' + duration * 1000)
                 el.classList.add('animate')
+                el._observe.loading = false
             }, delay)
 
         } else if(!modifiers.once) {
@@ -37,12 +40,13 @@ function mounted(el, binding) {
         if (el._observe.init && modifiers.once) {
             unmounted(el, binding)
         }
-        else (el._observe.init = true)
-    }, {threshold: 0})
+    }, {threshold: value.threshold || 0})
 
-    el._observe = {init: false, observer}
+    el._observe = {init: false, loading: false, observer}
 
-    observer.observe(el)
+    setTimeout(() => {
+        observer.observe(el)
+    }, 100)
 }
 
 function unmounted(el,binding) {

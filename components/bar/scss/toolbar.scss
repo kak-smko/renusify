@@ -12,7 +12,7 @@
       width: 40px;
       height: 40px;
       position: absolute;
-      transition: 2s all map.get(base.$transition, 'swing');
+      transition: 0.5s all map.get(base.$transition, 'swing');
       @include mixins.rtl() {
         right: -40px;
       }
@@ -25,7 +25,7 @@
       height: 100%;
       overflow: auto;
       position: absolute;
-      transition: .5s all map.get(base.$transition, 'swing');
+      transition: .3s all map.get(base.$transition, 'swing');
       background-color: var(--color-sheet);
       color: var(--color-on-sheet);
       @include mixins.rtl() {
@@ -42,7 +42,7 @@
       height: 100vh;
       z-index: map.get(base.$z-index, 'important');
       background-color: var(--color-overlay);
-      transition: 1s width map.get(base.$transition, 'swing');
+      transition: .1s width map.get(base.$transition, 'swing');
       overflow: hidden;
       @include mixins.rtl() {
         right: 0;
@@ -56,7 +56,7 @@
         width: 100vw;
       }
       .toolbar-side {
-        transition: 2s all map.get(base.$transition, 'swing');
+        transition: 0.3s all map.get(base.$transition, 'swing');
         @include mixins.rtl() {
           right: 0;
         }
@@ -106,7 +106,7 @@
   }
 
   .menu-list {
-    transition: 1s map.get(base.$transition, 'swing');
+    transition: 0.3s map.get(base.$transition, 'swing');
     min-width: 200px;
     max-height: 500px;
     overflow-y: auto;
@@ -129,7 +129,7 @@
     position: relative;
 
     .toolbar-childs {
-      transition: 1s map.get(base.$transition, 'swing');
+      transition: 0.3s map.get(base.$transition, 'swing');
       position: absolute;
       top: 40px;
       max-height: 0;

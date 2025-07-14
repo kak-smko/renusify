@@ -85,7 +85,7 @@ emits:['update:modelValue','change'],
     width: 100%;
     height: 100%;
     border-radius: 10px;
-    background-color: var(--color-sheet-container);
+    background-color: var(--color-border);
   }
 
   .switch-dot {

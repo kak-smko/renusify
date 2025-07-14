@@ -44,7 +44,11 @@ export default {
             this.startTrackMouse();
 
             this.dragItem = item;
-            this.itemsOld = this.modelValue;
+            this.itemsOld = JSON.parse(JSON.stringify(this.modelValue));
+
+            const {clientX, clientY} = this.getXandYFromEvent(event);
+            this.mouse.last = {x: clientX, y: clientY};
+            this.mouse.shift = {x: 0, y: 0};
 
             this.$nextTick(() => {
                 this.onMouseMove(event);
@@ -119,6 +123,15 @@ export default {
         },
 
         moveItem({dragItem, pathFrom, pathTo}) {
+            if (JSON.stringify(pathFrom) === JSON.stringify(pathTo)) {
+                return;
+            }
+
+            const newDepth = pathTo.length + this.getItemDepth(dragItem);
+            if (newDepth > this.maxDepth) {
+                return;
+            }
+
             const realPathTo = this.getRealNextPath(pathFrom, pathTo);
 
             const removePath = this.getSplicePath(pathFrom, {
@@ -138,6 +151,12 @@ export default {
 
             this.pathTo = realPathTo;
             this.$emit("update:model-value", items);
+            this.$emit("change", {
+                movedItem: dragItem,
+                fromPath: pathFrom,
+                toPath: pathTo,
+                items
+            });
         },
         isEquals(x, y) {
             return x === y;

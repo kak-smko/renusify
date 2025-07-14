@@ -1,18 +1,13 @@
 <template>
   <div v-intersect.[modifier]="check" :class="{
         [$r.prefix+'img']:true,
-        'img-hoverZoom':hoverZoom,'img-hoverDark':hoverDark,'img-hoverTitle':hoverTitle}"
+        'img-hoverZoom':hoverZoom,'img-hoverDark':hoverDark,'img-hover-preview':preview}"
        ref="rImg">
-    <div v-if="hoverTitle" class="title-3 color-white-text img-title w-full pa-1"
-         :class="{
-            'title-hs':titleHs,
-            'title-hc':titleHc,
-            'title-he':titleHe,
-            'title-vs':titleVs,
-            'title-vc':titleVc,
-            'title-ve':titleVe
-        }"
-    >{{ alt }}
+    <div v-if="preview" class="img-preview w-full h-full d-flex v-center h-center"
+    >
+      <r-btn icon @click="show_preview=true">
+        <r-icon v-html="$r.icons.eye"></r-icon>
+      </r-btn>
     </div>
     <img v-if="load &&!isSvg" ref="img" :alt="alt" :height="size.height>0?size.height:'auto'" :src="link" :style="{'height':size.height>0?undefined:'auto',
          'width':size.width>0?undefined:'auto'
@@ -21,6 +16,9 @@
          draggable="false"/>
     <svg-img v-else-if="load &&isSvg&&link" :link="link" :size="size">
     </svg-img>
+    <teleport v-if="preview&&show_preview" :to="`.${$r.prefix}app`">
+      <preview-img :src="preview" @close="show_preview=false"></preview-img>
+    </teleport>
   </div>
 </template>
 <script>
@@ -28,12 +26,16 @@ import {defineAsyncComponent} from 'vue'
 
 export default {
   name: 'r-img',
-  components: {SvgImg:defineAsyncComponent(()=>import('./svgImg.vue'))},
+  components: {
+    SvgImg: defineAsyncComponent(() => import('./svgImg.vue')),
+    previewImg: defineAsyncComponent(() => import('./preview.vue')),
+  },
   props: {
     src: {
       type: String,
       required: true
     },
+    preview: String,
     alt: {
       type: String,
       required: true
@@ -55,19 +57,13 @@ export default {
     autoSize: Boolean,
     hoverZoom: Boolean,
     hoverDark: Boolean,
-    hoverTitle: Boolean,
-    titleHs: Boolean,
-    titleHc: Boolean,
-    titleHe: Boolean,
-    titleVs: Boolean,
-    titleVc: Boolean,
-    titleVe: Boolean,
     isSvg: Boolean,
     svgCache: {type: Number, default: 86400},
     wPH: Number
   },
   data() {
     return {
+      show_preview: false,
       load: false,
       view: false,
       modifier: this.lazy !== 'no' ? 'once' : 'pre',
@@ -180,6 +176,7 @@ export default {
 }
 </script>
 <style lang="scss">
+@use "sass:map";
 @use "../../style/variables/base";
 
 .#{base.$prefix}img {
@@ -211,44 +208,65 @@ export default {
     }
   }
 
-  &.img-hoverTitle {
+  &.img-hover-preview {
     &:hover {
-      .img-title {
+      .img-preview {
+        background: rgba(0, 0, 0, 0.5);
         max-width: 100%;
       }
     }
   }
 
-  .img-title {
+  .img-preview {
+    transition: 0.1s all ease;
     position: absolute;
     z-index: 1;
+    top: 0;
+    left: 0;
     max-width: 0;
     overflow: hidden;
+  }
+}
 
-    &.title-hs {
-      text-align: start;
-    }
+.#{base.$prefix}img-preview-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: fixed;
+  touch-action: none;
+  background: var(--color-overlay);
+  backdrop-filter: blur(3px) grayscale(30%);
+  z-index: map.get(base.$z-index, 'important');
+  top: 0;
+  left: 0;
 
-    &.title-hc {
-      text-align: center;
-    }
+  .image-wrapper {
+    position: absolute;
+    will-change: transform;
+  }
 
-    &.title-he {
-      text-align: end;
-    }
+  .image-wrapper img {
+    display: block;
+  }
 
-    &.title-vs {
-      top: 10px
-    }
+  .controls {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    z-index: 2;
+  }
 
-    &.title-vc {
-      top: 50%
-    }
-
-    &.title-ve {
-      bottom: 10px
-    }
-
+  .controls button {
+    padding: 2px 8px;
+    cursor: pointer;
   }
 }
 </style>
