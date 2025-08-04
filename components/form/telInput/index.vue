@@ -1,7 +1,7 @@
 <template>
   <div :class="`${$r.prefix}input-tel`">
     <r-btn :disabled="!select||readonly"
-           :rounded="!c_tile" class="btn-country ltr ms-1" outlined @click.stop="toggleDropdown">
+           :rounded="!c_tile" class="btn-country ltr mr-1" outlined @click.stop="toggleDropdown">
       <div :class="activeCountry.iso2.toLowerCase()" class="iti-flag"></div>
       <span class="country-code pa-1"> +{{ activeCountry.dialCode }} </span>
       <span class="dropdown-arrow">{{ open ? "▲" : "▼" }}</span>
@@ -152,7 +152,7 @@ export default {
 
 .#{base.$prefix}input-tel {
   display: flex;
-  align-items: baseline;
+  align-items: end;
   direction: ltr;
   flex-wrap: wrap;
   .btn-country {

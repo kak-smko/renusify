@@ -1,34 +1,35 @@
 <template>
-  <teleport v-if="show" :to="`.${$r.prefix}app`">
-    <div v-if="modelValue&&!noOverlay" :class="{
-      [`${$r.prefix}modal-overlay`]:true
-    }"></div>
-    <transition :name="c_animate">
-      <div v-if="modelValue" :class="{
-        [`${$r.prefix}modal`]:true,
-        'h-end': bottom||fullHeight,
-        'animate-modal-vibrate': run_animate,
-      }" v-bind="$attrs" @click.self="close"
-      >
-        <div class="modal-container" :style="{'max-width':maxWidth,'max-height':maxHeight}" :class="{
-      'modal-bottom':bottom,
-      [color]:color,
-     'modal-full-width':fullWidth,
-     'modal-full-height':fullHeight,
-      'modal-mini':minWidth,
-      'modal-flat':flat
+  <teleport v-if="mounted" :to="`.${$r.prefix}app`">
+    <div
+        v-if="modelValue && !noOverlay"
+        :class="`${$r.prefix}modal-overlay`"
+    ></div>
 
-    }">
+    <transition :name="computedAnimation">
+      <div
+          v-if="modelValue"
+          :class="modalClasses"
+          v-bind="$attrs"
+          @click.self="!noCloseOnClickOutside && close()"
+      >
+        <div
+            :class="containerClasses"
+            :style="containerStyles"
+            class="modal-container"
+        >
           <div class="modal-btn text-end">
-            <r-btn class="color-error-text"
-                   text
-                   @click.prevent="close(true)"
-                   fab
-                   size="small"
-                   v-if="closebtn">
+            <r-btn
+                v-if="!noCloseBtn"
+                class="color-error-text"
+                fab
+                size="small"
+                text
+                @click.prevent="close(true)"
+            >
               <r-icon v-html="$r.icons.close"></r-icon>
             </r-btn>
           </div>
+
           <div class="modal-content">
             <slot></slot>
           </div>
@@ -45,123 +46,170 @@ export default {
   name: 'r-modal',
   inheritAttrs: false,
   props: {
-    modelValue: Boolean,
-    bottom: Boolean,
+    modelValue: {
+      type: Boolean,
+      required: true
+    },
+    position: {
+      type: String,
+      default: 'center',
+      validator: (value) => ['center', 'bottom', 'start', 'end', 'top'].includes(value)
+    },
     noOverlay: Boolean,
     fullWidth: Boolean,
     fullHeight: Boolean,
-    maxWidth: String,
-    maxHeight: String,
-    minWidth: {type: Boolean, default: true},
-    flat: Boolean,
-    closable: Boolean,
+    maxWidth: {
+      type: String,
+      default: null
+    },
+    maxHeight: {
+      type: String,
+      default: null
+    },
+    minWidth: {
+      type: Boolean,
+      default: true
+    },
+    noClosable: Boolean,
+    noCloseBtn: Boolean,
+    noCloseOnClickOutside: Boolean,
     routeHistory: String,
-    closebtn: {type: Boolean, default: true},
     color: String,
-    animate: String
+    animation: String
   },
   emits: ['update:modelValue'],
   data() {
     return {
-      state: null,
-      run_animate: false,
-      show: false,
+      mounted: false,
+      runAnimation: false
     }
   },
   created() {
-    if (this.routeHistory) {
-      const h = this.$route.hash.replace('#', '').split('&')
-      if (h.includes(this.routeHistory)) {
-        this.$emit('update:modelValue', true)
-      }
-    }
-    setTimeout(()=>{
-      this.show=true
-    },10)
+    this.initFromRoute();
+    setTimeout(() => {
+      this.mounted = true;
+    }, 10);
   },
   watch: {
-    '$route': function (n) {
-      let h = []
-      if (this.$route.hash) {
-        h = this.$route.hash.replace('#', '').split('&')
-      }
-      if (!h.includes(this.routeHistory)) {
-        this.$emit('update:modelValue', false)
-      } else {
-        this.$emit('update:modelValue', true)
-      }
-    },
-    modelValue: {
-      // immediate: true, watch at created component
-      handler: function (newVal, oldVal) {
-        if (newVal === true) {
-          document.documentElement.style.overflow = 'hidden'
-          if (this.routeHistory) {
-            const routeHashs = this.$route.hash.replace('#', '').split('&')
-            if (!routeHashs.includes(this.routeHistory)) {
-              let h = ''
-              if (this.$route.hash) {
-                h = this.$route.hash + '&' + this.routeHistory
-              } else {
-                h = '#' + this.routeHistory
-              }
-              this.$router.push({path: this.$route.fullPath, hash: h})
-            }
-          }
-        } else {
-          document.documentElement.style.overflow = null
-        }
-      }
-    }
+    '$route': 'handleRouteChange',
+    modelValue: 'handleModelValueChange'
   },
   computed: {
-    c_animate() {
-      if (this.animate) {
-        return this.animate
+    computedAnimation() {
+      if (this.animation) return this.animation;
+
+      switch (this.position) {
+        case 'bottom':
+          return 'slide-up';
+        case 'top':
+          return 'slide-down';
+        case 'start':
+          return 'slide-end';
+        case 'end':
+          return 'slide-start';
+        default:
+          return 'scale';
       }
-      if (this.bottom) {
-        return 'slide-up'
-      }
-      if (this.fullHeight) {
-        return 'slide-up'
-      }
-      return 'scale'
+    },
+    modalClasses() {
+      return [
+        `${this.$r.prefix}modal`,
+        `modal-${this.position}`,
+        {
+          'animate-modal-vibrate': this.runAnimation
+        }
+      ];
+    },
+    containerClasses() {
+      return [
+        this.color,
+        {
+          'modal-full-width': this.fullWidth,
+          'modal-full-height': this.fullHeight,
+          'modal-mini': this.minWidth,
+          [`modal-${this.position}`]: this.position !== 'center'
+        }
+      ];
+    },
+    containerStyles() {
+      return {
+        'max-width': this.maxWidth,
+        'max-height': this.maxHeight
+      };
     }
   },
   methods: {
-    close(force = false) {
-      if (this.closable || force === true) {
-        if (this.routeHistory) {
-          if (history.state.back) {
-            this.$router.back()
-          } else {
-            let h = ''
-            if (this.$route.hash) {
-              h = this.$route.hash.replace('#', '').split('&')
-              h.splice(h.indexOf(this.routeHistory), 1)
-              let s = ''
-              let first = true
-              h.forEach((item) => {
-                if (item) {
-                  s += (first ? '#' : '&') + item
-                }
-              })
-              h = s
-            }
-            this.$router.replace({'path': this.$route.fullPath, hash: h})
-          }
-        }
-        this.$emit('update:modelValue', false)
-      } else {
-        this.run_animate = true
-        setTimeout(() => {
-          this.run_animate = false
-        }, 300)
+    initFromRoute() {
+      if (!this.routeHistory) return;
+
+      const hashValues = this.$route.hash.replace('#', '').split('&');
+      if (hashValues.includes(this.routeHistory)) {
+        this.$emit('update:modelValue', true);
       }
+    },
+    handleRouteChange(newRoute) {
+      if (!this.routeHistory) return;
+
+      const hashValues = newRoute.hash.replace('#', '').split('&');
+      this.$emit('update:modelValue', hashValues.includes(this.routeHistory));
+    },
+    handleModelValueChange(isOpen) {
+      if (isOpen) {
+        document.documentElement.style.overflow = 'hidden';
+        this.handleOpenState();
+      } else {
+        document.documentElement.style.overflow = null;
+      }
+    },
+    handleOpenState() {
+      if (!this.routeHistory) return;
+
+      const hashValues = this.$route.hash.replace('#', '').split('&');
+      if (!hashValues.includes(this.routeHistory)) {
+        const newHash = this.$route.hash
+            ? `${this.$route.hash}&${this.routeHistory}`
+            : `#${this.routeHistory}`;
+
+        this.$router.push({
+          path: this.$route.fullPath,
+          hash: newHash
+        });
+      }
+    },
+    close(force = false) {
+      if (this.noClosable && !force) {
+        this.runAnimation = true;
+        setTimeout(() => this.runAnimation = false, 300);
+        return;
+      }
+
+      if (this.routeHistory) {
+        this.handleRouteClose();
+      }
+
+      this.$emit('update:modelValue', false);
+    },
+    handleRouteClose() {
+      if (history.state.back) {
+        this.$router.back();
+        return;
+      }
+
+      let hashValues = this.$route.hash.replace('#', '').split('&');
+      hashValues = hashValues.filter(val => val !== this.routeHistory);
+
+      const newHash = hashValues.length
+          ? `#${hashValues.join('&')}`
+          : '';
+
+      this.$router.replace({
+        path: this.$route.fullPath,
+        hash: newHash
+      });
     }
   },
   beforeUnmount() {
-    document.documentElement.style.overflow = null
+    document.documentElement.style.overflow = null;
   }
 }
 </script>

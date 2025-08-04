@@ -129,9 +129,6 @@ export default {
     },
     inputHex(color) {
       const value = color.target.value
-      if (value.length !== 7) {
-        return
-      }
       this.setColorValue(value)
       this.$nextTick(() => {
 

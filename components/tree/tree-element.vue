@@ -107,10 +107,17 @@ export default {
       }
       const sortBy = this.sortBy
       s.sort(function (a, b) {
-        if (a['value'][sortBy]) {
-          return a['value'][sortBy].localeCompare(b['value'][sortBy]);
+        if (a['value'][sortBy] !== undefined) {
+          if (b['value'][sortBy] !== undefined) {
+            if (typeof a['value'][sortBy] === 'number' && typeof b['value'][sortBy] === 'number') {
+              return a['value'][sortBy] - b['value'][sortBy];
+            } else {
+              return String(a['value'][sortBy]).localeCompare(String(b['value'][sortBy]));
+            }
+          }
+          return -1;
         }
-        return 1
+        return b['value'][sortBy] !== undefined ? 1 : 0;
       });
       const lng = s.length
       for (let i = 0; i < lng; i++) {

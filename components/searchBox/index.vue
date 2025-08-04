@@ -205,8 +205,13 @@ export default {
     line-height: 20px;
     padding: 12px;
     max-width: 100%;
-    min-width: 0px;
+    min-width: 0;
     caret-color: var(--color-on-sheet);
+  }
+
+  input::placeholder {
+    color: var(--color-on-sheet);
+    opacity: 1;
   }
 
   .card-search {

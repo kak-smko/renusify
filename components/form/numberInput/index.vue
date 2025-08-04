@@ -5,7 +5,7 @@
              :active="active"
              inputControlClass="v-center"
     >
-      <r-btn @click.prevent.stop="minus" class="minus" icon :text="btnText">
+      <r-btn :disabled="min!==undefined&&number<=min" :text="btnText" class="minus" icon @click.prevent.stop="minus">
         <r-icon v-html="$r.icons.minus"></r-icon>
       </r-btn>
       <input @input="emit"
@@ -18,7 +18,7 @@
              autocomplete="no"
              v-model="number"
       />
-      <r-btn @click.prevent.stop="plus" class="plus" icon :text="btnText">
+      <r-btn :disabled="max!==undefined&&number>=max" :text="btnText" class="plus" icon @click.prevent.stop="plus">
         <r-icon v-html="$r.icons.plus"></r-icon>
       </r-btn>
     </r-input>

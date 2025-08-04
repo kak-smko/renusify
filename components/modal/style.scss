@@ -5,36 +5,45 @@
 
 
 .#{base.$prefix}modal-overlay {
-  width: 100%;
-  height: 100%;
   position: fixed;
-  left: 0;
-  right: 0;
-  top:0;
+  inset: 0;
   z-index: map.get(base.$z-index, 'important');
   background-color: var(--color-overlay);
   backdrop-filter: blur(3px) grayscale(30%);
 }
 
 .#{base.$prefix}modal {
-  align-items: center;
-  flex-direction: column;
-  display: flex;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
   position: fixed;
+  inset: 0;
+  display: flex;
   z-index: map.get(base.$z-index, 'important');
   outline: none;
 
-  .modal-content {
-    border: 1px solid var(--color-sheet-container-low);
-    background-color: var(--color-sheet-container-low);
-    color: var(--color-on-sheet)
+  // Position variants
+  &.modal-center {
+    align-items: center;
+    justify-content: center;
   }
 
+  &.modal-bottom {
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  &.modal-top {
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  &.modal-start {
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  &.modal-end {
+    align-items: center;
+    justify-content: flex-end;
+  }
 
   .modal-btn {
     width: 100%;
@@ -43,10 +52,12 @@
     .#{base.$prefix}btn {
       position: absolute;
       bottom: -40px;
-      z-index: map.get(base.$z-index, 'important')+1;
+      z-index: map.get(base.$z-index, 'important') + 1;
+
       @include mixins.rtl() {
         left: 5px;
       }
+
       @include mixins.ltr() {
         right: 5px;
       }
@@ -58,18 +69,48 @@
     max-width: 100vw;
     max-height: 90vh;
     z-index: map.get(base.$z-index, 'important');
+    background-color: var(--color-sheet-container-low);
+    color: var(--color-on-sheet);
+    border: 1px solid var(--color-sheet-container-low);
+    border-radius: base.$border-modal;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    &.modal-bottom,
+    &.modal-top {
+      width: 100%;
+      border-radius: base.$border-modal base.$border-modal 0 0;
+
+      &:not(.modal-full-width) {
+        max-width: map.get(base.$container-max-widths, 'lg');
+      }
+    }
+
+    &.modal-start,
+    &.modal-end {
+      height: 100%;
+      max-height: 100vh;
+      border-radius: 0 base.$border-modal base.$border-modal 0;
+
+      &:not(.modal-full-height) {
+        max-height: 90vh;
+      }
+    }
+
+    &.modal-start {
+      border-radius: base.$border-modal 0 0 base.$border-modal;
+    }
   }
 
   .modal-content {
-    position: relative;
-    border-radius: base.$border-modal;
+    flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 100%;
   }
 
   @include mixins2.media-breakpoint-up('md') {
-    .modal-container {
+    .modal-container:not(.modal-full-width):not(.modal-mini) {
       width: 75%;
       max-width: 75vw;
     }
@@ -79,44 +120,27 @@
     max-width: 500px;
   }
 
-  .modal-flat {
-    border-radius: 0;
-  }
-
   .modal-full-width {
     width: 100%;
-    max-width: 100vw !important;
+    max-width: 100vw;
   }
 
   .modal-full-height {
     height: 100%;
-  }
-
-  .modal-bottom {
-    border-radius: base.$border-modal base.$border-modal 0 0;
-
-    &:not(.modal-full-width) {
-      max-width: map.get(base.$container-max-widths, 'lg');
-    }
+    max-height: 100vh;
   }
 }
 
+// Animations
 .animate-modal-vibrate {
-  animation-duration: .15s !important;
-  animation-name: animate-modal-vibrate !important;
-  animation-timing-function: map.get(base.$transition, 'fast-in-fast-out') !important;
+  animation: animate-modal-vibrate 0.15s map.get(base.$transition, 'fast-in-fast-out');
+
   @keyframes animate-modal-vibrate {
-    0% {
-      transform: scale(1)
+    0%, 100% {
+      transform: scale(1);
     }
     50% {
-      transform: scale(1.03)
-    }
-    100% {
-      transform: scale(1)
+      transform: scale(1.03);
     }
   }
 }
-
-
-

@@ -1,5 +1,6 @@
 <template>
   <div ref="container"
+       class="ltr"
        :class="{ [$r.prefix+'img-preview-container']:true}">
     <div
         :style="wrapperStyle"
