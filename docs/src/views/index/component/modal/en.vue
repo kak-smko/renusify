@@ -24,7 +24,7 @@
  return {
     "modelValue": false,
     "routeHistory": "modal1",
-    "bottom": false,
+    "position": "center",
     "noOverlay": false,
     "fullWidth": false,
     "fullHeight": false,
@@ -45,7 +45,7 @@ methods:{
 }'
         template='<r-btn @click="modelValue=true">open modal
 </r-btn>
-<r-modal v-model="modelValue" :routeHistory="routeHistory" :bottom="bottom" :no-Overlay="noOverlay" :full-Width="fullWidth" :full-Height="fullHeight" :max-Width="maxWidth" :max-Height="maxHeight" :min-Width="minWidth" :flat="flat" :closable="closable" :closebtn="closebtn" :color="color" :animate="animate" @update:model-Value="log(`update:modelValue`,$event)" >
+<r-modal v-model="modelValue" :routeHistory="routeHistory" :position="position" :no-Overlay="noOverlay" :full-Width="fullWidth" :full-Height="fullHeight" :max-Width="maxWidth" :max-Height="maxHeight" :min-Width="minWidth" :flat="flat" :no-closable="closable" :no-close-btn="closebtn" :color="color" :animate="animate" @update:model-Value="log(`update:modelValue`,$event)" >
   <r-card class="pa-10 text-center">
     <h1>modal title</h1>
     <p class="mt-5">modal body</>
@@ -106,7 +106,7 @@ methods:{
         PROP / <span>Bottom</span>
       </h1>
       <r-btn outlined @click="showBot = true">Click Me</r-btn>
-      <r-modal v-model="showBot" bottom>
+      <r-modal v-model="showBot" position="bottom">
         <r-card>
           <r-container>
             <r-row class="text-center">
@@ -140,7 +140,7 @@ methods:{
         template='
        <div>
            <r-btn @click="showBot = true" outlined>Click Me</r-btn>
-      <r-modal v-model="showBot" bottom>
+      <r-modal v-model="showBot" position="bottom">
       <r-card>
         <r-container>
           <r-row class="text-center">
@@ -347,10 +347,10 @@ export default {
           description: "",
         },
         {
-          prop: "bottom",
-          type: "Boolean",
-          default: "null",
-          description: "The model is placed at the bottom of the page ",
+          prop: "position",
+          type: "String",
+          default: "center",
+          description: "The model is placed at the position of the page ",
         },
         {
           prop: "noOverlay",
@@ -401,15 +401,15 @@ export default {
           description: "The frame is being made flat.",
         },
         {
-          prop: "closable",
+          prop: "no-closable",
           type: "Boolean",
-          default: "null",
+          default: "false",
           description: "Click anywhere on the page to close it.",
         },
         {
-          prop: "closebtn",
+          prop: "no-close-btn",
           type: "Boolean",
-          default: "true",
+          default: "false",
           description: "The close button can be disabled.",
         },
         {

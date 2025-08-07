@@ -4,7 +4,7 @@
       {{ modelValue ? $d(modelValueDate, withTime ? 'long' : 'medium', locale) : null }}
     </div>
   </r-input>
-  <r-modal :model-value="show" @update:model-value="close()" :closebtn="false" closable class="text-center">
+  <r-modal :model-value="show" class="text-center" no-close-btn @update:model-value="close()">
     <div v-if="!showTime" :class="`${$r.prefix}date-input`">
       <div>
         <r-container>

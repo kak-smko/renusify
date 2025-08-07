@@ -75,8 +75,7 @@
       </r-col>
     </r-row>
     <r-modal v-model="show"
-             :closable="false"
-             :closebtn="false">
+             no-closable no-close-btn>
       <r-form v-model="valid1">
         <r-container>
           <r-row>
@@ -109,8 +108,7 @@
       </r-form>
     </r-modal>
     <r-modal v-model="showImg"
-             :closable="false"
-             :closebtn="false">
+             no-closable no-close-btn>
       <r-form v-model="valid2">
         <r-container>
           <r-file-input v-model="image"
@@ -144,8 +142,7 @@
       </r-form>
     </r-modal>
     <r-modal v-model="showVideo"
-             :closable="false"
-             :closebtn="false">
+             no-closable no-close-btn>
       <r-form v-model="valid2">
         <r-container>
           <r-file-input v-model="video"
@@ -178,8 +175,7 @@
       </r-form>
     </r-modal>
     <r-modal v-model="showPre"
-             :closable="false"
-             :closebtn="false">
+             no-closable no-close-btn>
       <r-form v-model="valid2">
         <r-container>
           <r-text-input v-model="code_name" :label="$t('name','renusify')"></r-text-input>
@@ -206,8 +202,7 @@
       </r-form>
     </r-modal>
     <r-modal v-model="showTable"
-             :closable="false"
-             :closebtn="false">
+             no-closable no-close-btn>
       <r-form v-model="valid2">
         <r-container>
           <r-select-input v-model="table_form.headers"

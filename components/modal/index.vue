@@ -10,7 +10,7 @@
           v-if="modelValue"
           :class="modalClasses"
           v-bind="$attrs"
-          @click.self="!noCloseOnClickOutside && close()"
+          @click.self="close()"
       >
         <div
             :class="containerClasses"
@@ -72,7 +72,6 @@ export default {
     },
     noClosable: Boolean,
     noCloseBtn: Boolean,
-    noCloseOnClickOutside: Boolean,
     routeHistory: String,
     color: String,
     animation: String

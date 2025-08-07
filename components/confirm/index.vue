@@ -1,5 +1,5 @@
 <template>
-  <r-modal :closebtn="false" :model-value="modelValue">
+  <r-modal :model-value="modelValue" no-close-btn>
       <r-container class="container-fluid">
         <r-row>
           <r-col class="col-12 text-center">

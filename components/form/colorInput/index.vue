@@ -2,7 +2,7 @@
   <r-input class="mt-5" :model-value="modelValue" hide labelControlClass="label-active"
            :class="`${$r.prefix}color-picker`">
     <div :style="{'background-color':modelValue||'#ffffff'}" class="shower" @click.prevent="open=true"></div>
-    <r-modal v-model="open" :closebtn="false" class="color-picker-modal" closable maxWidth="260px">
+    <r-modal v-model="open" class="color-picker-modal" maxWidth="260px" no-close-btn>
       <picker :color="modelValue" @changeColor="emit"></picker>
       <div class="d-flex h-space-between">
         <r-btn class="color-success flex-grow-1 me-1" outlined @click.prevent="close()">

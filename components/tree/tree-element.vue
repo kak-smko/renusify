@@ -29,6 +29,7 @@
                         @expand="handleExpand"
                         :expand="expand"
                         :openAll="openAll"
+                        :sort-by="sortBy"
                         @select="$emit('select',$event)"
         >
          <template v-slot="{ item,nodeKey }">

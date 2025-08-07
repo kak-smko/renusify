@@ -1,6 +1,6 @@
 <template>
   <div :class="`${$r.prefix}table-manage`">
-    <r-modal v-model="showForm" bottom full-width>
+    <r-modal v-model="showForm" full-width position="bottom">
       <slot :autoSend="autoSend"
             :method="method"
             :modelValue="editedItem"
@@ -19,7 +19,7 @@
         ></r-form-creator>
       </slot>
     </r-modal>
-    <r-modal v-model="showCopy" bottom full-width>
+    <r-modal v-model="showCopy" full-width position="bottom">
       <div class="pa-3">
         <div v-for="(item,key) in table.option" :key="key"
              class="mb-5">

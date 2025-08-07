@@ -105,7 +105,7 @@ methods:{
         PROP / <span>Bottom</span>
       </h1>
       <r-btn outlined @click="showBot = true">Click Me</r-btn>
-      <r-modal v-model="showBot" bottom>
+      <r-modal v-model="showBot" position="bottom">
         <r-card>
           <r-container>
             <r-row class="text-center">
@@ -139,7 +139,7 @@ methods:{
         template='
        <div>
            <r-btn @click="showBot = true" outlined>Click Me</r-btn>
-      <r-modal v-model="showBot" bottom>
+      <r-modal v-model="showBot" position="bottom">
       <r-card>
         <r-container>
           <r-row class="text-center">

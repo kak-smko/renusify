@@ -19,7 +19,7 @@
     <r-modal
         class="modal-timepicker"
         v-model="show_modal"
-        :closebtn="false"
+        no-close-btn
         :no-overlay="noOverlay"
     >
       <div class="pt-3 pb-1">
