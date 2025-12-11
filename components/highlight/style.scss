@@ -1,6 +1,6 @@
-@use "../../style/variables/base";
+@use "../../style" as *;
 
-.#{base.$prefix}highlight {
+.#{$prefix}highlight {
   direction: ltr;
   text-align: left;
   white-space: pre;

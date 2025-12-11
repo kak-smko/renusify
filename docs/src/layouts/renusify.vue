@@ -21,6 +21,7 @@
       </router-link>
       <r-spacer></r-spacer>
       <r-select-input
+          v-if="1===2"
           v-model="lang"
           :items="[
           { name: 'English', value: 'en' },
@@ -71,7 +72,7 @@ export default {
     }
     this.$r.lang = this.lang;
 
-    import("../views/index/menu/" + this.lang + ".json").then((data) => {
+    import("../views/index/menu/menu.json").then((data) => {
       this.menu = data.default;
       this.$r.store.menu = this.menu;
     });
@@ -107,7 +108,7 @@ $menu-width: 300px;
     position: fixed;
     top: 0;
     width: 100%;
-    height: base.$toolbar-height;
+    height: 80px;
     z-index: map.get(base.$z-index, "medium");
   }
 
@@ -121,7 +122,7 @@ $menu-width: 300px;
     .hover-div {
       width: calc(100% - #{$menu-width});
       max-width: calc(100% - #{$menu-width});
-      min-height: calc(100vh - #{base.$toolbar-height});
+      min-height: calc(100vh - 80px);
       transition: 0.1s all ease-in-out;
       position: absolute;
       top: 0;
@@ -146,8 +147,8 @@ $menu-width: 300px;
 
   .menu-main {
     transition: 0.3s all ease-in-out;
-    height: calc(100vh - #{base.$toolbar-height});
-    top: base.$toolbar-height;
+    height: calc(100vh - 80px);
+    top: 80px;
     position: fixed;
     z-index: map.get(base.$z-index, "medium");
     opacity: 0;
@@ -178,11 +179,11 @@ $menu-width: 300px;
 
   .router-div {
     position: fixed;
-    top: base.$toolbar-height;
+    top: 80px;
     width: 100%;
     max-width: 100%;
     overflow-y: auto;
-    height: calc(100vh - #{base.$toolbar-height});
+    height: calc(100vh - 80px);
     @include mixins.rtl() {
       left: 0;
     }

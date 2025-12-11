@@ -1,21 +1,20 @@
 <template>
-  <div :class="`${$r.prefix}timepicker`">
-    <r-input
-        v-bind="$attrs"
-        :active="active"
-        :model-value="lazyValue"
-        @click.prevent="show_modal = true"
-    >
-      <input
-          type="text"
-          @focusin="active = true"
-          @focusout="active = false"
-          @input="emit"
-          autocomplete="no"
-          ref="input"
-          v-model="lazyValue"
-      />
-    </r-input>
+  <r-input
+      :active="active"
+      :class="`${$r.prefix}timepicker`"
+      :model-value="lazyValue"
+      @click.prevent="show_modal = true"
+  >
+    <input
+        ref="inputRef"
+        v-model="lazyValue"
+        :placeholder="$attrs.placeholder"
+        autocomplete="no"
+        readonly
+        type="text"
+        @focusin="active = true"
+        @focusout="active = false"
+    />
     <r-modal
         class="modal-timepicker"
         v-model="show_modal"
@@ -34,7 +33,7 @@
           <r-btn
               class="color-success-text"
               outlined
-              @click.prevent="show_modal = false,emit()"
+              @click.prevent="show_modal = false,emitValue()"
           >
             {{ $t('accept', 'renusify') }}
           </r-btn
@@ -42,7 +41,7 @@
           <r-btn
               class="color-warning-text"
               outlined
-              @click.prevent="(show_modal = false), (lazyValue = null),emit()"
+              @click.prevent="(show_modal = false), (lazyValue = null),emitValue()"
           >
             {{ $t('cancel', 'renusify') }}
           </r-btn
@@ -50,52 +49,80 @@
         </div>
       </div>
     </r-modal>
-  </div>
+  </r-input>
+
 </template>
 
-<script>
-import {defineAsyncComponent} from 'vue'
+<script setup>
+import {ref, watch} from 'vue'
+import Timepicker from "./timepicker.vue"
 
-export default {
-  name: "r-time-picker",
-  components: {Timepicker:defineAsyncComponent(()=>import('./timepicker.vue'))},
-  props: {
-    disableTime: {
-      type: Function, default: () => {
-        return false
-      }
-    },
-    withSec: Boolean,
-    is24Hour: {type: Boolean, default: true},
-    noOverlay: Boolean,
-    modelValue: String
+const props = defineProps({
+  /**
+   * Function to disable specific times
+   * @type {Function}
+   * @default () => false
+   */
+  disableTime: {
+    type: Function,
+    default: () => false
   },
-  emits: ['update:modelValue'],
-  data() {
-    return {
-      active: false,
-      show_modal: false,
-      lazyValue: this.modelValue
-    };
+  /**
+   * Show seconds picker in addition to hours and minutes
+   * @type {Boolean}
+   */
+  withSec: Boolean,
+  /**
+   * Use 24-hour format instead of 12-hour AM/PM format
+   * @type {Boolean}
+   * @default true
+   */
+  is24Hour: {
+    type: Boolean,
+    default: true
   },
-  watch: {
-    modelValue: function () {
-      this.lazyValue = this.modelValue
-    }
-  },
-  methods: {
-    emit() {
-      this.$emit("update:modelValue", this.lazyValue);
-    }
-  }
-};
+  /**
+   * Disable the overlay background when picker is open
+   * @type {Boolean}
+   */
+  noOverlay: Boolean,
+  /**
+   * The model value in time string format (HH:MM or HH:MM:SS)
+   * @type {String}
+   */
+  modelValue: String
+})
+
+const emit = defineEmits([
+  /**
+   * Emitted when the time value changes
+   * @param {String} value - The updated time value
+   */
+  'update:modelValue'
+])
+
+// Reactive data
+const active = ref(false)
+const show_modal = ref(false)
+const lazyValue = ref(props.modelValue || '')
+
+// Methods
+/**
+ * Emits the updated time value to the parent component
+ */
+const emitValue = () => {
+  emit('update:modelValue', lazyValue.value)
+}
+
+// Watchers
+watch(() => props.modelValue, (newValue) => {
+  lazyValue.value = newValue || ''
+})
 </script>
 
 <style lang="scss">
 .modal-timepicker {
   .modal-mini {
-    background-color: var(--color-sheet-container-high);
-    color: var(--color-on-sheet);
     max-width: 285px !important;
   }
 }

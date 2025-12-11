@@ -1,6 +1,280 @@
 import './style.scss'
 import {cleanArray, ifHas} from '../../tools/helper.js'
 
+/**
+ * @example // v-sortable usage
+ *
+ * <template>
+ *   <div class="sortable-container">
+ *     <div class="sortable-lists">
+ *       <div class="sortable-list">
+ *         <h3>Task List</h3>
+ *         <div v-sortable="{ items: tasks, end: onTaskReorder }" class="sortable-area">
+ *           <div v-for="task in tasks" :key="task.id" class="sortable-item">
+ *             <div class="task-content">
+ *               <div class="task-icon">📋</div>
+ *               <div class="task-info">
+ *                 <div class="task-title">{{ task.title }}</div>
+ *                 <div class="task-desc">{{ task.description }}</div>
+ *               </div>
+ *             </div>
+ *             <div class="task-drag-handle">
+ *               ⋮⋮
+ *             </div>
+ *           </div>
+ *         </div>
+ *       </div>
+ *
+ *
+ *     <div class="sortable-info">
+ *       <div class="info-item">
+ *         <span>Task Order:</span>
+ *         <span class="order-value">{{ taskOrder }}</span>
+ *       </div>
+ *     </div>
+ *   </div>
+ * </template>
+ *
+ * <script>
+ * import { ref, computed } from 'vue'
+ *
+ * const tasks = ref([
+ *   { id: 1, title: 'Design Homepage', description: 'Create wireframes and mockups' },
+ *   { id: 2, title: 'Implement Login', description: 'Build authentication system' },
+ *   { id: 3, title: 'Write Documentation', description: 'Document API endpoints' },
+ *   { id: 4, title: 'Fix Mobile Bugs', description: 'Resolve responsive issues' },
+ *   { id: 5, title: 'Add Analytics', description: 'Integrate tracking tools' }
+ * ])
+ *
+ * const taskOrder = computed(() => tasks.value.map(t => t.id).join(', '))
+ *
+ * const onTaskReorder = (newOrder) => {
+ *  console.log(newOrder)
+ * }
+ *
+ * const onDragStart = () => {
+ *   console.log('Drag started')
+ * }
+ *
+ * <//script>
+ *
+ * <style>
+ * .sortable-container {
+ *   font-family: Arial, sans-serif;
+ *   padding: 20px;
+ *   max-width: 1400px;
+ *   margin: 0 auto;
+ * }
+ *
+ * .sortable-lists {
+ *   display: grid;
+ *   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+ *   gap: 30px;
+ *   margin-bottom: 30px;
+ * }
+ *
+ * .sortable-list {
+ *   background: white;
+ *   border-radius: 12px;
+ *   padding: 25px;
+ *   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+ * }
+ *
+ * .sortable-list h3 {
+ *   margin-top: 0;
+ *   color: #667eea;
+ *   font-size: 1.4rem;
+ *   margin-bottom: 20px;
+ *   text-align: center;
+ * }
+ *
+ * .sortable-area {
+ *   min-height: 400px;
+ *   border: 2px dashed #e9ecef;
+ *   border-radius: 8px;
+ *   padding: 10px;
+ * }
+ *
+ * .sortable-item {
+ *   background: white;
+ *   border: 2px solid #dee2e6;
+ *   border-radius: 8px;
+ *   padding: 15px;
+ *   margin-bottom: 10px;
+ *   display: flex;
+ *   align-items: center;
+ *   justify-content: space-between;
+ *   cursor: move;
+ *   user-select: none;
+ *   transition: all 0.3s;
+ *   position: relative;
+ * }
+ *
+ * .sortable-item:hover {
+ *   border-color: #667eea;
+ *   box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+ * }
+ *
+ * .sortable-item.on-drag {
+ *   position: absolute;
+ *   z-index: 1000;
+ *   opacity: 0.9;
+ *   transform: scale(1.05);
+ *   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+ * }
+ *
+ * .task-content {
+ *   display: flex;
+ *   align-items: center;
+ *   gap: 15px;
+ *   flex: 1;
+ * }
+ *
+ * .task-icon {
+ *   font-size: 1.5rem;
+ * }
+ *
+ * .task-info {
+ *   flex: 1;
+ * }
+ *
+ * .task-title {
+ *   font-weight: bold;
+ *   color: #333;
+ *   margin-bottom: 4px;
+ * }
+ *
+ * .task-desc {
+ *   color: #666;
+ *   font-size: 0.9rem;
+ * }
+ *
+ * .task-drag-handle {
+ *   color: #adb5bd;
+ *   font-size: 1.2rem;
+ *   padding: 0 10px;
+ *   cursor: grab;
+ *   user-select: none;
+ * }
+ *
+ * .image-item {
+ *   flex-direction: column;
+ *   align-items: stretch;
+ *   gap: 15px;
+ * }
+ *
+ * .image-content {
+ *   display: flex;
+ *   align-items: center;
+ *   gap: 15px;
+ * }
+ *
+ * .image-preview {
+ *   width: 60px;
+ *   height: 60px;
+ *   border-radius: 6px;
+ *   object-fit: cover;
+ * }
+ *
+ * .image-info {
+ *   flex: 1;
+ * }
+ *
+ * .image-title {
+ *   font-weight: bold;
+ *   color: #333;
+ *   margin-bottom: 4px;
+ * }
+ *
+ * .image-size {
+ *   color: #666;
+ *   font-size: 0.9rem;
+ * }
+ *
+ * .image-drag {
+ *   align-self: flex-end;
+ *   color: #adb5bd;
+ *   font-size: 1.2rem;
+ *   padding: 5px 10px;
+ *   background: #f8f9fa;
+ *   border-radius: 4px;
+ *   cursor: grab;
+ *   user-select: none;
+ * }
+ *
+ * .user-content {
+ *   display: flex;
+ *   align-items: center;
+ *   gap: 15px;
+ *   flex: 1;
+ * }
+ *
+ * .user-avatar {
+ *   width: 50px;
+ *   height: 50px;
+ *   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ *   color: white;
+ *   border-radius: 50%;
+ *   display: flex;
+ *   align-items: center;
+ *   justify-content: center;
+ *   font-weight: bold;
+ *   font-size: 1.2rem;
+ * }
+ *
+ * .user-info {
+ *   flex: 1;
+ * }
+ *
+ * .user-name {
+ *   font-weight: bold;
+ *   color: #333;
+ *   margin-bottom: 4px;
+ * }
+ *
+ * .user-email {
+ *   color: #666;
+ *   font-size: 0.9rem;
+ * }
+ *
+ * .sortable-info {
+ *   background: white;
+ *   border-radius: 12px;
+ *   padding: 25px;
+ *   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+ * }
+ *
+ * .sortable-info .info-item {
+ *   display: flex;
+ *   justify-content: space-between;
+ *   align-items: center;
+ *   padding: 12px;
+ *   margin-bottom: 10px;
+ *   background: #f8f9fa;
+ *   border-radius: 8px;
+ *   border-left: 4px solid #667eea;
+ * }
+ *
+ * .sortable-info .info-item:last-child {
+ *   margin-bottom: 0;
+ * }
+ *
+ * .sortable-info .info-item span:first-child {
+ *   font-weight: bold;
+ *   color: #555;
+ * }
+ *
+ * .order-value {
+ *   font-family: monospace;
+ *   font-weight: bold;
+ *   background: #e9ecef;
+ *   padding: 6px 12px;
+ *   border-radius: 4px;
+ *   min-width: 150px;
+ *   text-align: center;
+ * }
+ * </style>
+ * */
 let scopeObj;
 
 function defineScope(elementArray) {

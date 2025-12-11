@@ -2,116 +2,171 @@
   <r-input :class="`${$r.prefix}unit-input`" :active="active"
            :model-value="lazyValue"
            @click.prevent="handleClick">
-    <input :autofocus="autofocus"
-           :type="type"
-           @focusin="active=true"
-           @focusout="active=false"
-           @input="emit"
-           autocomplete="no"
-           ref="input"
-           v-model="lazyValue"
-           :readonly="disableInput"
-           :class="{'input-shadow':disableInput}"
-           class="me-1"
-    />
-    <div class="select-unit" :class="{'input-shadow':disableUnit}">
-      <r-select-input :readonly="disableUnit" :items="units" v-model="unit"
-                      @update:model-value="emit" hide justValue :translate="translate"
-                      class="mt-0"
-                      disableSearch
-                      firstSelect></r-select-input>
+    <div class="d-flex v-center">
+      <input ref="inputRef"
+             :autofocus="$attrs.autofocus"
+             :type="type"
+             @focusin="active=true"
+             @focusout="active=false"
+             :placeholder="$attrs.placeholder"
+             autocomplete="no"
+             @input="emitValue"
+             v-model="lazyValue"
+             :readonly="disableInput"
+             :class="{'input-shadow':disableInput}"
+             class="me-1"
+      />
+      <div class="select-unit" :class="{'input-shadow':disableUnit}">
+        <r-select-input :readonly="disableUnit" :items="units" v-model="unit"
+                        :translate="translate" hide justValue @update:model-value="emitValue"
+                        class="mt-0"
+                        disableSearch
+                        firstSelect></r-select-input>
+      </div>
     </div>
   </r-input>
 </template>
-<script>
-export default {
-  name: 'r-unit-input',
-  props: {
-    type: {
-      type: String,
-      default: 'text'
-    },
-    units: {
-      type: Array,
-      required: true
-    },
-    modelValue: {
-      type: Object, default: () => {
-        return {
-          value: null,
-          unit: null
-        }
-      }
-    },
-    disableInput: Boolean,
-    disableUnit: Boolean,
-    autofocus: Boolean,
-    translate: Boolean
+<script setup>
+import {ref, watch, computed} from 'vue'
+
+const props = defineProps({
+  /**
+   * Input type (text, number, etc.)
+   * @type {String}
+   * @default 'text'
+   */
+  type: {
+    type: String,
+    default: 'text'
   },
-emits:['update:modelValue'],
-  data() {
-    return {
-      lazyValue: this.modelValue ? this.modelValue.value : null,
-      active: false,
-      unit: this.modelValue ? this.modelValue.unit : null
-    }
+  /**
+   * Array of available unit options
+   * @type {Array}
+   * @required
+   */
+  units: {
+    type: Array,
+    required: true
   },
-  watch: {
-    modelValue() {
-      this.lazyValue = this.modelValue.value
-      this.unit = this.modelValue.unit
-    }
+  /**
+   * The model value object containing value and unit
+   * @type {Object}
+   * @default () => ({ value: null, unit: null })
+   */
+  modelValue: {
+    type: Object,
+    default: () => ({
+      value: null,
+      unit: null
+    })
   },
-  methods: {
-    handleClick(e) {
-      this.$refs.input.focus()
-    },
-    emit() {
-      if (this.unit === null) {
-        this.unit = this.units[0]
-      }
-      this.$emit('update:modelValue', {value: this.lazyValue, unit: this.unit})
-    }
-  }
+  /**
+   * Disable the value input field
+   * @type {Boolean}
+   */
+  disableInput: Boolean,
+  /**
+   * Disable the unit selector
+   * @type {Boolean}
+   */
+  disableUnit: Boolean,
+  /**
+   * Enable translation for unit labels
+   * @type {Boolean}
+   */
+  translate: Boolean
+})
+
+const emit = defineEmits([
+  /**
+   * Emitted when the value or unit changes
+   * @param {Object} value - The updated object with value and unit properties
+   */
+  'update:modelValue'
+])
+
+// Reactive data
+const lazyValue = ref(props.modelValue?.value ?? null)
+const active = ref(false)
+const unit = ref(props.modelValue?.unit ?? null)
+const inputRef = ref(null)
+
+// Computed properties
+/**
+ * Gets the currently selected unit or defaults to first unit in array
+ * @returns {any|null} The selected unit
+ */
+const selectedUnit = computed(() => {
+  return unit.value || (props.units.length > 0 ? props.units[0] : null)
+})
+
+// Methods
+/**
+ * Focuses the input element
+ */
+const handleClick = () => {
+  inputRef.value?.focus()
 }
 
-</script>
-<style lang="scss">
-@use "../../../style/variables/base";
-@use "../../../style/mixins";
-@use "../../../style/functions";
+/**
+ * Emits the updated value and unit to the parent component
+ */
+const emitValue = () => {
+  const value = {
+    value: lazyValue.value,
+    unit: selectedUnit.value
+  }
 
-.#{base.$prefix}unit-input {
+  emit('update:modelValue', value)
+}
+
+// Watchers
+watch(() => props.modelValue, (newValue) => {
+  if (newValue) {
+    lazyValue.value = newValue.value ?? null
+    unit.value = newValue.unit ?? null
+  } else {
+    lazyValue.value = null
+    unit.value = null
+  }
+}, {deep: true})
+</script>
+
+<style lang="scss">
+@use "../../../style" as *;
+
+.#{$prefix}unit-input {
   .input-shadow, .input-shadow * {
-    @include mixins.disable-states()
+    @include disable-states()
+  }
+
+  > .input-control {
+    @include rtl() {
+      padding-left: 0;
+    }
+    @include ltr() {
+      padding-right: 0;
+    }
   }
 
   input {
-    width: calc(65% - 4px);
+    flex-grow: 1;
   }
-
-
-  --c-unit: var(--color-sheet-low);
-
 
   .select-unit {
     width: calc(35% + 16px);
     overflow-x: clip;
 
-    * {
-      font-size: functions.map-metro-get(base.$headings, 'label-3', 'size') !important;
+    @include rtl() {
+      border-right: 1px solid var(--color-border-low);
+    }
+
+    @include ltr() {
+      border-left: 1px solid var(--color-border-low);
     }
 
     .input-control {
-      border-radius: 0;
       padding: 4px;
-      @include mixins.rtl() {
-        border-right: 1px solid var(--c-unit) !important;
-      }
-
-      @include mixins.ltr() {
-        border-left: 1px solid var(--c-unit) !important;
-      }
     }
 
 

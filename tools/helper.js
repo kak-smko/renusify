@@ -134,14 +134,6 @@ export function searchArray(arr, key, value) {
     return false;
 }
 
-export function replacer(string = null, find = ' ', replace = '-') {
-    if (!string) {
-        return string;
-    }
-
-    return string.toString().split(find).join(replace);
-}
-
 export function ifHas(object = null, rtrn = false, ...childs) {
     let o;
     if (!object) {

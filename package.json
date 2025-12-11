@@ -23,5 +23,8 @@
     "email": "ba.smko@gmail.com"
   },
   "license": "BSD",
-  "private": false
+  "private": false,
+  "scripts": {
+    "docs:generate": "node scripts/generate-docs.mjs"
+  }
 }

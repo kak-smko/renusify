@@ -1,6 +1,7 @@
 @use "../variables/base";
 
 @use "sass:map";
+@use "sass:math";
 
 
 @function breakpoint-min-width($name, $breakpoints: base.$grid-breakpoints) {
@@ -17,4 +18,11 @@
     $map: map.get($map, $key);
   }
   @return $map
+}
+
+@function fluid-font-size($min-size, $max-size, $min-vw: base.$min-viewport-width, $max-vw: base.$max-viewport-width) {
+  $slope: math.div($max-size - $min-size, $max-vw - $min-vw);
+  $slope-vw: $slope * 100;
+  $intercept: $min-size - $slope * $min-vw;
+  @return clamp(#{$min-size}, #{$intercept} + #{$slope-vw}vw, #{$max-size});
 }

@@ -1,11 +1,9 @@
 <template>
   <div class="flex-grow-1">
+    <!-- Default slot for spacer content -->
     <slot></slot>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'r-spacer'
-}
+<script setup>
 </script>

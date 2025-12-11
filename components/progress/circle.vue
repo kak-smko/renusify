@@ -28,6 +28,7 @@
       ></circle>
     </svg>
     <div :class="`${$r.prefix}progress-circle-info`">
+      <!-- Default slot for custom progress circle content -->
       <slot>
         <span v-if="showPercent">{{ modelValue }} %</span>
       </slot>
@@ -35,78 +36,196 @@
   </div>
 </template>
 
-<script>
-import './style.scss'
+<script setup>
+import {computed} from 'vue'
 
-export default {
-  name: 'pcircle',
-  props: {
-    indeterminate: Boolean,
-    showPercent: Boolean,
-    rotate: {
-      type: [Number, String],
-      default: 0
-    },
-    size: {
-      type: [Number, String],
-      default: '32'
-    },
-    width: {
-      type: [Number, String],
-      default: 4
-    },
-    modelValue: {
-      type: [Number, String],
-      default: 0
-    }
+const props = defineProps({
+  /**
+   * Shows indeterminate/animated progress circle
+   * @type {Boolean}
+   */
+  indeterminate: Boolean,
+  /**
+   * Shows percentage value in the center (when slot is not used)
+   * @type {Boolean}
+   */
+  showPercent: Boolean,
+  /**
+   * Rotation angle of the progress circle in degrees
+   * @type {Number|String}
+   * @default 0
+   */
+  rotate: {
+    type: [Number, String],
+    default: 0
   },
-  data: () => ({
-    radius: 20
-  }),
-  computed: {
+  /**
+   * Size of the progress circle in pixels
+   * @type {Number|String}
+   * @default '32'
+   */
+  size: {
+    type: [Number, String],
+    default: '32'
+  },
+  /**
+   * Stroke width of the progress circle in pixels
+   * @type {Number|String}
+   * @default 4
+   */
+  width: {
+    type: [Number, String],
+    default: 4
+  },
+  /**
+   * Current progress value (0-100)
+   * @type {Number|String}
+   * @default 0
+   */
+  modelValue: {
+    type: [Number, String],
+    default: 0
+  }
+})
 
-    circumference () {
-      return 2 * Math.PI * this.radius
-    },
+const radius = 20
 
-    normalizedValue () {
-      if (this.modelValue < 0) {
-        return 0
-      }
+const circumference = computed(() => {
+  return 2 * Math.PI * radius
+})
 
-      if (this.modelValue > 100) {
-        return 100
-      }
+const normalizedValue = computed(() => {
+  const value = parseFloat(props.modelValue)
 
-      return parseFloat(this.modelValue)
-    },
+  if (isNaN(value)) return 0
+  if (value < 0) return 0
+  if (value > 100) return 100
 
-    strokeDashArray () {
-      return Math.round(this.circumference * 1000) / 1000
-    },
+  return value
+})
 
-    strokeDashOffset () {
-      return (100 - this.normalizedValue) / 100 * this.circumference + 'px'
-    },
+const strokeDashArray = computed(() => {
+  return Math.round(circumference.value * 1000) / 1000
+})
 
-    strokeWidth () {
-      return Number(this.width) / +this.size * this.viewBoxSize * 2
-    },
+const strokeDashOffset = computed(() => {
+  return ((100 - normalizedValue.value) / 100) * circumference.value + 'px'
+})
 
-    styles () {
-      const size= this.size + 'px'
-      return `height: ${size};
-        width: ${size}`
-    },
+const strokeWidth = computed(() => {
+  const widthNum = Number(props.width)
+  const sizeNum = Number(props.size)
 
-    svgStyles () {
-      return `transform: rotate(${Number(this.rotate)}deg)`
-    },
+  if (sizeNum === 0) return 0
+  return (widthNum / sizeNum) * viewBoxSize.value * 2
+})
 
-    viewBoxSize () {
-      return this.radius / (1 - Number(this.width) / +this.size)
+const styles = computed(() => {
+  const size = props.size + 'px'
+  return {
+    height: size,
+    width: size
+  }
+})
+
+const svgStyles = computed(() => {
+  return {
+    transform: `rotate(${Number(props.rotate)}deg)`
+  }
+})
+
+const viewBoxSize = computed(() => {
+  const widthNum = Number(props.width)
+  const sizeNum = Number(props.size)
+
+  if (sizeNum === 0 || widthNum >= sizeNum) return radius
+  return radius / (1 - widthNum / sizeNum)
+})
+
+</script>
+
+<style lang="scss">
+@use "sass:map";
+@use "../../style" as *;
+
+
+$progress-circle-rotate-animation: progress-circle-rotate 1.4s linear infinite !default;
+$progress-circle-rotate-dash: progress-circle-dash 1.4s ease-in-out infinite !default;
+$process-circle-intermediate-svg-transition: all .2s ease-in-out !default;
+$progress-circle-underlay-stroke: rgba(0, 0, 0, 0.1) !default;
+$progress-circle-overlay-transition: all .6s ease-in-out !default;
+
+.#{$prefix}progress-circle {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+  }
+
+  &-indeterminate {
+    svg {
+      animation: $progress-circle-rotate-animation;
+      transform-origin: center center;
+      transition: $process-circle-intermediate-svg-transition;
     }
 
+    .#{$prefix}progress-circle-overlay {
+      animation: $progress-circle-rotate-dash;
+      stroke-linecap: round;
+      stroke-dasharray: 80, 200;
+      stroke-dashoffset: 0px;
+    }
+  }
+
+  &-info {
+    align-items: center;
+    display: flex;
+    justify-content: center
+  }
+
+  &-underlay {
+    stroke: $progress-circle-underlay-stroke;
+    z-index: 1
+  }
+
+  &-overlay {
+    stroke: currentColor;
+    z-index: 2;
+    transition: $progress-circle-overlay-transition
   }
 }
-</script>
+
+@keyframes progress-circle-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0px
+  }
+  50% {
+    stroke-dasharray: 100, 200;
+    stroke-dashoffset: -15px
+  }
+  100% {
+    stroke-dasharray: 100, 200;
+    stroke-dashoffset: -125px
+  }
+}
+
+@keyframes progress-circle-rotate {
+  100% {
+    transform: rotate(360deg)
+  }
+}
+
+</style>

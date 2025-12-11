@@ -1,0 +1,937 @@
+[
+  {
+    "id": 1,
+    "name": "Introduction",
+    "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><path fill=\"currentColor\" d=\"M21 4H3a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2M3 19V6h8v13H3m18 0h-8V6h8v13m-7-9.5h6V11h-6V9.5m0 2.5h6v1.5h-6V12m0 2.5h6V16h-6v-1.5Z\"/></svg>",
+    "childs": [
+      {
+        "name": "Why Renusify?",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "introduction-whyRenusify"
+          }
+        }
+      },
+      {
+        "name": "Support",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "introduction-support"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "getting started",
+    "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><path fill=\"currentColor\" d=\"M12 12q-.425 0-.713-.288T11 11V3q0-.425.288-.713T12 2q.425 0 .713.288T13 3v8q0 .425-.288.713T12 12Zm0 9q-1.875 0-3.513-.713t-2.85-1.924q-1.212-1.213-1.924-2.85T3 12q0-1.525.5-2.963T4.95 6.4q.275-.35.7-.338t.75.338q.275.275.25.675t-.275.75Q5.7 8.725 5.35 9.8T5 12q0 2.925 2.038 4.963T12 19q2.925 0 4.963-2.038T19 12q0-1.15-.338-2.238T17.6 7.775q-.25-.325-.275-.713t.25-.662q.3-.3.725-.313t.7.313q.975 1.2 1.488 2.625T21 12q0 1.875-.713 3.513t-1.924 2.85q-1.213 1.212-2.85 1.925T12 21Z\"/></svg>",
+    "childs": [
+      {
+        "name": "installation",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "getting_started-installation"
+          }
+        }
+      },
+      {
+        "name": "Browser Support",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "getting_started-browserSupport"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "features",
+    "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><path fill=\"currentColor\" d=\"M13 9V3h8v6h-8ZM3 13V3h8v10H3Zm10 8V11h8v10h-8ZM3 21v-6h8v6H3Z\"/></svg>",
+    "childs": [
+      {
+        "name": "direction",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "features-direction"
+          }
+        }
+      },
+      {
+        "name": "breakpoint",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "features-breakpoint"
+          }
+        }
+      },
+      {
+        "name": "internationalization",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "features-internationalization"
+          }
+        }
+      },
+      {
+        "name": "theme",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "features-theme"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "directive",
+    "icon": "<svg  xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" role=\"img\" aria-hidden=\"true\"><path d=\"M15.6,5.29C14.5,5.19 13.53,6 13.43,7.11L13.18,10H16V12H13L12.56,17.07C12.37,19.27 10.43,20.9 8.23,20.7C6.92,20.59 5.82,19.86 5.17,18.83L6.67,17.33C6.91,18.07 7.57,18.64 8.4,18.71C9.5,18.81 10.47,18 10.57,16.89L11,12H8V10H11.17L11.44,6.93C11.63,4.73 13.57,3.1 15.77,3.3C17.08,3.41 18.18,4.14 18.83,5.17L17.33,6.67C17.09,5.93 16.43,5.36 15.6,5.29Z\"></path></svg>",
+    "childs": [
+      {
+        "name": "animate",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "directive-animate"
+          }
+        }
+      },
+      {
+        "name": "click out side",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "directive-clickOutSide"
+          }
+        }
+      },
+      {
+        "name": "drag",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "directive-drag"
+          }
+        }
+      },
+      {
+        "name": "intersect",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "directive-intersect"
+          }
+        }
+      },
+      {
+        "name": "mask",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "directive-mask"
+          }
+        }
+      },
+      {
+        "name": "parallax",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "directive-parallax"
+          }
+        }
+      },
+      {
+        "name": "ripple",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "directive-ripple"
+          }
+        }
+      },
+      {
+        "name": "scroll",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "directive-scroll"
+          }
+        }
+      },
+      {
+        "name": "sortable",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "directive-sortable"
+          }
+        }
+      },
+      {
+        "name": "touch",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "directive-touch"
+          }
+        }
+      },
+      {
+        "name": "title",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "directive-title"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "component",
+    "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 2048 2048\"><path fill=\"currentColor\" d=\"M1024 1024h768v896H128V256h896v768zM256 384v640h640V384H256zm640 1408v-640H256v640h640zm768 0v-640h-640v640h640zM1280 0h768v768h-768V0zm640 640V128h-512v512h512z\"/></svg>",
+    "childs": [
+      {
+        "name": "app",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-app"
+          }
+        }
+      },
+      {
+        "name": "avatar",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-avatar"
+          }
+        }
+      },
+      {
+        "name": "button",
+        "childs": [
+          {
+            "name": "button",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-button"
+              }
+            }
+          },
+          {
+            "name": "button confirm",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-button-buttonConfirm"
+              }
+            }
+          },
+          {
+            "name": "button group",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-button-buttonGroup"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "calendar",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-calendar"
+          }
+        }
+      },
+      {
+        "name": "card",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-card"
+          }
+        }
+      },
+      {
+        "name": "code editor",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-codeEditor"
+          }
+        }
+      },
+      {
+        "name": "confirm",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-confirm"
+          }
+        }
+      },
+      {
+        "name": "container",
+        "childs": [
+          {
+            "name": "container",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-container"
+              }
+            }
+          },
+          {
+            "name": "row",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-container-row"
+              }
+            }
+          },
+          {
+            "name": "col",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-container-col"
+              }
+            }
+          },
+          {
+            "name": "spacer",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-container-spacer"
+              }
+            }
+          },
+          {
+            "name": "divider",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-container-divider"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "content",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-content"
+          }
+        }
+      },
+      {
+        "name": "cropper",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-cropper"
+          }
+        }
+      },
+      {
+        "name": "float",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-float"
+          }
+        }
+      },
+      {
+        "name": "form",
+        "childs": [
+          {
+            "name": "form",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form"
+              }
+            }
+          },
+          {
+            "name": "input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-input"
+              }
+            }
+          },
+          {
+            "name": "color input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-colorInput"
+              }
+            }
+          },
+          {
+            "name": "date input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-dateInput"
+              }
+            }
+          },
+          {
+            "name": "file input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-fileInput"
+              }
+            }
+          },
+          {
+            "name": "tel input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-telInput"
+              }
+            }
+          },
+          {
+            "name": "json input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-jsonInput"
+              }
+            }
+          },
+          {
+            "name": "text editor",
+            "childs": [
+              {
+                "name": "text editor",
+                "to": {
+                  "name": "pages",
+                  "params": {
+                    "lang": "en",
+                    "path": "component-form-textEditor"
+                  }
+                }
+              },
+              {
+                "name": "preview",
+                "to": {
+                  "name": "pages",
+                  "params": {
+                    "lang": "en",
+                    "path": "component-form-textEditor-preview"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "time input",
+            "childs": [
+              {
+                "name": "time input",
+                "to": {
+                  "name": "pages",
+                  "params": {
+                    "lang": "en",
+                    "path": "component-form-timeInput"
+                  }
+                }
+              },
+              {
+                "name": "range",
+                "to": {
+                  "name": "pages",
+                  "params": {
+                    "lang": "en",
+                    "path": "component-form-timeInput-range"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "unique input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-uniqueInput"
+              }
+            }
+          },
+          {
+            "name": "address input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-addressInput"
+              }
+            }
+          },
+          {
+            "name": "cam input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-camInput"
+              }
+            }
+          },
+          {
+            "name": "check input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-checkInput"
+              }
+            }
+          },
+          {
+            "name": "checkbox input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-checkboxInput"
+              }
+            }
+          },
+          {
+            "name": "group input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-groupInput"
+              }
+            }
+          },
+          {
+            "name": "mask input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-maskInput"
+              }
+            }
+          },
+          {
+            "name": "number input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-numberInput"
+              }
+            }
+          },
+          {
+            "name": "password input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-passwordInput"
+              }
+            }
+          },
+          {
+            "name": "radio input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-radioInput"
+              }
+            }
+          },
+          {
+            "name": "range input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-rangeInput"
+              }
+            }
+          },
+          {
+            "name": "rating input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-ratingInput"
+              }
+            }
+          },
+          {
+            "name": "select input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-selectInput"
+              }
+            }
+          },
+          {
+            "name": "switch input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-switchInput"
+              }
+            }
+          },
+          {
+            "name": "text area",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-textArea"
+              }
+            }
+          },
+          {
+            "name": "text input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-textInput"
+              }
+            }
+          },
+          {
+            "name": "unit input",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-form-unitInput"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "form creator",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-formCreator"
+          }
+        }
+      },
+      {
+        "name": "icon",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-icon"
+          }
+        }
+      },
+      {
+        "name": "img",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-img"
+          }
+        }
+      },
+      {
+        "name": "infinite",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-infinite"
+          }
+        }
+      },
+      {
+        "name": "map",
+        "childs": [
+          {
+            "name": "map",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-map"
+              }
+            }
+          },
+          {
+            "name": "select",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-map-select"
+              }
+            }
+          },
+          {
+            "name": "route",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-map-route"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "menu",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-menu"
+          }
+        }
+      },
+      {
+        "name": "meta",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-meta"
+          }
+        }
+      },
+      {
+        "name": "modal",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-modal"
+          }
+        }
+      },
+      {
+        "name": "notify",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-notify"
+          }
+        }
+      },
+      {
+        "name": "progress",
+        "childs": [
+          {
+            "name": "circle",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-progress-circle"
+              }
+            }
+          },
+          {
+            "name": "line",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-progress-line"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "search box",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-searchBox"
+          }
+        }
+      },
+      {
+        "name": "slider",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-slider"
+          }
+        }
+      },
+      {
+        "name": "swiper",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-swiper"
+          }
+        }
+      },
+      {
+        "name": "table",
+        "childs": [
+          {
+            "name": "table",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-table"
+              }
+            }
+          },
+          {
+            "name": "crud",
+            "to": {
+              "name": "pages",
+              "params": {
+                "lang": "en",
+                "path": "component-table-crud"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "time ago",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-timeAgo"
+          }
+        }
+      },
+      {
+        "name": "tour",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-tour"
+          }
+        }
+      },
+      {
+        "name": "tree",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-tree"
+          }
+        }
+      },
+      {
+        "name": "highlight",
+        "to": {
+          "name": "pages",
+          "params": {
+            "lang": "en",
+            "path": "component-highlight"
+          }
+        }
+      }
+    ]
+  }
+]

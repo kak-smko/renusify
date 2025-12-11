@@ -1,98 +1,113 @@
 <template>
   <div class="saturation">
-    <canvas ref="canvas" :width="size" :height="size" v-touch="{'end':move,
-                  'move':move}"/>
+    <canvas
+        ref="canvasRef"
+        v-touch="{'end': handleMove, 'move': handleMove}"
+        :height="size"
+        :width="size"
+    />
     <div :style="style" class="slide"/>
   </div>
 </template>
 
-<script>
-import {color} from "./mixin.js";
 
-export default {
-  props: {
-    color: {
-      type: String,
-      default: '#000000',
-    },
-    hsv: {
-      type: Object,
-      default: null,
-    },
-    size: {
-      type: Number,
-      default: 152,
-    },
+<script setup>
+import {ref, onMounted} from 'vue'
+import {useColor} from './useColor.js'
+
+const props = defineProps({
+  color: {
+    type: String,
+    default: '#000000',
   },
-  mixins: [color],
-  emits: ['selectSaturation'],
-  data() {
-    return {
-      style: {},
-      ctx: null
-    }
+  hsv: {
+    type: Object,
+    default: null,
   },
-  mounted() {
-    this.ctx = this.$refs.canvas.getContext('2d', {willReadFrequently: true})
-    this.renderColor()
-    this.renderSlide()
+  size: {
+    type: Number,
+    default: 152,
   },
-  methods: {
-    renderColor() {
-      const size = this.size
+})
 
-      this.ctx.fillStyle = this.color
-      this.ctx.fillRect(0, 0, size, size)
+const emit = defineEmits(['selectSaturation'])
 
-      this.createLinearGradient(
-          'l',
-          this.ctx,
-          size,
-          size,
-          '#FFFFFF',
-          'rgba(255,255,255,0)'
-      )
-      this.createLinearGradient('p', this.ctx, size, size, 'rgba(0,0,0,0)', '#000000')
-    },
-    renderSlide() {
-      this.style = {
-        left: this.hsv.s * this.size - 5 + 'px',
-        top: (1 - this.hsv.v) * this.size - 5 + 'px',
-      }
-    },
-    move(e) {
-      let x = e.current.x
-      let y = e.current.y
+const {createLinearGradient} = useColor()
 
-      if (x < 0) {
-        x = 0
-      }
-      if (y < 0) {
-        y = 0
-      }
-      if (x > this.size) {
-        x = this.size
-      }
-      if (y > this.size) {
-        y = this.size
-      }
+const canvasRef = ref(null)
+const ctx = ref(null)
+const style = ref({})
 
-      this.style = {
-        left: x - 5 + 'px',
-        top: y - 5 + 'px',
-      }
 
-      const imgData = this.ctx.getImageData(
-          Math.min(x, this.size - 1),
-          Math.min(y, this.size - 1),
-          1,
-          1
-      )
-      const [r, g, b] = imgData.data
-      this.$emit('selectSaturation', {r, g, b})
-    }
-  },
+onMounted(() => {
+  if (canvasRef.value) {
+    ctx.value = canvasRef.value.getContext('2d', {willReadFrequently: true})
+    renderColor()
+    renderSlide()
+  }
+})
+
+function renderColor() {
+  const size = props.size
+
+  ctx.value.fillStyle = props.color
+  ctx.value.fillRect(0, 0, size, size)
+
+  createLinearGradient(
+      'l',
+      ctx.value,
+      size,
+      size,
+      '#FFFFFF',
+      'rgba(255,255,255,0)'
+  )
+  createLinearGradient('p', ctx.value, size, size, 'rgba(0,0,0,0)', '#000000')
 }
+
+
+function renderSlide() {
+  style.value = {
+    left: props.hsv.s * props.size - 5 + 'px',
+    top: (1 - props.hsv.v) * props.size - 5 + 'px',
+  }
+}
+
+function handleMove(e) {
+  let x = e.current.x
+  let y = e.current.y
+
+  if (x < 0) {
+    x = 0
+  }
+  if (y < 0) {
+    y = 0
+  }
+  if (x > props.size) {
+    x = props.size
+  }
+  if (y > props.size) {
+    y = props.size
+  }
+
+  style.value = {
+    left: x - 5 + 'px',
+    top: y - 5 + 'px',
+  }
+
+  const imgData = ctx.value.getImageData(
+      Math.min(x, props.size - 1),
+      Math.min(y, props.size - 1),
+      1,
+      1
+  )
+  const [r, g, b] = imgData.data
+  emit('selectSaturation', {r, g, b})
+}
+
+defineExpose({
+  renderColor,
+  renderSlide
+})
 </script>
 
 <style lang="scss">

@@ -1,16 +1,16 @@
 <template>
   <div :class="`${$r.prefix}timepicker-clock`">
     <transition mode="out-in" name="scale">
-      <div :key="show" ref="clock" class="clock ltr">
-        <div ref="center" class="center"></div>
-        <div ref="hand" :class="{ 'is-small': isSmall }" class="clock-item-hand hour"></div>
+      <div :key="show" ref="clockRef" class="clock ltr">
+        <div ref="centerRef" class="center"></div>
+        <div ref="handRef" :class="{ 'is-small': isSmall }" class="clock-item-hand hour"></div>
         <div
             v-for="(num, i) in nums"
             :key="i"
-            ref="number"
+            ref="numbersRef"
             :class="['number' + i,{'number-disabled':disableTime(parseInt(i),show,hour,min,sec)}]"
             class="number"
-            @click.prevent="set(i)"
+            @click.prevent="selectNumber(i)"
         >
           {{ num }}
         </div>
@@ -19,17 +19,17 @@
     <div class="text-meridiem ltr" v-if="!is24Hour">
       <div
           :class="{ 'meridiem-active': meridiem === 'AM' }"
-          class="time-meridiem overflow-hidden"
-          @click.prevent="(meridiem = 'AM'),emit()"
+          class="time-meridiem"
+          @click.prevent="(meridiem = 'AM'),emitTime()"
       >
-        {{ $t('timepicker_am', 'renusify') }}
+        AM
       </div>
       <div
           :class="{ 'meridiem-active': meridiem === 'PM' }"
-          class="time-meridiem overflow-hidden"
-          @click.prevent="(meridiem = 'PM'),emit()"
+          class="time-meridiem"
+          @click.prevent="(meridiem = 'PM'),emitTime()"
       >
-        {{ $t('timepicker_pm', 'renusify') }}
+        PM
       </div>
     </div>
     <div class="text-time ltr">
@@ -41,9 +41,9 @@
         }"
           class="time-show"
           placeholder="00"
-          @input="emit"
-          @update:model-value="handle_hour()"
-          @click.prevent.stop="handle_hour(false)"
+          @input="emitTime()"
+          @update:model-value="handleHour()"
+          @click.prevent.stop="handleHour(false)"
       />
       <div class="t-text">:</div>
       <input
@@ -54,9 +54,9 @@
         }"
           class="time-show"
           placeholder="00"
-          @input="emit"
-          @update:model-value="handle_min()"
-          @click.prevent.stop="handle_min(false)"
+          @input="emitTime()"
+          @update:model-value="handleMin()"
+          @click.prevent.stop="handleMin(false)"
       />
       <div class="t-text" v-if="withSec">:</div>
       <input
@@ -68,455 +68,386 @@
         }"
           class="time-show"
           placeholder="00"
-          @input="emit"
-          @update:model-value="handle_sec()"
-          @click.prevent.stop="handle_sec(false)"
+          @input="emitTime()"
+          @update:model-value="handleSec()"
+          @click.prevent.stop="handleSec(false)"
       />
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: "timepicker",
-  props: {
-    disableTime: {
-      type: Function, default: () => {
-        return false
-      }
-    },
-    withSec: Boolean,
-    is24Hour: Boolean,
-    modelValue: String
+<script setup>
+import {ref, computed, onMounted, nextTick} from 'vue'
+
+const props = defineProps({
+  disableTime: {
+    type: Function,
+    default: () => false
   },
-  emits: ['update:modelValue', 'finish'],
-  data() {
-    return {
-      show: this.is24Hour ? "hours24" : "hours12",
-      hour: null,
-      delay: 350,
-      meridiem: "AM",
-      min: null,
-      sec: null,
-      isSmall: false,
-      hours12: {
-        1: "1",
-        2: "2",
-        3: "3",
-        4: "4",
-        5: "5",
-        6: "6",
-        7: "7",
-        8: "8",
-        9: "9",
-        10: "10",
-        11: "11",
-        12: "12"
-      },
-      hours24: {
-        1: "1",
-        2: "2",
-        3: "3",
-        4: "4",
-        5: "5",
-        6: "6",
-        7: "7",
-        8: "8",
-        9: "9",
-        10: "10",
-        11: "11",
-        12: "12",
-        0: "0",
-        13: "13",
-        14: "14",
-        15: "15",
-        16: "16",
-        17: "17",
-        18: "18",
-        19: "19",
-        20: "20",
-        21: "21",
-        22: "22",
-        23: "23"
-      },
-      mins: {
-        0: "0",
-        1: "",
-        2: "",
-        3: "",
-        4: "",
-        5: "5",
-        6: "",
-        7: "",
-        8: "",
-        9: "",
-        10: "10",
-        11: "",
-        12: "",
-        13: "",
-        14: "",
-        15: "15",
-        16: "",
-        17: "",
-        18: "",
-        19: "",
-        20: "20",
-        21: "",
-        22: "",
-        23: "",
-        24: "",
-        25: "25",
-        26: "",
-        27: "",
-        28: "",
-        29: "",
-        30: "30",
-        31: "",
-        32: "",
-        33: "",
-        34: "",
-        35: "35",
-        36: "",
-        37: "",
-        38: "",
-        39: "",
-        40: "40",
-        41: "",
-        42: "",
-        43: "",
-        44: "",
-        45: "45",
-        46: "",
-        47: "",
-        48: "",
-        49: "",
-        50: "50",
-        51: "",
-        52: "",
-        53: "",
-        54: "",
-        55: "55",
-        56: "",
-        57: "",
-        58: "",
-        59: ""
-      },
-      seconds: {
-        0: "0",
-        1: "",
-        2: "",
-        3: "",
-        4: "",
-        5: "5",
-        6: "",
-        7: "",
-        8: "",
-        9: "",
-        10: "10",
-        11: "",
-        12: "",
-        13: "",
-        14: "",
-        15: "15",
-        16: "",
-        17: "",
-        18: "",
-        19: "",
-        20: "20",
-        21: "",
-        22: "",
-        23: "",
-        24: "",
-        25: "25",
-        26: "",
-        27: "",
-        28: "",
-        29: "",
-        30: "30",
-        31: "",
-        32: "",
-        33: "",
-        34: "",
-        35: "35",
-        36: "",
-        37: "",
-        38: "",
-        39: "",
-        40: "40",
-        41: "",
-        42: "",
-        43: "",
-        44: "",
-        45: "45",
-        46: "",
-        47: "",
-        48: "",
-        49: "",
-        50: "50",
-        51: "",
-        52: "",
-        53: "",
-        54: "",
-        55: "55",
-        56: "",
-        57: "",
-        58: "",
-        59: ""
-      }
-    };
-  },
-  mounted() {
-    this.setup_hour();
-    setTimeout(() => {
-      this.parser(this.modelValue)
-    }, 100)
-  },
-  computed: {
-    nums() {
-      return this[this.show];
+  withSec: Boolean,
+  is24Hour: Boolean,
+  modelValue: String
+})
+
+const emit = defineEmits(['update:modelValue', 'finish'])
+
+const show = ref(props.is24Hour ? 'hours24' : 'hours12')
+const hour = ref(null)
+const min = ref(null)
+const sec = ref(null)
+const meridiem = ref('AM')
+const isSmall = ref(false)
+
+const handRef = ref(null)
+const clockRef = ref(null)
+const numbersRef = ref([])
+
+const delay = 350
+
+const hours12 = ref({
+  1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6',
+  7: '7', 8: '8', 9: '9', 10: '10', 11: '11', 12: '12'
+})
+
+const hours24 = ref({
+  1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6',
+  7: '7', 8: '8', 9: '9', 10: '10', 11: '11', 12: '12',
+  0: '0', 13: '13', 14: '14', 15: '15', 16: '16', 17: '17',
+  18: '18', 19: '19', 20: '20', 21: '21', 22: '22', 23: '23'
+})
+
+const mins = ref({
+  0: '0', 5: '5', 10: '10', 15: '15', 20: '20', 25: '25',
+  30: '30', 35: '35', 40: '40', 45: '45', 50: '50', 55: '55',
+  ...Array.from({length: 60}, (_, i) => i)
+      .filter(i => ![0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].includes(i))
+      .reduce((acc, i) => ({...acc, [i]: ''}), {})
+})
+
+const seconds = ref({
+  0: '0', 5: '5', 10: '10', 15: '15', 20: '20', 25: '25',
+  30: '30', 35: '35', 40: '40', 45: '45', 50: '50', 55: '55',
+  ...Array.from({length: 60}, (_, i) => i)
+      .filter(i => ![0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].includes(i))
+      .reduce((acc, i) => ({...acc, [i]: ''}), {})
+})
+
+const nums = computed(() => {
+  switch (show.value) {
+    case 'hours12':
+      return hours12.value
+    case 'hours24':
+      return hours24.value
+    case 'mins':
+      return mins.value
+    case 'seconds':
+      return seconds.value
+    default:
+      return {}
+  }
+})
+
+const parser = (txt) => {
+  if (!txt) return
+
+  const parts = txt.split(' ')
+  let timeStr = parts[0]
+
+  if (parts.length === 2) {
+    meridiem.value = parts[1]
+  }
+
+  const timeParts = timeStr.split(':')
+  hour.value = parseInt(timeParts[0]) || null
+  min.value = parseInt(timeParts[1]) || null
+
+  if (props.withSec && timeParts[2]) {
+    sec.value = parseInt(timeParts[2]) || null
+  }
+
+  handleHour(false)
+}
+
+const emitTime = () => {
+  const h = hour.value || 0
+  const m = min.value || 0
+  const s = sec.value || 0
+
+  const formattedHour = h < 10 ? '0' + h : h.toString()
+  const formattedMin = m < 10 ? '0' + m : m.toString()
+  const formattedSec = s < 10 ? '0' + s : s.toString()
+
+  let timeStr = formattedHour + ':' + formattedMin
+  if (props.withSec) {
+    timeStr += ':' + formattedSec
+  }
+
+  if (!props.is24Hour) {
+    timeStr += ' ' + meridiem.value
+  }
+
+  emit('update:modelValue', timeStr)
+
+  let finishedPart = 'hour'
+  if (min.value !== null) {
+    finishedPart = props.withSec && sec.value === null ? 'minute' : 'second'
+  }
+  emit('finish', finishedPart)
+}
+
+const handleHour = (next = true) => {
+  if (hour.value > (props.is24Hour ? 23 : 12)) {
+    hour.value = props.is24Hour ? 23 : 12
+  }
+
+  show.value = props.is24Hour ? 'hours24' : 'hours12'
+
+  setTimeout(() => {
+    isSmall.value = false
+    setupHour()
+    if (hour.value !== null) {
+      setNumber(hour.value, next)
     }
-  },
-  methods: {
-    parser(txt) {
-      if (!txt) {
-        return
-      }
-      txt = txt.split(' ')
-      if (txt.length === 2) {
-        this.meridiem = txt[1]
-      }
-      txt = txt[0].split(':')
-      this.hour = parseInt(txt[0])
-      this.min = parseInt(txt[1])
-      if (this.withSec) {
-        this.sec = parseInt(txt[2])
-      }
-      this.handle_hour(false)
-    },
-    emit() {
-      let hour = this.hour || 0
-      let min = this.min || 0
-      let sec = this.sec || 0
-      if (hour < 10) {
-        hour = '0' + hour;
-      }
-      if (min < 10) {
-        min = '0' + min;
-      }
-      if (sec < 10) {
-        sec = '0' + sec;
-      }
-      let n = hour + ":" + min;
-      if (this.withSec) {
-        n += ":" + sec;
-      }
-      if (!this.is24Hour) {
-        n += " " + this.meridiem;
-      }
+  }, delay)
+}
 
-      this.$emit("update:modelValue", n);
-      this.$emit("finish", this.min === null ? 'hour' : (this.sec === null ? 'minute' : 'second'));
-    },
-    handle_hour(next = true) {
-      if (this.hour > (this.is24Hour ? 23 : 12)) {
-        this.hour = this.is24Hour ? 23 : 12;
-      }
+const handleMin = (next = true) => {
+  if (min.value > 59) {
+    min.value = 59
+  }
 
-      this.show = this.is24Hour ? "hours24" : "hours12";
+  show.value = 'mins'
+  setSmall(min.value)
+
+  setTimeout(() => {
+    setupMin()
+    if (min.value !== null) {
+      setNumber(min.value, next)
+    }
+  }, delay)
+}
+
+const handleSec = (next = true) => {
+  if (sec.value > 59) {
+    sec.value = 59
+  }
+
+  show.value = 'seconds'
+  setSmall(sec.value)
+
+  setTimeout(() => {
+    setupMin()
+    if (sec.value !== null) {
+      setNumber(sec.value, next)
+    }
+  }, delay)
+}
+
+const setNumber = (value, next = true) => {
+  const numValue = parseInt(value)
+  let element = null
+
+  if (show.value === 'hours12') {
+    element = numbersRef.value[numValue - 1]
+  } else {
+    element = numbersRef.value[numValue]
+  }
+
+  if (!element || !handRef.value || !clockRef.value) return
+
+  const clockRect = clockRef.value.getBoundingClientRect()
+  const elementRect = element.getBoundingClientRect()
+
+  const angle = calculateAngle(
+      elementRect.left + 10,
+      elementRect.top + 10,
+      clockRect.width / 2 + clockRect.left,
+      clockRect.top,
+      clockRect.width / 2 + clockRect.left,
+      clockRect.height / 2 + clockRect.top
+  )
+
+  let finalAngle = angle
+  if ((show.value === 'hours24' || show.value === 'hours12') &&
+      ((numValue > 6 && numValue < 13) || (numValue > 18 && numValue <= 23))) {
+    finalAngle = 180 + 180 - angle
+  } else if (numValue > 30) {
+    finalAngle = 180 + 180 - angle
+  }
+
+  handRef.value.style.transform = `rotate(${finalAngle}deg)`
+
+  if (show.value === 'hours24' && (numValue === 0 || numValue >= 13)) {
+    handRef.value.style.height = '70px'
+  } else {
+    handRef.value.style.height = '110px'
+  }
+
+  if (!next) {
+    // Just update the value without proceeding to next step
+    if (show.value === 'hours24' || show.value === 'hours12') {
+      hour.value = numValue
+    } else if (show.value === 'mins') {
+      min.value = numValue
+    } else {
+      sec.value = numValue
+    }
+    emitTime()
+    return
+  }
+
+  switch (show.value) {
+    case 'hours24':
+    case 'hours12':
+      hour.value = numValue
       setTimeout(() => {
-        this.isSmall = false
-        this.setup_hour();
-        this.hour && this.set(this.hour, next);
-      }, this.delay);
-    },
-    handle_min(next = true) {
-      if (this.min > 59) {
-        this.min = 59;
-      }
-      this.show = "mins";
-      this.setSmall(this.min)
-      setTimeout(() => {
-        this.setup_min();
-        this.min && this.set(this.min, next);
-      }, this.delay);
-    },
-    handle_sec(next = true) {
-      if (this.sec > 59) {
-        this.sec = 59;
-      }
-      this.show = "seconds";
-      this.setSmall(this.sec)
-      setTimeout(() => {
-        this.setup_min();
-        this.sec && this.set(this.sec, next);
-      }, this.delay);
-    },
-
-    set(h, next = true) {
-      h = parseInt(h);
-      let cl = this.$refs["number"][h];
-      if (this.show === "hours12") {
-        cl = this.$refs["number"][h - 1];
-      }
-
-      const hand = this.$refs.hand;
-      const clock = this.$refs.clock.getBoundingClientRect();
-
-      const b = cl.getBoundingClientRect();
-
-      let ang = this.angle(
-          b.left + 10,
-          b.top + 10,
-          clock.width / 2 + clock.left,
-          clock.top,
-          clock.width / 2 + clock.left,
-          clock.height / 2 + clock.top
-      );
-      if (
-          (this.show === "hours24" || this.show === "hours12") &&
-          ((h > 6 && h < 13) || (h > 18 && h <= 23))
-      ) {
-        ang = 180 + 180 - ang;
-      } else if (h > 30) {
-        ang = 180 + 180 - ang;
-      }
-      hand.style.transform = "rotate(" + ang + "deg)";
-
-      if (this.show === "hours24" && (h === 0 || h >= 13)) {
-        hand.style.height = "70px";
-      } else {
-        hand.style.height = "110px";
-      }
-
-      if (!next) {
-        if (this.show === "hours24" || this.show === "hours12") {
-          this.hour = h;
-        } else if (this.show === "mins") {
-          this.min = h;
-        }
-        this.emit();
-        return
-      }
-      if (this.show === "hours24") {
-        this.hour = h;
+        show.value = 'mins'
         setTimeout(() => {
-          this.show = "mins";
-          setTimeout(() => {
-            this.setup_min();
-          }, this.delay);
-        }, this.delay);
-      } else if (this.show === "hours12") {
-        this.hour = h;
+          setupMin()
+        }, delay)
+      }, delay)
+      break
+
+    case 'mins':
+      min.value = numValue
+      setSmall(numValue)
+      if (props.withSec) {
         setTimeout(() => {
-          this.show = "mins";
+          show.value = 'seconds'
+          isSmall.value = false
           setTimeout(() => {
-            this.setup_min();
-          }, this.delay);
-        }, this.delay);
-
-      } else if (this.show === "mins") {
-        this.min = h;
-        this.setSmall(h)
-        if (this.withSec) {
-          setTimeout(() => {
-            this.show = "seconds";
-            this.isSmall = false;
-            setTimeout(() => {
-              this.setup_min();
-            }, this.delay);
-          }, this.delay);
-        }
-      } else {
-        this.setSmall(h)
-        this.sec = h;
+            setupMin()
+          }, delay)
+        }, delay)
       }
-      this.emit();
-    },
-    setSmall(h) {
-      if ([0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].includes(h)) {
-        this.isSmall = false;
-      } else {
-        this.isSmall = true;
-      }
-    },
-    angle(p1x, p1y, p2x, p2y, p3x, p3y) {
-      let p0c = Math.sqrt(Math.pow(p3x - p1x, 2) + Math.pow(p3y - p1y, 2));
-      let p1c = Math.sqrt(Math.pow(p3x - p2x, 2) + Math.pow(p3y - p2y, 2));
-      let p0p1 = Math.sqrt(Math.pow(p2x - p1x, 2) + Math.pow(p2y - p1y, 2));
-      return (
-          Math.acos((p1c * p1c + p0c * p0c - p0p1 * p0p1) / (2 * p1c * p0c)) *
-          (180 / Math.PI)
-      );
-    },
+      break
 
-    movePointAtAngle(point, angle, distance) {
-      return [
-        point[0] + Math.sin(angle) * distance,
-        point[1] - Math.cos(angle) * distance
-      ];
-    },
+    case 'seconds':
+      setSmall(numValue)
+      sec.value = numValue
+      break
+  }
 
-    print_point(n, lng, nums = 12) {
-      return this.movePointAtAngle([130, 130], ((Math.PI * 2) / nums) * n, lng);
-    },
-    setup_hour() {
-      let cl = null;
-      let po = null;
+  emitTime()
+}
 
-      if (this.is24Hour) {
-        for (let i = 1; i <= 12; i++) {
-          cl = this.$refs["number"][i];
-          po = this.print_point(i, 110);
-          cl.style.left = po[0] - 10 + "px";
-          cl.style.top = po[1] - 10 + "px";
-          cl.classList.add('number-show')
-        }
-        for (let i = 13; i <= 23; i++) {
-          cl = this.$refs["number"][i];
-          po = this.print_point(i, 70);
-          cl.style.left = po[0] - 10 + "px";
-          cl.style.top = po[1] - 10 + "px";
-          cl.classList.add('number-show')
-        }
-        cl = this.$refs["number"][0];
-        po = this.print_point(0, 70);
-        cl.style.left = po[0] - 10 + "px";
-        cl.style.top = po[1] - 10 + "px";
-        cl.classList.add('number-show')
-      } else {
-        for (let i = 0; i < 12; i++) {
-          cl = this.$refs["number"][i];
-          po = this.print_point(i + 1, 110);
-          cl.style.left = po[0] - 10 + "px";
-          cl.style.top = po[1] - 10 + "px";
-          cl.classList.add('number-show')
-        }
-      }
-    },
-    setup_min() {
-      const clock = this.$refs.hand;
-      clock.style.transform = "rotate(0)";
-      clock.style.height = "110px";
+const setSmall = (value) => {
+  const largeValues = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]
+  isSmall.value = !largeValues.includes(parseInt(value))
+}
 
-      let cl = null;
-      let po = null;
-      for (let i = 0; i < 60; i++) {
-        cl = this.$refs["number"][i];
-        po = this.print_point(i, 110, 60);
-        cl.style.left = po[0] - 10 + "px";
-        cl.style.top = po[1] - 10 + "px";
-        cl.classList.add('number-show')
-      }
+const calculateAngle = (p1x, p1y, p2x, p2y, p3x, p3y) => {
+  const p0c = Math.sqrt(Math.pow(p3x - p1x, 2) + Math.pow(p3y - p1y, 2))
+  const p1c = Math.sqrt(Math.pow(p3x - p2x, 2) + Math.pow(p3y - p2y, 2))
+  const p0p1 = Math.sqrt(Math.pow(p2x - p1x, 2) + Math.pow(p2y - p1y, 2))
+  return Math.acos((p1c * p1c + p0c * p0c - p0p1 * p0p1) / (2 * p1c * p0c)) * (180 / Math.PI)
+}
+
+const movePointAtAngle = (point, angle, distance) => {
+  return [
+    point[0] + Math.sin(angle) * distance,
+    point[1] - Math.cos(angle) * distance
+  ]
+}
+
+const calculatePointPosition = (n, length, totalNumbers = 12) => {
+  return movePointAtAngle([130, 130], ((Math.PI * 2) / totalNumbers) * n, length)
+}
+
+const setupHour = () => {
+  if (!numbersRef.value.length) return
+
+  let element = null
+  let position = null
+
+  if (props.is24Hour) {
+    for (let i = 1; i <= 12; i++) {
+      element = numbersRef.value[i]
+      if (!element) continue
+
+      position = calculatePointPosition(i, 110)
+      element.style.left = position[0] - 10 + 'px'
+      element.style.top = position[1] - 10 + 'px'
+      element.classList.add('number-show')
+    }
+
+    for (let i = 13; i <= 23; i++) {
+      element = numbersRef.value[i]
+      if (!element) continue
+
+      position = calculatePointPosition(i, 70)
+      element.style.left = position[0] - 10 + 'px'
+      element.style.top = position[1] - 10 + 'px'
+      element.classList.add('number-show')
+    }
+
+    element = numbersRef.value[0]
+    if (element) {
+      position = calculatePointPosition(0, 70)
+      element.style.left = position[0] - 10 + 'px'
+      element.style.top = position[1] - 10 + 'px'
+      element.classList.add('number-show')
+    }
+  } else {
+    for (let i = 0; i < 12; i++) {
+      element = numbersRef.value[i]
+      if (!element) continue
+
+      position = calculatePointPosition(i + 1, 110)
+      element.style.left = position[0] - 10 + 'px'
+      element.style.top = position[1] - 10 + 'px'
+      element.classList.add('number-show')
     }
   }
-};
+}
+
+const setupMin = () => {
+  if (!handRef.value) return
+
+  handRef.value.style.transform = 'rotate(0)'
+  handRef.value.style.height = '110px'
+
+  let element = null
+  let position = null
+
+  for (let i = 0; i < 60; i++) {
+    element = numbersRef.value[i]
+    if (!element) continue
+
+    position = calculatePointPosition(i, 110, 60)
+    element.style.left = position[0] - 10 + 'px'
+    element.style.top = position[1] - 10 + 'px'
+    element.classList.add('number-show')
+  }
+}
+
+
+const selectNumber = (value) => {
+  if (props.disableTime && props.disableTime(value, show.value, hour.value, min.value)) {
+    return
+  }
+
+  setNumber(value, true)
+}
+
+
+onMounted(() => {
+  nextTick(() => {
+    setupHour()
+
+    setTimeout(() => {
+      if (props.modelValue) {
+        parser(props.modelValue)
+      }
+    }, 100)
+  })
+})
 </script>
 
 <style lang="scss">
-@use "../../../style/variables/base";
-@use "../../../style/mixins";
+@use "../../../style" as *;
 
-.#{base.$prefix}timepicker-clock {
+.#{$prefix}timepicker-clock {
 
   --color-timepicker: var(--color-one);
 
@@ -555,17 +486,19 @@ export default {
   }
 
   .meridiem-active {
-    background-color: var(--color-three-container);
-    color: var(--color-on-three-container);
+    background-color: var(--color-one-container);
+    color: var(--color-on-one-container);
   }
 
   .text-meridiem > .time-meridiem {
     width: 40px;
     height: 40px;
-    text-align: center;
+    justify-content: center;
     border-radius: 10px;
     padding: 12px 5px 5px 5px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid var(--color-border-low);
+    display: flex;
+    align-items: center;
   }
 
   .text-time > .t-text {
@@ -684,7 +617,7 @@ export default {
 
 
   .number-disabled {
-    @include mixins.disable-states()
+    @include disable-states()
   }
 }
 </style>

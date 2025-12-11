@@ -19,10 +19,10 @@ function breakpoint() {
     const height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
     const points = {
         'xs': 0,
-        'sm': 600,
-        'md': 960,
-        'lg': 1280,
-        'xl': 1620
+        'sm': 576,
+        'md': 768,
+        'lg': 1024,
+        'xl': 1440
     }
     let data = {
         points: points,
@@ -61,7 +61,6 @@ export default {
         app.config.globalProperties.$r = reactive(Object.assign({}, {
             prefix: 'r-',
             rtl: false,
-            inputs: {tile: false},
             lang: 'en',
             langs:
                 {
@@ -118,8 +117,7 @@ export default {
         // renusify validation
         const v = new valid(app.config.globalProperties.$t)
         app.config.globalProperties.$v = (names) => v.checkType(names)
-
-        app.provide('renusify', {
+        let provide = {
             $r: app.config.globalProperties.$r,
             $toast: app.config.globalProperties.$toast,
             $storage: app.config.globalProperties.$storage,
@@ -130,7 +128,11 @@ export default {
             $d: app.config.globalProperties.$d,
             $n: app.config.globalProperties.$n,
             $v: app.config.globalProperties.$v,
-        })
+        }
+        if (app.config.globalProperties.$r.useNotify) {
+            provide.$notify = app.config.globalProperties.$notify
+        }
+        app.provide('renusify', provide)
 
         // install components
         let required_directive = _register(app, options['components'] || {});

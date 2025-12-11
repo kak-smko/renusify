@@ -1,3 +1,26 @@
+/**
+ * @example // Basic usage
+ * <template>
+ * <r-meta
+ *   title="pageTitle"
+ *   description="pageDescription"
+ *   keywords="test,test2"
+ * />
+ * </template>
+ *
+ * @example // Advanced usage with HTML and HEAD attributes
+ * <template>
+ * <r-meta
+ *   :html="{ body: { id: 'page-id', class: 'home-page' } }"
+ *   :head="{ 'meta[charset]': { charset: 'utf-8' } }"
+ *   title="Dynamic Page Title"
+ *   description="Dynamic page description for SEO"
+ *   image="https://example.com/og-image.jpg"
+ *   url="https://example.com/current-page"
+ *   lang="en-US"
+ * />
+ *</template>
+ */
 //https://github.com/troxler/headful/blob/master/src/headful.js
 export default {
     name: "r-meta",
@@ -84,9 +107,9 @@ export default {
                 let property = selector;
                 property = property.split("[");
                 const name = property[0];
-                property = this.$helper.replacer(property[1], "]", "");
-                property = this.$helper.replacer(property, '"', "");
-                property = this.$helper.replacer(property, "'", "");
+                property = property[1].replaceAll("]", "");
+                property = property.replaceAll('"', "");
+                property = property.replaceAll("'", "");
                 property = property.trim(" ");
                 property = property.split("=");
                 let meta = document.createElement(name);

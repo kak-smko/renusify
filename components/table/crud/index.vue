@@ -1,6 +1,14 @@
 <template>
   <div :class="`${$r.prefix}table-manage`">
     <r-modal v-model="showForm" full-width position="bottom">
+      <!-- @slot Slot for custom form rendering
+      @binding {Boolean} autoSend - Whether to auto-send form
+      @binding {String} method - HTTP method (post/put)
+      @binding {Object} modelValue - Edited item data
+      @binding {Function} ok - Function to call on successful form submission
+      @binding {Object} options - Form field options from table headers
+      @binding {String} title - Form title
+      @binding {String} url - Form submission URL -->
       <slot :autoSend="autoSend"
             :method="method"
             :modelValue="editedItem"
@@ -60,67 +68,78 @@
                    @edit="copyHandle('edit')"
                    @update:modelValue="searching()"
                    @a-search="(a_search=$event),(searching())"></manage-header>
-    <div v-if="card" class="d-flex overflow-x-auto">
-      <div class="d-flex">
-        <r-card v-for="(item,i) in table.data" :key="i" :class="{'br-lg':!$r.inputs.tile}"
-                class="pa-3 me-3"
-                style="width: 300px">
-          <div v-for="(h,j) in headerTable" :key="i+'-'+j"
-               class="d-flex text-no-wrap overflow-x-auto">
-            <slot :editItem="editItem" :item="item" :value="h" :name="'td-'+h.value">
-              <slot :editItem="editItem" :item="item" :value="h" name="card">
-                <div v-if="h['option']['type']==='r-date-input' && item[h['value']]!==undefined"
-                     class="py-2">
-                  {{ h['text'] }}:
-                  {{ $d(new Date(item[h['value']]), h['option']['format'] || 'short') }}
+    <template v-if="card">
+      <!-- @slot Slot for custom cards view rendering
+      @binding {Function} deleteItem - Function to delete an item
+      @binding {Function} editItem - Function to edit an item
+      @binding {Array} header - Table headers
+      @binding {Array} items - Table data items -->
+      <slot :deleteItem="deleteItem" :editItem="editItem" :header="headerTable" :items="table.data" name="cards">
+        <div class="d-flex overflow-x-auto">
+          <div class="d-flex">
+            <r-card v-for="(item,i) in table.data" :key="i"
+                    class="pa-3 me-3"
+                    style="width: 300px">
+              <div v-for="(h,j) in headerTable" :key="i+'-'+j"
+                   class="d-flex text-no-wrap overflow-x-auto">
+                <!-- @slot Dynamic slot for card content, named 'td-[h.value]'
+                @binding {Function} editItem - Function to edit an item
+                @binding {Object} item - Card data item
+                @binding {Object} value - Header configuration -->
+                <slot :editItem="editItem" :item="item" :name="'td-'+h.value" :value="h">
+                  <div v-if="h['option']['type']==='r-date-input' && item[h['value']]!==undefined"
+                       class="py-2">
+                    {{ h['text'] }}:
+                    {{ $d(new Date(item[h['value']]), h['option']['format'] || 'short') }}
+                  </div>
+                  <div
+                      v-else-if="h['option']['type']==='r-time-ago' && item[h['value']]!==undefined"
+                      class="py-2">
+                    {{ h['text'] }}:
+                    <r-time-ago :time="item[h['value']]"></r-time-ago>
+                  </div>
+                  <div v-else-if="h['option']['type']==='r-switch-input'" class="d-flex py-2">
+                    {{ h['text'] }}:
+                    <r-switch-input
+                        :modelValue="item[h['value']]"
+                        :readonly="h['option']['formInput']===false"
+                        class="mt-0"
+                        @update:modelValue="h['option']['formInput']!==false?editItem(item,true,h['value']):''"
+                    ></r-switch-input>
+                  </div>
+                  <div v-else-if="h['option']['type'] === 'r-number-input'" class="py-2">
+                    {{ h['text'] }}: {{ $n(item[h['value']]) }}
+                  </div>
+                  <div v-else-if="h['option']['type']!=='action'" class="py-2">
+                    {{ h['text'] }}: {{
+                      h['value'] in cast ?
+                          $helper.ifHas(item, '', h['value'], cast[h['value']])
+                          : item[h['value']]
+                    }}
+                  </div>
+                </slot>
+                <div v-if="h['option']['type']==='action'" class="w-full text-end">
+                  <r-divider class="mt-3"></r-divider>
+                  <r-btn v-if="!disableUpdate" class="mx-0 color-success-text"
+                         icon text @click.prevent="editItem(item)">
+                    <r-icon exact v-html="$r.icons.edit"></r-icon>
+                  </r-btn>
+                  <r-btn v-if="!disableDelete" class="mx-0 color-error-text"
+                         icon text @click.prevent="deleteItem(item)">
+                    <r-icon v-html="$r.icons.delete"></r-icon>
+                  </r-btn>
+                  <r-btn v-for="(val,index) in actions" :key="index" :class="`color-${val.color}-text`"
+                         class="mx-0" icon
+                         text @click.prevent="$emit(val.name,item)">
+                    <r-icon exact v-html="val.icon"></r-icon>
+                  </r-btn>
                 </div>
-                <div
-                    v-else-if="h['option']['type']==='r-time-ago' && item[h['value']]!==undefined"
-                    class="py-2">
-                  {{ h['text'] }}:
-                  <r-time-ago :time="item[h['value']]"></r-time-ago>
-                </div>
-                <div v-else-if="h['option']['type']==='r-switch-input'" class="d-flex py-2">
-                  {{ h['text'] }}:
-                  <r-switch-input
-                      :modelValue="item[h['value']]"
-                      :readonly="h['option']['formInput']===false"
-                      class="mt-0"
-                      @update:modelValue="h['option']['formInput']!==false?editItem(item,true,h['value']):''"
-                  ></r-switch-input>
-                </div>
-                <div v-else-if="h['option']['type'] === 'r-number-input'" class="py-2">
-                  {{ h['text'] }}: {{ $n(item[h['value']]) }}
-                </div>
-                <div v-else-if="h['option']['type']!=='action'" class="py-2">
-                  {{ h['text'] }}: {{
-                  h['value'] in cast ?
-                  $helper.ifHas(item, '', h['value'], cast[h['value']])
-                  : item[h['value']]
-                  }}
-                </div>
-              </slot>
-            </slot>
-            <div v-if="h['option']['type']==='action'" class="w-full text-end">
-              <r-divider class="mt-3"></r-divider>
-              <r-btn v-if="!disableUpdate" class="mx-0 color-success-text"
-                     icon text @click.prevent="editItem(item)">
-                <r-icon exact v-html="$r.icons.edit"></r-icon>
-              </r-btn>
-              <r-btn v-if="!disableDelete" class="mx-0 color-error-text"
-                     icon text @click.prevent="deleteItem(item)">
-                <r-icon v-html="$r.icons.delete"></r-icon>
-              </r-btn>
-              <r-btn v-for="(val,index) in actions" :key="index" :class="`color-${val.color}-text`"
-                     class="mx-0" icon
-                     text @click.prevent="$emit(val.name,item)">
-                <r-icon exact v-html="val.icon"></r-icon>
-              </r-btn>
-            </div>
+              </div>
+            </r-card>
           </div>
-        </r-card>
-      </div>
-    </div>
+        </div>
+      </slot>
+    </template>
     <r-table v-else :headers="headerTable" :items="table.data" :key-item="itemId"
              :responsive="responsive"
              transition="table-row">
@@ -144,9 +163,9 @@
             }" class="w-10 icon-holder"
             >
               <r-icon v-if="(sortType === 2 && sortBy === item.value)"
-                      v-html="this.$r.icons.arrow_down"></r-icon>
+                      v-html="$r.icons.arrow_down"></r-icon>
               <r-icon v-if="(sortType !== 2 || sortBy !== item.value)"
-                      v-html="this.$r.icons.arrow_up"></r-icon>
+                      v-html="$r.icons.arrow_up"></r-icon>
 
             </div>
 
@@ -155,6 +174,10 @@
       </template>
 
       <template v-slot:row="props">
+        <!-- @slot Slot for custom row rendering in table view
+        @binding {Function} deleteItem - Function to delete an item
+        @binding {Function} editItem - Function to edit an item
+        @binding {Object} table - Table props object -->
         <slot :deleteItem="deleteItem" :editItem="editItem" :table="props" name="row">
           <td v-for="(value,key2) in props.th"
               :key="`td-${key2}`">
@@ -168,37 +191,39 @@
                    icon text @click.prevent="props.open(props.key)">
               <r-icon v-html="props.opened!==props.key?$r.icons.plus:$r.icons.minus"></r-icon>
             </r-btn>
+            <!-- @slot Dynamic slot for table cell content, named 'td-[value.value]'
+            @binding {Function} editItem - Function to edit an item
+            @binding {Object} item - Row data item
+            @binding {Object} value - Header configuration -->
             <slot :editItem="editItem" :item="props.item" :value="value" :name="'td-'+value.value">
-              <slot :editItem="editItem" :item="props.item" :value="value" name="cell">
-                <div
-                    v-if="value['option']['type']==='r-date-input' && props.item[value['value']]!==undefined">
-                  {{
+              <div
+                  v-if="value['option']['type']==='r-date-input' && props.item[value['value']]!==undefined">
+                {{
                   $d(new Date(props.item[value['value']]), value['option']['format'] || 'short')
-                  }}
-                </div>
-                <div
-                    v-else-if="value['option']['type']==='r-time-ago' && props.item[value['value']]!==undefined">
-                  <r-time-ago :time="props.item[value['value']]"></r-time-ago>
-                </div>
-                <div v-else-if="value['option']['type']==='r-switch-input'">
-                  <r-switch-input
-                      :modelValue="props.item[value['value']]"
-                      :readonly="value['option']['formInput']===false"
-                      class="mt-0"
-                      @update:modelValue="value['option']['formInput']!==false?editItem(props.item,true,value['value']):''"
-                  ></r-switch-input>
-                </div>
-                <div v-else-if="value['option']['type'] === 'r-number-input'">
-                  {{ $n(props.item[value['value']]) }}
-                </div>
-                <div v-else-if="value['option']['type']!=='action'">
-                  {{
+                }}
+              </div>
+              <div
+                  v-else-if="value['option']['type']==='r-time-ago' && props.item[value['value']]!==undefined">
+                <r-time-ago :time="props.item[value['value']]"></r-time-ago>
+              </div>
+              <div v-else-if="value['option']['type']==='r-switch-input'">
+                <r-switch-input
+                    :modelValue="props.item[value['value']]"
+                    :readonly="value['option']['formInput']===false"
+                    class="mt-0"
+                    @update:modelValue="value['option']['formInput']!==false?editItem(props.item,true,value['value']):''"
+                ></r-switch-input>
+              </div>
+              <div v-else-if="value['option']['type'] === 'r-number-input'">
+                {{ $n(props.item[value['value']]) }}
+              </div>
+              <div v-else-if="value['option']['type']!=='action'">
+                {{
                   value['value'] in cast ?
-                  $helper.ifHas(props.item, '', value['value'], cast[value['value']])
-                  : props.item[value['value']]
-                  }}
-                </div>
-              </slot>
+                      $helper.ifHas(props.item, '', value['value'], cast[value['value']])
+                      : props.item[value['value']]
+                }}
+              </div>
             </slot>
             <div v-if="value['option']['type']==='action'">
               <r-btn v-if="!disableUpdate" class="mx-0 color-success-text"
@@ -222,6 +247,7 @@
     </r-table>
     <manage-footer v-model:page="page" v-model:per-page="itemsPerPage"
                    :total="table.total"></manage-footer>
+
     <r-confirm
         v-model="showConfirm"
         hard
@@ -231,346 +257,550 @@
   </div>
 </template>
 
-<script>
-import {defineAsyncComponent} from 'vue'
+<script setup>
+import {ref, computed, watch, onMounted, inject} from 'vue'
+import ManageFooter from "./footer.vue";
+import ManageHeader from "./header.vue";
 
-export default {
-  name: 'r-table-crud',
-  components: {
-    ManageHeader: defineAsyncComponent(() =>
-        import('./header.vue')
-    ), ManageFooter: defineAsyncComponent(() =>
-        import('./footer.vue')
-    )
-  },
-  props: {
-    link: {
-      required: true,
-      type: String
-    },
-    actions: {
-      default: function () {
-        return []
-      },
-      type: Array
-    },
-    cast: {
-      default: function () {
-        return {}
-      },
-      type: Object
-    },
-    perPage: {
-      type: Object, default: () => {
-        return {name: '10', value: 10}
-      }
-    },
-    query: Object,
-    responsive: {
-      type: Boolean,
-      default: true
-    },
 
-    card: Boolean,
-    disableAdd: Boolean,
-    advanceSearch: {type: Boolean, default: true},
-    disableDelete: Boolean,
-    disableUpdate: Boolean,
-    mcud: String,
-    itemId: {type: String, default: '_id'},
-    headers: Object
+const props = defineProps({
+  /**
+   * API endpoint URL for data operations
+   * @type {String}
+   * @required
+   */
+  link: {
+    required: true,
+    type: String
   },
-  emits: ['actions'],
-  data() {
-    return {
-      time_out_id: null,
-      loading: false,
-      showForm: false,
-      showCopy: false,
-      showConfirm: false,
-      search: '',
-      a_search: {},
-      copyItem: {'d': {}, 'c': 1},
-      editedItem: {},
-      deleted: '',
-      url: '',
-      method: 'post',
-      title: '',
-      autoSend: false,
-      itemsPerPage: this.perPage,
-      page: 1,
-      sortBy: null,
-      sortType: 0,
-      table: {
-        headers: [],
-        option: {},
-        data: [],
-        startTime: false,
-        total: 0
-      },
-      check_all: false,
-      checked: {}
+  /**
+   * Array of custom action buttons configuration
+   * @type {Array}
+   * @default () => []
+   */
+  actions: {
+    default: () => [],
+    type: Array
+  },
+  /**
+   * Object mapping field names to nested property paths for display
+   * @type {Object}
+   * @default () => ({})
+   */
+  cast: {
+    default: () => ({}),
+    type: Object
+  },
+  /**
+   * Default items per page configuration
+   * @type {Object}
+   * @default () => ({name: '10', value: 10})
+   */
+  perPage: {
+    type: Object,
+    default: () => ({name: '10', value: 10})
+  },
+  /**
+   * Additional query parameters for API requests
+   * @type {Object}
+   */
+  query: Object,
+  /**
+   * Enables responsive table behavior
+   * @type {Boolean}
+   */
+  responsive: Boolean,
+  /**
+   * Displays data in cards view instead of table
+   * @type {Boolean}
+   */
+  card: Boolean,
+  /**
+   * Disables "Add New" functionality
+   * @type {Boolean}
+   */
+  disableAdd: Boolean,
+  /**
+   * Enables advanced search functionality
+   * @type {Boolean}
+   * @default true
+   */
+  advanceSearch: {type: Boolean, default: true},
+  /**
+   * Disables delete functionality
+   * @type {Boolean}
+   */
+  disableDelete: Boolean,
+  /**
+   * Disables update/edit functionality
+   * @type {Boolean}
+   */
+  disableUpdate: Boolean,
+  /**
+   * Mass CRUD operations endpoint URL
+   * @type {String}
+   */
+  mcud: String,
+  /**
+   * Property name that serves as unique item identifier
+   * @type {String}
+   * @default '_id'
+   */
+  itemId: {type: String, default: '_id'},
+  /**
+   * Additional HTTP headers for API requests
+   * @type {Object}
+   */
+  headers: Object
+})
+
+const {$helper, $t} = inject('renusify')
+const $axios = inject('axios')
+
+const time_out_id = ref(null)
+const loading = ref(false)
+const showForm = ref(false)
+const showCopy = ref(false)
+const showConfirm = ref(false)
+const search = ref('')
+const a_search = ref({})
+const copyItem = ref({d: {}, c: 1})
+const editedItem = ref({})
+const deleted = ref('')
+const url = ref('')
+const method = ref('post')
+const title = ref('')
+const autoSend = ref(false)
+const itemsPerPage = ref(props.perPage)
+const page = ref(1)
+const sortBy = ref(null)
+const sortType = ref(0)
+const table = ref({
+  headers: [],
+  option: {},
+  data: [],
+  startTime: false,
+  total: 0
+})
+const check_all = ref(false)
+const checked = ref({})
+
+
+const showMCUD = computed(() => {
+  if (check_all.value) return true
+
+  for (let k in checked.value) {
+    if (checked.value[k] === true) {
+      return true
     }
-  },
-  created() {
-    this.refresh()
-  },
-  watch: {
-    page: function (n, o) {
-      if (n > 0) {
-        this.refresh()
-      }
-    },
-    itemsPerPage: function () {
-      this.refresh()
+  }
+  return false
+})
+
+const headerTable = computed(() => {
+  const headers = table.value.headers
+  const res = []
+  const lng = headers.length
+
+  for (let i = 0; i < lng; i++) {
+    if ($helper.ifHas(headers[i], true, 'option', 'tableShow') !== false) {
+      res.push(headers[i])
     }
-  },
-  computed: {
-    showMCUD() {
-      if (this.check_all) {
-        return true
-      }
-      for (let k in this.checked) {
-        if (this.checked[k] === true) {
-          return true
-        }
-      }
-      return false
-    },
-    headerTable() {
-      const headers = this.table.headers
-      const res = []
-      const lng = headers.length
-      for (let i = 0; i < lng; i++) {
-        if (this.$helper.ifHas(headers[i], true, 'option', 'tableShow') !== false) {
-          res.push(headers[i])
-        }
-      }
-      return res
+  }
+  return res
+})
+
+
+const getAttr = (data, typ) => {
+  const res = {}
+  const ls = ['formInput', 'sortable', 'type', 'tableShow', 'priority']
+
+  if (typ === 'edit') {
+    ls.push('rules')
+  }
+
+  for (let i in data) {
+    if ($helper.hasKey(data, i) && !ls.includes(i)) {
+      res[i] = data[i]
     }
-  },
-  methods: {
-    getAttr(data, typ) {
-      let res = {}
-      let ls = ['formInput', 'sortable', 'type', 'tableShow', 'priority']
-      if (typ === 'edit') {
-        ls.push('rules')
-      }
-      for (let i in data) {
-        if (this.$helper.hasKey(data, i) &&
-            !ls.includes(i)) {
-          res[i] = data[i]
-        }
-      }
-      return res
-    },
-    copyAll() {
-      this.loading = true
-      this.$axios[this.copyItem['t'] === 'copy' ? 'post' : 'put'](this.mcud, this.copyItem, {headers: this.headers}).then(() => {
-        this.loading = false
-        this.showCopy = false
-        this.refresh()
-      }, () => {
-        this.loading = false
+  }
+  return res
+}
+
+const copyAll = () => {
+  loading.value = true
+
+  const axiosMethod = copyItem.value.t === 'copy' ? 'post' : 'put'
+  $axios[axiosMethod](props.mcud, copyItem.value, {headers: props.headers})
+      .then(() => {
+        loading.value = false
+        showCopy.value = false
+        refresh()
       })
-    },
-    copyHandle(typ = 'copy') {
-      this.copyItem = {'d': {}, 'c': 1, 't': typ}
-      if (typ === 'edit') {
-        this.copyItem['ids'] = this.get_ids()
-        if (this.copyItem['ids'].length === 0) {
-          return
-        }
-      }
-      if (typ === 'copy') {
-        if (this.check_all) {
-          this.copyItem['d'] = this.table.data[0]
-          this.copyItem['c'] = 1
-        }
-        for (let k in this.checked) {
-          if (this.checked[k] === true) {
-            this.table.data.forEach((item) => {
-              if (item[this.itemId] === k) {
-                this.copyItem['d'] = item
-                this.copyItem['c'] = 1
-              }
-            })
-            break
+      .catch(() => {
+        loading.value = false
+      })
+}
+
+const copyHandle = (typ = 'copy') => {
+  copyItem.value = {d: {}, c: 1, t: typ}
+
+  if (typ === 'edit') {
+    copyItem.value.ids = get_ids()
+    if (copyItem.value.ids.length === 0) {
+      return
+    }
+  }
+
+  if (typ === 'copy') {
+    if (check_all.value) {
+      copyItem.value.d = table.value.data[0]
+      copyItem.value.c = 1
+    }
+
+    for (let k in checked.value) {
+      if (checked.value[k] === true) {
+        table.value.data.forEach((item) => {
+          if (item[props.itemId] === k) {
+            copyItem.value.d = item
+            copyItem.value.c = 1
           }
-        }
-      }
-      this.showCopy = true
-    },
-    get_ids() {
-      let res = []
-      if (this.check_all) {
-        this.table.data.forEach((item) => {
-          res.push(item[this.itemId])
         })
+        break
       }
-      for (let k in this.checked) {
-        if (this.checked[k] === true) {
-          res.push(k)
-        }
-      }
-      return res
-    },
-    deleteAll() {
-      let res = this.get_ids()
-      if (res.length > 0) {
-        this.$axios.delete(this.mcud, {
-          data: {
-            ids: res
-          },
-          headers: this.headers
+    }
+  }
+
+  showCopy.value = true
+}
+
+const get_ids = () => {
+  const res = []
+
+  if (check_all.value) {
+    table.value.data.forEach((item) => {
+      res.push(item[props.itemId])
+    })
+  }
+
+  for (let k in checked.value) {
+    if (checked.value[k] === true) {
+      res.push(k)
+    }
+  }
+  return res
+}
+
+const deleteAll = () => {
+  const res = get_ids()
+  if (res.length > 0) {
+    $axios.delete(props.mcud, {
+      data: {ids: res},
+      headers: props.headers
+    })
+        .then(() => {
+          refresh()
         })
-            .then(() => {
-              this.refresh()
-            })
-      }
-    },
-    sortSetup(item) {
-      if (!this.$helper.ifHas(item, true, 'option', 'sortable')) {
-        return
-      }
-      if (this.sortBy !== item.value) {
-        this.sortType = 0
-      }
-      this.sortBy = item.value
-      if (this.sortType >= 2) {
-        this.sortType = 0
+        .catch(error => {
+          console.error('Delete error:', error)
+        })
+  }
+}
+
+/**
+ * Sets up sorting for a column
+ * @param {Object} item - Header configuration object
+ */
+const sortSetup = (item) => {
+  if (!$helper.ifHas(item, true, 'option', 'sortable')) {
+    return
+  }
+
+  if (sortBy.value !== item.value) {
+    sortType.value = 0
+  }
+
+  sortBy.value = item.value
+
+  if (sortType.value >= 2) {
+    sortType.value = 0
+  } else {
+    sortType.value += 1
+  }
+
+  refresh()
+}
+
+/**
+ * Handles successful form submission
+ */
+const ok = () => {
+  table.value.startTime = false
+  page.value = 1
+  sortBy.value = null
+  sortType.value = 0
+  autoSend.value = false
+  showForm.value = false
+  refresh()
+}
+
+/**
+ * Refreshes table data
+ * @param {Object} e - Event object with perPage value
+ */
+const refresh = (e) => {
+  loading.value = true
+  check_all.value = false
+  checked.value = {}
+
+  const perPage = e !== undefined ? e.value : itemsPerPage.value.value
+  const params = {...props.query}
+
+  params.page = page.value
+  params.per_page = perPage
+
+  if (table.value.startTime !== false) {
+    params.t = table.value.startTime
+  }
+
+  if (sortType.value !== 0) {
+    const sort = (sortType.value === 2) ? 'desc' : 'asc'
+    params[sort] = sortBy.value
+  }
+
+  if (search.value.length >= 1) {
+    params.search = search.value
+  }
+
+  if (Object.keys(a_search.value).length > 0) {
+    params.a_search = JSON.stringify(a_search.value)
+  }
+
+  setup(props.link, params)
+}
+
+/**
+ * Performs search with debouncing
+ */
+const searching = () => {
+  clearTimeout(time_out_id.value)
+  loading.value = true
+
+  time_out_id.value = setTimeout(() => {
+    page.value = 1
+    refresh()
+  }, 1000)
+}
+
+/**
+ * Opens form for creating a new item
+ */
+const newItem = () => {
+  title.value = $t('new', 'renusify')
+  url.value = props.link
+
+  const items = {}
+  table.value.headers.forEach((item) => {
+    if (item.option.formInput !== false) {
+      if (item.option.type === 'boolean') {
+        items[item.value] = false
       } else {
-        this.sortType += 1
+        items[item.value] = null
       }
-      this.refresh()
-    },
-    ok() {
-      this.table.startTime = false
-      this.page = 1;
-      this.sortBy = null;
-      this.sortType = 0;
-      this.autoSend = false
-      this.showForm = false
-      this.refresh()
-    },
-    refresh(e) {
-      this.loading = true
-      this.check_all = false
-      this.checked = {}
-      const perPage = e !== undefined ? e.value : this.itemsPerPage.value
-      let params = this.query || {}
-      params.page = this.page
-      if (this.table.startTime !== false) {
-        params.t = this.table.startTime
-      }
-      if (this.sortType !== 0) {
-        const sort = (this.sortType === 2) ? 'desc' : 'asc'
-        params[sort] = this.sortBy
-      }
-      params.per_page = perPage
-      if (this.search.length >= 1) {
-        params.search = this.search
-      }
-      if (this.$helper.size(this.a_search) > 0) {
-        params.a_search = JSON.stringify(this.a_search)
-      }
+    }
+  })
 
-      this.setup(this.link, params)
-    },
-    searching() {
-      clearTimeout(this.time_out_id)
-      this.loading = true
-      this.time_out_id = setTimeout(() => {
-        this.page = 1
-        this.refresh()
-      }, 1000)
+  editedItem.value = items
+  method.value = 'post'
+  autoSend.value = false
+  showForm.value = true
+}
 
-    },
-    newItem() {
-      this.title = this.$t('new', 'renusify')
-      this.url = this.link
-      const items = {}
-      this.table.headers.map((item) => {
-        if (item.option.formInput !== false) {
-          if (item.option.type === 'boolean') {
-            items[item.value] = false
-          } else {
-            items[item.value] = null
-          }
-        }
+/**
+ * Opens form for editing an existing item
+ * @param {Object} item - Item to edit
+ * @param {Boolean} autoSendFlag - Whether to auto-save changes
+ * @param {String|null} key - Specific field key to edit
+ */
+const editItem = (item, autoSendFlag = false, key = null) => {
+  let sw
+  title.value = $t('edit', 'renusify')
+  url.value = `${props.link}/${item[props.itemId]}`
+
+  if (key) {
+    sw = !item[key]
+  }
+
+  const items = {}
+  table.value.headers.forEach((header) => {
+    if (header.option.formInput !== false) {
+      if (header.option.type === 'boolean') {
+        items[header.value] = item[header.value] !== undefined ? item[header.value] : false
+      } else {
+        items[header.value] = item[header.value] !== undefined ? item[header.value] : null
+      }
+    }
+  })
+
+  editedItem.value = {...items}
+
+  if (key) {
+    editedItem.value[key] = sw
+  }
+
+  method.value = 'put'
+  autoSend.value = autoSendFlag
+  showForm.value = true
+}
+
+/**
+ * Opens confirmation dialog for deleting an item
+ * @param {Object} item - Item to delete
+ */
+const deleteItem = (item) => {
+  showConfirm.value = true
+  deleted.value = item[props.itemId]
+}
+
+/**
+ * Deletes an item by ID
+ * @param {String} _id - Item ID to delete
+ */
+const deleteItemById = (_id) => {
+  $axios.delete(`${props.link}/${_id}`, {headers: props.headers})
+      .then(() => {
+        refresh()
       })
-      this.editedItem = items
-      this.method = 'post'
-      this.autoSend = false
-      this.showForm = true
-    },
-    editItem(item, autoSend = false, key = null) {
-      let sw
-      this.title = this.$t('edit', 'renusify')
-      this.url = this.link + '/' + item[this.itemId]
-      if (key) {
-        sw = !item[key]
-      }
-      const items = {}
-      this.table.headers.map((header) => {
-        if (header.option.formInput !== false) {
-          if (header.option.type === 'boolean') {
-            items[header.value] = item[header.value] !== undefined ? item[header.value] : false
-          } else {
-            items[header.value] = item[header.value] !== undefined ? item[header.value] : null
-          }
-        }
+      .catch(error => {
+        console.error('Delete item error:', error)
       })
-      this.editedItem = Object.assign({}, items)
+}
 
-      if (key) {
-        this.editedItem[key] = sw
-      }
-      this.method = 'put'
-      this.autoSend = autoSend
-      this.showForm = true
-    },
-    deleteItem(item) {
-      this.showConfirm = true
-      this.deleted = item[this.itemId]
-    },
-    delete(_id) {
-      this.$axios.delete(this.link + '/' + _id, {headers: this.headers})
-          .then((res) => {
-            this.refresh()
-          })
-    },
-    accept() {
-      this.showConfirm = false
-      this.delete(this.deleted)
-      this.deleted = ''
-      this.refresh()
-    },
-    setup(url, params = null) {
-      this.loading = true
+/**
+ * Handles confirmation dialog acceptance
+ */
+const accept = () => {
+  showConfirm.value = false
+  deleteItemById(deleted.value)
+  deleted.value = ''
+  refresh()
+}
 
-      this.$axios.get(url, {params: params, headers: this.headers}).then(({data}) => {
+/**
+ * Fetches table data from API
+ * @param {String} url - API endpoint URL
+ * @param {Object|null} params - Query parameters
+ */
+const setup = (url, params = null) => {
+  loading.value = true
+
+  $axios.get(url, {params: params, headers: props.headers})
+      .then(({data}) => {
         let all = []
-        if (this.mcud) {
+
+        if (props.mcud) {
           all.push({
             option: {type: 'mcud', sortable: false, formInput: false, priority: 10},
             text: 'action',
             value: 'action'
           })
         }
+
         all = all.concat(data.headers)
 
-        this.table.headers = all.map((item) => {
-          this.table.option[item.value] = item.option
-          item.text = this.$t(item.value)
+        table.value.headers = all.map((item) => {
+          table.value.option[item.value] = item.option
+          item.text = $t(item.value)
           return item
         })
-        this.table.data = data.data
-        this.table.total = data.total
-        this.table.startTime = this.$helper.ifHas(data, false, 't')
-        this.loading = false
+
+        table.value.data = data.data
+        table.value.total = data.total
+        table.value.startTime = $helper.ifHas(data, false, 't')
+        loading.value = false
       })
+      .catch(error => {
+        console.error('Setup error:', error)
+        loading.value = false
+      })
+}
+
+onMounted(() => {
+  refresh()
+})
+
+watch(page, (newValue) => {
+  if (newValue > 0) {
+    refresh()
+  }
+})
+
+watch(itemsPerPage, () => {
+  refresh()
+})
+</script>
+<style lang="scss">
+@use "../../../style" as *;
+
+
+.#{$prefix}table-manage {
+  white-space: nowrap;
+
+  .overflow-x-auto {
+    overflow-x: auto;
+  }
+
+  .table-checkbox {
+    width: 17px;
+    height: 17px;
+  }
+
+  .manage-footer {
+    .btn-page {
+      color: var(--color-on-sheet);
+      border: solid 1px var(--color-sheet-low);
+      background-color: var(--color-sheet-container);
+    }
+  }
+
+  th {
+    position: relative;
+    transition: 0.2s;
+
+    .icon-hidden {
+      visibility: hidden;
+    }
+
+    &.header-sortable:hover {
+      cursor: pointer;
+
+      .icon-hidden {
+        visibility: visible;
+      }
+    }
+  }
+
+  td {
+    max-width: 130px !important;
+    overflow: auto;
+  }
+
+  .manage-footer {
+    .btn-page {
+      border-radius: 30px;
+      padding: 2px;
+    }
+
+    .per-page {
+      width: 80px;
+    }
+
+    .input-page {
+      outline: none;
+      width: 20px;
+
     }
   }
 }
-</script>
+
+</style>

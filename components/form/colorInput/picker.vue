@@ -4,21 +4,21 @@
   >
     <div class="color-set">
       <Saturation
-          ref="saturation"
+          ref="saturationRef"
           :hsv="{h:h,s:s,v:v}"
           :color="rgbaString"
           :size="200"
           @selectSaturation="selectSaturation"
       />
       <Hue
-          ref="hue"
+          ref="hueRef"
           :hsv="{h:h,s:s,v:v}"
           :width="15"
           :height="200"
           @selectHue="selectHue"
       />
       <Alpha
-          ref="alpha"
+          ref="alphaRef"
           :color="rgbaString"
           :rgba="rgba"
           :width="15"
@@ -49,119 +49,124 @@
     <slot></slot>
   </div>
 </template>
+<script setup>
+import {nextTick, ref, computed, watch} from 'vue'
+import {rgb2hex, setColorValue} from './useColor.js'
+import Saturation from "./Saturation.vue";
+import Hue from "./Hue.vue";
+import Alpha from "./Alpha.vue";
+import Preview from "./Preview.vue";
 
-<script>
-import {defineAsyncComponent} from 'vue'
-import {color} from './mixin.js'
+const props = defineProps({
+  color: {
+    type: String,
+    default: '#2F1DCC',
+  }
+})
+const emit = defineEmits(['changeColor'])
+const r = ref(0)
+const g = ref(0)
+const b = ref(0)
+const a = ref(1)
+const h = ref(0)
+const s = ref(0)
+const v = ref(0)
 
-export default {
-  components: {
-    Saturation: defineAsyncComponent(() => import('./Saturation.vue')),
-    Hue: defineAsyncComponent(() => import('./Hue.vue')),
-    Alpha: defineAsyncComponent(() => import('./Alpha.vue')),
-    Preview: defineAsyncComponent(() => import('./Preview.vue'))
-  },
-  mixins: [color],
-  props: {
-    color: {
-      type: String,
-      default: '#2F1DCC',
-    }
-  },
-  emits: ['changeColor'],
-  data() {
-    return {
-      r: 0,
-      g: 0,
-      b: 0,
-      a: 1,
-      h: 0,
-      s: 0,
-      v: 0
-    }
-  },
-  computed: {
-    rgba() {
-      return {
-        r: this.r,
-        g: this.g,
-        b: this.b,
-        a: this.a
-      }
-    },
+const saturationRef = ref(null)
+const hueRef = ref(null)
+const alphaRef = ref(null)
 
-    rgbaString() {
-      return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})`
-    },
-    hexString() {
-      return this.rgb2hex(this.rgba, true)
-    },
-  },
-  created() {
-    this.setColorValue(this.color)
-  },
-  watch: {
-    color: function () {
-      this.setColorValue(this.color)
-    },
-    rgba: function () {
-      this.$emit('changeColor', {
-        rgba: this.rgbaString,
-        hex: this.hexString,
-      })
-    }
-  },
-  methods: {
-    selectSaturation(color) {
-      this.setColorValue(color)
-    },
-    selectHue(color) {
-      this.setColorValue(color)
-      this.$nextTick(() => {
+const rgba = computed(() => ({
+  r: r.value,
+  g: g.value,
+  b: b.value,
+  a: a.value
+}))
+const rgbaString = computed(() =>
+    `rgba(${r.value}, ${g.value}, ${b.value}, ${a.value})`
+)
 
-        this.$refs.saturation.renderColor()
+const hexString = computed(() =>
+    rgb2hex(rgba.value, true)
+)
 
-        this.$refs.saturation.renderSlide()
-      })
-    },
-    selectAlpha(a) {
-      this.a = a
-    },
-    inputHex(color) {
-      const value = color.target.value
-      this.setColorValue(value)
-      this.$nextTick(() => {
+watch(() => props.color, (newColor) => {
+  setColorValue(newColor, {
+    r, g, b, a, h, s, v
+  })
+})
 
-        this.$refs.saturation.renderColor()
+watch(rgba, () => {
+  emit('changeColor', {
+    rgba: rgbaString.value,
+    hex: hexString.value,
+  })
+})
 
-        this.$refs.saturation.renderSlide()
-
-        this.$refs.hue.renderSlide()
-      })
-    },
-    inputRgba(color) {
-      const value = color.target.value
-      this.setColorValue(value)
-      this.$nextTick(() => {
-        this.$refs.saturation.renderColor()
-
-        this.$refs.saturation.renderSlide()
-
-        this.$refs.hue.renderSlide()
-      })
-    }
-  },
+function selectSaturation(color) {
+  setColorValue(color, {
+    r, g, b, a, h, s, v
+  })
 }
+
+function selectHue(color) {
+  setColorValue(color, {
+    r, g, b, a, h, s, v
+  })
+  nextTick(() => {
+
+    saturationRef.value.renderColor()
+
+    saturationRef.value.renderSlide()
+  })
+}
+
+function selectAlpha(e) {
+  a.value = e
+}
+
+function inputHex(color) {
+  const value = color.target.value
+  setColorValue(value, {
+    r, g, b, a, h, s, v
+  })
+  nextTick(() => {
+
+    saturationRef.value.renderColor()
+
+    saturationRef.value.renderSlide()
+
+    hueRef.value.renderSlide()
+  })
+}
+
+function inputRgba(color) {
+  const value = color.target.value
+  setColorValue(value, {
+    r, g, b, a, h, s, v
+  })
+  nextTick(() => {
+    saturationRef.value.renderColor()
+
+    saturationRef.value.renderSlide()
+
+    hueRef.value.renderSlide()
+  })
+}
+
+setColorValue(props.color, {
+  r, g, b, a, h, s, v
+})
 </script>
 
 <style lang="scss">
 @use "sass:map";
-@use "../../../style/variables/base";
+@use "../../../style" as *;
 
 
 .color-box {
   padding: 10px;
-  border-radius: map.get(base.$borders, 'sm');
+  border-radius: map.get($borders, 'sm');
   box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.16);
   z-index: 1;
 

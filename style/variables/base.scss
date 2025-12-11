@@ -1,20 +1,14 @@
 @use "sass:map";
 @use "sass:math";
+
 $prefix: 'r-' !default;
-$body-font-family: IRANSans, 'Roboto', sans-serif !default;
-$font-size-root: 16px !default;
-$font-size-root-mobile: 13px !default;
+$body-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !default;
 $line-height-root: 1.5rem !default;
 
 $spacer: 4px !default;
 $spacers: ();
 @for $i from 0 through 24 {
-        $spacers: map.merge($spacers, ($i: $spacer * $i))
-}
-
-$negative-spacers: ();
-@for $i from 1 through 24 {
-        $negative-spacers: map.merge($negative-spacers, ("n" + $i: -$spacer * $i))
+  $spacers: map.merge($spacers, ($i: $spacer * $i))
 }
 
 $borders: (
@@ -30,59 +24,14 @@ $borders: (
 
 $cursor: ('pointer', 'auto', 'grab', 'grabbing') !default;
 
-$widths: (
-        'full': 100%,
-        '95': 95%,
-        '90': 90%,
-        '85': 85%,
-        '80': 80%,
-        '75': 75%,
-        '70': 70%,
-        '65': 65%,
-        '60': 60%,
-        '55': 55%,
-        '50': 50%,
-        '45': 45%,
-        '40': 40%,
-        '35': 35%,
-        '30': 30%,
-        '25': 25%,
-        '20': 20%,
-        '15': 15%,
-        '10': 10%,
-        '5': 5%
-) !default;
-$heights: (
-        'full': 100%,
-        '95': 95%,
-        '90': 90%,
-        '85': 85%,
-        '80': 80%,
-        '75': 75%,
-        '70': 70%,
-        '65': 65%,
-        '60': 60%,
-        '55': 55%,
-        '50': 50%,
-        '45': 45%,
-        '40': 40%,
-        '35': 35%,
-        '30': 30%,
-        '25': 25%,
-        '20': 20%,
-        '15': 15%,
-        '10': 10%,
-        '5': 5%
-) !default;
-
 $grid-breakpoints: (
         'xs': 0,
-        'sm': 600px,
-        'md': 960px,
-        'lg': 1280px,
-        'xl': 1620px
+        'sm': 36rem, // Small devices (landscape phones, 576px)
+        'md': 48rem, // Medium devices (tablets, 768px)
+        'lg': 64rem, // Large devices (desktops, 1024px)
 ) !default;
 
+$base-font-size: 1rem;
 $grid-gutter: $spacer * 6 !default;
 $form-grid-gutter: $spacer * 2 !default;
 $grid-columns: 12 !default;
@@ -93,8 +42,7 @@ $grid-gutters: (
         'xs': math.div($grid-gutter, 12),
         'sm': math.div($grid-gutter, 6),
         'md': math.div($grid-gutter, 3),
-        'lg': math.div($grid-gutter * 2, 3),
-        'xl': $grid-gutter
+        'lg':$grid-gutter
 ) !default;
 
 $box-shadows: (
@@ -104,146 +52,194 @@ $box-shadows: (
         'md': var(--box-shadow, rgb(0 0 0 / 0.1)) 0 .25rem .5rem,
         'lg': var(--box-shadow, rgb(0 0 0 / 0.1)) 0 .5rem 1rem,
         'xl': var(--box-shadow, rgb(0 0 0 / 0.1)) 0 .75rem 2rem,
-        '2xl': var(--box-shadow, rgb(0 0 0 / 0.2)) 0 1.5rem 4rem,
+        'xxl': var(--box-shadow, rgb(0 0 0 / 0.2)) 0 1.5rem 4rem,
 ) !default;
 
 $container-max-widths: (
-        'md': map.get($grid-breakpoints, 'md')-60,
-        'lg': map.get($grid-breakpoints, 'lg')-80,
-        'xl': map.get($grid-breakpoints, 'xl')-120
-) !default;
-
-$display-breakpoints: (
-        'print-only': 'only print',
-        'screen-only': 'only screen',
-        'xs-only': 'only screen and (max-width: #{map.get($grid-breakpoints, 'sm') - 1})',
-        'sm-only': 'only screen and (min-width: #{map.get($grid-breakpoints, 'sm')}) and (max-width: #{map.get($grid-breakpoints, 'md') - 1})',
-        'sm-and-down': 'only screen and (max-width: #{map.get($grid-breakpoints, 'md') - 1})',
-        'sm-and-up': 'only screen and (min-width: #{map.get($grid-breakpoints, 'sm')})',
-        'md-only': 'only screen and (min-width: #{map.get($grid-breakpoints, 'md')}) and (max-width: #{map.get($grid-breakpoints, 'lg') - 1})',
-        'md-and-down': 'only screen and (max-width: #{map.get($grid-breakpoints, 'lg') - 1})',
-        'md-and-up': 'only screen and (min-width: #{map.get($grid-breakpoints, 'md')})',
-        'lg-only': 'only screen and (min-width: #{map.get($grid-breakpoints, 'lg')}) and (max-width: #{map.get($grid-breakpoints, 'xl') - 1})',
-        'lg-and-down': 'only screen and (max-width: #{map.get($grid-breakpoints, 'xl') - 1})',
-        'lg-and-up': 'only screen and (min-width: #{map.get($grid-breakpoints, 'lg')})',
-        'xl-only': 'only screen and (min-width: #{map.get($grid-breakpoints, 'xl')})'
+        'md': map.get($grid-breakpoints, 'md')- 3rem,
+        'lg': map.get($grid-breakpoints, 'lg')- 4rem
 ) !default;
 
 $font-weights: (
-        'thin': 100,
         'light': 300,
         'regular': 400,
         'medium': 500,
-        'bold': 700,
-        'black': 900
+        'bold': 700
+) !default;
+
+$typography-ratio: 1.25;
+$min-viewport-width: 20rem;
+$max-viewport-width: 90rem;
+
+$line-heights: (
+        "tight": 1.15,
+        "normal": 1.5,
+        "relaxed": 1.6
+) !default;
+
+$letter-spacings: (
+        "tight": -0.025em,
+        "normal": 0,
+        "wide": 0.025em
+) !default;
+
+$line-heights: (
+        "tight": 1.15,
+        "normal": 1.5,
+        "relaxed": 1.6
+) !default;
+
+$letter-spacings: (
+        "tight": -0.025em,
+        "normal": 0,
+        "wide": 0.025em
 ) !default;
 
 
 $headings: (
+  //display-1/2/3	Massive, attention-grabbing heroes	Page title, full-width banner text
+  //The largest possible text. Reserved for the most important headline on a marketing site.
         'display-1': (
-                'size': 4.75rem,
-                'weight': 400,
-                'line-height': 6rem,
-                'letter-spacing': -0.02rem,
-                'text-transform': false
+                'min-size': 2.5rem,
+                'max-size': 3.75rem,
+                'weight': map.get($font-weights, "light"),
+                'line-height': map.get($line-heights, "tight"),
+                'letter-spacing': map.get($letter-spacings, "tight"),
+                'text-transform': none,
+                'fluid': true
         ),
+  //A slightly smaller massive headline. Often used as the main title on a landing page.
         'display-2': (
-                'size': 3.75rem,
-                'weight': 400,
-                'line-height': 5.3rem,
-                'letter-spacing': 0,
-                'text-transform': false
+                'min-size': 2rem,
+                'max-size': 3rem,
+                'weight': map.get($font-weights, "light"),
+                'line-height': map.get($line-heights, "tight"),
+                'letter-spacing': map.get($letter-spacings, "normal"),
+                'text-transform': none,
+                'fluid': true
         ),
+  //A large, but more manageable, display style. Can be used for a major section title or a premium product name.
         'display-3': (
-                'size': 3rem,
-                'weight': 400,
-                'line-height': 4.3rem,
-                'letter-spacing': 0,
-                'text-transform': false
+                'min-size': 1.75rem,
+                'max-size': 2.5rem,
+                'weight': map.get($font-weights, "regular"),
+                'line-height': map.get($line-heights, "tight"),
+                'letter-spacing': map.get($letter-spacings, "normal"),
+                'text-transform': none,
+                'fluid': true
         ),
+  //headline-1/2/3	Major section titles	H1, H2, H3 headings
+  //The primary title of the page. There should only be one H1 per page.
         'headline-1': (
-                'size': 2.66rem,
-                'weight': 400,
-                'line-height': 3.6rem,
-                'letter-spacing': 0,
-                'text-transform': false
+                'min-size': 1.75rem,
+                'max-size': 2.25rem,
+                'weight': map.get($font-weights, "bold"),
+                'line-height': map.get($line-heights, "normal"),
+                'letter-spacing': map.get($letter-spacings, "normal"),
+                'text-transform': none,
+                'fluid': true
         ),
+  //Major section headings. They break the page into main topics.
         'headline-2': (
-                'size': 2.33rem,
-                'weight': 400,
-                'line-height': 3.2rem,
-                'letter-spacing': 0,
-                'text-transform': false
+                'min-size': 1.5rem,
+                'max-size': 2rem,
+                'weight': map.get($font-weights, "regular"),
+                'line-height': map.get($line-heights, "normal"),
+                'letter-spacing': map.get($letter-spacings, "normal"),
+                'text-transform': none,
+                'fluid': true
         ),
+  //Sub-section headings. These nest under headline-2 sections.
         'headline-3': (
-                'size': 2rem,
-                'weight': 400,
-                'line-height': 2.66rem,
-                'letter-spacing': 0,
-                'text-transform': false
+                'size': 1.5rem,
+                'weight': map.get($font-weights, "regular"),
+                'line-height': map.get($line-heights, "normal"),
+                'letter-spacing': map.get($letter-spacings, "normal"),
+                'text-transform': none,
+                'fluid': false
         ),
+  //title-1/2/3	Smaller titles, emphasized text	H4, H5, card titles, product names
+  //Perfect for card titles, feature names, or large data points (e.g., total price).
         'title-1': (
-                'size': 1.66rem,
-                'weight': 400,
-                'line-height': 2.33rem,
-                'letter-spacing': 0,
-                'text-transform': false
+                'size': 1.25rem,
+                'weight': map.get($font-weights, "medium"),
+                'line-height': map.get($line-heights, "normal"),
+                'letter-spacing': map.get($letter-spacings, "normal"),
+                'text-transform': none,
+                'fluid': false
         ),
+  //A title that is the same size as body text but uses a medium weight (500) to create emphasis. Good for interactive element labels.
         'title-2': (
-                'size': 1.33rem,
-                'weight': 500,
-                'line-height': 1.9rem,
-                'letter-spacing': 0.0125rem,
-                'text-transform': false
+                'size': 1.125rem,
+                'weight': map.get($font-weights, "medium"),
+                'line-height': map.get($line-heights, "normal"),
+                'letter-spacing': map.get($letter-spacings, "wide"),
+                'text-transform': none,
+                'fluid': false
         ),
+  //A small, emphasized title. Useful in dense interfaces like dashboards or tables.
         'title-3': (
-                'size': 1.15rem,
-                'weight': 500,
-                'line-height': 1.66rem,
-                'letter-spacing': 0.008rem,
-                'text-transform': false
-        ),
-        'body-1': (
-                'size': 1.33rem,
-                'weight': 400,
-                'line-height': 1.8rem,
-                'letter-spacing': 0.042rem,
-                'text-transform': false
-        ),
-        'body-2': (
-                'size': 1.15rem,
-                'weight': 400,
-                'line-height': 1.66rem,
-                'letter-spacing': 0.02rem,
-                'text-transform': false
-        ),
-        'body-3': (
                 'size': 1rem,
-                'weight': 400,
-                'line-height': 1.33rem,
-                'letter-spacing': 0.033rem,
-                'text-transform': false
+                'weight': map.get($font-weights, "medium"),
+                'line-height': map.get($line-heights, "normal"),
+                'letter-spacing': map.get($letter-spacings, "wide"),
+                'text-transform': none,
+                'fluid': false
         ),
+  //THE STANDARD. Default paragraph text, product descriptions, article content—anything users read in large quantities.
+        'body-1': (
+                'size': $base-font-size,
+                'weight': map.get($font-weights, "regular"),
+                'line-height': map.get($line-heights, "relaxed"),
+                'letter-spacing': map.get($letter-spacings, "normal"),
+                'text-transform': none,
+                'fluid': false
+        ),
+  //Secondary, supporting text. Less important than body-1. Good for comments, minor details, or captions under images.
+        'body-2': (
+                'size': 0.875rem,
+                'weight': map.get($font-weights, "regular"),
+                'line-height': map.get($line-heights, "relaxed"),
+                'letter-spacing': map.get($letter-spacings, "normal"),
+                'text-transform': none,
+                'fluid': false
+        ),
+  //The absolute smallest text should be used for legal disclaimers, copyright info, or dense, non-essential data.
+        'body-3': (
+                'size': 0.8125rem,
+                'weight': map.get($font-weights, "medium"),
+                'line-height': map.get($line-heights, "relaxed"),
+                'letter-spacing': map.get($letter-spacings, "wide"),
+                'text-transform': none,
+                'fluid': false
+        ),
+  //label-1/2/3	UI controls, tags, buttons	Form labels, buttons, badges, chips
+  //Labels for form fields, buttons, or navigation items. The most common label size.
         'label-1': (
-                'size': 1.15rem,
-                'weight': 500,
-                'line-height': 1.5rem,
-                'letter-spacing': 0.008rem,
-                'text-transform': uppercase
+                'size': 0.875rem,
+                'weight': map.get($font-weights, "medium"),
+                'line-height': map.get($line-heights, "normal"),
+                'letter-spacing': map.get($letter-spacings, "wide"),
+                'text-transform': uppercase,
+                'fluid': false
         ),
+  //Smaller labels for tags, badges, or status indicators (e.g., "NEW", "SOLD OUT").
         'label-2': (
-                'size':1rem,
-                'weight': 500,
-                'line-height': 1.2rem,
-                'letter-spacing': 0.042rem,
-                'text-transform': uppercase
+                'size': 0.8125rem,
+                'weight': map.get($font-weights, "medium"),
+                'line-height': map.get($line-heights, "normal"),
+                'letter-spacing': map.get($letter-spacings, "wide"),
+                'text-transform': uppercase,
+                'fluid': false
         ),
+  //Highly specific and minimal. Only for extreme cases where space is incredibly limited.
         'label-3': (
-                'size': 0.85rem,
-                'weight': 500,
-                'line-height': 1.1rem,
-                'letter-spacing': 0.042rem,
-                'text-transform': uppercase
+                'size': 0.75rem,
+                'weight': map.get($font-weights, "bold"),
+                'line-height': map.get($line-heights, "normal"),
+                'letter-spacing': map.get($letter-spacings, "wide"),
+                'text-transform': uppercase,
+                'fluid': false
         )
 ) !default;
 
@@ -267,23 +263,6 @@ $z-index: (
         'important':50,
         'veryImportant':100,
 ) !default;
-
-//bar
-//toolbar
-$toolbar-content-padding-y: 4px !default;
-$toolbar-content-padding-x: 16px !default;
-$toolbar-height: 80px !default;
-
-//modal
-$border-modal: map.get($borders, 'md') !default;
-
-//bottom navigation
-$bottom-nav-btn-min-width: 56px !default;
-$bottom-nav-btn-max-width: 168px !default;
-$bottom-nav-height: 56px !default;
-
-//navbar
-$navbar-width: 300px !default;
 
 $states: (
         'hover':('state':('opacity':0.08)),

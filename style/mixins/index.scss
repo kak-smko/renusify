@@ -27,11 +27,23 @@
   caret-color: $color_value if($important, !important, null);
 }
 
-@mixin typography($headings,$key) {
-  font-size: functions.map-metro-get($headings, $key, 'size');
-  font-weight: functions.map-metro-get($headings, $key, 'weight');
-  line-height: functions.map-metro-get($headings, $key, 'line-height');
-  letter-spacing: functions.map-metro-get($headings, $key, 'letter-spacing');
+
+@mixin typography($styles-map, $key) {
+  $style: map.get($styles-map, $key);
+
+  font-weight: map.get($style, 'weight');
+  line-height: map.get($style, 'line-height');
+  letter-spacing: map.get($style, 'letter-spacing');
+  text-transform: map.get($style, 'text-transform');
+
+  @if map.get($style, 'fluid') {
+    font-size: functions.fluid-font-size(
+                    map.get($style, 'min-size'),
+                    map.get($style, 'max-size')
+    );
+  } @else {
+    font-size: map.get($style, 'size');
+  }
 }
 
 @mixin elevation($name, $important: false) {

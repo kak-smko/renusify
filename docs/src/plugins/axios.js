@@ -50,5 +50,6 @@ axios.interceptors.response.use(
 export default {
   install: (app) => {
     app.config.globalProperties.$axios = axios;
+    app.provide('axios', app.config.globalProperties.$axios);
   },
 };

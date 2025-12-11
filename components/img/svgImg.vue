@@ -1,45 +1,48 @@
 <template>
-  <span ref="img"></span>
+  <span ref="imgRef"></span>
 </template>
-<script>
-export default {
-  name: "svgImg",
-  props: {
-    link: String,
-    size: Object
-  },
-  created() {
-    this.ImgToSvg()
-  },
-  methods: {
-    replace(svg) {
-      if (!this.$refs.img) {
-        setTimeout(() => {
-          this.replace(svg)
-        }, 10)
-        return
-      }
-      this.$refs.img.replaceWith(svg)
-    },
-    ImgToSvg() {
-      const that = this
-      fetch(this.link).then(x => {
-        x.text().then((d) => {
-          const el = document.createElement('div')
-          el.innerHTML = d
-          let svg = el.querySelector('svg')
-          if (svg) {
-            svg.setAttribute('width', that.size.width + 'px')
-            svg.setAttribute('height', that.size.height + 'px')
-            that.replace(svg)
-          }
-        })
-      })
-    }
+<script setup>
+import {ref, onMounted, nextTick} from 'vue'
+
+const props = defineProps({
+  link: String,
+  size: Object
+})
+
+const imgRef = ref(null)
+
+const replace = (svg) => {
+  if (!imgRef.value) {
+    nextTick(() => {
+      replace(svg)
+    })
+    return
   }
+  imgRef.value.replaceWith(svg)
 }
+
+const imgToSvg = () => {
+  fetch(props.link)
+      .then(response => response.text())
+      .then(data => {
+        const el = document.createElement('div')
+        el.innerHTML = data
+        const svg = el.querySelector('svg')
+
+        if (svg && props.size) {
+          svg.setAttribute('width', `${props.size.width}px`)
+          svg.setAttribute('height', `${props.size.height}px`)
+          replace(svg)
+        }
+      })
+      .catch(error => {
+        console.error('Failed to load SVG:', error)
+      })
+}
+
+onMounted(() => {
+  imgToSvg()
+})
+
 </script>
 
-<style lang="scss">
-
-</style>

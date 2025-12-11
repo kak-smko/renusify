@@ -23,53 +23,71 @@
 
 </template>
 
-<script>
-import './style.scss'
+<script setup>
+import {ref, watch, inject} from 'vue'
 
-export default {
-  name: 'r-toast',
-  props: {
-    type: {
-      type: String,
-      default: 'info',
-      validator: function (value) {
-        return ['info', 'warning', 'error', 'success'].indexOf(value) !== -1
-      }
-    },
-    modelValue: Boolean,
-    closable: Boolean,
-    action: Function,
-    actionName: String,
-    time: {
-      type: Number,
-      default: 3000
+const props = defineProps({
+  type: {
+    type: String,
+    default: 'info',
+    validator: function (value) {
+      return ['info', 'warning', 'error', 'success'].indexOf(value) !== -1
     }
   },
-  emits:['update:modelValue'],
-  data(){
-    return{
-      setTimeout_id:null
-    }
-  },
-  methods: {
-    delay () {
-      if (this.time !== -1) {
-        clearTimeout(this.setTimeout_id)
-        this.setTimeout_id=setTimeout(() => {
-          this.close()
-        }, this.time)
-      }
-    },
-    close () {
-      this.$emit('update:modelValue', false)
-    }
-  },
-  watch: {
-    modelValue (nVal) {
-      if (nVal === true) {
-        this.delay()
-      }
-    }
+  modelValue: Boolean,
+  closable: Boolean,
+  action: Function,
+  actionName: String,
+  time: {
+    type: Number,
+    default: 3000
+  }
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+const setTimeout_id = ref(null)
+const $r = inject('renusify').$r
+
+// Methods
+const delay = () => {
+  if (props.time !== -1) {
+    clearTimeout(setTimeout_id.value)
+    setTimeout_id.value = setTimeout(() => {
+      close()
+    }, props.time)
   }
 }
+
+const close = () => {
+  emit('update:modelValue', false)
+}
+
+// Watchers
+watch(() => props.modelValue, (nVal) => {
+  if (nVal === true) {
+    delay()
+  }
+})
 </script>
+
+<style lang="scss">
+@use "sass:map";
+@use "../../../style" as *;
+
+.#{$prefix}toast {
+  max-width: 500px;
+  width: 95vw;
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: map.get($z-index, 'veryImportant');
+
+  .toast-content {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+  }
+}
+</style>

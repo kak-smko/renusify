@@ -1,27 +1,91 @@
 <template>
-  <div :class="`${this.$r.prefix}select-container`" ref="select" v-click-outside="closeList">
-    <r-input :active="active"
+  <div ref="selectRef" v-click-outside="showMode==='modal'?()=>{}:closeList"
+       :class="[`${$r.prefix}select-container`,{'open-to-top':openToTop}]">
+    <r-input :active="active||openList"
              v-bind="$attrs"
-             :readonly="readonly"
-             :modelValue="$helper.ifHas(chips,null,0,value)"
+             :modelValue="modelValue"
              @click.prevent="handleClick()">
-      <div class="select-wrap v-center"
-           :class="{
-        'h-center':disableSearch,
+      <div :class="{
         'flex-nowrap':!multiple
-      }">
-        <r-chip
+      }"
+           class="select-wrap v-center">
+        <span
             v-for="(item,key) in chips"
             :key="key"
-            :class="{'px-0':!multiple}"
-            :close="multiple&&!textChip"
-            :text="textChip || !multiple"
-            class="my-0 ms-0"
-            selectable
-            @update:modelValue="handleChip($event,key)">
+            :class="{'px-0':!multiple,'chip body-3':multiple}"
+            class=" ms-0 d-flex v-center">
           {{ item ? item[text] : '' }}
-        </r-chip>
+          <r-icon v-if="multiple" class="chip-icon cursor-pointer ms-1" height="16" width="16"
+                  @click="handleChip(false,key)"
+                  v-html="$r.icons.close"></r-icon>
+
+        </span>
         <span>
+        <input v-if="!disableSearch"
+               ref="inputRef"
+               :autofocus="autofocus"
+               :placeholder="modelValue?'':placeholder"
+               :type="type"
+               :value="inputVal"
+               autocomplete="no"
+               class="select-input"
+               @focusin="focusInput(true)"
+               @focusout="focusInput(false)"
+               @input="e => inputVal = e.target.value"
+               @keydown.enter="add"
+        />
+          </span>
+      </div>
+      <r-progress-line v-if="loading" color="color-two"></r-progress-line>
+    </r-input>
+    <div v-if="showMode!=='modal'" :class="{
+            'card-no-float':showMode==='noFloat',
+            'card-select-active':genItems.length>0 && openList
+        }" :style="{
+                    width:width+'px'
+                }"
+         class="card-select"
+    >
+      <div v-for="(item,i) in genItems"
+           :key="i"
+           :class="{'card-item-active':$helper.searchArray(chips,text,item[text])!==false}"
+           class="card-item"
+           @click="handle_item(item)">
+        <!-- Default slot for list item. Provide item prop. -->
+        <slot :item="item">
+          {{ item[text] }}
+          <transition name="fade">
+            <r-icon v-if="$helper.searchArray(chips,text,item[text])!==false" class="pe-1"
+                    exact
+                    v-html="$r.icons.check"
+            ></r-icon>
+          </transition>
+        </slot>
+      </div>
+    </div>
+    <r-modal v-else v-model="openList" full-width position="bottom">
+      <div :class="`${$r.prefix}select-container`" class="pa-3">
+        <r-input v-if="!disableSearch" :active="true"
+                 :modelValue="$helper.ifHas(chips,null,0,value)"
+                 v-bind="$attrs"
+                 @click.prevent="handleClick()">
+          <div :class="{
+        'h-center':disableSearch,
+        'flex-nowrap':!multiple
+      }"
+               class="select-wrap v-center">
+        <span
+            v-for="(item,key) in chips"
+            :key="key"
+            :class="{'px-0':!multiple,'chip body-3':multiple}"
+            class=" ms-0 d-flex v-center">
+          {{ item ? item[text] : '' }}
+          <r-icon v-if="multiple" class="chip-icon cursor-pointer ms-1" height="16" width="16"
+                  @click="handleChip(false,key)"
+                  v-html="$r.icons.close"></r-icon>
+
+        </span>
+            <span>
         <input :type="type"
                v-if="!disableSearch"
                @focusin="focusInput(true)"
@@ -29,327 +93,530 @@
                @keydown.enter="add"
                autocomplete="no"
                class="select-input"
-               :readonly="readonly"
-               ref="input"
                :value="inputVal"
                @input="e => inputVal = e.target.value"
         />
           </span>
-      </div>
-      <r-progress-line v-if="loading" color="color-two"></r-progress-line>
-    </r-input>
-    <r-card class="card-select" :class="{
-            'card-select-active':genItems.length>0 && openList,
-            'to-top':openToTop
-        }"
-            :style="{
-                    width:$refs.select&&$refs.select.getBoundingClientRect().width+'px'
-                }"
-    >
-      <r-list :filter="!searchLink?(inputVal&&inputVal.trim()):''"
-              :items="genItems"
-              :multiple="multiple"
-              :modelValue="chips"
-              :text="text"
-              :value="value"
-              @update:modelValue="listInput"
-              checked>
-        <template v-slot="props">
-          <slot :item="props.item">
-            <div class="list-title">
-              {{ props.item[text] }}
-            </div>
+          </div>
+          <r-progress-line v-if="loading" color="color-two"></r-progress-line>
+        </r-input>
+        <div v-for="(item,i) in genItems"
+             :key="i"
+             :class="{'card-item-active':$helper.searchArray(chips,text,item[text])!==false}"
+             class="card-item"
+             @click="handle_item(item)">
+          <!-- Default slot for list item. Provide item prop. -->
+          <slot :item="item">
+            {{ item[text] }}
+            <transition name="fade">
+              <r-icon v-if="$helper.searchArray(chips,text,item[text])!==false" class="pe-1"
+                      exact
+                      v-html="$r.icons.check"
+              ></r-icon>
+            </transition>
           </slot>
-          <transition name="fade">
-            <r-icon class="pe-1" exact
-                    v-html="$r.icons.check"
-                    v-if="$helper.searchArray(props.list,text,props.item[text])!==false"
-            ></r-icon>
-          </transition>
-        </template>
-      </r-list>
-    </r-card>
+        </div>
+      </div>
+    </r-modal>
   </div>
 </template>
-<script>
+<script setup>
+import {ref, computed, watch, onMounted, inject, nextTick, useAttrs} from 'vue'
 
-export default {
-  name: 'r-select',
-  inheritAttrs: false,
-  props: {
-    searchLink: String,
-    type: {
-      type: String,
-      default: 'text'
-    },
-    text: {
-      type: String,
-      default: 'name'
-    },
-    value: {
-      type: String,
-      default: 'value'
-    },
-    disableSearch: Boolean,
-    readonly: Boolean,
-    textChip: Boolean,
-    items: Array,
-    modelValue: [String, Number, Array, Object],
-    tags: Boolean,
-    multiple: Boolean,
-    justValue: Boolean,
-    openToTop: Boolean,
-    translate: Boolean,
-    firstSelect: Boolean,
-    headers: Object
+defineOptions({
+  inheritAttrs: false
+})
+
+const attr = useAttrs()
+const placeholder = attr.placeholder
+const autofocus = attr.autofocus
+
+const props = defineProps({
+  /**
+   * API endpoint URL for fetching search results
+   * @type {String}
+   */
+  searchLink: String,
+  /**
+   * Input type for the select component
+   * @type {String}
+   * @default 'text'
+   */
+  type: {
+    type: String,
+    default: 'text'
   },
-  emits: ['update:modelValue', 'del'],
-  data() {
-    return {
-      apiData: [],
-      loading: false,
-      active: false,
-      openList: false,
-      inputVal: null,
-      chips: []
-    }
+  /**
+   * Property name for display text in items
+   * @type {String}
+   * @default 'name'
+   */
+  text: {
+    type: String,
+    default: 'name'
   },
-  mounted() {
-    this.chips = this.getValue()
-    if (this.firstSelect & this.chips.length === 0) {
-      this.chips.push(this.genItems[0])
-      this.emitVal()
-    }
-    if (this.searchLink) {
-      this.get()
-    }
+  /**
+   * Property name for value in items
+   * @type {String}
+   * @default 'value'
+   */
+  value: {
+    type: String,
+    default: 'value'
   },
-  computed: {
-    genItems() {
-      let res = []
-      if (this.apiData.length > 0) {
-        res = this.apiData
-      }
+  /**
+   * Disable search functionality
+   * @type {Boolean}
+   */
+  disableSearch: Boolean,
+  /**
+   * Static array of select items
+   * @type {Array}
+   */
+  items: Array,
+  /**
+   * The selected value(s)
+   * @type {String|Number|Array|Object}
+   */
+  modelValue: [String, Number, Array, Object],
+  /**
+   * Enable tag mode (allow custom values not in items)
+   * @type {Boolean}
+   */
+  tags: Boolean,
+  /**
+   * Enable multiple selection
+   * @type {Boolean}
+   */
+  multiple: Boolean,
+  /**
+   * Emit only values instead of full objects
+   * @type {Boolean}
+   */
+  justValue: Boolean,
+  /**
+   * Open dropdown above the input
+   * @type {Boolean}
+   */
+  openToTop: Boolean,
+  /**
+   * Enable translation for item texts
+   * @type {Boolean}
+   */
+  translate: Boolean,
+  /**
+   * Automatically select first item when empty
+   * @type {Boolean}
+   */
+  firstSelect: Boolean,
+  /**
+   * Disable floating label
+   * @type {Boolean}
+   */
+  noFloat: Boolean,
+  /**
+   * Force modal display on all screen sizes
+   * @type {Boolean}
+   */
+  modal: Boolean,
+  /**
+   * Auto display mode based on screen size
+   * @type {String}
+   * @default 'modal'
+   * @validator ['modal', 'float', 'none']
+   */
+  auto: {type: String, default: 'modal', validator: value => ['modal', 'float', 'none'].includes(value)},
+  /**
+   * Additional headers for API requests
+   * @type {Object}
+   */
+  headers: Object
+})
 
-      if (this.items) {
-        res = Object.assign([], this.items)
-      }
+const emit = defineEmits([
+  /**
+   * Emitted when selected value(s) change
+   * @param {String|Number|Array|Object} value - Updated selected value(s)
+   */
+  'update:modelValue',
+  /**
+   * Emitted when a chip/tag is deleted
+   * @param {Array} deletedItem - Array containing [index, deletedItem]
+   */
+  'del'
+])
 
-      if (typeof res[0] !== 'object') {
-        for (let i in res) {
-          if (this.$helper.hasKey(res, i)) {
-            let v = {}
-            v[this.text] = res[i].toString()
-            v[this.value] = res[i]
-            res[i] = v
-          }
-        }
-      }
-      if (this.translate) {
-        for (let i in res) {
-          if (this.$helper.hasKey(res, i)) {
-            res[i][this.text] = this.$t(res[i][this.text])
-          }
-        }
-      }
-      return res
+const {$helper, $t, $r} = inject('renusify')
+const $axios = inject('axios')
+
+// Reactive data
+const apiData = ref([])
+const loading = ref(false)
+const active = ref(false)
+const openList = ref(false)
+const inputVal = ref(null)
+const width = ref(100)
+const chips = ref([])
+
+// Template refs
+const selectRef = ref(null)
+const inputRef = ref(null)
+
+// Computed properties
+/**
+ * Determines display mode based on props and screen size
+ * @returns {String} Display mode: 'modal', 'noFloat', or 'none'
+ */
+const showMode = computed(() => {
+  if ($r.breakpoint.mdAndDown) {
+    if (props.auto === 'modal') {
+      return 'modal'
     }
-  },
-  watch: {
-    'inputVal': function (newVal) {
-      if (this.searchLink) {
-        if (newVal && newVal.length > 0) {
-          this.get()
-        }
-      }
-    },
-    'modelValue': function (n) {
-      this.chips = this.getValue()
+    if (props.auto === 'float') {
+      return 'noFloat'
     }
-  },
-  methods: {
-    get() {
-      this.loading = true
-      return this.$axios.get(this.searchLink, {
-        params: {
-          s: (this.inputVal === null ? '' : this.inputVal)
-        },
-        headers: this.headers
-      }).then(({data}) => {
-        this.apiData = data
-        this.loading = false
-      }, () => {
-        this.loading = false
-      })
-    },
-    getValue() {
-      if (!this.searchLink && !this.tags && this.modelValue !== undefined && this.modelValue !== null) {
-        if (typeof this.modelValue === 'string' || typeof this.modelValue === 'number') {
-          const index = this.$helper.searchArray(this.genItems, this.value, this.modelValue)
-          if (index === false) {
-            this.$emit('update:modelValue', null)
-            return []
-          }
-        } else if (this.$helper.isArray(this.modelValue)) {
-          this.modelValue.forEach((item) => {
-            if (typeof item === 'string' || typeof item === 'number') {
-              const index = this.$helper.searchArray(this.genItems, this.value, item)
-              if (index === false) {
-                this.$emit('update:modelValue', null)
-                return []
-              }
-            } else {
-              const index = this.$helper.searchArray(this.genItems, this.value, item[this.value])
-              if (index === false) {
-                this.$emit('update:modelValue', null)
-                return []
-              }
-            }
-          })
-        } else {
-          const index = this.$helper.searchArray(this.genItems, this.value, this.modelValue[this.value])
-          if (index === false) {
-            this.$emit('update:modelValue', null)
-            return []
-          }
-        }
-      }
-      if (this.modelValue !== undefined && this.modelValue !== null) {
-        if (this.$helper.ifHas(this.modelValue, false, this.text)) {
-          return [this.modelValue]
-        } else if (typeof this.modelValue === 'string' || typeof this.modelValue === 'number') {
-          const index = this.$helper.searchArray(this.genItems, this.value, this.modelValue)
-          if (index !== false) {
-            return [this.genItems[index]]
-          }
-          return [{
-            [this.text]: this.modelValue.toString(), [this.value]: this.modelValue
-          }]
-        } else if (typeof this.modelValue[0] === 'string' || typeof this.modelValue[0] === 'number') {
-          let res = []
-          const lng = this.modelValue.length
-          for (let i = 0; i < lng; i++) {
-            const index = this.$helper.searchArray(this.genItems, this.value, this.modelValue[i])
-            if (index !== false) {
-              res.push(this.genItems[index])
-            } else {
-              res.push({[this.text]: this.modelValue[i].toString(), [this.value]: this.modelValue[i]})
-            }
-          }
-          return res
-        } else {
-          return this.modelValue
-        }
-      }
-      this.$emit('update:modelValue', null)
-      return []
-    },
-    handleChip(e, key) {
-      if (e === false) {
-        this.$emit('del', [key, this.chips[key]])
-        this.chips.splice(key, 1)
-        this.emitVal()
-      } else {
-        this.handleClick()
-      }
-    },
-    handleClick() {
-      if (this.$refs.input) {
-        this.$refs.input.focus()
-        this.$refs.select.scrollIntoView({
-          block: "start",
-          behavior: "smooth"
-        })
-      } else {
-        this.focusInput(true)
-      }
-    },
-    add() {
-      if (this.inputVal) {
-        let val = {[this.text]: this.inputVal.toString(), [this.value]: this.inputVal}
-        if (!this.multiple) {
-          this.chips = []
-        }
-        if (!this.tags) {
-          const exist = this.$helper.searchArray(this.genItems, this.text, val[this.text])
-          if (exist !== false) {
-            this.chips.push(val)
-          }
-        } else {
-          this.chips.push(val)
-        }
-        this.inputVal = null
-
-        this.emitVal()
-      }
-    },
-    emitVal() {
-      this.chips = this.$helper.uniqArray(this.chips)
-
-      let val = this.chips
-      if (this.justValue) {
-        val = []
-        for (let i in this.chips) {
-          if (this.$helper.hasKey(this.chips, i)) {
-            val.push(this.chips[i][this.value])
-          }
-        }
-      }
-      if (!this.multiple) {
-        val = val[0]
-        if (val) {
-          this.closeList()
-        }
-      }
-      if (val === undefined) {
-        val = null
-      }
-
-      this.$emit('update:modelValue', val)
-
-    },
-    focusInput(val) {
-      if (this.readonly) {
-        return
-      }
-      this.active = val
-
-      if (val === true) {
-        this.openList = true
-      }
-      setTimeout(() => {
-        this.add()
-      }, 200)
-    },
-    listInput(e) {
-      this.inputVal = null
-      if (e) {
-        this.chips = this.multiple ? e : [e]
-
-      } else {
-        this.chips = []
-      }
-
-      this.emitVal()
-    },
-    closeList() {
-      this.active = false
-      this.openList = false
-
+  } else {
+    if (props.modal) {
+      return 'modal'
     }
+    if (props.noFloat) {
+      return 'noFloat'
+    }
+  }
+  return 'none'
+})
+
+/**
+ * Generates and filters items for display
+ * @returns {Array} Processed and filtered items array
+ */
+const genItems = computed(() => {
+  let res = []
+
+  if (apiData.value.length > 0) {
+    res = apiData.value
+  }
+
+  if (props.items) {
+    res = [...(res || []), ...props.items]
+  }
+
+  // Convert primitive values to objects
+  if (res.length > 0 && typeof res[0] !== 'object') {
+    res = res.map(item => ({
+      [props.text]: item.toString(),
+      [props.value]: item
+    }))
+  }
+
+  // Apply translation if enabled
+  if (props.translate) {
+    res = res.map(item => ({
+      ...item,
+      [props.text]: $t(item[props.text])
+    }))
+  }
+
+  // Filter by search term if not using API search
+  if (!props.searchLink && inputVal.value) {
+    const searchTerm = inputVal.value.trim()
+    return res.filter(el => {
+      return el[props.text] && el[props.text].toLowerCase().includes(searchTerm.toLowerCase())
+    })
+  }
+
+  return res
+})
+
+// Methods
+/**
+ * Fetches data from API search endpoint
+ */
+const get = async () => {
+  if (!props.searchLink) return
+
+  loading.value = true
+  try {
+    const {data} = await $axios.get(props.searchLink, {
+      params: {
+        s: inputVal.value || ''
+      },
+      headers: props.headers
+    })
+    apiData.value = data
+  } catch (error) {
+    console.error('Error fetching select data:', error)
+  } finally {
+    loading.value = false
   }
 }
 
+/**
+ * Converts modelValue to chip format
+ * @returns {Array} Array of chip objects
+ */
+const getValue = () => {
+  // Validate modelValue against available items if not using tags
+  if (!props.searchLink && !props.tags && props.modelValue !== undefined && props.modelValue !== null) {
+    if (typeof props.modelValue === 'string' || typeof props.modelValue === 'number') {
+      const index = $helper?.searchArray(genItems.value, props.value, props.modelValue)
+      if (index === false) {
+        emit('update:modelValue', null)
+        return []
+      }
+    } else if (Array.isArray(props.modelValue)) {
+      for (const item of props.modelValue) {
+        if (typeof item === 'string' || typeof item === 'number') {
+          const index = $helper?.searchArray(genItems.value, props.value, item)
+          if (index === false) {
+            emit('update:modelValue', null)
+            return []
+          }
+        } else {
+          const index = $helper?.searchArray(genItems.value, props.value, item[props.value])
+          if (index === false) {
+            emit('update:modelValue', null)
+            return []
+          }
+        }
+      }
+    } else {
+      const index = $helper?.searchArray(genItems.value, props.value, props.modelValue[props.value])
+      if (index === false) {
+        emit('update:modelValue', null)
+        return []
+      }
+    }
+  }
+
+  // Convert modelValue to chip format
+  if (props.modelValue !== undefined && props.modelValue !== null) {
+    if ($helper?.ifHas(props.modelValue, false, props.text)) {
+      return [props.modelValue]
+    } else if (typeof props.modelValue === 'string' || typeof props.modelValue === 'number') {
+      const index = $helper?.searchArray(genItems.value, props.value, props.modelValue)
+      if (index !== false) {
+        return [genItems.value[index]]
+      }
+      return [{
+        [props.text]: props.modelValue.toString(),
+        [props.value]: props.modelValue
+      }]
+    } else if (Array.isArray(props.modelValue) && (typeof props.modelValue[0] === 'string' || typeof props.modelValue[0] === 'number')) {
+      return props.modelValue.map(item => {
+        const index = $helper?.searchArray(genItems.value, props.value, item)
+        if (index !== false) {
+          return genItems.value[index]
+        }
+        return {
+          [props.text]: item.toString(),
+          [props.value]: item
+        }
+      })
+    } else {
+      return Array.isArray(props.modelValue) ? props.modelValue : [props.modelValue]
+    }
+  }
+
+  emit('update:modelValue', null)
+  return []
+}
+
+/**
+ * Handles chip deletion or click
+ * @param {Boolean} e - False if deleting, otherwise clicking
+ * @param {Number} key - Chip index
+ */
+const handleChip = (e, key) => {
+  if (e === false) {
+    emit('del', [key, chips.value[key]])
+    chips.value.splice(key, 1)
+    emitVal()
+  } else {
+    handleClick()
+  }
+}
+
+/**
+ * Handles input click to open dropdown
+ */
+const handleClick = () => {
+  if (selectRef.value) {
+    nextTick(() => {
+      width.value = selectRef.value.getBoundingClientRect().width
+    })
+  }
+  if (inputRef.value) {
+    inputRef.value.focus()
+  } else {
+    focusInput(true)
+  }
+}
+
+/**
+ * Adds custom tag from input value
+ */
+const add = () => {
+  if (inputVal.value) {
+    const val = {
+      [props.text]: inputVal.value.toString(),
+      [props.value]: inputVal.value
+    }
+
+    if (!props.multiple) {
+      chips.value = []
+    }
+
+    if (!props.tags) {
+      const exist = $helper?.searchArray(genItems.value, props.text, val[props.text])
+      if (exist !== false) {
+        chips.value.push(val)
+      }
+    } else {
+      chips.value.push(val)
+    }
+
+    inputVal.value = null
+    emitVal()
+  }
+}
+
+/**
+ * Emits updated value to parent
+ */
+const emitVal = () => {
+  chips.value = $helper?.uniqArray(chips.value) || chips.value
+
+  let val = chips.value
+  if (props.justValue) {
+    val = chips.value.map(chip => chip[props.value])
+  }
+
+  if (!props.multiple) {
+    val = val[0]
+    if (val) {
+      closeList()
+    }
+  }
+
+  if (val === undefined) {
+    val = null
+  }
+
+  emit('update:modelValue', val)
+}
+
+/**
+ * Focuses input and opens dropdown
+ * @param {Boolean} val - Whether to focus/open
+ */
+const focusInput = (val) => {
+  active.value = val
+  if (val === true) {
+    openList.value = true
+  }
+
+  setTimeout(() => {
+    add()
+  }, 200)
+}
+
+/**
+ * Handles item selection from dropdown
+ * @param {Object} item - Selected item
+ */
+const handle_item = (item) => {
+  const index = $helper?.searchArray(chips.value, props.text, item[props.text])
+
+  if (index !== false) {
+    chips.value.splice(index, 1)
+  } else {
+    if (!props.multiple) {
+      chips.value = []
+    }
+    chips.value.push(item)
+  }
+
+  inputVal.value = null
+  if (!props.multiple && chips.value.length > 0) {
+    chips.value = [chips.value[0]]
+  }
+
+  emitVal()
+}
+
+/**
+ * Closes dropdown list
+ */
+const closeList = () => {
+  active.value = false
+  openList.value = false
+}
+
+// Watchers
+watch(inputVal, (newVal) => {
+  if (props.searchLink && newVal && newVal.length > 0) {
+    get()
+  }
+})
+
+watch(() => props.modelValue, (n) => {
+  chips.value = getValue()
+})
+
+// Lifecycle hooks
+onMounted(() => {
+  chips.value = getValue()
+
+  if (props.firstSelect && chips.value.length === 0 && genItems.value.length > 0) {
+    chips.value.push(genItems.value[0])
+    emitVal()
+  }
+
+  if (props.searchLink) {
+    get()
+  }
+
+  if (selectRef.value) {
+    nextTick(() => {
+      width.value = selectRef.value.getBoundingClientRect().width
+    })
+  }
+})
 </script>
 <style lang="scss">
 @use "sass:map";
-@use "../../../style/variables/base";
+@use "../../../style" as *;
 
 
 $min-height: 40px;
-.#{base.$prefix}select-container {
+.#{$prefix}select-container {
   position: relative;
   scroll-margin: $min-height;
+
+  &.open-to-top {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .chip {
+    background: var(--color-sheet);
+    color: var(--color-on-sheet);
+    border-radius: 50px;
+    margin: 4px;
+    @include rtl() {
+      padding: 2px 8px 2px 4px;
+    }
+    @include ltr() {
+      padding: 2px 4px 2px 8px;
+    }
+
+    .chip-icon {
+      background: var(--color-sheet-container);
+      border-radius: 50%;
+      padding: 2px;
+    }
+  }
 
   .input-control {
     min-height: $min-height;
@@ -378,7 +645,7 @@ $min-height: 40px;
     position: relative;
   }
 
-  .#{base.$prefix}chip {
+  .#{$prefix}chip {
     flex: 0 1 auto;
     margin: 4px;
   }
@@ -387,18 +654,39 @@ $min-height: 40px;
     max-height: 0;
     overflow: auto;
     opacity: .5;
-    transition: all .3s base.$primary-transition;
-    position: absolute;
+    transition: all .3s $primary-transition;
     left: 0;
-    z-index: map.get(base.$z-index, 'default');
+    z-index: map.get($z-index, 'default');
+    background: var(--color-sheet-container);
+    color: var(--color-on-sheet);
+
+    &:not(.card-no-float) {
+      position: absolute;
+    }
   }
 
-  .to-top {
-    bottom: $min-height+2px;
+  &.open-to-top {
+    .card-select {
+      bottom: $min-height+2px;
+    }
+  }
+
+
+  .card-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--color-sheet-container-low);
+  }
+
+  .card-item-active {
+    background: var(--color-one-container);
+    color: var(--color-on-one-container);
   }
 
   .card-select-active {
-    transition: all 0.3s base.$primary-transition;
+    transition: all 0.3s $primary-transition;
     max-height: 300px;
     opacity: 1;
   }

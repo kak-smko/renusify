@@ -32,6 +32,7 @@
           :css="sty"
           :script="scr"
           :template="temp"
+          :scriptSetup="scriptSetup"
       ></r-code-editor-run>
     </div>
     <div v-show="show !== 'run'" ref="codeView" class="code-wrapper">
@@ -42,10 +43,11 @@
       </div>
       <div>
         <span v-show="scriptShow" class="highlight-syn-class"
-        >&lt;script&gt;<br/>export default {</span
+        >&lt;script <span class="highlight-syn-str" v-if="scriptSetup">setup</span>&gt;<br/>
+          <template v-if="!scriptSetup">export default {</template></span
         >
         <highlight-script ref="h-js" v-model="scr"></highlight-script>
-        <span v-show="scriptShow" class="highlight-syn-class">}<br/>&lt;/script&gt;</span>
+        <span v-show="scriptShow" class="highlight-syn-class"><template v-if="!scriptSetup">}</template><br/>&lt;/script&gt;</span>
       </div>
       <div>
         <span v-show="cssShow" class="highlight-syn-class"
@@ -58,87 +60,135 @@
   </div>
 </template>
 
-<script>
-import {defineAsyncComponent} from 'vue'
+<script setup>
+import {ref, watch, defineAsyncComponent, inject} from 'vue'
+import {useCodeFormatter} from "./useCodeFormatter"
 
-export default {
-  name: "r-code-editor",
-  components: {
-    HighlightCss: defineAsyncComponent(() =>
-        import("./highlightCss.vue")
-    ), HighlightScript: defineAsyncComponent(() =>
-        import("./highlightJs.vue")
-    ), highlightHtml: defineAsyncComponent(() =>
-        import("./highlightHtml.vue")
-    ), RCodeEditorRun: defineAsyncComponent(() =>
-        import("./run.vue")
-    )
-  },
-  props: {
-    runnable: Boolean,
-    templateShow: {type: Boolean, default: true},
-    scriptShow: {type: Boolean, default: true},
-    cssShow: {type: Boolean, default: true},
-    template: String,
-    script: String,
-    css: String,
-  },
-  emits: ["update:template", "update:script", "update:css"],
-  data() {
-    return {
-      show: "code",
-      code: "",
-      edited: false,
-      temp: this.template,
-      scr: this.script,
-      sty: this.css,
-      id: this.$helper.uniqueId(),
-    };
-  },
-  created() {
-    if (!this.$r.icons.play) {
-      this.$r.icons.play =
-          '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.14v14l11-7l-11-7Z"/></svg>';
-    }
-    if (!this.$r.icons.code_tags) {
-      this.$r.icons.code_tags =
-          '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="m14.6 16.6l4.6-4.6l-4.6-4.6L16 6l6 6l-6 6l-1.4-1.4m-5.2 0L4.8 12l4.6-4.6L8 6l-6 6l6 6l1.4-1.4Z"/></svg>';
-    }
-  },
-  watch: {
-    template: function (n) {
-      this.temp = n
-    },
-    script: function (n) {
-      this.scr = n
-    },
-    css: function (n) {
-      this.sty = n
-    },
-    temp: function () {
-      this.$emit("update:template", this.temp);
-    },
-    scr: function () {
-      this.$emit("update:script", this.scr);
-    },
-    sty: function () {
-      this.$emit("update:css", this.sty);
-    },
-  },
-  methods: {
-    pretty() {
-      this.temp = this.$refs["h-html"].pretty_html(this.temp)
-      this.scr = this.$refs["h-js"].pretty_js(this.scr)
-      this.sty = this.$refs["h-css"].pretty_js(this.sty)
-    }
-  },
-};
+const {pretty_html, pretty_js} = useCodeFormatter()
+const HighlightCss = defineAsyncComponent(() => import("./highlightCss.vue"))
+const HighlightScript = defineAsyncComponent(() => import("./highlightJs.vue"))
+const HighlightHtml = defineAsyncComponent(() => import("./highlightHtml.vue"))
+const RCodeEditorRun = defineAsyncComponent(() => import("./run.vue"))
+
+const props = defineProps({
+  /**
+   * Enables run functionality for the code editor
+   * @type {Boolean}
+   */
+  runnable: Boolean,
+
+  /**
+   * Shows/hides the template section
+   * @type {Boolean}
+   * @default true
+   */
+  templateShow: {type: Boolean, default: true},
+
+  /**
+   * Shows/hides the script section
+   * @type {Boolean}
+   * @default true
+   */
+  scriptShow: {type: Boolean, default: true},
+
+  /**
+   * Shows/hides the CSS section
+   * @type {Boolean}
+   * @default true
+   */
+  cssShow: {type: Boolean, default: true},
+
+  /**
+   * Template code content
+   * @type {String}
+   */
+  template: String,
+
+  /**
+   * Script code content
+   * @type {String}
+   */
+  script: String,
+
+  /**
+   * CSS code content
+   * @type {String}
+   */
+  css: String,
+  /**
+   * Script code content is setup.
+   */
+  scriptSetup: Boolean
+})
+
+const emit = defineEmits([
+  /**
+   * Emitted when template content changes
+   * @param {String} template - Updated template code
+   */
+  "update:template",
+
+  /**
+   * Emitted when script content changes
+   * @param {String} script - Updated script code
+   */
+  "update:script",
+
+  /**
+   * Emitted when CSS content changes
+   * @param {String} css - Updated CSS code
+   */
+  "update:css"
+])
+
+const renusify = inject('renusify')
+const $r = renusify.$r
+const $helper = renusify.$helper
+
+const show = ref("code")
+const temp = ref(props.template || "")
+const scr = ref(props.script || "")
+const sty = ref(props.css || "")
+const id = ref($helper?.uniqueId() || Math.random().toString(36).substr(2, 9))
+
+watch(() => props.template, (newValue) => {
+  temp.value = newValue
+})
+
+watch(() => props.script, (newValue) => {
+  scr.value = newValue
+})
+
+watch(() => props.css, (newValue) => {
+  sty.value = newValue
+})
+
+watch(temp, (newValue) => {
+  emit("update:template", newValue)
+})
+
+watch(scr, (newValue) => {
+  emit("update:script", newValue)
+})
+
+watch(sty, (newValue) => {
+  emit("update:css", newValue)
+})
+
+/**
+ * Formats all code sections (template, script, CSS) to make them prettier
+ */
+const pretty = () => {
+  temp.value = pretty_html(temp.value)
+  scr.value = pretty_js(scr.value)
+  sty.value = pretty_js(sty.value)
+}
 </script>
 
 <style lang="scss">
-@use "../../style/variables/base";
+@use "../../style" as *;
 
-.#{base.$prefix}code-editor {
+.#{$prefix}code-editor {
   position: relative;
   white-space: break-spaces;
   caret-color: #f8f8f2;

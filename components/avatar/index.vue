@@ -1,90 +1,214 @@
 <template>
-    <div :class="`${$r.prefix}avatar ${tile?'avatar-tile':''}`"
-         :style="`height:${size}px;width:${size}px;`">
-      <div class="avatar-content" :class="`${!flat?'elevation-'+elevation:''}`" :key="k">
-        <slot></slot>
-      </div>
-      <r-btn :loading="loading" v-if="editable" @click.prevent.stop="pickFile" icon class="avatar-edit color-info">
-        <r-icon v-html="$r.icons.camera"></r-icon>
-      </r-btn>
-      <input v-if="editable" accept="image/*"
-             @change="addFile()"
-             ref="file"
-               class="d-none"
-               type="file"
-        >
+  <div
+      :class="avatarClasses"
+      :style="avatarStyle"
+  >
+    <div :key="k" :class="contentClasses">
+      <!-- Default slot for avatar content.
+       @example <r-img src="/storage/img/avatar.jpg" width="80" height="80"></r-img>-->
+      <slot></slot>
     </div>
+
+    <r-btn
+        v-if="editable"
+        :loading="loading"
+        class="avatar-edit-button color-info"
+        icon
+        @click.prevent.stop="pickFile"
+    >
+      <r-icon v-html="$r.icons.edit"></r-icon>
+    </r-btn>
+
+    <input
+        v-if="editable"
+        ref="file"
+        accept="image/*"
+        class="d-none"
+        type="file"
+        @change="addFile()"
+    >
+  </div>
 </template>
 
-<script>
-    import './style.scss'
+<script setup>
+import {ref, computed, inject} from 'vue'
 
-    export default {
-        name: 'r-avatar',
-        props: {
-            size: {
-                type: [Number, String],
-              default: 48
-            },
-          elevation: {
-            type: String,
-            default: 'none'
-          },
-          editable: {
-            type: String
-          },
-          flat: Boolean,
-          tile: Boolean,
-          headers: Object
-        },
-        data() {
-            return {
-                k:0,
-                files: [],
-                loading: false
-            }
-        },
-        created(){
-          if(!this.$r.icons.camera){
-              this.$r.icons.camera = '<svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M3 4V1h2v3h3v2H5v3H3V6H0V4m6 6V7h3V4h7l1.8 2H21c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V10m10 9c4.45 0 6.69-5.38 3.54-8.54C13.39 7.31 8 9.55 8 14c0 2.76 2.24 5 5 5m-3.2-5c0 2.85 3.45 4.28 5.46 2.26c2.02-2.01.59-5.46-2.26-5.46A3.21 3.21 0 0 0 9.8 14Z"/></svg>'
-          }
-        },
-        methods: {
-            addFile() {
-                this.CancelTokenSource = this.$axios.CancelToken.source()
-                this.files = this.$refs.file.files
-                this.saveImage()
-            },
-            pickFile() {
-                this.$refs.file.click()
-            },
-            saveImage() {
-              this.loading = true
-              let fileData = new FormData()
-              fileData.append('file', this.files[0])
-              let headers = this.headers
-              if (!headers) {
-                headers = {}
-              }
-              headers['Content-Type'] = 'multipart/form-data'
-              this.$axios.post(this.editable, fileData,
-                  {
-                    headers: headers,
-                    onUploadProgress: function (progressEvent) {
-                      this.uploadPercentage = Math.min(parseInt(Math.floor((progressEvent.loaded * 100) / progressEvent.total)), 98)
-                    }.bind(this),
-                    cancelToken: this.CancelTokenSource.token
-                  }
-              )
-                  .then(() => {
-                        this.loading = false
-                        this.k+=1
-                    }, () => {
-                        this.loading = false
-                    })
-            }
+const props = defineProps({
+  /**
+   * Size of the avatar in pixels
+   * @type {Number|String}
+   * @default 48
+   */
+  size: {
+    type: [Number, String],
+    default: 48
+  },
+  /**
+   * Elevation level for the avatar shadow
+   * @type {String}
+   * @default 'sm'
+   */
+  elevation: {
+    type: String,
+    default: 'sm'
+  },
+  /**
+   * API endpoint URL for uploading avatar images when editable
+   * @type {String}
+   */
+  editable: {
+    type: String
+  },
+  /**
+   * Removes elevation/shadow from avatar
+   * @type {Boolean}
+   */
+  flat: Boolean,
+  /**
+   * Removes border radius making corners square
+   * @type {Boolean}
+   */
+  tile: Boolean,
+  /**
+   * Additional headers for the image upload request
+   * @type {Object}
+   */
+  headers: Object
+})
 
-        }
+// Reactive data
+const k = ref(0)
+const files = ref([])
+const loading = ref(false)
+const CancelTokenSource = ref(null)
+const file = ref(null)
 
-    }
+// Inject dependencies
+const $r = inject('renusify').$r
+const $axios = inject('axios')
+
+// Computed properties
+const avatarClasses = computed(() => [
+  `${$r.prefix}avatar`,
+  'd-inline-flex',
+  'h-center',
+  'v-center'
+])
+
+const contentClasses = computed(() => [
+  'avatar-content',
+  'd-flex',
+  'h-center',
+  'v-center',
+  {
+    'br-circle': !props.tile,
+    'br-none': props.tile,
+    [`elevation-${props.elevation}`]: !props.flat
+  }
+])
+
+const avatarStyle = computed(() => ({
+  height: `${props.size}px`,
+  width: `${props.size}px`
+}))
+
+// Methods
+/**
+ * Triggers file picker dialog
+ */
+const pickFile = () => {
+  file.value.click()
+}
+
+/**
+ * Handles file selection and initiates upload
+ */
+const addFile = () => {
+  files.value = file.value.files
+  if (files.value.length > 0) {
+    saveImage()
+  }
+}
+
+const uploadPercentage = ref(0)
+/**
+ * Uploads selected image to the specified endpoint
+ */
+const saveImage = () => {
+  loading.value = true
+  uploadPercentage.value = 0
+  const fileData = new FormData()
+  fileData.append('file', files.value[0])
+
+  const headers = {
+    'Content-Type': 'multipart/form-data',
+    ...props.headers
+  }
+
+  CancelTokenSource.value = $axios.CancelToken.source()
+
+  $axios.post(props.editable, fileData, {
+    headers,
+    onUploadProgress: (progressEvent) => {
+      uploadPercentage.value = Math.min(
+          parseInt(Math.floor((progressEvent.loaded * 100) / progressEvent.total)),
+          98
+      )
+    },
+    cancelToken: CancelTokenSource.value.token
+  })
+      .then(() => {
+        loading.value = false
+        k.value += 1
+      })
+      .catch(() => {
+        loading.value = false
+      })
+}
 </script>
+
+<style lang="scss">
+@use "../../style" as *;
+
+.#{$prefix}avatar {
+  position: relative;
+  border-radius: inherit;
+
+  .avatar-content {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--color-sheet);
+
+    :deep(img),
+    :deep(svg) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  .avatar-edit-button {
+    position: absolute !important;
+    bottom: -8px;
+    right: -8px;
+    border-radius: 50% !important;
+    width: 32px !important;
+    height: 32px !important;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+
+  &:hover .avatar-edit-button {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  &:hover .avatar-content {
+    transform: scale(1.05);
+    box-shadow: var(--box-shadow, rgba(0, 0, 0, 0.1)) 0 0.5rem 1rem;
+  }
+}
+</style>

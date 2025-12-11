@@ -21,16 +21,13 @@ export default {
   },
   computed: {
     page() {
-      let lang = this.lang || this.$storage.get("lang", "en");
       let path = this.path || "introduction-whyRenusify";
       return defineAsyncComponent({
         loader: () =>
             import(
             "../index/" +
-            this.$helper.replacer(path, "-", "/") +
-            "/" +
-            lang +
-            ".vue"
+            path.replaceAll("-", "/") +
+            "/index.vue"
                 ),
         errorComponent: notFound,
       });

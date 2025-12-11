@@ -1,5 +1,5 @@
 <template>
-  <r-container v-if="show" full-width :class="`${$r.prefix}tree-element px-0`" ref="tree">
+  <r-container v-if="show" ref="treeRef" :class="`${$r.prefix}tree-element px-0`" full-width>
     <r-row class="h-center flex-nowrap no-gutters">
       <r-col class="text-center">
         <div class="d-flex h-center mb-1 node-info" @click.prevent="$emit('select',{key:nodeKey,item:node[nodeKey]})">
@@ -28,7 +28,6 @@
                         :model-value="{[child['gen']]:child}"
                         @expand="handleExpand"
                         :expand="expand"
-                        :openAll="openAll"
                         :sort-by="sortBy"
                         @select="$emit('select',$event)"
         >
@@ -40,11 +39,10 @@
     </r-row>
   </r-container>
 </template>
-<script>
+<script setup>
+import {ref, computed, inject} from 'vue'
 
-export default {
-  name: 'r-tree-element',
-  props: {
+const props = defineProps({
     modelValue: Object,
     link: String,
     parentNode: String,
@@ -60,120 +58,122 @@ export default {
       type: String,
       default: 'childs'
     },
-    openAll: Boolean,
     headers: Object
-  },
-  emits:['update:modelValue','fire','select','expand'],
-  data() {
-    return {
-      back: false,
-      show: false,
-      loading: false,
-      open: this.expand,
-    }
-  },
-  mounted() {
-    if (this.modelValue) {
-      this.show = true
-    }
-    if (this.openAll && this.childs.length > 0) {
-      this.open = true;
-    }
-  },
-  computed: {
-    node() {
-      return this.modelValue
-    },
-    size() {
-      return this.childs.length
-    },
-    childs() {
-      let res = []
-      if (!this.node || !(this.nodeKey in this.node) || !(this.childsName in this.node[this.nodeKey])) {
-        return res
-      }
-      const childs = this.node[this.nodeKey][this.childsName]
+})
 
-      let s = []
-      for (const key in childs) {
-        if (this.$helper.hasKey(childs, key)) {
-          if (childs[key]['gen'] === undefined) {
-            childs[key]['gen'] = key
-          }
-          s.push({
-            'key': key,
-            'value': childs[key]
-          })
-        }
-      }
-      const sortBy = this.sortBy
-      s.sort(function (a, b) {
-        if (a['value'][sortBy] !== undefined) {
-          if (b['value'][sortBy] !== undefined) {
-            if (typeof a['value'][sortBy] === 'number' && typeof b['value'][sortBy] === 'number') {
-              return a['value'][sortBy] - b['value'][sortBy];
-            } else {
-              return String(a['value'][sortBy]).localeCompare(String(b['value'][sortBy]));
-            }
-          }
-          return -1;
-        }
-        return b['value'][sortBy] !== undefined ? 1 : 0;
-      });
-      const lng = s.length
-      for (let i = 0; i < lng; i++) {
-        res.push(s[i]['value'])
-      }
-      return res
-    },
-    nodeKey() {
-      const keys = Object.keys(this.node)
-      if (keys) {
-        return keys[0]
-      }
-      return false
-    }
-  },
-  methods: {
-    updateNode(e, key) {
-      let res = Object.assign({}, this.modelValue)
-      res[this.nodeKey][this.childsName][key] = e[key]
-      this.$emit('update:modelValue', this.modelValue)
-    },
-    handleExpand(e, current) {
-      if (current) {
-        if (this.link && this.size === 0) {
-          this.loading = true
-          this.$axios.get(this.link + e, {headers: this.headers})
-              .then(({data}) => {
-                this.$emit('update:modelValue', data)
-                this.open = !this.open
-                setTimeout(() => {
-                  this.$emit('expand', [this.open, this.$refs.tree.$el])
-                }, 220)
-                this.loading = false
-              }, () => {
-                this.loading = false
-              })
-        } else {
-          this.open = !this.open
-          setTimeout(() => {
-            this.$emit('expand', [this.open, this.$refs.tree.$el])
-          }, 250)
-        }
+const emit = defineEmits(['update:modelValue', 'fire', 'select', 'expand'])
 
-      } else {
-        this.$emit('expand', e)
+const {$helper} = inject('renusify')
+const $axios = inject('axios')
+
+const show = ref(false)
+const loading = ref(false)
+const open = ref(props.expand)
+
+const treeRef = ref(null)
+
+const node = computed(() => props.modelValue)
+
+const size = computed(() => childs.value.length)
+
+const childs = computed(() => {
+  const res = []
+  const nodeKeyValue = nodeKey.value
+
+  if (!node.value || !nodeKeyValue || !(nodeKeyValue in node.value) || !(props.childsName in node.value[nodeKeyValue])) {
+    return res
+  }
+
+  const childs = node.value[nodeKeyValue][props.childsName]
+  const s = []
+
+  for (const key in childs) {
+    if ($helper.hasKey(childs, key)) {
+      if (childs[key]['gen'] === undefined) {
+        childs[key]['gen'] = key
       }
+      s.push({
+        'key': key,
+        'value': childs[key]
+      })
     }
   }
+
+  const sortBy = props.sortBy
+  s.sort(function (a, b) {
+    if (a['value'][sortBy] !== undefined) {
+      if (b['value'][sortBy] !== undefined) {
+        if (typeof a['value'][sortBy] === 'number' && typeof b['value'][sortBy] === 'number') {
+          return a['value'][sortBy] - b['value'][sortBy]
+        } else {
+          return String(a['value'][sortBy]).localeCompare(String(b['value'][sortBy]))
+        }
+      }
+      return -1
+    }
+    return b['value'][sortBy] !== undefined ? 1 : 0
+  })
+
+  const lng = s.length
+  for (let i = 0; i < lng; i++) {
+    res.push(s[i]['value'])
+  }
+
+  return res
+})
+
+const nodeKey = computed(() => {
+  if (!node.value) return false
+
+  const keys = Object.keys(node.value)
+  if (keys.length > 0) {
+    return keys[0]
+  }
+
+  return false
+})
+
+const updateNode = (e, key) => {
+  const res = {...props.modelValue}
+  res[nodeKey.value][props.childsName][key] = e[key]
+  emit('update:modelValue', props.modelValue)
+}
+
+const handleExpand = (e, current) => {
+  if (current) {
+    if (props.link && size.value === 0) {
+      loading.value = true
+      $axios.get(props.link + e, {headers: props.headers})
+          .then(({data}) => {
+            emit('update:modelValue', data)
+            open.value = !open.value
+            setTimeout(() => {
+              emit('expand', [open.value, treeRef.value.$el])
+            }, 220)
+            loading.value = false
+          })
+          .catch(() => {
+            loading.value = false
+          })
+    } else {
+      open.value = !open.value
+      setTimeout(() => {
+        emit('expand', [open.value, treeRef.value.$el])
+      }, 250)
+    }
+  } else {
+    emit('expand', e)
+  }
+}
+if (props.modelValue) {
+  show.value = true
 }
 </script>
 <style lang="scss">
-@use "../../style/variables/base";
+@use "../../style" as *;
 
 $distance: 20px;
-.#{base.$prefix}tree-element {
+.#{$prefix}tree-element {
   direction: ltr;
   position: relative;
   display: table;

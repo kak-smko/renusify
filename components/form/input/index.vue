@@ -2,296 +2,377 @@
   <div
       :class="{
         [`${$r.prefix}input-container`]:true,
-        [c_color]:c_color&&!isDisabled&&!hasError,
-        'color-error-text':hasError&&genMessages.length>0,
-        'hide-detail':c_hide,
+        'input-invalid':hasError,
+        'input-valid':!hasError,
+        'input-error':hasError&&genMessages.length>0,
+        'hide-detail':hide,
         'input-focused':active,
         'input-disabled':isDisabled,
-        'input-ltr':c_ltr
+        'input-ltr':ltr
          }"
   >
-    <div ref="input" :class="[c_inputControlClass,{'input-tile':c_tile,'ps-8':preIcon}]" class="input-control">
-      <label :for="computedId" class="label"
-             v-if="label"
-             :class="[c_labelControlClass,
-                   {'label-active':labelActive,
-                   'ms-5':((preIcon&&!labelActive&&!active))
-                   }]"
+    <div ref="input" class="input-control">
+      <label v-if="label"
+             :class="{
+               'label-active':activeLabel,
+               'label-margin':((preIcon&&!activeLabel&&!active))
+                }"
+             :for="computedId"
+             class="label"
       >
-        <span class="color-error-text" v-if="isRequired">*</span> {{ label }}
+        <!-- Slot for custom label content. Provide isRequired prop. -->
+        <slot name="label" :isRequired="isRequired">
+          <span v-if="isRequired" class="color-error-text">*</span> {{ label }}
+        </slot>
       </label>
-      <r-icon class="pre-icon" v-if="preIcon" v-html="preIcon" @click.prevent.stop="$emit('pre-icon',true)"></r-icon>
-      <slot :isRequired="isRequired" :uid="uid"></slot>
-      <r-icon class="after-icon" v-if="icon" v-html="icon" @click.prevent.stop="$emit('icon',true)"></r-icon>
+      <span v-if="preIcon" class="pre-icon" @click.prevent.stop="$emit('pre-icon',true)">
+         <!-- Slot for pre-icon content -->
+      <slot name="preIcon">
+        <r-icon v-html="preIcon"></r-icon>
+      </slot>
+        </span>
+      <div class="input-holder">
+        <!-- Default slot for input content. Provide isRequired, uid props. -->
+        <slot :isRequired="isRequired" :uid="uid"></slot>
+      </div>
+      <span v-if="icon" class="icon" @click.prevent.stop="$emit('icon',true)">
+        <!-- Slot for icon content -->
+      <slot name="icon">
+        <r-icon v-html="icon"></r-icon>
+      </slot>
+        </span>
     </div>
-    <div class="massage"
+    <div class="massage body-3"
          :class="{
             'massage-active':genMessages.length>0,
         }">
-      <div :class="{'animation-shake-3':c_msgShake}">{{ genMessages.join(',') }}</div>
-
+      <!-- Slot for custom message display -->
+      <slot :messages="genMessages" name="message">{{ genMessages.join(',') }}</slot>
     </div>
   </div>
 </template>
-<script>
+<script setup>
+import {ref, computed, watch, inject, onMounted, onBeforeUnmount} from 'vue'
 
-export default {
-  name: 'r-input',
-  inject: {
-    'form': {
-      default: false
-    }
+const props = defineProps({
+  /**
+   * Input ID attribute
+   * @type {String}
+   */
+  id: String,
+
+  /**
+   * Icon to display after input
+   * @type {String}
+   */
+  icon: String,
+
+  /**
+   * Icon to display before input
+   * @type {String}
+   */
+  preIcon: String,
+
+  /**
+   * Custom error message
+   * @type {String}
+   */
+  msg: String,
+
+  /**
+   * Input label text
+   * @type {String}
+   */
+  label: String,
+
+  /**
+   * Input placeholder text
+   * @type {String}
+   */
+  placeholder: String,
+
+  /**
+   * The model value for the input (v-model)
+   * @type {String|Boolean|Number|Array|Object}
+   */
+  modelValue: [String, Boolean, Number, Array, Object],
+
+  /**
+   * Whether input is in focused state
+   * @type {Boolean}
+   */
+  active: Boolean,
+
+  /**
+   * Whether label should always be active
+   * @type {Boolean}
+   */
+  labelActive: Boolean,
+
+  /**
+   * Hides validation details
+   * @type {Boolean}
+   * @default undefined
+   */
+  hide: {type: Boolean, default: undefined},
+
+  /**
+   * Disables the input
+   * @type {Boolean}
+   */
+  disabled: Boolean,
+
+  /**
+   * Makes input read-only
+   * @type {Boolean}
+   */
+  readonly: Boolean,
+
+  /**
+   * Manually sets error state
+   * @type {Boolean}
+   */
+  error: Boolean,
+
+  /**
+   * Auto-focuses input on mount
+   * @type {Boolean}
+   */
+  autofocus: Boolean,
+
+  /**
+   * Sets left-to-right text direction
+   * @type {Boolean}
+   * @default undefined
+   */
+  ltr: {type: Boolean, default: undefined},
+
+  /**
+   * Validation rules
+   * @type {Array|Function}
+   * @default () => []
+   */
+  rules: {
+    type: [Array, Function],
+    default: () => []
   },
-  props: {
-    id: String,
-    icon: String,
-    preIcon: String,
-    msg: String,
-    labelControlClass: [String, Object, Array],
-    inputControlClass: [String, Object, Array],
-    color: String,
-    label: String,
-    modelValue: [String, Boolean, Number, Array, Object],
-    active: Boolean,
-    hide: {type: Boolean, default: undefined},
-    tile: {type: Boolean, default: undefined},
-    disabled: Boolean,
-    readonly: Boolean,
-    error: Boolean,
-    ltr: {type: Boolean, default: undefined},
-    msgShake: {type: Boolean, default: undefined},
-    rules: {
-      type: [Array, Function],
-      default: () => []
-    },
-    validateOnBlur: {type: Boolean, default: undefined}
-  },
-  emits: ['pre-icon', 'icon', 'update:modelValue'],
-  data() {
-    return {
-      uid: 'input_' + this.$helper.uniqueId(),
-      lazyValue: this.modelValue,
-      focused: false,
-      errorBucket: [],
-      hasColor: false,
-      hasFocused: false,
-      hasInput: false,
-      isFocused: false,
-      isResetting: false,
-      valid: false
-    }
-  },
-  beforeMount() {
-    this.validate()
-  },
-  mounted() {
-    let inp = this.$refs.input.querySelector('input')
-    if (inp) {
-      inp.setAttribute('id', this.uid)
-    }
-  },
-  created() {
-    this.form && this.form.register(this)
-  },
-  beforeUnmount() {
-    this.form && this.form.unregister(this)
-  },
-  computed: {
-    computedId() {
-      return this.id || this.uid
-    },
-    isRequired() {
-      return this.rules ? (this.rules.indexOf('required') > -1) : false
-    },
-    isDisabled() {
-      return this.disabled || this.readonly
-    },
-    hasError() {
-      if (this.error) {
-        return true
-      }
-      return this.errorBucket.length > 0
-    },
-    genMessages() {
-      let m = []
-      if (this.msg) {
-        m = [this.msg]
-      }
-      return this.hasMessages ? this.validations : m
-    },
-    hasMessages() {
-      return this.validationTarget.length > 0
-    },
-    shouldValidate() {
-      if (this.isResetting) return false
-      return this.c_validateOnBlur ? this.hasFocused && !this.isFocused : this.hasInput || this.hasFocused
-    },
-    validations() {
-      return this.validationTarget.slice(0, 1)
-    },
-    validationTarget() {
-      if (this.shouldValidate) {
-        return this.errorBucket
-      } else return []
-    },
-    labelActive() {
-      return (this.lazyValue !== undefined && this.lazyValue !== '' && this.lazyValue !== null)
-    },
-    c_labelControlClass() {
-      if (this.labelControlClass === undefined && this.$r.inputs.labelControlClass) {
-        return this.$r.inputs.labelControlClass
-      }
-      return this.labelControlClass
-    },
-    c_inputControlClass() {
-      if (this.inputControlClass === undefined && this.$r.inputs.inputControlClass) {
-        return this.$r.inputs.inputControlClass
-      }
-      return this.inputControlClass
-    },
-    c_color() {
-      if (this.color === undefined && this.$r.inputs.color) {
-        return this.$r.inputs.color
-      }
-      return this.color || 'color-one-text'
-    },
-    c_hide() {
-      if (this.hide === undefined && this.$r.inputs.hide) {
-        return this.$r.inputs.hide
-      }
-      return this.hide
-    },
-    c_tile() {
-      if (this.tile === undefined && this.$r.inputs.tile) {
-        return this.$r.inputs.tile
-      }
-      return this.tile
-    },
-    c_ltr() {
-      if (this.ltr === undefined && this.$r.inputs.ltr) {
-        return this.$r.inputs.ltr
-      }
-      return this.ltr
-    },
-    c_msgShake() {
-      if (this.msgShake === undefined && this.$r.inputs.msgShake) {
-        return this.$r.inputs.msgShake
-      }
-      return this.msgShake === undefined ? true : this.msgShake
-    },
-    c_validateOnBlur() {
-      if (this.validateOnBlur === undefined && this.$r.inputs.validateOnBlur) {
-        return this.$r.inputs.validateOnBlur
-      }
-      return this.validateOnBlur
-    }
-  },
-  watch: {
-    rules: {
-      handler(newVal, oldVal) {
-        if (this.deepEqual(newVal, oldVal)) return
-        this.validate()
-      },
 
-      deep: true
-    },
+  /**
+   * Validate input on blur event
+   * @type {Boolean}
+   * @default true
+   */
+  validateOnBlur: {type: Boolean, default: true}
+})
 
-    isFocused(val) {
-      // Should not check validation
-      // if disabled
-      if (!val && !this.isDisabled) {
-        this.hasFocused = true
-        this.c_validateOnBlur && this.validate()
-      }
-    },
+const emit = defineEmits([
+  /**
+   * Emitted when pre-icon is clicked
+   * @param {Boolean} true - Indicates pre-icon was clicked
+   */
+  'pre-icon',
 
-    isResetting() {
-      setTimeout(() => {
-        this.hasInput = false
-        this.hasFocused = false
-        this.isResetting = false
-        this.validate()
-      }, 0)
-    },
+  /**
+   * Emitted when icon is clicked
+   * @param {Boolean} true - Indicates icon was clicked
+   */
+  'icon',
 
-    modelValue(val) {
-      this.hasInput = true
-      this.lazyValue = val
-      this.validate()
-    },
-    active(val) {
-      this.focused = val
-    }
+  /**
+   * Emitted when model value changes
+   * @param {any} value - New model value
+   */
+  'update:modelValue'
+])
 
-  },
-  methods: {
-    deepEqual(a, b) {
-      if (a === b) return true
+const form = inject('form', false)
+const {$r, $v, $helper} = inject('renusify')
 
-      if (a instanceof Date && b instanceof Date) {
-        // If the values are Date, they were convert to timestamp with getTime and compare it
-        if (a.getTime() !== b.getTime()) return false
-      }
+const uid = ref('input_' + $helper.uniqueId())
+const lazyValue = ref(props.modelValue)
+const errorBucket = ref([])
+const hasFocused = ref(false)
+const hasInput = ref(false)
+const isResetting = ref(false)
+const valid = ref(false)
+const input = ref(null)
 
-      if (a !== Object(a) || b !== Object(b)) {
-        // If the values aren't objects, they were already checked for equality
-        return false
-      }
+const computedId = computed(() => props.id || uid.value)
 
-      const props = Object.keys(a)
+const isRequired = computed(() => {
+  return props.rules ? (Array.isArray(props.rules) && props.rules.indexOf('required') > -1) : false
+})
 
-      if (props.length !== Object.keys(b).length) {
-        // Different number of props, don't bother to check
-        return false
-      }
+const isDisabled = computed(() => props.disabled || props.readonly)
 
-      return props.every(p => this.deepEqual(a[p], b[p]))
-    },
+const hasError = computed(() => {
+  if (props.error) {
+    return true
+  }
+  return errorBucket.value.length > 0
+})
 
-    reset() {
-      this.isResetting = true
-      this.$emit('update:modelValue', null)
-    },
+const genMessages = computed(() => {
+  let m = []
+  if (props.msg) {
+    m = [props.msg]
+  }
+  return hasMessages.value ? validations.value : m
+})
 
-    resetValidation() {
-      this.isResetting = true
-    },
+const hasMessages = computed(() => validationTarget.value.length > 0)
 
-    validate(force = false, value) {
-      const errorBucket = []
-      value = value || this.modelValue
-      if (force) this.hasInput = this.hasFocused = true
-      const rules = this.$v(this.rules)
-      for (let index = 0; index < rules.length; index++) {
-        const rule = rules[index]
-        const valid = typeof rule === 'function' ? rule(value) : rule
+const shouldValidate = computed(() => {
+  if (isResetting.value) return false
+  return hasInput.value || hasFocused.value
+})
 
-        if (typeof valid === 'string') {
-          errorBucket.push(valid)
-        } else if (typeof valid !== 'boolean') {
-          console.log(`Rules should return a string or boolean, received '${typeof valid}' instead` + this)
-        }
-      }
+const validations = computed(() => {
+  return validationTarget.value.slice(0, 1)
+})
 
-      this.errorBucket = errorBucket
-      this.valid = errorBucket.length === 0
-      return this.valid
-    }
+const validationTarget = computed(() => {
+  if (shouldValidate.value) {
+    return errorBucket.value
+  } else return []
+})
 
+const activeLabel = computed(() =>
+    props.labelActive ||
+    ![undefined, '', null].includes(lazyValue.value)
+)
+
+/**
+ * Deep equality check for two values
+ * @param {any} a - First value
+ * @param {any} b - Second value
+ * @returns {Boolean} True if values are deeply equal
+ */
+const deepEqual = (a, b) => {
+  if (a === b) return true
+
+  if (a instanceof Date && b instanceof Date) {
+    if (a.getTime() !== b.getTime()) return false
   }
 
+  if (a !== Object(a) || b !== Object(b)) {
+    return false
+  }
+
+  const propsA = Object.keys(a)
+
+  if (propsA.length !== Object.keys(b).length) {
+    return false
+  }
+
+  return propsA.every(p => deepEqual(a[p], b[p]))
 }
 
+/**
+ * Resets input value to null
+ */
+const reset = () => {
+  isResetting.value = true
+  emit('update:modelValue', null)
+}
+
+/**
+ * Resets validation state
+ */
+const resetValidation = () => {
+  isResetting.value = true
+}
+
+/**
+ * Validates input value against rules
+ * @param {Boolean} force - Force validation regardless of state
+ * @param {any} value - Value to validate (defaults to modelValue)
+ * @returns {Boolean} True if validation passes
+ */
+const validate = (force = false, value) => {
+  const errorBucketLocal = []
+  value = value || props.modelValue
+  if (force) {
+    hasInput.value = true
+    hasFocused.value = true
+  }
+
+  const rules = $v ? $v(props.rules) : props.rules
+
+  if (Array.isArray(rules)) {
+    for (let index = 0; index < rules.length; index++) {
+      const rule = rules[index]
+      const validResult = typeof rule === 'function' ? rule(value) : rule
+
+      if (typeof validResult === 'string') {
+        errorBucketLocal.push(validResult)
+      } else if (typeof validResult !== 'boolean') {
+        console.log(`Rules should return a string or boolean, received '${typeof validResult}' instead`, this)
+      }
+    }
+  }
+
+  errorBucket.value = errorBucketLocal
+  valid.value = errorBucketLocal.length === 0
+  return valid.value
+}
+
+watch(() => props.rules, (newVal, oldVal) => {
+  if (deepEqual(newVal, oldVal)) return
+  validate()
+}, {deep: true})
+
+watch(isResetting, () => {
+  setTimeout(() => {
+    hasInput.value = false
+    hasFocused.value = false
+    isResetting.value = false
+    validate()
+  }, 0)
+})
+
+watch(() => props.modelValue, (val) => {
+  hasInput.value = true
+  lazyValue.value = val
+  validate()
+})
+
+validate()
+
+onMounted(() => {
+  if (input.value) {
+    let inp = input.value.querySelector('input')
+    if (inp) {
+      inp.setAttribute('id', uid.value)
+    }
+  }
+})
+
+if (form) {
+  const formInput = {
+    uid: uid.value,
+    hasError,
+    validate: (force = false) => validate(force),
+    reset: () => reset(),
+    resetValidation: () => resetValidation()
+  }
+
+  form.register(formInput)
+
+  onBeforeUnmount(() => {
+    form.unregister(formInput)
+  })
+}
 </script>
 <style lang="scss">
 @use "sass:map";
-@use "../../../style/variables/base";
-@use "../../../style/mixins";
+@use "../../../style" as *;
 
 
-.#{base.$prefix}input-container {
+.#{$prefix}input-container {
   position: relative;
   align-items: flex-start;
+  text-align: start;
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
@@ -306,35 +387,15 @@ export default {
     }
   }
 
-  &:not(.input-disabled) {
-    input,
-    textarea {
-      color: var(--color-on-sheet)
-    }
-  }
-
-  &:not(.input-disabled) {
-    .label, .#{base.$prefix}icon, .#{base.$prefix}btn {
-      color: var(--color-on-sheet-low)
-    }
-  }
-
   input::placeholder,
   textarea::placeholder {
-    color: var(--color-on-sheet-low)
+    color: var(--color-on-sheet-low);
+    opacity: 0.7;
   }
 
   &.input-disabled {
     opacity: 0.38;
     pointer-events: none;
-
-    * {
-      color: var(--color-on-sheet)
-    }
-
-    .input-control {
-      background-color: var(--color-sheet-container);
-    }
   }
 
 
@@ -369,54 +430,49 @@ export default {
 
   .input-control {
     display: flex;
-    flex-direction: column;
     height: 40px;
     flex-grow: 1;
-    flex-wrap: wrap;
     width: 100%;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     position: relative;
     border: solid 1px var(--color-sheet-low);
     background-color: var(--color-sheet-container);
+    color: var(--color-on-sheet);
+    caret-color: var(--color-on-sheet);
+    padding: 0 8px;
+    border-radius: map.get($borders, 'sm');
+    transition: $primary-transition;
 
-    .after-icon {
-      position: absolute;
+    .input-holder {
+      flex-grow: 1;
+      border-radius: inherit;
+    }
+
+    .icon {
       cursor: pointer;
-      @include mixins.ltr() {
-        right: 5px;
+      @include ltr() {
+        margin-left: 4px;
       }
-      @include mixins.rtl() {
-        left: 5px;
+      @include rtl() {
+        margin-right: 4px;
       }
 
     }
 
     .pre-icon {
-      position: absolute;
       cursor: pointer;
-      @include mixins.ltr() {
-        left: 5px;
+      @include ltr() {
+        margin-right: 4px;
       }
-      @include mixins.rtl() {
-        right: 5px;
+      @include rtl() {
+        margin-left: 4px;
       }
 
-    }
-
-    &:not(.input-tile) {
-      padding: 0 16px;
-      border-radius: map.get(base.$borders, 'xl');
-    }
-
-    &.input-tile {
-      padding: 0 8px;
-      border-radius: map.get(base.$borders, 'sm');
     }
   }
 
   &.hide-detail {
-
     > .input-control {
       border: unset !important;
       height: auto;
@@ -430,93 +486,72 @@ export default {
     position: absolute;
     z-index: 0;
     top: 8px;
-    transition: base.$primary-transition;
+    transition: $primary-transition;
 
-    @include mixins.ltr() {
-      left: 15px;
-      transform-origin: top left;
+    @include ltr() {
+      left: 10px;
     }
 
-    @include mixins.rtl() {
-      right: 15px;
-      transform-origin: top right;
+    @include rtl() {
+      right: 10px;
     }
   }
 
-  :not(.input-tile) {
-    .label-active {
-      @include mixins.ltr() {
-        transform: translateY(-27px) translateX(5px) scale(.9);
-      }
-      @include mixins.rtl() {
-        transform: translateY(-27px) translateX(-5px) scale(.9);
-      }
-      transition: base.$primary-transition
+  .label-margin {
+    @include ltr() {
+      margin-left: 25px;
+    }
+
+    @include rtl() {
+      margin-right: 25px;
     }
   }
 
-  .label-fixed {
-    transform: none !important;
-    top: -20px !important;
-    @include mixins.ltr() {
-      left: 0 !important;
+  .label-active {
+    @include ltr() {
+      transform: translateY(-30px) scale(.9);
+      left: 0;
     }
-    @include mixins.rtl() {
-      right: 0 !important;
+    @include rtl() {
+      transform: translateY(-30px) scale(.9);
+      right: 0;
     }
+    transition: $primary-transition
   }
 
-  .input-tile {
-    .label-active {
-      @include mixins.ltr() {
-        transform: translateY(-27px) translateX(-8px) scale(.9);
-      }
-      @include mixins.rtl() {
-        transform: translateY(-27px) translateX(8px) scale(.9);
-      }
-      transition: base.$primary-transition
-    }
-  }
 
   &.input-focused {
     .input-control {
-      border: solid 1px currentColor;
-    }
+      color: var(--color-one);
+      border-color: currentColor;
 
-    .#{base.$prefix}icon, .#{base.$prefix}btn {
-      color: currentColor !important;
-    }
-
-    :not(.input-tile) {
-      .label {
-        color: currentColor !important;
-        @include mixins.ltr() {
-          transform: translateY(-27px) translateX(5px) scale(.9);
-        }
-        @include mixins.rtl() {
-          transform: translateY(-27px) translateX(-5px) scale(.9);
-        }
-        transition: base.$primary-transition
+      .input-holder {
+        color: var(--color-on-sheet);
       }
     }
 
-    .input-tile {
-      .label {
-        color: currentColor !important;
-        @include mixins.ltr() {
-          transform: translateY(-27px) translateX(-8px) scale(.9);
-        }
-        @include mixins.rtl() {
-          transform: translateY(-27px) translateX(8px) scale(.9);
-        }
-        transition: base.$primary-transition
-      }
+    .#{$prefix}icon, .#{$prefix}btn {
+      color: currentColor;
     }
+
+    .label {
+      color: currentColor;
+      @include ltr() {
+        transform: translateY(-30px) scale(.9);
+        left: 0;
+      }
+      @include rtl() {
+        transform: translateY(-30px) scale(.9);
+        right: 0;
+      }
+      transition: $primary-transition
+    }
+
   }
 
   .massage {
     display: none;
-    margin-left: 10px;
+    width: 100%;
 
     &-active {
       display: block;
@@ -524,27 +559,31 @@ export default {
   }
 
 
-  &.color-error-text {
-    .label {
-      color: currentColor;
-    }
+  &.input-error {
+    color: var(--color-error);
 
     .input-control {
-      border: solid 1px currentColor;
+      background: var(--color-error-container);
+      color: var(--color-on-error-container);
+      caret-color: var(--color-on-error-container);
     }
   }
 
-  &.#{base.$prefix}text-area {
-    .input-control {
-      height: auto;
-
-      &:not(.input-tile) {
-        border-radius: map.get(base.$borders, 'xl');
-      }
+  &:not(.input-error) {
+    .massage-active {
+      color: var(--color-info)
     }
+  }
 
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
   }
 }
-
 
 </style>

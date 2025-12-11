@@ -1,3 +1,70 @@
+/**
+ * @example // v-mask usage
+ * <template>
+ *     <div class="title-1 my-3">Number input (N)</div>
+ *     <input
+ *      class="input-mask"
+ *         v-model="lazy1"
+ *         placeholder="2020/04/01"
+ *         @complete="log('complete',$event)"
+ *         @accept="log('accept',$event)"
+ *         @backspace="log('backspace',$event)"
+ *         @paste.prevent="log('paste',$event)"
+ *         v-mask="'NNNN/NN/NN'"
+ *     />
+ *     <div class="title-1 my-3">[a-z] input (A)</div>
+ *     <input
+ *      class="input-mask"
+ *         v-model="lazy2"
+ *         placeholder="aaaa - bbbb"
+ *         @complete="log('complete',$event)"
+ *         @accept="log('accept',$event)"
+ *         @backspace="log('backspace',$event)"
+ *         @paste.prevent="log('paste',$event)"
+ *         v-mask="'AAAA - AAAA'"
+ *     />
+ *     <div class="title-1 my-3">[a-z0-9] input (B)</div>
+ *     <input
+ *      class="input-mask"
+ *         v-model="lazy3"
+ *         placeholder="aaaa - 22"
+ *         @complete="log('complete',$event)"
+ *         @accept="log('accept',$event)"
+ *         @backspace="log('backspace',$event)"
+ *         @paste.prevent="log('paste',$event)"
+ *         v-mask="'BBBB - BB'"
+ *     />
+ *     <div class="title-1 my-3">Any input (X)</div>
+ *     <input
+ *      class="input-mask"
+ *         v-model="lazy4"
+ *         placeholder="aa - 22 - #@"
+ *         @complete="log('complete',$event)"
+ *         @accept="log('accept',$event)"
+ *         @backspace="log('backspace',$event)"
+ *         @paste.prevent="log('paste',$event)"
+ *         v-mask="'XX XX XX'"
+ *     />
+ *
+ * </template>
+ * <script>
+ *     import {ref} from 'vue'
+ *     const lazy1=ref(null)
+ *     const lazy2=ref(null)
+ *     const lazy3=ref(null)
+ *     const lazy4=ref(null)
+ *     const log=(name,e)=>{
+ *         console.log(name,e)
+ *     }
+ * <//script>
+ * <style>
+ *     .input-mask{
+ *         width:100%;
+ *         border:1px solid;
+ *         padding:8px
+ *     }
+ * </style>
+ * */
 function fireEvent(el, eventName, data) {
     var e = document.createEvent('CustomEvent');
     e.initCustomEvent(eventName, true, true, data);

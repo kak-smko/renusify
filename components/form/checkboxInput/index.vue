@@ -1,6 +1,6 @@
 <template>
   <r-input :class="{
-        [`${this.$r.prefix}checkbox`]:true,
+        [`${$r.prefix}checkbox`]:true,
         'checkbox-readonly': this.readonly,
     }" :modelValue="lazyValue" hide>
     <template v-slot="{isRequired}">
@@ -9,66 +9,96 @@
                 [size]:true,
                    'br-circle':rounded,
                    'checkbox-select':modelValue
-               }" @click.prevent="emit">
+               }" @click.prevent="toggle">
                    <transition name="scale">
                        <r-icon v-if="modelValue"
                                class="color-white-text"
                                v-html="$r.icons.check" exact></r-icon>
                    </transition>
             </span>
-        <span class="ms-2 checkbox-label" @click.prevent="emit">
+        <span class="ms-2 checkbox-label" @click.prevent="toggle">
                 <span class="color-error-text" v-if="isRequired">*</span>
+          <!-- Slot for custom label.-->
           <slot name="label">{{ label }}</slot>
             </span>
       </div>
     </template>
   </r-input>
 </template>
-<script>
-export default {
-  name: 'r-checkbox',
-  props: {
-    label: String,
-    readonly: Boolean,
-    rounded: Boolean,
-    modelValue: Boolean,
-    size: {
-      type: String,
-      default: 'default',
-      validator: function (value) {
-        return ['x-small', 'small', 'default', 'large', 'x-large'].indexOf(value) !== -1
-      }
-    },
-  },
-  emits: ['update:modelValue'],
-  data() {
-    return {
-      lazyValue: this.modelValue
-    }
-  },
-  watch: {
-    modelValue() {
-      this.lazyValue = this.modelValue
-    }
-  },
-  methods: {
-    emit() {
-      if (this.readonly) {
-        return
-      }
+<script setup>
+import {ref, watch} from 'vue'
 
-      this.lazyValue = (!this.lazyValue) ? !this.lazyValue : false
-      this.$emit('update:modelValue', this.lazyValue)
+const props = defineProps({
+  /**
+   * Label text for the component
+   * @type {String}
+   */
+  label: String,
+
+  /**
+   * Makes the component read-only
+   * @type {Boolean}
+   */
+  readonly: Boolean,
+
+  /**
+   * Applies rounded corners to the component
+   * @type {Boolean}
+   */
+  rounded: Boolean,
+
+  /**
+   * The model value for the component (v-model)
+   * @type {Boolean}
+   */
+  modelValue: Boolean,
+
+  /**
+   * Size of the component
+   * @type {String}
+   * @default 'default'
+   * @values xs, sm, md, lg, xl, xxl
+   */
+  size: {
+    type: String,
+    default: 'md',
+    validator: (value) => {
+      return ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'].includes(value)
     }
+  },
+})
+
+const emit = defineEmits([
+  /**
+   * Emitted when the model value changes
+   * @param {Boolean} value - The new value
+   */
+  'update:modelValue'
+])
+
+const lazyValue = ref(props.modelValue)
+
+watch(() => props.modelValue, (newValue) => {
+  lazyValue.value = newValue
+})
+
+/**
+ * Toggles the component's value
+ */
+const toggle = () => {
+  if (props.readonly) {
+    return
   }
-}
 
+  lazyValue.value = !lazyValue.value
+  emit('update:modelValue', lazyValue.value)
+}
 </script>
 <style lang="scss">
 @use "sass:map";
-@use "../../../style/variables/base";
+@use "../../../style" as *;
 
-.#{base.$prefix}checkbox {
+.#{$prefix}checkbox {
   width: 100%;
   cursor: pointer;
 
@@ -80,7 +110,7 @@ export default {
     border: 1px solid var(--color-on-sheet-low)
   }
 
-  .#{base.$prefix}icon {
+  .#{$prefix}icon {
     width: 100%;
     height: 100%;
     display: flex;
@@ -90,10 +120,10 @@ export default {
 
   .checkbox-input {
     text-align: center;
-    border-radius: map.get(base.$borders, 'sm');
+    border-radius: map.get($borders, 'sm');
     transition: .3s all ease-in-out;
 
-    &.x-small {
+    &.xs {
       width: 17px;
       height: 17px;
 
@@ -103,7 +133,7 @@ export default {
       }
     }
 
-    &.small {
+    &.sm {
       width: 20px;
       height: 20px;
 
@@ -113,7 +143,7 @@ export default {
       }
     }
 
-    &.default {
+    &.md {
       width: 22px;
       height: 22px;
 
@@ -123,7 +153,7 @@ export default {
       }
     }
 
-    &.large {
+    &.lg {
       width: 25px;
       height: 25px;
 
@@ -133,13 +163,23 @@ export default {
       }
     }
 
-    &.x-large {
+    &.xl {
       width: 30px;
       height: 30px;
 
       svg {
         width: 25px;
         height: 25px;
+      }
+    }
+
+    &.xxl {
+      width: 40px;
+      height: 40px;
+
+      svg {
+        width: 35px;
+        height: 35px;
       }
     }
   }

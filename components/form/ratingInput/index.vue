@@ -1,8 +1,10 @@
 <template>
-  <div :class="`${$r.prefix}rating size-${size} ms-n1`">
-    <r-btn :key="i" :class="`${Math.round(modelValue)>=i?'color-rating':''}`"
+  <div :class="`${$r.prefix}rating`">
+    <r-btn :key="i"
+           :class="`${Math.round(modelValue)>=i?'color-rating':''}`"
            :readonly="readonly"
            @click.prevent="select(i)"
+           :size="size"
            icon
            text
            v-for="i in count">
@@ -11,73 +13,71 @@
   </div>
 </template>
 
-<script>
+<script setup>
 
-export default {
-  name: 'r-rating',
-  props: {
-    count: {
-      type: Number,
-      default: 5
-    },
-    size: {
-      type: String,
-      default: 'default',
-      validator: function (value) {
-        return ['x-small', 'small', 'default', 'large', 'x-large'].indexOf(value) !== -1
-      }
-    },
-    modelValue: Number,
-    readonly: Boolean
+const props = defineProps({
+  /**
+   * Total number of rating stars to display
+   * @type {Number}
+   * @default 5
+   */
+  count: {
+    type: Number,
+    default: 5
   },
-  emits: ['update:modelValue'],
-  created() {
-    if (!this.$r.icons.star) {
-      this.$r.icons.star = '<svg xmlns="http://www.w3.org/2000/svg"   preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2L9.19 8.62L2 9.24l5.45 4.73L5.82 21L12 17.27Z"/></svg>'
-    }
+  /**
+   * Size of the rating stars
+   * @type {String}
+   * @default 'md'
+   * @validator ['xs', 'sm', 'md', 'lg', 'xl', 'xxl']
+   */
+  size: {
+    type: String,
+    default: 'md',
+    validator: (value) => ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'].includes(value)
   },
-  methods: {
-    select(n) {
-      this.$emit('update:modelValue', n)
-    }
-  }
+  /**
+   * Current rating value (0 to count)
+   * @type {Number}
+   */
+  modelValue: Number,
+  /**
+   * Disable rating interaction
+   * @type {Boolean}
+   */
+  readonly: Boolean
+})
+
+const emit = defineEmits([
+  /**
+   * Emitted when a rating is selected
+   * @param {Number} rating - The selected rating value (1 to count)
+   */
+  'update:modelValue'
+])
+
+// Methods
+/**
+ * Selects a rating value
+ * @param {Number} rating - The rating value to select
+ */
+const select = (rating) => {
+  if (props.readonly) return
+  emit('update:modelValue', rating)
 }
 </script>
-<style lang="scss">
-@use "../../../style/variables/base";
 
-$btn-sizes: (
-    'x-small': 20,
-    'small': 25,
-    'default': 30,
-    'large': 35,
-    'x-large': 40
-) !default;
-.#{base.$prefix}rating {
+<style lang="scss">
+@use "../../../style" as *;
+
+
+.#{$prefix}rating {
   max-width: 100%;
   white-space: nowrap;
-  transition: 1s base.$primary-transition;
-
-  * {
-    color: var(--color-on-sheet-low);
-  }
+  transition: all $primary-transition;
 
   .color-rating * {
     color: #fbc02d !important;
-  }
-
-  @each $name, $size in $btn-sizes {
-    &.size-#{$name} {
-      .#{base.$prefix}btn {
-        height: #{$size}px;
-        width: #{$size}px
-      }
-
-      .#{base.$prefix}icon {
-        height: #{$size - 4px};
-        width: #{$size - 4px}
-      }
-    }
   }
 }
 

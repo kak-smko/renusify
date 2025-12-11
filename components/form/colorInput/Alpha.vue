@@ -1,94 +1,92 @@
 <template>
   <div class="color-alpha ms-1">
-    <canvas ref="canvas" :width="width" :height="height" v-touch="{'end':move,
-                  'move':move}"/>
-    <div :style="style" class="slide"/>
+    <canvas
+        ref="canvasRef"
+        v-touch="{'end': handleMove, 'move': handleMove}"
+        :height="height"
+        :width="width"
+    />
+    <div :style="slideStyle" class="slide"/>
   </div>
 </template>
 
-<script>
+<script setup>
+import {ref, watch, onMounted, computed} from 'vue'
+import {useColor} from './useColor.js'
 
-import {color} from "./mixin.js";
+const props = defineProps({
+  color: {
+    type: String,
+    default: '#000000',
+  },
+  rgba: {
+    type: Object,
+    default: () => ({a: 1}),
+  },
+  width: {
+    type: Number,
+    default: 15,
+  },
+  height: {
+    type: Number,
+    default: 152,
+  },
+})
 
-export default {
-  props: {
-    color: {
-      type: String,
-      default: '#000000',
-    },
-    rgba: {
-      type: Object,
-      default: null,
-    },
-    width: {
-      type: Number,
-      default: 15,
-    },
-    height: {
-      type: Number,
-      default: 152,
-    },
-  },
-  mixins: [color],
-  emits: ['selectAlpha'],
-  data() {
-    return {
-      style: {},
-      alphaSize: 5,
-      ctx: null
-    }
-  },
-  watch: {
-    color() {
-      this.renderColor()
-    },
-    'rgba.a'() {
-      this.renderSlide()
-    },
-  },
-  mounted() {
-    this.ctx = this.$refs.canvas.getContext('2d', {willReadFrequently: true})
-    this.renderColor()
-    this.renderSlide()
-  },
-  methods: {
-    renderColor() {
-      if (!this.ctx) {
-        return
-      }
-      const canvasSquare = this.createAlphaSquare(this.alphaSize)
-      this.ctx.fillStyle = this.ctx.createPattern(canvasSquare, 'repeat')
-      this.ctx.fillRect(0, 0, this.width, this.height)
+const emit = defineEmits(['selectAlpha'])
 
-      this.createLinearGradient(
-          'p',
-          this.ctx,
-          this.width,
-          this.height,
-          'rgba(255,255,255,0)',
-          this.color
-      )
-    },
-    renderSlide() {
-      this.style = {
-        top: this.rgba.a * this.height + 'px',
-      }
-    },
-    move(e) {
-      let y = e.current.y
-      if (y <= 0) {
-        this.$emit('selectAlpha', 0)
-        return
-      }
-      if (y >= this.height) {
-        this.$emit('selectAlpha', 1)
-        return
-      }
+const {createAlphaSquare, createLinearGradient} = useColor()
 
-      let a = parseFloat((y / this.height).toFixed(2))
-      this.$emit('selectAlpha', a)
-    }
-  },
+const canvasRef = ref(null)
+const ctx = ref(null)
+const alphaSize = 5
+
+const slideStyle = computed(() => ({
+  top: `${(props.rgba?.a || 1) * props.height}px`,
+}))
+
+watch(() => props.color, renderColor)
+
+
+onMounted(() => {
+  if (canvasRef.value) {
+    ctx.value = canvasRef.value.getContext('2d', {willReadFrequently: true})
+    renderColor()
+  }
+})
+
+function renderColor() {
+  if (!ctx.value) return
+
+  const canvasSquare = createAlphaSquare(alphaSize)
+  ctx.value.fillStyle = ctx.value.createPattern(canvasSquare, 'repeat')
+  ctx.value.fillRect(0, 0, props.width, props.height)
+
+  createLinearGradient(
+      'p',
+      ctx.value,
+      props.width,
+      props.height,
+      'rgba(255,255,255,0)',
+      props.color
+  )
+}
+
+function handleMove(e) {
+  let y = e.current.y
+
+  if (y <= 0) {
+    emit('selectAlpha', 0)
+    return
+  }
+
+  if (y >= props.height) {
+    emit('selectAlpha', 1)
+    return
+  }
+
+  let a = parseFloat((y / props.height).toFixed(2))
+  emit('selectAlpha', a)
 }
 </script>
 

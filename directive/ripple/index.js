@@ -1,6 +1,20 @@
 // MIT License https://github.com/vuetifyjs/vuetify
 import './style.scss'
 
+/**
+ * @example // v-ripple usage
+ * <template>
+ *     <div class="text-center">
+ *         <span v-ripple class="mt-12 pa-12 rippl br-md cursor-pointer">click me</span>
+ *     </div>
+ * </template>
+ * <style>
+ *     .rippl{
+ *             background-color: var(--color-sheet-container-low);
+ *     color: var(--color-on-sheet);
+ *     }
+ *     </style>
+ * */
 function transform (el, value) {
   el.style.transform = value
   el.style.webkitTransform = value

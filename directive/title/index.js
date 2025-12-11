@@ -1,5 +1,80 @@
 import './style.scss'
 
+/**
+ * @example // v-title usage
+ * <template>
+ *     <div class="tooltip-section">
+ *         <h2>Top Tooltips</h2>
+ *         <div class="d-flex h-space-around">
+ *           <button v-title.top="'This is a top tooltip'" class="tooltip-btn btn-primary">
+ *             Top Tooltip
+ *           </button>
+ *
+ *           <div v-title.top="'Save your changes'" class="tooltip-icon">
+ *             💾
+ *           </div>
+ *
+ *           <a v-title.top="'Visit our documentation'" href="#" class="tooltip-link">
+ *             Documentation
+ *           </a>
+ *         </div>
+ *       </div>
+ *
+ *       <!-- Bottom Tooltips -->
+ *       <div class="tooltip-section">
+ *         <h2>Bottom Tooltips</h2>
+ *         <div class="d-flex h-space-around">
+ *           <button v-title.bottom="'Click to download file'" class="tooltip-btn btn-success">
+ *             Download
+ *           </button>
+ *
+ *           <div v-title.bottom="'Delete this item'" class="tooltip-icon">
+ *             🗑️
+ *           </div>
+ *
+ *           <a v-title.bottom="'Contact support team'" href="#" class="tooltip-link">
+ *             Support
+ *           </a>
+ *         </div>
+ *       </div>
+ *
+ *       <!-- Left Tooltips -->
+ *       <div class="tooltip-section">
+ *         <h2>Left Tooltips</h2>
+ *         <div class="d-flex h-space-around">
+ *           <button v-title.left="'Previous page'" class="tooltip-btn btn-info">
+ *             ← Back
+ *           </button>
+ *
+ *           <div v-title.left="'User settings'" class="tooltip-icon">
+ *             ⚙️
+ *           </div>
+ *
+ *           <a v-title.left="'View your profile'" href="#" class="tooltip-link">
+ *             Profile
+ *           </a>
+ *         </div>
+ *       </div>
+ *
+ *       <!-- Right Tooltips -->
+ *       <div class="tooltip-section">
+ *         <h2>Right Tooltips</h2>
+ *         <div class="d-flex h-space-around">
+ *           <button v-title.right="'Next page'" class="tooltip-btn btn-warning">
+ *             Next →
+ *           </button>
+ *
+ *           <div v-title.right="'Open notifications'" class="tooltip-icon">
+ *             🔔
+ *           </div>
+ *
+ *           <a v-title.right="'Go to home page'" href="#" class="tooltip-link">
+ *             Home
+ *           </a>
+ *         </div>
+ *       </div>
+ * </template>
+ * */
 function mousestart(el, binding) {
     let d = 'top'
 

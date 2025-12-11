@@ -20,14 +20,14 @@
                         <r-btn :disabled="page===1" @click.prevent="pageBtn('prev')" class="btn-shaped"
                                icon
                                text>
-                            <r-icon v-html="this.$r.icons.chevron_left"></r-icon>
+                          <r-icon v-html="$r.icons.chevron_left"></r-icon>
 
                         </r-btn>
                       <input name="input-page" type="text" :value="page" @input="pageN" class="input-page text-center">
                         <r-btn :disabled="endPage" @click.prevent="pageBtn('next')" class="btn-shaped"
                                icon
                                text>
-                            <r-icon v-html="this.$r.icons.chevron_right"></r-icon>
+                          <r-icon v-html="$r.icons.chevron_right"></r-icon>
 
                         </r-btn>
                     </div>
@@ -36,55 +36,79 @@
         </r-container>
     </div>
 </template>
-<script>
-    export default {
-        name: 'manageFooter',
-        props: {
-            page: {type: Number, default: 1},
-            total: {},
-            perPage: {
-                type: Object, default: () => {
-                    return {name: '10', value: 10}
-                }
-            }
-        },
-        emits: ['update:per-page', 'update:page'],
-        computed: {
-            totalSetup() {
-                let to = this.page * this.perPage.value
-                const from = to - this.perPage.value
-                if (to > this.total) {
-                    to = this.total
-                }
-                return this.$t(['from_to_manage', [from, to, this.total]], 'renusify')
-            },
-            endPage() {
-                let to = this.page * this.perPage.value
-                if (to > this.total) {
-                    to = this.total
-                }
+<script setup>
+import {computed, inject} from 'vue'
 
-                return to === this.total
-            }
-        },
-        methods: {
-            perPageE(e) {
-                this.$emit('update:per-page', e)
-            },
-            pageN(e) {
-                e = parseInt(e.target.value)
-                if (e < 1) {
-                    e = 1
-                }
-                this.$emit('update:page', e)
-            },
-            pageBtn(v) {
-                if (v === 'prev') {
-                    this.$emit('update:page', this.page - 1)
-                } else {
-                    this.$emit('update:page', this.page + 1)
-                }
-            },
-        }
-    }
+const props = defineProps({
+  page: {type: Number, default: 1},
+  total: {},
+  perPage: {
+    type: Object,
+    default: () => ({name: '10', value: 10})
+  }
+})
+
+const emit = defineEmits(['update:per-page', 'update:page'])
+
+const {$t} = inject('renusify')
+
+const totalSetup = computed(() => {
+  let to = props.page * props.perPage.value
+  const from = to - props.perPage.value
+
+  if (to > props.total) {
+    to = props.total
+  }
+
+  return $t(['from_to_manage', [from, to, props.total]], 'renusify')
+})
+
+const endPage = computed(() => {
+  let to = props.page * props.perPage.value
+  if (to > props.total) {
+    to = props.total
+  }
+
+  return to === props.total
+})
+
+
+const totalPages = computed(() => {
+  if (!props.total || !props.perPage.value) return 1
+  return Math.ceil(props.total / props.perPage.value)
+})
+
+const perPageE = (e) => {
+  emit('update:per-page', e)
+}
+
+const pageN = (e) => {
+  let value = parseInt(e.target.value)
+
+  if (isNaN(value) || value < 1) {
+    value = 1
+  }
+
+  if (value > totalPages.value) {
+    value = totalPages.value
+  }
+
+  emit('update:page', value)
+}
+
+const pageBtn = (direction) => {
+  let newPage = props.page
+
+  if (direction === 'prev') {
+    newPage = Math.max(1, props.page - 1)
+  } else if (direction === 'next') {
+    newPage = Math.min(totalPages.value, props.page + 1)
+  } else if (direction === 'first') {
+    newPage = 1
+  } else if (direction === 'last') {
+    newPage = totalPages.value
+  }
+
+  emit('update:page', newPage)
+}
 </script>

@@ -1,24 +1,43 @@
 <template>
   <div :class="classes">
+    <!-- Default slot for container content
+     @example
+     <r-row>
+      <r-col class="col-4"> col-1</r-col>
+      <r-col class="col-4"> col-2</r-col>
+      <r-col class="col-4"> col-3</r-col>
+     </r-row>
+      -->
     <slot></slot>
   </div>
 </template>
 
-<script>
+<script setup>
+import {computed, inject} from 'vue'
 import './style.scss'
 
-export default {
-  name: 'r-container',
-  props: {
-    fullWidth: Boolean,
-    fill: Boolean
-  },
-  computed:{
-    classes(){
-      let a={'container-fluid':this.fullWidth,'fill':this.fill}
-      a[`${this.$r.prefix}container`]=true
-      return a
-    }
+const props = defineProps({
+  /**
+   * Makes container full width (fluid)
+   * @type {Boolean}
+   */
+  fullWidth: Boolean,
+
+  /**
+   * Makes container fill available height
+   * @type {Boolean}
+   */
+  fill: Boolean
+})
+
+const {$r} = inject('renusify')
+
+const classes = computed(() => {
+  const prefix = $r.prefix || 'r-'
+  return {
+    'container-fluid': props.fullWidth,
+    'fill': props.fill,
+    [`${prefix}container`]: true
   }
-}
+})
 </script>

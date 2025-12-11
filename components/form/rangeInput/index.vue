@@ -1,14 +1,12 @@
 <template>
   <r-input :class="`${$r.prefix}range`"
            :modelValue="modelValue"
-           active
-           hide
-           tile
+           active-label
   >
 
-    <div class="range-container" ref="range">
+    <div ref="rangeRef" class="range-container">
       <div
-          ref='dot'
+          ref='dotRef'
           v-touch="{'end':end,
                   'move':move}"
           :style="{'transform':'translate3d('+x+'px,0,0)'}"
@@ -23,7 +21,7 @@
       </div>
       <div
           v-if="isRange"
-          ref='dot2'
+          ref='dot2Ref'
           v-touch="{'end':end2,
                   'move':move2}"
           :style="{'transform':'translate3d('+x2+'px,0,0)'}"
@@ -47,172 +45,287 @@
     </div>
   </r-input>
 </template>
-<script>
 
-export default {
-  name: 'r-range',
-  props: {
-    modelValue: {
-      type: [Number, Array]
-    },
-    min: {
-      type: Number,
-      default: 0
-    },
-    max: {
-      type: Number,
-      default: 100
-    },
-    color: {
-      type: String,
-      default: 'color-one'
-    },
-    step: {
-      type: Number,
-      default: 1
-    },
-    tooltipAlways: Boolean,
+<script setup>
+import {ref, computed, onMounted, inject, nextTick, watch} from 'vue'
 
-    disabled: Boolean,
-    isRange: Boolean
-
+const props = defineProps({
+  /**
+   * The slider's model value
+   * @type {Number|Array}
+   *
+   * For single slider: Number
+   * For range slider: Array of two numbers [minValue, maxValue]
+   */
+  modelValue: {
+    type: [Number, Array]
   },
-  emits:['update:modelValue'],
-  data() {
-    return {
-      width: 0,
-      inMove: false,
-      inMove2: false,
-      x: 0,
-      x2: 0,
-      prePosition: 0,
-      prePosition2: 0,
-      preValue: 0,
-      preValue2: 0,
-    }
+  /**
+   * Minimum allowed value
+   * @type {Number}
+   * @default 0
+   */
+  min: {
+    type: Number,
+    default: 0
   },
-  mounted() {
-    this.width = this.$refs.range.getBoundingClientRect().width - 10
-    this.preValue = this.min
-    if (this.isRange && !this.modelValue) {
-      this.$emit('update:modelValue', [])
-      const r = this.$r.rtl ? -1 : 1
-      this.x2 = this.width * r
-      this.prePosition2 = this.width * r
-      this.preValue2 = this.max
-    }
-    if (this.modelValue !== undefined) {
-      this.preValue = this.isRange ? this.modelValue[0] : this.modelValue
-      this.preValue2 = this.modelValue[1]
-    }
-
-    this.set(this.preValue, this.preValue2)
-
+  /**
+   * Maximum allowed value
+   * @type {Number}
+   * @default 100
+   */
+  max: {
+    type: Number,
+    default: 100
   },
-  computed: {
-    padR() {
-      const r = this.$r.rtl ? -1 : 1
-      return this.x * r
-    },
-    padL() {
-      const r = this.$r.rtl ? -1 : 1
-      return this.width - this.x2 * r
-    }
+  /**
+   * Color class for the slider track
+   * @type {String}
+   * @default 'color-one'
+   */
+  color: {
+    type: String,
+    default: 'color-one'
   },
-  methods: {
-    emit(value) {
-      if (this.disabled) {
-        return
-      }
-      const v = Math.round(value / this.step) * this.step
-      if (v !== this.preValue) {
-        this.$emit('update:modelValue', this.isRange ? [v, this.preValue2] : v)
-        this.preValue = v
-      }
-    },
-    set(v, v2) {
-      const r = this.$r.rtl ? -1 : 1
-      const x = (v - this.min) / (r * (this.max - this.min) / this.width)
-      const x2 = (v2 - this.min) / (r * (this.max - this.min) / this.width)
-      this.x = x
-      this.x2 = x2
-      this.end()
-      this.end2()
-    },
-    move(e) {
-      if (this.disabled) {
-        return
-      }
-      this.inMove = true
-      const x = this.prePosition + e.goX
-      const r = this.$r.rtl ? -1 : 1
-      const value = (r * (this.max - this.min) * x / this.width) + this.min
-      if (value > this.max || (this.isRange && value > this.preValue2)) {
-        if (this.isRange) {
-          this.x = this.x2
-        } else {
-          this.x = this.width * r
-        }
-        this.$emit('update:modelValue', this.isRange ? [this.preValue2, this.preValue2] : this.max)
-        return
-      }
-      if (value < this.min) {
-        this.x = 0
-        this.$emit('update:modelValue', this.isRange ? [this.min, this.preValue2] : this.min)
-        return
-      }
-      this.x = x
-      this.emit(value)
-    },
-    end() {
-      this.inMove = false
-      this.prePosition = this.x
-    },
-    emit2(value) {
-      if (this.disabled) {
-        return
-      }
-      const v = Math.round(value / this.step) * this.step
-      if (v !== this.preValue2) {
-        this.$emit('update:modelValue', [this.preValue, v])
-        this.preValue2 = v
+  /**
+   * Step value for slider increments
+   * @type {Number}
+   * @default 1
+   */
+  step: {
+    type: Number,
+    default: 1
+  },
+  /**
+   * Always show tooltip on slider handle
+   * @type {Boolean}
+   */
+  tooltipAlways: Boolean,
+  /**
+   * Disable slider interaction
+   * @type {Boolean}
+   */
+  disabled: Boolean,
+  /**
+   * Enable range slider with two handles
+   * @type {Boolean}
+   */
+  isRange: Boolean
+})
 
-      }
-    },
-    move2(e) {
-      if (this.disabled) {
-        return
-      }
-      this.inMove2 = true
-      const x = this.prePosition2 + e.goX
-      const r = this.$r.rtl ? -1 : 1
-      const value = (r * (this.max - this.min) * x / this.width) + this.min
-      if (value > this.max) {
-        this.x2 = this.width * r
-        this.$emit('update:modelValue', [this.preValue, this.max])
-        return
-      }
-      if (value < this.min || value < this.preValue) {
-        this.x2 = this.x1
-        this.$emit('update:modelValue', [this.preValue, this.preValue])
-        return
-      }
+const emit = defineEmits([
+  /**
+   * Emitted when slider value changes
+   * @param {Number|Array} value - Updated slider value
+   *
+   * For single slider: Number value
+   * For range slider: Array [minValue, maxValue]
+   */
+  'update:modelValue'
+])
 
-      this.x2 = x
-      this.emit2(value)
-    },
-    end2() {
-      this.inMove2 = false
-      this.prePosition2 = this.x2
-    }
+const {$r} = inject('renusify')
+
+// Reactive data
+const width = ref(0)
+const inMove = ref(false)
+const inMove2 = ref(false)
+const x = ref(0)
+const x2 = ref(0)
+const prePosition = ref(0)
+const prePosition2 = ref(0)
+const preValue = ref(0)
+const preValue2 = ref(0)
+
+// Template refs
+const rangeRef = ref(null)
+const dotRef = ref(null)
+const dot2Ref = ref(null)
+
+// Computed properties
+/**
+ * Right padding for RTL support (first handle in range mode)
+ * @returns {Number} Right padding value
+ */
+const padR = computed(() => {
+  const r = $r.rtl ? -1 : 1
+  return x.value * r
+})
+
+/**
+ * Left padding for RTL support (second handle in range mode)
+ * @returns {Number} Left padding value
+ */
+const padL = computed(() => {
+  const r = $r.rtl ? -1 : 1
+  return width.value - x2.value * r
+})
+
+// Methods - First handle (min value)
+/**
+ * Emits updated value for first handle
+ * @param {Number} value - Raw value to emit
+ */
+const emitValue = (value) => {
+  if (props.disabled) {
+    return
+  }
+  const v = Math.round(value / props.step) * props.step
+  if (v !== preValue.value) {
+    emit('update:modelValue', props.isRange ? [v, preValue2.value] : v)
+    preValue.value = v
   }
 }
-</script>
-<style lang="scss">
-@use "../../../style/variables/base";
-@use "../../../style/mixins";
 
-.#{base.$prefix}range {
+/**
+ * Sets slider handle positions based on values
+ * @param {Number} v - First handle value
+ * @param {Number} v2 - Second handle value
+ */
+const set = (v, v2) => {
+  const r = $r.rtl ? -1 : 1
+  const calcX = (v - props.min) / (r * (props.max - props.min) / width.value)
+  const calcX2 = (v2 - props.min) / (r * (props.max - props.min) / width.value)
+  x.value = calcX
+  x2.value = calcX2
+  end()
+  end2()
+}
+
+/**
+ * Handles first handle movement
+ * @param {Object} e - Movement event with goX property
+ */
+const move = (e) => {
+  if (props.disabled) {
+    return
+  }
+  inMove.value = true
+  const calcX = prePosition.value + e.goX
+  const r = $r.rtl ? -1 : 1
+  const value = (r * (props.max - props.min) * calcX / width.value) + props.min
+
+  if (value > props.max || (props.isRange && value > preValue2.value)) {
+    if (props.isRange) {
+      x.value = x2.value
+    } else {
+      x.value = width.value * r
+    }
+    emit('update:modelValue', props.isRange ? [preValue2.value, preValue2.value] : props.max)
+    return
+  }
+
+  if (value < props.min) {
+    x.value = 0
+    emit('update:modelValue', props.isRange ? [props.min, preValue2.value] : props.min)
+    return
+  }
+
+  x.value = calcX
+  emitValue(value)
+}
+
+/**
+ * Ends first handle movement
+ */
+const end = () => {
+  inMove.value = false
+  prePosition.value = x.value
+}
+
+// Methods - Second handle (max value, range mode only)
+/**
+ * Emits updated value for second handle
+ * @param {Number} value - Raw value to emit
+ */
+const emitValue2 = (value) => {
+  if (props.disabled) {
+    return
+  }
+  const v = Math.round(value / props.step) * props.step
+  if (v !== preValue2.value) {
+    emit('update:modelValue', [preValue.value, v])
+    preValue2.value = v
+  }
+}
+
+/**
+ * Handles second handle movement
+ * @param {Object} e - Movement event with goX property
+ */
+const move2 = (e) => {
+  if (props.disabled) {
+    return
+  }
+  inMove2.value = true
+  const calcX = prePosition2.value + e.goX
+  const r = $r.rtl ? -1 : 1
+  const value = (r * (props.max - props.min) * calcX / width.value) + props.min
+
+  if (value > props.max) {
+    x2.value = width.value * r
+    emit('update:modelValue', [preValue.value, props.max])
+    return
+  }
+
+  if (value < props.min || value < preValue.value) {
+    x2.value = x.value
+    emit('update:modelValue', [preValue.value, preValue.value])
+    return
+  }
+
+  x2.value = calcX
+  emitValue2(value)
+}
+
+/**
+ * Ends second handle movement
+ */
+const end2 = () => {
+  inMove2.value = false
+  prePosition2.value = x2.value
+}
+
+/**
+ * Initializes slider dimensions and positions
+ */
+const init = () => {
+  nextTick(() => {
+    width.value = rangeRef.value.getBoundingClientRect().width - 10
+    preValue.value = props.min
+
+    if (props.isRange && (!props.modelValue || props.modelValue.length === 0)) {
+      emit('update:modelValue', [props.min, props.max])
+      const r = $r.rtl ? -1 : 1
+      x2.value = width.value * r
+      prePosition2.value = width.value * r
+      preValue2.value = props.max
+    }
+
+    if (props.modelValue && !(props.isRange && props.modelValue.length === 0)) {
+      preValue.value = props.isRange ? props.modelValue[0] : props.modelValue
+      preValue2.value = props.isRange ? props.modelValue[1] : props.max
+    }
+
+    set(preValue.value, preValue2.value)
+  })
+}
+
+onMounted(() => {
+  init()
+})
+
+watch(() => props.modelValue, () => {
+  if (!inMove.value && !inMove2.value) {
+    init()
+  }
+}, {deep: true})
+</script>
+
+<style lang="scss">
+@use "../../../style" as *;
+
+.#{$prefix}range {
   height: 30px;
   position: relative;
 
@@ -247,10 +360,10 @@ export default {
       &:hover {
         width: 16px;
         height: 16px;
-        @include mixins.rtl() {
+        @include rtl() {
           transform: translate(2px, -2px);
         }
-        @include mixins.ltr() {
+        @include ltr() {
           transform: translate(-2px, -2px);
         }
         border: 3px solid var(--color-one) !important;
@@ -275,10 +388,10 @@ export default {
       width: auto;
       height: 30px;
       min-width: 30px;
-      @include mixins.rtl() {
+      @include rtl() {
         transform: translateX(calc(50% - 5px));
       }
-      @include mixins.ltr() {
+      @include ltr() {
         transform: translateX(calc(-50% + 5px));
       }
     }
@@ -310,10 +423,10 @@ export default {
       &:hover {
         width: 16px;
         height: 16px;
-        @include mixins.rtl() {
+        @include rtl() {
           transform: translate(2px, -2px);
         }
-        @include mixins.ltr() {
+        @include ltr() {
           transform: translate(-2px, -2px);
         }
         border: 3px solid var(--color-one) !important;
@@ -338,10 +451,10 @@ export default {
       width: auto;
       height: 30px;
       min-width: 30px;
-      @include mixins.rtl() {
+      @include rtl() {
         transform: translateX(calc(50% - 5px));
       }
-      @include mixins.ltr() {
+      @include ltr() {
         transform: translateX(calc(-50% + 5px));
       }
     }

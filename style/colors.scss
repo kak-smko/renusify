@@ -41,6 +41,7 @@ $colorsList: (
         "sheet-dark": #D9D9E0,
         "sheet-light": #F9F9FF,
         "on-sheet": #191C20,
+        "on-sheet-2": #343a42,
         "sheet-low": #E0E2EC,
         "on-sheet-low": #44474E,
         "sheet-container-lowest": #FFFFFF,
@@ -84,16 +85,6 @@ $colorsList: (
   }
 }
 
-@each $color_name, $color_value in color.$grey {
-  .#{base.$prefix}app .color-grey-#{$color_name} {
-    @include mixins.background-color($color_value, true);
-  }
-
-  .#{base.$prefix}app .color-grey-#{$color_name}-text {
-    @include mixins.text-color($color_value, true);
-  }
-}
-
 @each $color_name, $color_value in color.$colorMain {
   .color-#{$color_name} {
     @include mixins.background-color(var(--color-#{$color_name}), true);
@@ -104,20 +95,12 @@ $colorsList: (
   }
 }
 
-.shadow-info {
-  --box-shadow: rgba(10, 150, 250, 0.2)
+.color-text-primary {
+  color: var(--color-on-sheet);
 }
 
-.shadow-success {
-  --box-shadow: rgba(50, 250, 10, 0.2)
-}
-
-.shadow-error {
-  --box-shadow: rgba(255, 10, 30, 0.2)
-}
-
-.shadow-warning {
-  --box-shadow: rgba(250, 150, 10, 0.2)
+.color-text-secondary {
+  color: var(--color-on-sheet-2);
 }
 
 

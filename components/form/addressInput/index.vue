@@ -3,152 +3,227 @@
       :label="$t('country','renusify')"
       v-model="country"
       v-if="!hideCountry||!country"
-      @update:model-value="emit(true,true)"
+      :readonly="readonly"
       value="id"
       :searchLink="`${baseUrl}?lang=${$r.lang}`"
       :rules="required?['required']:[]"
       :headers="{'Authorization':''}"
-      :readonly="readonly"
-      :tile="tile">
+      @update:model-value="emitAddress(true,true)">
   </r-select-input>
   <r-select-input :label="$t('state','renusify')"
                   v-model="state"
                   :disabled="!country"
                   :key="country&&country['id']"
                   v-if="show_state"
-                  @update:model-value="emit(false,true)"
+                  :readonly="readonly"
                   :searchLink="country&&`${baseUrl}/${country['id']}?lang=${$r.lang}`"
                   :rules="required?['required']:[]"
                   value="id"
                   :headers="{'Authorization':''}"
-                  :readonly="readonly"
-                  :tile="tile">
+                  @update:model-value="emitAddress(false,true)">
 
   </r-select-input>
   <r-select-input v-if="show_city"
                   v-model="city"
                   :disabled="!state"
                   :key="state&&(country['id']+'-'+state['id'])"
-                  @update:model-value="emit(false,false)"
+                  :readonly="readonly"
                   :label="$t('city','renusify')"
                   :searchLink="state&&`${baseUrl}/${country['id']}/${state['id']}?lang=${$r.lang}`"
                   :rules="required?['required']:[]"
                   value="id"
                   :headers="{'Authorization':''}"
-                  :readonly="readonly"
-                  :tile="tile">
+                  @update:model-value="emitAddress(false,false)">
 
   </r-select-input>
-  <r-text-input v-if="show_zip" @update:model-value="emit(false,false)"
+  <r-text-input v-if="show_zip"
+                @update:model-value="emitAddress(false,false)"
                 :label="$t('zip_code','renusify')"
                 v-model="zip_code"
-                :tile="tile"
                 :readonly="readonly"
                 :rules="required?['required']:[]"></r-text-input>
-  <r-text-area v-if="show_street" @update:model-value="emit(false,false)"
+  <r-text-area v-if="show_street" @update:model-value="emitAddress(false,false)"
                :label="$t('street','renusify')"
                v-model="street"
-               :tile="tile"
                :readonly="readonly"
                :rules="required?['required']:[]"></r-text-area>
 </template>
-<script>
+<script setup>
+import {ref, computed, watch, nextTick} from 'vue'
 
-export default {
-  name: 'r-address',
-  inheritAttrs: false,
-  props: {
-    required: Boolean,
-    stepShow: Boolean,
-    allowCountries: Array,
-    hideCountry: Boolean,
-    hideState: Boolean,
-    hideCity: Boolean,
-    hideZipCode: Boolean,
-    hideStreet: Boolean,
-    readonly: Boolean,
-    tile: {type: Boolean, default: undefined},
-    baseUrl: {type: String, default: "https://codenus.com/api/apps/address"},
-    defaultCountry: Object,
-    modelValue: Object
-  },
-  emits:['update:modelValue'],
-  data() {
-    return {
-      country: this.modelValue ? this.modelValue.country : this.defaultCountry,
-      state: this.modelValue ? this.modelValue.state : null,
-      city: this.modelValue ? this.modelValue.city : null,
-      zip_code: this.modelValue ? this.modelValue.zip_code : null,
-      street: this.modelValue ? this.modelValue.street : null
-    }
-  },
-  watch: {
-    modelValue() {
-      this.country = this.modelValue ? this.modelValue.country : (this.defaultCountry ? this.defaultCountry : null)
-      this.state = this.modelValue ? this.modelValue.state : null
-      this.city = this.modelValue ? this.modelValue.city : null
-      this.zip_code = this.modelValue ? this.modelValue.zip_code : null
-      this.street = this.modelValue ? this.modelValue.street : null
-    }
-  },
-  computed: {
-    show_state() {
-      if (this.stepShow) {
-        return !this.hideState && this.country
-      } else {
-        return !this.hideState
-      }
-    },
-    show_city() {
-      if (this.stepShow) {
-        return !this.hideCity && this.state
-      } else {
-        return !this.hideCity
-      }
-    },
-    show_street() {
-      if (this.stepShow) {
-        return !this.hideStreet && this.city
-      } else {
-        return !this.hideStreet
-      }
-    },
-    show_zip() {
-      if (this.stepShow) {
-        return !this.hideZipCode && this.city
-      } else {
-        return !this.hideZipCode
-      }
-    }
-  },
-  methods: {
-    emit(clearState = false, clearCity = false) {
-      setTimeout(() => {
-        let r = {
-          country: this.country,
-        }
-        if (clearState) {
-          this.state = null
-        }
-        if (!this.hideState) {
-          r['state'] = this.state
-        }
-        if (clearCity) {
-          this.city = null
-        }
-        if (!this.hideCity) {
-          r['city'] = this.city
-        }
-        if (!this.hideStreet) {
-          r['street'] = this.street
-        }
-        if (!this.hideZipCode) {
-          r['zip_code'] = this.zip_code
-        }
-        this.$emit('update:modelValue', r)
-      }, 10)
-    }
+defineOptions({
+  inheritAttrs: false
+})
+const props = defineProps({
+  /**
+   * Whether the address fields are required
+   * @type {Boolean}
+   */
+  required: Boolean,
+
+  /**
+   * Show fields step by step based on previous selections
+   * @type {Boolean}
+   */
+  stepShow: Boolean,
+
+  /**
+   * Array of allowed countries to show in country selector
+   * @type {Array}
+   */
+  allowCountries: Array,
+
+  /**
+   * Hide the country field
+   * @type {Boolean}
+   */
+  hideCountry: Boolean,
+
+  /**
+   * Hide the state/province field
+   * @type {Boolean}
+   */
+  hideState: Boolean,
+
+  /**
+   * Hide the city field
+   * @type {Boolean}
+   */
+  hideCity: Boolean,
+
+  /**
+   * Hide the zip/postal code field
+   * @type {Boolean}
+   */
+  hideZipCode: Boolean,
+
+  /**
+   * Hide the street address field
+   * @type {Boolean}
+   */
+  hideStreet: Boolean,
+
+  /**
+   * Make all fields read-only
+   * @type {Boolean}
+   */
+  readonly: Boolean,
+
+  /**
+   * Base URL for API calls to fetch address data
+   * @type {String}
+   * @default "https://codenus.com/api/apps/address"
+   */
+  baseUrl: {type: String, default: "https://codenus.com/api/apps/address"},
+
+  /**
+   * Default country to pre-select
+   * @type {Object}
+   */
+  defaultCountry: Object,
+
+  /**
+   * The address model value
+   * @type {Object}
+   */
+  modelValue: Object
+})
+
+const emit = defineEmits([
+  /**
+   * Emitted when address data changes
+   * @param {Object} address - The updated address object
+   * @param {Object|null} address.country - Selected country
+   * @param {Object|null} address.state - Selected state/province
+   * @param {Object|null} address.city - Selected city
+   * @param {String|null} address.street - Street address
+   * @param {String|null} address.zip_code - Zip/postal code
+   */
+  'update:modelValue'
+])
+
+// Reactive data
+const country = ref(props.modelValue?.country || props.defaultCountry || null)
+const state = ref(props.modelValue?.state || null)
+const city = ref(props.modelValue?.city || null)
+const zip_code = ref(props.modelValue?.zip_code || null)
+const street = ref(props.modelValue?.street || null)
+
+// Computed properties
+const show_state = computed(() => {
+  if (props.stepShow) {
+    return !props.hideState && country.value
+  } else {
+    return !props.hideState
   }
+})
+
+const show_city = computed(() => {
+  if (props.stepShow) {
+    return !props.hideCity && state.value
+  } else {
+    return !props.hideCity
+  }
+})
+
+const show_street = computed(() => {
+  if (props.stepShow) {
+    return !props.hideStreet && city.value
+  } else {
+    return !props.hideStreet
+  }
+})
+
+const show_zip = computed(() => {
+  if (props.stepShow) {
+    return !props.hideZipCode && city.value
+  } else {
+    return !props.hideZipCode
+  }
+})
+
+// Methods
+/**
+ * Emits the current address data and optionally clears dependent fields
+ * @param {Boolean} clearState - Whether to clear the state field
+ * @param {Boolean} clearCity - Whether to clear the city field
+ * @returns {Promise<void>}
+ */
+const emitAddress = async (clearState = false, clearCity = false) => {
+  await nextTick()
+  if (clearState) {
+    state.value = null
+  }
+  if (clearCity) {
+    city.value = null
+  }
+
+  const result = {
+    country: country.value,
+  }
+
+  if (!props.hideState) {
+    result.state = state.value
+  }
+  if (!props.hideCity) {
+    result.city = city.value
+  }
+  if (!props.hideStreet) {
+    result.street = street.value
+  }
+  if (!props.hideZipCode) {
+    result.zip_code = zip_code.value
+  }
+
+  emit('update:modelValue', result)
 }
 
+// Watchers
+watch(() => props.modelValue, (newVal) => {
+  country.value = newVal?.country || (props.defaultCountry || null)
+  state.value = newVal?.state || null
+  city.value = newVal?.city || null
+  zip_code.value = newVal?.zip_code || null
+  street.value = newVal?.street || null
+})
 </script>

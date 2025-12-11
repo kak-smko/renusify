@@ -2,24 +2,33 @@
   <hr :class="classes"/>
 </template>
 
-<script>
-export default {
-  name: 'r-divider',
-  props: {
-    inset: Boolean,
-    vertical: Boolean
-  },
-  computed: {
-    classes () {
-      let c = this.$r.prefix+'divider'
-      if (this.inset) {
-        c += ' divider-inset'
-      }
-      if (this.vertical) {
-        c += ' divider-vertical'
-      }
-      return c
-    }
+<script setup>
+import {computed, inject} from 'vue'
+
+const props = defineProps({
+  /**
+   * Adds inset padding to the divider
+   * @type {Boolean}
+   */
+  inset: Boolean,
+
+  /**
+   * Makes the divider vertical instead of horizontal
+   * @type {Boolean}
+   */
+  vertical: Boolean
+})
+
+const $r = inject('renusify').$r
+
+const classes = computed(() => {
+  let c = [$r.prefix + 'divider']
+  if (props.inset) {
+    c.push('divider-inset')
   }
-}
+  if (props.vertical) {
+    c.push('divider-vertical')
+  }
+  return c
+})
 </script>

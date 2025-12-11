@@ -2,10 +2,10 @@
   <r-input
       :class="[`${$r.prefix}cam-input`]"
       :model-value="files.length > 0 ? files : null"
-      hide
-      labelControlClass="label-active"
+      label-active
   >
     <div>
+      <!-- Slot for custom video holder display. Provides items scoped prop -->
       <slot name="holder" :items="modelValue">
         <span class="video-holder" v-for="(vid, i) in modelValue" :key="i">
           <video
@@ -44,6 +44,7 @@
             :width="width"
             :height="height"
         ></canvas>
+        <!-- Slot for custom control buttons. Provides uploadPercentage, cancelFile, start, stop, started scoped props -->
         <slot name="control"
               :uploadPercentage="uploadPercentage"
               :cancelFile="cancelFile"
@@ -105,257 +106,382 @@
   </r-input>
 </template>
 
-<script>
-export default {
-  name: "r-cam-input",
-  props: {
-    uploadLink: String,
-    width: {
-      type: String,
-      default: "300",
-    },
-    height: {
-      type: String,
-      default: "300",
-    },
-    audio: {
-      type: Boolean,
-      default: true,
-    },
-    video: {
-      type: Boolean,
-      default: true,
-    },
-    modelValue: Array,
-    size: {
-      default: 3,
-      type: Number,
-    },
-    headers: Object
+<script setup>
+import {ref, watch, inject, onUnmounted} from 'vue'
+
+const props = defineProps({
+  /**
+   * API endpoint URL for uploading recorded videos
+   * @type {String}
+   */
+  uploadLink: String,
+
+  /**
+   * Width of the camera view/video element
+   * @type {String|Number}
+   * @default "300"
+   */
+  width: {
+    type: [String, Number],
+    default: "300",
   },
-  emits: ['update:modelValue', 'error'],
-  data() {
-    return {
-      started: false,
-      type: null,
-      stream: null,
-      mediaRecorder: null,
-      recordedBlobs: [],
-      uploadPercentage: 0,
-      CancelTokenSource: null,
-      files: this.modelValue || [],
-    };
+
+  /**
+   * Height of the camera view/video element
+   * @type {String|Number}
+   * @default "300"
+   */
+  height: {
+    type: [String, Number],
+    default: "300",
   },
-  methods: {
-    visualize() {
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const analyser = audioCtx.createAnalyser();
-      const source = audioCtx.createMediaStreamSource(this.stream);
-      source.connect(analyser);
 
-      analyser.fftSize = 2048;
-      const bufferLength = analyser.frequencyBinCount;
-      const dataArray = new Uint8Array(bufferLength);
-      analyser.getByteTimeDomainData(dataArray);
-      const canvas = this.$refs.visualizer;
-      canvas.width = this.width;
-      canvas.height = this.height;
-      const canvasCtx = canvas.getContext("2d");
-      canvasCtx.clearRect(0, 0, this.width, this.height);
-      const that = this;
-
-      const barHeight = 5;
-      const barWidth = 4;
-      const barSpacing = 10;
-      const cx = canvas.width / 2;
-      const cy = canvas.height / 2;
-      const radius = cy / 2;
-      const maxBarNum = Math.floor(
-          (radius * 2 * Math.PI) / (barWidth + barSpacing)
-      );
-
-      const freqJump = Math.floor(dataArray.length / maxBarNum);
-      let colors = [];
-      for (let i = 0; i < maxBarNum; i++) {
-        colors.push(that.getRandomColor());
-      }
-      const draw2 = function () {
-        if (!that.started) {
-          return;
-        }
-        canvasCtx.clearRect(0, 0, that.width, that.height);
-        requestAnimationFrame(draw2);
-        analyser.getByteTimeDomainData(dataArray);
-
-        for (let i = 0; i < maxBarNum; i++) {
-          const amplitude = 128 - dataArray[i * freqJump];
-          const alfa = (i * 2 * Math.PI) / maxBarNum;
-          const beta = ((3 * 45 - barWidth) * Math.PI) / 180;
-          const x = 0;
-          const y = radius;
-          const w = barWidth;
-          const h = Math.min(Math.max(barHeight, amplitude), radius / 2);
-          canvasCtx.save();
-          canvasCtx.translate(cx, cy);
-          canvasCtx.rotate(alfa - beta);
-          canvasCtx.fillStyle = colors[i];
-          canvasCtx.fillRect(x, y, w, h);
-          canvasCtx.restore();
-        }
-      };
-      draw2();
-    },
-    getRandomColor() {
-      const letters = "0123456789ABCDEF";
-      let color = "#";
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
-    },
-    startRecording(stream) {
-      this.recordedBlobs = [];
-
-      try {
-        this.mediaRecorder = new MediaRecorder(stream);
-      } catch (e) {
-        console.error("Exception while creating MediaRecorder:", e);
-        return;
-      }
-
-      this.mediaRecorder.onstop = () => {
-        console.log("Recorder stopped");
-        this.download();
-      };
-      this.mediaRecorder.ondataavailable = this.handleDataAvailable;
-      this.mediaRecorder.start();
-      console.log("MediaRecorder started");
-    },
-    handleDataAvailable(event) {
-      if (event.data && event.data.size > 0) {
-        this.type = event.data.type;
-        this.recordedBlobs.push(event.data);
-      }
-    },
-    download() {
-      this.CancelTokenSource = this.$axios.CancelToken.source();
-      const blob = new Blob(this.recordedBlobs, {type: this.type});
-      let fileData = new FormData();
-      fileData.append("file", blob, "user.webm");
-      let headers = this.headers
-      if (!headers) {
-        headers = {}
-      }
-      headers['Content-Type'] = 'multipart/form-data'
-      this.$axios
-          .post(this.uploadLink, fileData, {
-            headers: headers,
-            onUploadProgress: function (progressEvent) {
-              this.uploadPercentage = Math.min(
-                  parseInt(
-                      Math.floor((progressEvent.loaded * 100) / progressEvent.total)
-                  ),
-                  98
-              );
-            }.bind(this),
-            cancelToken: this.CancelTokenSource.token,
-          })
-          .then(
-              ({data}) => {
-                this.uploadPercentage = 100;
-                this.files.push(data.link);
-                this.emit();
-              },
-              (err) => {
-                this.uploadPercentage = 0;
-                if (err.response) {
-                  this.$emit('error', err.response.data)
-                } else {
-                  this.$emit('error', err)
-                }
-              }
-          );
-    },
-    emit() {
-      this.$emit("update:modelValue", this.files);
-    },
-    run() {
-      try {
-        this.uploadPercentage = 0;
-        navigator.mediaDevices
-            .getUserMedia({
-              audio: this.audio,
-              video: this.video
-                  ? {width: this.width, height: this.height}
-                  : false,
-            })
-            .then((stream) => {
-              if (this.$refs.selfView) {
-                this.$refs.selfView.srcObject = stream;
-              }
-              if (!this.video) {
-                this.stream = stream;
-                this.visualize();
-              }
-
-              this.startRecording(stream);
-            });
-      } catch (err) {
-        this.started = false;
-        console.error("startChat: " + err);
-      }
-    },
-    start() {
-      if (this.files.length >= this.size) {
-        return;
-      }
-      this.started = true;
-      this.run();
-    },
-    stop() {
-      this.started = false;
-      if (this.$refs["selfView"] && this.$refs["selfView"].srcObject) {
-        this.$refs["selfView"].srcObject.getTracks().forEach(function (track) {
-          track.stop();
-        });
-        this.$refs["selfView"].srcObject = null;
-      } else if (this.stream) {
-        this.stream.getTracks().forEach(function (track) {
-          track.stop();
-        });
-        this.stream = null;
-      }
-
-      if (this.mediaRecorder !== null) {
-        this.mediaRecorder.stop();
-        this.mediaRecorder = null;
-      }
-    },
-    cancelFile() {
-      this.CancelTokenSource.cancel();
-      this.uploadPercentage = 0;
-    },
-    dlt(link) {
-      const i = this.files.indexOf(link);
-      this.$axios
-          .delete(this.uploadLink, {
-            data: {link: link},
-          }, {headers: this.headers})
-          .then(() => {
-            this.files.splice(i, 1);
-            this.emit();
-          });
-    },
+  /**
+   * Enable audio recording
+   * @type {Boolean}
+   * @default true
+   */
+  audio: {
+    type: Boolean,
+    default: true,
   },
-};
+
+  /**
+   * Enable video recording
+   * @type {Boolean}
+   * @default true
+   */
+  video: {
+    type: Boolean,
+    default: true,
+  },
+
+  /**
+   * Array of uploaded video URLs
+   * @type {Array}
+   */
+  modelValue: Array,
+
+  /**
+   * Maximum number of videos allowed to record
+   * @type {Number}
+   * @default 3
+   */
+  size: {
+    default: 3,
+    type: Number,
+  },
+
+  /**
+   * Additional headers for upload/delete requests
+   * @type {Object}
+   */
+  headers: Object
+})
+
+const emit = defineEmits([
+  /**
+   * Emitted when the list of uploaded videos changes
+   * @param {Array} videos - Array of video URLs
+   */
+  'update:modelValue',
+
+  /**
+   * Emitted when an error occurs during recording, upload, or delete
+   * @param {String|Object} error - Error message or error object
+   */
+  'error'
+])
+
+const $axios = inject('axios')
+
+const started = ref(false)
+const type = ref(null)
+const stream = ref(null)
+const mediaRecorder = ref(null)
+const recordedBlobs = ref([])
+const uploadPercentage = ref(0)
+const CancelTokenSource = ref(null)
+const files = ref(props.modelValue || [])
+
+const visualizer = ref(null)
+const selfView = ref(null)
+
+watch(() => props.modelValue, (newValue) => {
+  files.value = newValue || []
+})
+
+/**
+ * Creates audio visualizer when video is disabled
+ */
+const visualize = () => {
+  if (!stream.value) return
+
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
+  const analyser = audioCtx.createAnalyser()
+  const source = audioCtx.createMediaStreamSource(stream.value)
+  source.connect(analyser)
+
+  analyser.fftSize = 2048
+  const bufferLength = analyser.frequencyBinCount
+  const dataArray = new Uint8Array(bufferLength)
+  analyser.getByteTimeDomainData(dataArray)
+
+  const canvas = visualizer.value
+  if (!canvas) return
+
+  canvas.width = parseInt(props.width)
+  canvas.height = parseInt(props.height)
+  const canvasCtx = canvas.getContext("2d")
+  canvasCtx.clearRect(0, 0, canvas.width, canvas.height)
+
+  const barHeight = 5
+  const barWidth = 4
+  const barSpacing = 10
+  const cx = canvas.width / 2
+  const cy = canvas.height / 2
+  const radius = cy / 2
+  const maxBarNum = Math.floor(
+      (radius * 2 * Math.PI) / (barWidth + barSpacing)
+  )
+
+  const freqJump = Math.floor(dataArray.length / maxBarNum)
+  let colors = []
+  for (let i = 0; i < maxBarNum; i++) {
+    colors.push(getRandomColor())
+  }
+
+  const draw = () => {
+    if (!started.value) {
+      return
+    }
+    canvasCtx.clearRect(0, 0, canvas.width, canvas.height)
+    requestAnimationFrame(draw)
+    analyser.getByteTimeDomainData(dataArray)
+
+    for (let i = 0; i < maxBarNum; i++) {
+      const amplitude = 128 - dataArray[i * freqJump]
+      const alfa = (i * 2 * Math.PI) / maxBarNum
+      const beta = ((3 * 45 - barWidth) * Math.PI) / 180
+      const x = 0
+      const y = radius
+      const w = barWidth
+      const h = Math.min(Math.max(barHeight, amplitude), radius / 2)
+      canvasCtx.save()
+      canvasCtx.translate(cx, cy)
+      canvasCtx.rotate(alfa - beta)
+      canvasCtx.fillStyle = colors[i]
+      canvasCtx.fillRect(x, y, w, h)
+      canvasCtx.restore()
+    }
+  }
+  draw()
+}
+
+/**
+ * Generates a random color for visualizer bars
+ * @returns {String} Random hex color
+ */
+const getRandomColor = () => {
+  const letters = "0123456789ABCDEF"
+  let color = "#"
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)]
+  }
+  return color
+}
+
+/**
+ * Starts media recording
+ * @param {MediaStream} stream - Media stream to record
+ */
+const startRecording = (stream) => {
+  recordedBlobs.value = []
+
+  try {
+    mediaRecorder.value = new MediaRecorder(stream)
+  } catch (e) {
+    console.error("Exception while creating MediaRecorder:", e)
+    return
+  }
+
+  mediaRecorder.value.onstop = () => {
+    console.log("Recorder stopped")
+    download()
+  }
+
+  mediaRecorder.value.ondataavailable = handleDataAvailable
+  mediaRecorder.value.start()
+  console.log("MediaRecorder started")
+}
+
+/**
+ * Handles data available event from media recorder
+ * @param {BlobEvent} event - Data available event
+ */
+const handleDataAvailable = (event) => {
+  if (event.data && event.data.size > 0) {
+    type.value = event.data.type
+    recordedBlobs.value.push(event.data)
+  }
+}
+
+/**
+ * Uploads recorded video to server
+ */
+const download = async () => {
+  if (!props.uploadLink || !$axios) {
+    console.error("Upload link or axios not available")
+    return
+  }
+
+  CancelTokenSource.value = $axios.CancelToken.source()
+  const blob = new Blob(recordedBlobs.value, {type: type.value})
+  let fileData = new FormData()
+  fileData.append("file", blob, "user.webm")
+
+  let headers = props.headers ? {...props.headers} : {}
+  headers['Content-Type'] = 'multipart/form-data'
+
+  try {
+    const response = await $axios.post(props.uploadLink, fileData, {
+      headers: headers,
+      onUploadProgress: (progressEvent) => {
+        uploadPercentage.value = Math.min(
+            parseInt(
+                Math.floor((progressEvent.loaded * 100) / progressEvent.total)
+            ),
+            98
+        )
+      },
+      cancelToken: CancelTokenSource.value.token,
+    })
+
+    uploadPercentage.value = 100
+    files.value.push(response.data.link)
+    emitFiles()
+  } catch (err) {
+    uploadPercentage.value = 0
+    if (err.response) {
+      emit('error', err.response.data)
+    } else {
+      emit('error', err)
+    }
+  }
+}
+
+/**
+ * Emits updated files array to parent
+ */
+const emitFiles = () => {
+  emit("update:modelValue", files.value)
+}
+
+/**
+ * Initializes camera and starts recording
+ */
+const run = async () => {
+  try {
+    uploadPercentage.value = 0
+    const mediaStream = await navigator.mediaDevices.getUserMedia({
+      audio: props.audio,
+      video: props.video
+          ? {width: parseInt(props.width), height: parseInt(props.height)}
+          : false,
+    })
+
+    if (selfView.value) {
+      selfView.value.srcObject = mediaStream
+    }
+
+    if (!props.video) {
+      stream.value = mediaStream
+      visualize()
+    }
+
+    startRecording(mediaStream)
+  } catch (err) {
+    started.value = false
+    console.error("startChat: " + err)
+    emit('error', err.message || err)
+  }
+}
+
+/**
+ * Starts the recording process
+ */
+const start = () => {
+  if (files.value.length >= props.size) {
+    return
+  }
+  started.value = true
+  run()
+}
+
+/**
+ * Stops recording and cleans up media resources
+ */
+const stop = () => {
+  started.value = false
+
+  if (selfView.value?.srcObject) {
+    selfView.value.srcObject.getTracks().forEach(track => track.stop())
+    selfView.value.srcObject = null
+  } else if (stream.value) {
+    stream.value.getTracks().forEach(track => track.stop())
+    stream.value = null
+  }
+
+  if (mediaRecorder.value) {
+    mediaRecorder.value.stop()
+    mediaRecorder.value = null
+  }
+}
+
+/**
+ * Cancels current file upload
+ */
+const cancelFile = () => {
+  if (CancelTokenSource.value) {
+    CancelTokenSource.value.cancel()
+  }
+  uploadPercentage.value = 0
+}
+
+/**
+ * Deletes an uploaded video
+ * @param {String} link - Video URL to delete
+ */
+const dlt = async (link) => {
+  if (!props.uploadLink || !$axios) return
+
+  const i = files.value.indexOf(link)
+  try {
+    await $axios.delete(props.uploadLink, {
+      data: {link: link},
+      headers: props.headers
+    })
+    files.value.splice(i, 1)
+    emitFiles()
+  } catch (error) {
+    console.error("Error deleting file:", error)
+    emit('error', error.response?.data || error.message || error)
+  }
+}
+
+onUnmounted(() => {
+  stop()
+  cancelFile()
+})
 </script>
 
 <style lang="scss">
-@use "../../../style/variables/base";
+@use "../../../style" as *;
 
-.#{base.$prefix}cam-input {
-  video {
-    border: 1px solid var(--color-border);
+.#{$prefix}cam-input {
+  .input-control {
+    height: auto;
+    width: auto;
   }
 
   .self-view {

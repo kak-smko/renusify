@@ -1,1 +1,0 @@
-export * as rBottomNavigation from './bottomNav.vue'

@@ -15,65 +15,48 @@
         </div>
     </transition>
 </template>
-<script>
-export default {
-  props: {
-    pos: {
-      default: 'right'
-    },
-    permanent: {
-      default: false
-    },
-    content: {},
-    status: {
-      type: String,
-      default: 'alert-success'
-    },
-    width: {
-      type: String,
-      default: '350px'
-    },
-    timeout: {
-      type: Number,
-      default: 4000
-    }
+<script setup>
+import {ref, onMounted, nextTick} from 'vue'
+
+const props = defineProps({
+  pos: {
+    default: 'right'
   },
-  emits:['hide'],
-  data () {
-    return {
-      show: false
-    }
+  permanent: {
+    default: false
   },
-  methods: {
-    hideMe () {
-      this.$emit('hide',true)
-    }
+  content: {},
+  status: {
+    type: String,
+    default: 'alert-success'
   },
-  created () {
-    setTimeout(() => {
-      this.show = true
-    }, 10)
-    if (!this.permanent) {
-      setTimeout(() => {
-        this.hideMe()
-      }, this.timeout)
-    }
+  width: {
+    type: String,
+    default: '350px'
+  },
+  timeout: {
+    type: Number,
+    default: 4000
   }
+})
+
+const emit = defineEmits(['hide'])
+
+const show = ref(false)
+
+const hideMe = () => {
+  emit('hide', true)
 }
+
+onMounted(() => {
+  nextTick(() => {
+    show.value = true
+  })
+
+  if (!props.permanent) {
+    setTimeout(() => {
+      hideMe()
+    }, props.timeout)
+  }
+})
 </script>
-<style lang="scss">
-@use "sass:map";
-@use "../../style/variables/base";
-
-
-.notify-msg {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 10px;
-  border-radius: map.get(base.$borders, 'md');
-  position: relative;
-  z-index: map.get(base.$z-index, 'important');
-  margin: 0.3rem 0;
-}
-</style>

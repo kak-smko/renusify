@@ -1,1 +1,0 @@
-export * as rChart from './chart.vue'

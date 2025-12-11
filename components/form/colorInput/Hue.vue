@@ -1,85 +1,108 @@
 <template>
   <div class="hue ms-1">
-    <canvas ref="canvas" :width="width" :height="height" v-touch="{'end':move,
-                  'move':move}"/>
-    <div :style="style" class="slide"/>
+    <canvas
+        ref="canvasRef"
+        v-touch="{'end': handleMove, 'move': handleMove}"
+        :height="height"
+        :width="width"
+    />
+    <div :style="slideStyle" class="slide"/>
   </div>
 </template>
 
-<script >
+<script setup>
+import {ref, watch, onMounted, computed} from 'vue'
 
-export default
-        {
-  props: {
-    hsv: {
-      type: Object,
-      default: null,
-    },
-    width: {
-      type: Number,
-      default: 15,
-    },
-    height: {
-      type: Number,
-      default: 152,
-    },
+const props = defineProps({
+  hsv: {
+    type: Object,
+    default: () => ({h: 0}),
   },
-  emits: ['selectHue'],
-  data() {
-    return {
-      style: {},
-      ctx: null
-    }
+  width: {
+    type: Number,
+    default: 15,
   },
-  mounted() {
-    this.ctx = this.$refs.canvas.getContext('2d', {willReadFrequently: true})
-    this.renderColor()
-    this.renderSlide()
+  height: {
+    type: Number,
+    default: 152,
   },
-  methods: {
-    renderColor() {
-      const g = this.ctx.createLinearGradient(0, 0, 0, this.height)
-      g.addColorStop(0, '#FF0000') // red
-      g.addColorStop(0.17 * 1, '#FF00FF') // purple
-      g.addColorStop(0.17 * 2, '#0000FF') // blue
-      g.addColorStop(0.17 * 3, '#00FFFF') // green
-      g.addColorStop(0.17 * 4, '#00FF00') // green
-      g.addColorStop(0.17 * 5, '#FFFF00') // yellow
-      g.addColorStop(1, '#FF0000') // red
-      this.ctx.fillStyle = g
-      this.ctx.fillRect(0, 0, this.width, this.height)
-    },
-    renderSlide() {
-      this.style = {
-        top: (1 - this.hsv.h / 360) * this.height + 'px',
-      }
-    },
-    move(e) {
-      let y = e.current.y
+})
 
-      if (y < 0) {
-        y = 0
-      }
-      if (y > this.height) {
-        y = this.height
-      }
+const emit = defineEmits(['selectHue'])
 
-      this.style = {
-        top: y - 2 + 'px',
-      }
+const canvasRef = ref(null)
+const ctx = ref(null)
+const slideTop = ref('0px')
 
-      const imgData = this.ctx.getImageData(0, Math.min(y, this.height - 1), 1, 1)
-      const [r, g, b] = imgData.data
-      this.$emit('selectHue', {r, g, b})
-    }
-  },
+const slideStyle = computed(() => ({
+  top: slideTop.value,
+}))
+
+watch(() => props.hsv?.h, () => {
+  renderSlide()
+}, {immediate: true})
+
+
+onMounted(() => {
+  if (canvasRef.value) {
+    ctx.value = canvasRef.value.getContext('2d', {willReadFrequently: true})
+    renderColor()
+    renderSlide()
+  }
+})
+
+function renderColor() {
+  if (!ctx.value) return
+
+  const gradient = ctx.value.createLinearGradient(0, 0, 0, props.height)
+  gradient.addColorStop(0, '#FF0000') // red
+  gradient.addColorStop(0.17 * 1, '#FF00FF') // purple
+  gradient.addColorStop(0.17 * 2, '#0000FF') // blue
+  gradient.addColorStop(0.17 * 3, '#00FFFF') // cyan
+  gradient.addColorStop(0.17 * 4, '#00FF00') // green
+  gradient.addColorStop(0.17 * 5, '#FFFF00') // yellow
+  gradient.addColorStop(1, '#FF0000') // red
+
+  ctx.value.fillStyle = gradient
+  ctx.value.fillRect(0, 0, props.width, props.height)
 }
+
+function renderSlide() {
+  if (!props.hsv) return
+
+  const hue = props.hsv.h || 0
+  const topPosition = (1 - hue / 360) * props.height
+  slideTop.value = `${topPosition}px`
+}
+
+function handleMove(e) {
+  let y = e.current.y
+
+  if (y < 0) y = 0
+  if (y > props.height) y = props.height
+
+  slideTop.value = `${y - 2}px`
+
+  if (!ctx.value) return
+
+  const pixelY = Math.min(y, props.height - 1)
+  const imgData = ctx.value.getImageData(0, pixelY, 1, 1)
+  const [r, g, b] = imgData.data
+
+  emit('selectHue', {r, g, b})
+}
+
+defineExpose({
+  renderColor,
+  renderSlide
+})
 </script>
 
 <style lang="scss">
 .hue {
   position: relative;
   cursor: pointer;
+
   .slide {
     position: absolute;
     left: 0;

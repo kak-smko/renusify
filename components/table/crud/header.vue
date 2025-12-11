@@ -60,7 +60,7 @@
                              :label="$t('search','renusify')"
                              v-bind="headers[1][info.key].props"></component>
                 </div>
-                <r-btn :rounded="!$r.inputs.tile" class="ms-1 color-success" @click.prevent="added(info,add)">
+                <r-btn class="ms-1 color-success" @click.prevent="added(info,add)">
                   {{ $t('add', 'renusify') }}
                 </r-btn>
               </template>
@@ -82,79 +82,78 @@
     />
   </div>
 </template>
-<script>
-export default {
-  name: 'manageHeader',
-  props: {
-    headerTable: Object,
-    loading: Boolean,
-    disableAdd: Boolean,
-    advanceSearch: Boolean,
-    mcud: Boolean,
-    newItem: Function,
-    modelValue: String
-  },
-  emits: ['update:modelValue', 'copy', 'edit', 'delete', 'a-search'],
-  data() {
-    return {
-      show: false,
-      showConfirm: false,
-      advance: null
+
+<script setup>
+import {ref, computed, inject} from 'vue'
+
+const props = defineProps({
+  headerTable: Object,
+  loading: Boolean,
+  disableAdd: Boolean,
+  advanceSearch: Boolean,
+  mcud: Boolean,
+  newItem: Function,
+  modelValue: String
+})
+
+const emit = defineEmits(['update:modelValue', 'copy', 'edit', 'delete', 'a-search'])
+
+const {$t} = inject('renusify')
+
+const show = ref(false)
+const showConfirm = ref(false)
+const advance = ref({})
+
+const headers = computed(() => {
+  let r = []
+  let r2 = {}
+  for (let i = 0; i < props.headerTable.length; i++) {
+    r.push({'name': $t(props.headerTable[i].text), 'value': props.headerTable[i].value})
+    r2[props.headerTable[i].value] = props.headerTable[i].option
+    if (props.headerTable[i].option.type === 'r-date-input' || props.headerTable[i].option.type === 'r-time-ago') {
+      r2[props.headerTable[i].value]['withTime'] = true
     }
-  },
-  computed: {
-    headers() {
-      let r = []
-      let r2 = {}
-      for (let i = 0; i < this.headerTable.length; i++) {
-        r.push({'name': this.$t(this.headerTable[i].text), 'value': this.headerTable[i].value})
-        r2[this.headerTable[i].value] = this.headerTable[i].option
-        if (this.headerTable[i].option.type === 'r-date-input' || this.headerTable[i].option.type === 'r-time-ago') {
-          r2[this.headerTable[i].value]['withTime'] = true
-        }
-      }
-      return [r, r2]
-    }
-  },
-  methods: {
-    added(info, add) {
-      let item = this.headers[1][info.key]
-      if (info.key === '_id' || item.is_object_id === true) {
-        info.value = {'$oid': info.value}
-      } else if (item.is_object_id) {
-        info.value[item.is_object_id] = {'$oid': info.value[item.is_object_id]}
-      } else if (item.type === 'r-date-input' || item.type === 'r-time-ago') {
-        if (info.action === 'eq') {
-          info.value = {'$date': info.value}
-        } else if (info.action === 'ne') {
-          info.value = {'$ne': {'$date': info.value}}
-        } else if (info.action === 'gt') {
-          info.value = {'$gt': {'$date': info.value}}
-        } else if (info.action === 'lt') {
-          info.value = {'$lt': {'$date': info.value}}
-        }
-      } else {
-        if (info.action === 'ne') {
-          info.value = {'$ne': info.value}
-        } else if (info.action === 'gt') {
-          info.value = {'$gt': info.value}
-        } else if (info.action === 'lt') {
-          info.value = {'$lt': info.value}
-        }
-      }
-      add()
-    },
-    accept() {
-      this.$emit('delete', true)
-      this.showConfirm = false
-    },
-    send() {
-      this.$emit('update:modelValue', '')
-      this.$emit('a-search', this.advance)
-    },
-    open() {
-      this.show = !this.show
-    },
   }
+  return [r, r2]
+})
+
+const added = (info, add) => {
+  let item = headers[1][info.key]
+  if (info.key === '_id' || item.is_object_id === true) {
+    info.value = {'$oid': info.value}
+  } else if (item.is_object_id) {
+    info.value[item.is_object_id] = {'$oid': info.value[item.is_object_id]}
+  } else if (item.type === 'r-date-input' || item.type === 'r-time-ago') {
+    if (info.action === 'eq') {
+      info.value = {'$date': info.value}
+    } else if (info.action === 'ne') {
+      info.value = {'$ne': {'$date': info.value}}
+    } else if (info.action === 'gt') {
+      info.value = {'$gt': {'$date': info.value}}
+    } else if (info.action === 'lt') {
+      info.value = {'$lt': {'$date': info.value}}
+    }
+  } else {
+    if (info.action === 'ne') {
+      info.value = {'$ne': info.value}
+    } else if (info.action === 'gt') {
+      info.value = {'$gt': info.value}
+    } else if (info.action === 'lt') {
+      info.value = {'$lt': info.value}
+    }
+  }
+  add()
 }
+const accept = () => {
+  emit('delete', true)
+  showConfirm.value = false
+}
+const send = () => {
+  emit('update:modelValue', '')
+  emit('a-search', advance.value)
+}
+const open = () => {
+  show.value = !show.value
+}
+
 </script>

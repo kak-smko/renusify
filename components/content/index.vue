@@ -1,58 +1,75 @@
 <template>
-  <main :class="{[$r.prefix+'content']:true,
-  'flipped':flipped,
-  'moved':moved,
-  'below-header':belowHeader}" :style="{'--belowHeader':belowHeader}">
+  <main :class="{
+            [$r.prefix+'content']:true,
+            'flipped':flipped,
+            'moved':moved,
+            'below-header':belowHeader
+        }"
+        :style="{'--belowHeader':belowHeader}">
+    <!-- Default slot for main content
+    @example
+    <r-container>
+       <r-row>
+         <r-col class="col-4"> col-1</r-col>
+         <r-col class="col-4"> col-2</r-col>
+         <r-col class="col-4"> col-3</r-col>
+       </r-row>
+    </r-container>
+    -->
     <slot></slot>
   </main>
 </template>
 
-<script>
+<script setup>
+defineProps({
+  /**
+   * Adds content below the header
+   * @type {String}
+   */
+  belowHeader: String,
 
-export default {
-  name: 'r-content',
-  props: {
-    belowHeader: String,
-    flipped: Boolean,
-    moved: Boolean
-  }
-}
+  /**
+   * Flips the component orientation
+   * @type {Boolean}
+   */
+  flipped: Boolean,
+
+  /**
+   * Moves the component position
+   * @type {Boolean}
+   */
+  moved: Boolean
+})
 </script>
 
 <style lang="scss">
 @use "sass:map";
-@use "../../style/variables/base";
-@use "../../style/mixins";
+@use "../../style" as *;
 
 
-.#{base.$prefix}content {
-  --belowHeader: #{base.$toolbar-height};
+.#{$prefix}content {
+  --belowHeader: 80px;
   width: 100%;
   max-width: 100%;
-  transition: 0.2s map.get(base.$transition, 'fast-out-slow-in');
+  transition: 0.2s map.get($transition, 'fast-out-slow-in');
   position: relative;
-  @include mixins.firefox() {
-    @media print {
-      display: block
-    }
-  }
 
   &.flipped {
-    @include mixins.rtl() {
-      padding-right: base.$navbar-width;
+    @include rtl() {
+      padding-right: 300px;
     }
-    @include mixins.ltr() {
-      padding-left: base.$navbar-width;
+    @include ltr() {
+      padding-left: 300px;
     }
   }
 
   &.moved {
-    width: calc(100% + #{base.$navbar-width});
-    @include mixins.rtl() {
-      margin-right: base.$navbar-width;
+    width: calc(100% + 300px);
+    @include rtl() {
+      margin-right: 300px;
     }
-    @include mixins.ltr() {
-      margin-left: base.$navbar-width;
+    @include ltr() {
+      margin-left: 300px;
     }
   }
 

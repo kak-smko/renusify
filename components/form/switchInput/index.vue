@@ -1,69 +1,83 @@
 <template>
-    <r-input :class="`${$r.prefix}switch`" :modelValue="lazyValue" hide>
-        <div class="switch-container" :class="{'switch-active':modelValue}">
-            <div class="switch-label me-1 mt-1"
-            >{{label}}
-            </div>
-            <div class="switch-holder" @click.prevent="toggle()">
-              <div class="switch-line"></div>
-              <div class="switch-dot"></div>
-            </div>
-            <div class="switch-label ms-1 mt-1"
-                 v-if="label2">{{label2}}</div>
-        </div>
-    </r-input>
+  <r-input :class="`${$r.prefix}switch`" :modelValue="lazyValue" hide>
+    <div class="switch-container" :class="{'switch-active':modelValue}">
+      <div class="switch-label me-1"
+      >{{ label }}
+      </div>
+      <div class="switch-holder" @click.prevent="toggle()">
+        <div class="switch-line"></div>
+        <div class="switch-dot"></div>
+      </div>
+      <div class="switch-label ms-1"
+           v-if="label2">{{ label2 }}
+      </div>
+    </div>
+  </r-input>
 </template>
-<script>
+<script setup>
+import {ref, watch} from 'vue'
 
-    export default {
-        name: 'r-switch',
-        props: {
-            label: String,
-            label2: String,
-            readonly: Boolean,
-            modelValue: {
-                type: [Boolean, String]
-            }
-        },
-emits:['update:modelValue','change'],
-        data() {
-            return {
-                lazyValue: this.modelValue || false
+const props = defineProps({
+  /**
+   * Primary label for the switch
+   * @type {String}
+   */
+  label: String,
+  /**
+   * Secondary label for the switch (optional)
+   * @type {String}
+   */
+  label2: String,
+  /**
+   * The switch's model value
+   * @type {Boolean|String}
+   */
+  modelValue: {
+    type: [Boolean, String]
+  }
+})
 
-            }
-        },
-        watch: {
-            modelValue() {
-                this.lazyValue = this.modelValue
-            }
-        },
-        methods: {
-            toggle() {
-                if (!this.readonly) {
-                    if (this.lazyValue === true) {
-                        this.lazyValue = false
-                        this.$emit('change', true)
-                        this.$emit('update:modelValue', false)
-                    } else {
-                        this.lazyValue = true
-                        this.$emit('change', true)
-                        this.$emit('update:modelValue', true)
-                    }
-                }
-            }
-        }
-    }
+const emit = defineEmits([
+  /**
+   * Emitted when the switch value changes
+   * @param {Boolean|String} value - The updated switch value
+   */
+  'update:modelValue',
+  /**
+   * Emitted when the switch is toggled
+   * @param {Boolean|String} value - The new switch state
+   */
+  'change'
+])
 
+// Reactive data
+const lazyValue = ref(props.modelValue || false)
+
+// Watchers
+watch(() => props.modelValue, (newValue) => {
+  lazyValue.value = newValue
+})
+
+// Methods
+/**
+ * Toggles the switch state and emits events
+ */
+const toggle = () => {
+  const newValue = !lazyValue.value
+  lazyValue.value = newValue
+  emit('change', newValue)
+  emit('update:modelValue', newValue)
+}
 </script>
 <style lang="scss">
 @use "sass:map";
-@use "../../../style/variables/base";
-@use "../../../style/mixins";
+@use "../../../style" as *;
 
-.#{base.$prefix}switch {
+.#{$prefix}switch {
   .switch-label {
     color: var(--color-on-sheet);
   }
+
   .switch-container {
     display: flex;
     flex-direction: row;
@@ -94,11 +108,11 @@ emits:['update:modelValue','change'],
     height: 20px;
     border-radius: 50%;
     background-color: #cdcbcb;
-    transition: .3s map.get(base.$transition, 'fast-in-fast-out');
-    @include mixins.rtl() {
+    transition: .3s map.get($transition, 'fast-in-fast-out');
+    @include rtl() {
       right: 0;
     }
-    @include mixins.ltr() {
+    @include ltr() {
       left: 0;
     }
   }
@@ -111,10 +125,10 @@ emits:['update:modelValue','change'],
 
     .switch-dot {
       background-color: currentColor;
-      @include mixins.rtl() {
+      @include rtl() {
         right: 25px;
       }
-      @include mixins.ltr() {
+      @include ltr() {
         left: 25px;
       }
     }

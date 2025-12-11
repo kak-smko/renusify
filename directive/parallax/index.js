@@ -1,4 +1,82 @@
 //https://github.com/gerasimvol/vue-prlx
+/**
+ * @example // v-parallax usage
+ * <template>
+ *   <div class="parallax-container">
+ *
+ *     <div class="scroll-content">
+ *       <div class="placeholder" style="height: 100vh"></div>
+ *
+ *       <div
+ *         v-parallax="{ speed: 0.3 }"
+ *         class="parallax-box box1"
+ *       >
+ *         <h2>Default Parallax</h2>
+ *         <p>Speed: 0.3, Direction: Y</p>
+ *       </div>
+ *
+ *
+ *     </div>
+ *
+ *   </div>
+ * </template>
+ *
+ * <script>
+ *
+ * </script>
+ *
+ * <style>
+ *
+ * .scroll-content {
+ *   position: relative;
+ *   background: #f0f2f5;
+ * }
+ *
+ * .placeholder {
+ *   background: linear-gradient(90deg, #e0e0e0 25%, #d0d0d0 50%, #e0e0e0 75%);
+ *   background-size: 200% 100%;
+ *   animation: loading 2s infinite;
+ *   border-radius: 4px;
+ *   margin: 10px 0;
+ * }
+ *
+ * @keyframes loading {
+ *   0% { background-position: 200% 0; }
+ *   100% { background-position: -200% 0; }
+ * }
+ *
+ * .parallax-box {
+ *   width: 80%;
+ *   max-width: 600px;
+ *   height: 300px;
+ *   margin: 0 auto 40px;
+ *   border-radius: 12px;
+ *   display: flex;
+ *   flex-direction: column;
+ *   justify-content: center;
+ *   align-items: center;
+ *   text-align: center;
+ *   padding: 30px;
+ *   color: white;
+ *   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+ *   overflow: hidden;
+ * }
+ *
+ * .parallax-box h2 {
+ *   font-size: 2rem;
+ *   margin-bottom: 10px;
+ * }
+ *
+ * .parallax-box p {
+ *   font-size: 1rem;
+ *   opacity: 0.9;
+ * }
+ *
+ * .box1 {
+ *   background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+ * }
+ * </style>
+ * */
 function mounted (el, { modifiers = {}, value = {} }) {
   // SETUP SETTING
   const settings = {

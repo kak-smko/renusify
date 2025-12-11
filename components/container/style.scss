@@ -45,6 +45,9 @@
 
   &.row-grid {
     overflow: hidden;
+    margin-right: 0;
+    margin-left: 0;
+    border: 1px solid var(--color-border-low);
   }
 
   &.row-grid .col {

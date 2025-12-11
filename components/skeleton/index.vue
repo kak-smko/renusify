@@ -1,37 +1,62 @@
 <template>
   <div :class="[$r.prefix+'skeleton']">
+    <!--  Main content slot - shown when loading is true or showPreData is true
+     @example
+     <div class="tilte-1">title</div>
+     -->
     <slot v-if="loading||showPreData"></slot>
+
+    <!-- Skeleton slot - shown when loading is false -->
     <slot v-if="!loading" name="case">
       <div :class="['sk-'+type]" :style="{width:width,height:height}"></div>
     </slot>
   </div>
 </template>
 
-<script>
-export default {
-  name: "r-skeleton",
-  props: {
-    showPreData: Boolean,
-    loading: Boolean,
-    width: String,
-    height: String,
-    type: {
-      type: String,
-      default: 'card',
-      validator: function (value) {
-        return ['line', 'avatar', 'card'].indexOf(value) !== -1
-      }
-    },
-  }
-};
+<script setup>
+defineProps({
+  /**
+   * Shows pre-loaded data content instead of skeleton
+   * @type {Boolean}
+   */
+  showPreData: Boolean,
+  /**
+   * Controls loading state - shows skeleton when false, shows content when true
+   * @type {Boolean}
+   */
+  loading: Boolean,
+  /**
+   * Width of the skeleton element
+   * @type {String}
+   */
+  width: String,
+  /**
+   * Height of the skeleton element
+   * @type {String}
+   */
+  height: String,
+  /**
+   * Type of skeleton to display
+   * @type {String}
+   * @default 'card'
+   * @values 'line', 'avatar', 'card'
+   */
+  type: {
+    type: String,
+    default: 'card',
+    validator: function (value) {
+      return ['line', 'avatar', 'card'].indexOf(value) !== -1
+    }
+  },
+})
 </script>
 
 <style lang="scss">
 @use "sass:map";
-@use "../../style/variables/base";
+@use "../../style" as *;
 
 
-.#{base.$prefix}skeleton {
+.#{$prefix}skeleton {
   .sk-card, .sk-line, .sk-avatar {
     background: rgba(0, 0, 0, 0.12);
     overflow: hidden;
@@ -57,7 +82,7 @@ export default {
   }
 
   .sk-card {
-    border-radius: map.get(base.$borders, 'sm');
+    border-radius: map.get($borders, 'sm');
   }
 
   .sk-line {

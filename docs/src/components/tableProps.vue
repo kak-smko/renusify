@@ -1,4 +1,6 @@
 <template>
+  <div v-if="items&&items.length>0" class="mt-5">
+    <div class="headline-3">{{$t('table_props')}}</div>
   <r-table :items="items" borderd>
     <template #row="{ item, th, key, opened, open, show }">
       <td v-for="(value, k) in th" :key="`${key}- ${k}`">
@@ -19,6 +21,7 @@
       </td>
     </template>
   </r-table>
+  </div>
 </template>
 
 <script>

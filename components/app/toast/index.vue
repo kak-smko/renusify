@@ -1,77 +1,82 @@
 <template>
-    <toast :time="time"
-           :type="type"
-           :closable="closable"
-           :action="action"
-           :actionName="actionName"
-           v-model="show">
-        {{ msg }}
-    </toast>
+  <toast v-model="show"
+         :action="action"
+         :actionName="actionName"
+         :closable="closable"
+         :time="time"
+         :type="type">
+    {{ msg }}
+  </toast>
 </template>
 
-<script>
+<script setup>
+import {ref, onMounted, onBeforeUnmount, inject} from 'vue'
 import Toast from './toast.vue'
 
 const EVENTS = ['online', 'offline', 'load']
-    export default {
-        name: 'r-toast',
-      props:{
-        showOnlineStatus: {type:Boolean,default:true}
-      },
-        components: {
-            Toast
-        },
-        data() {
-            return {
-                msg: '',
-                time: 3000,
-                closable: true,
-                show: false,
-                type: 'info',
-                setTimeout_id:null,
-                action:undefined,
-                actionName:undefined
-            }
-        },
-        mounted() {
-            window.renusifyBus.on(
-                'toast', (data) => {
-                    if (this.show) {
-                        this.show = false
-                        clearTimeout(this.setTimeout_id)
-                        this.setTimeout_id=setTimeout(() => {
-                            this.build(data)
-                        }, 300)
-                    } else {
-                        this.build(data)
-                    }
-                }
-            )
-          if(this.showOnlineStatus) {
-            EVENTS.forEach(event => window.addEventListener(event, this.updateOnlineStatus))
-          }
-        },
-        beforeUnmount() {
-            EVENTS.forEach(event => window.removeEventListener(event, this.updateOnlineStatus))
-        },
-        methods: {
-            build(data) {
-                const option = data.options || {}
-                this.msg = data.msg
-                this.action=option.action
-                this.actionName=option.action_name
-                this.closable=this.$helper.ifHas(option, true, 'closable')
-                this.time = this.$helper.ifHas(option, 3000, 'time')
-                this.type = this.$helper.ifHas(option, 'info', 'type')
-                this.show = true
-            },
-            updateOnlineStatus() {
-                if (!navigator.onLine) {
-                    this.$toast(this.$t('no_internet','renusify'), {type: 'warning', time: -1})
-                } else {
-                    this.$toast(this.$t('no_internet','renusify'), {type: 'warning', time: 0})
-                }
-            }
-        }
-    }
+
+const props = defineProps({
+  /**
+   * Whether to show online/offline status notifications
+   */
+  showOnlineStatus: {type: Boolean, default: true}
+})
+
+const msg = ref('')
+const time = ref(3000)
+const closable = ref(true)
+const show = ref(false)
+const type = ref('info')
+const setTimeout_id = ref(null)
+const action = ref(undefined)
+const actionName = ref(undefined)
+
+const renusify = inject('renusify')
+const $helper = renusify.$helper
+const $toast = renusify.$toast
+const $t = renusify.$t
+
+// Methods
+const build = (data) => {
+  const option = data.options || {}
+  msg.value = data.msg
+  action.value = option.action
+  actionName.value = option.action_name
+  closable.value = $helper.ifHas(option, true, 'closable')
+  time.value = $helper.ifHas(option, 3000, 'time')
+  type.value = $helper.ifHas(option, 'info', 'type')
+  show.value = true
+}
+
+const updateOnlineStatus = () => {
+  if (!navigator.onLine) {
+    $toast($t('no_internet', 'renusify'), {type: 'warning', time: -1})
+  } else {
+    $toast($t('no_internet', 'renusify'), {type: 'warning', time: 0})
+  }
+}
+
+const handleToastEvent = (data) => {
+  if (show.value) {
+    show.value = false
+    clearTimeout(setTimeout_id.value)
+    setTimeout_id.value = setTimeout(() => {
+      build(data)
+    }, 300)
+  } else {
+    build(data)
+  }
+}
+
+onMounted(() => {
+  window.renusifyBus.on('toast', handleToastEvent)
+
+  if (props.showOnlineStatus) {
+    EVENTS.forEach(event => window.addEventListener(event, updateOnlineStatus))
+  }
+})
+
+onBeforeUnmount(() => {
+  EVENTS.forEach(event => window.removeEventListener(event, updateOnlineStatus))
+})
 </script>

@@ -5,70 +5,23 @@ $utilities: () !default;
 $utilities: map.merge(
                 (
                   // Display utilities
-                        "overflow": (
-                                property: overflow,
-                                values: auto hidden visible,
-                        ),
-                        "overflow-x": (
-                                property: overflow-x,
-                                values: auto hidden
-                        ),
-                        "overflow-y": (
-                                property: overflow-y,
-                                values: auto hidden
-                        ),
                         "display": (
-                                responsive: true,
                                 print: true,
                                 property: display,
                                 class: d,
                                 values: none inline inline-block block table table-row table-cell flex inline-flex
                         ),
-                        "float": (
-                                responsive: true,
-                                print: true,
-                                property: float,
-                                class: float,
-                                values: none left right
-                        ),
-                        "float-start-ltr": (
-                                responsive: true,
-                                property: (ltr: float),
-                                class: float,
-                                values: ('start':left)
-                        ),
-                        "float-start-rtl": (
-                                responsive: true,
-                                property: (rtl: float),
-                                class: float,
-                                values: ('start':right)
-                        ),
-                        "float-end-ltr": (
-                                responsive: true,
-                                property: (ltr: float),
-                                class: float,
-                                values: ('end':right)
-                        ),
-                        "float-end-rtl": (
-                                responsive: true,
-                                property: (rtl: float),
-                                class: float,
-                                values: ('end':left)
-                        ),
                   // Flex utilities
                         "flex": (
-                                responsive: true,
                                 property: flex,
                                 values: (fill: 1 1 auto)
                         ),
                         "flex-direction": (
-                                responsive: true,
                                 property: flex-direction,
                                 class: flex,
                                 values: row column row-reverse column-reverse
                         ),
                         "flex-grow": (
-                                responsive: true,
                                 property: flex-grow,
                                 class: flex,
                                 values: (
@@ -77,7 +30,6 @@ $utilities: map.merge(
                                 )
                         ),
                         "flex-shrink": (
-                                responsive: true,
                                 property: flex-shrink,
                                 class: flex,
                                 values: (
@@ -86,13 +38,11 @@ $utilities: map.merge(
                                 )
                         ),
                         "flex-wrap": (
-                                responsive: true,
                                 property: flex-wrap,
                                 class: flex,
                                 values: wrap nowrap wrap-reverse
                         ),
                         "justify-content": (
-                                responsive: true,
                                 property: justify-content,
                                 class: h,
                                 values: (
@@ -105,7 +55,6 @@ $utilities: map.merge(
                                 )
                         ),
                         "align-items": (
-                                responsive: true,
                                 property: align-items,
                                 class: v,
                                 values: (
@@ -116,231 +65,102 @@ $utilities: map.merge(
                                         stretch: stretch,
                                 )
                         ),
-                        "align-content": (
-                                responsive: true,
-                                property: align-content,
-                                class: v-content,
-                                values: (
-                                        start: flex-start,
-                                        end: flex-end,
-                                        center: center,
-                                        space-between: space-between,
-                                        space-around: space-around,
-                                        stretch: stretch,
-                                )
-                        ),
-                        "align-self": (
-                                responsive: true,
-                                property: align-self,
-                                class: v-self,
-                                values: (
-                                        auto: auto,
-                                        start: flex-start,
-                                        end: flex-end,
-                                        center: center,
-                                        baseline: baseline,
-                                        stretch: stretch,
-                                )
-                        ),
                         "rounded": (
-                                responsive: true,
                                 property: border-radius,
                                 class: br,
                                 values: base.$borders
                         ),
-                        "rounded-top-left": (
-                                responsive: true,
-                                property: border-top-left-radius,
-                                class: br-tl,
-                                values: base.$borders
-                        ),
-                        "rounded-top-right": (
-                                responsive: true,
-                                property: border-top-right-radius,
-                                class: br-tr,
-                                values: base.$borders
-                        ),
-                        "rounded-bottom-right": (
-                                responsive: true,
-                                property: border-bottom-right-radius,
-                                class: br-br,
-                                values: base.$borders
-                        ),
-                        "rounded-bottom-left": (
-                                responsive: true,
-                                property: border-bottom-left-radius,
-                                class: br-bl,
-                                values: base.$borders
-                        ),
                   // Margin utilities
                         "margin": (
-                                responsive: true,
                                 property: margin,
                                 class: ma,
                                 values: map.merge(base.$spacers, (auto: auto))
                         ),
                         "margin-x": (
-                                responsive: true,
                                 property: margin-right margin-left,
                                 class: mx,
                                 values: map.merge(base.$spacers, (auto: auto))
                         ),
                         "margin-y": (
-                                responsive: true,
                                 property: margin-top margin-bottom,
                                 class: my,
                                 values: map.merge(base.$spacers, (auto: auto))
                         ),
                         "margin-top": (
-                                responsive: true,
                                 property: margin-top,
                                 class: mt,
                                 values: map.merge(base.$spacers, (auto: auto))
                         ),
                         "margin-right": (
-                                responsive: true,
                                 property: margin-right,
                                 class: mr,
                                 values: map.merge(base.$spacers, (auto: auto))
                         ),
                         "margin-bottom": (
-                                responsive: true,
                                 property: margin-bottom,
                                 class: mb,
                                 values: map.merge(base.$spacers, (auto: auto))
                         ),
                         "margin-left": (
-                                responsive: true,
                                 property: margin-left,
                                 class: ml,
                                 values: map.merge(base.$spacers, (auto: auto))
                         ),
                         "margin-start": (
-                                responsive: true,
                                 property: (ltr: margin-left, rtl: margin-right),
                                 class: ms,
                                 values: map.merge(base.$spacers, (auto: auto))
                         ),
                         "margin-end": (
-                                responsive: true,
                                 property: (ltr: margin-right, rtl: margin-left),
                                 class: me,
                                 values: map.merge(base.$spacers, (auto: auto))
                         ),
-                  // Negative margin utilities
-                        "negative-margin": (
-                                responsive: true,
-                                property: margin,
-                                class: ma,
-                                values: base.$negative-spacers
-                        ),
-                        "negative-margin-x": (
-                                responsive: true,
-                                property: margin-right margin-left,
-                                class: mx,
-                                values: base.$negative-spacers
-                        ),
-                        "negative-margin-y": (
-                                responsive: true,
-                                property: margin-top margin-bottom,
-                                class: my,
-                                values: base.$negative-spacers
-                        ),
-                        "negative-margin-top": (
-                                responsive: true,
-                                property: margin-top,
-                                class: mt,
-                                values: base.$negative-spacers
-                        ),
-                        "negative-margin-right": (
-                                responsive: true,
-                                property: margin-right,
-                                class: mr,
-                                values: base.$negative-spacers
-                        ),
-                        "negative-margin-bottom": (
-                                responsive: true,
-                                property: margin-bottom,
-                                class: mb,
-                                values: base.$negative-spacers
-                        ),
-                        "negative-margin-left": (
-                                responsive: true,
-                                property: margin-left,
-                                class: ml,
-                                values: base.$negative-spacers
-                        ),
-                        "negative-margin-start": (
-                                responsive: true,
-                                property: (ltr: margin-left, rtl: margin-right),
-                                class: ms,
-                                values: base.$negative-spacers
-                        ),
-                        "negative-margin-end": (
-                                responsive: true,
-                                property: (ltr: margin-right, rtl: margin-left),
-                                class: me,
-                                values: base.$negative-spacers
-                        ),
                   // Padding utilities
                         "padding": (
-                                responsive: true,
                                 property: padding,
                                 class: pa,
                                 values: base.$spacers
                         ),
                         "padding-x": (
-                                responsive: true,
                                 property: padding-right padding-left,
                                 class: px,
                                 values: base.$spacers
                         ),
                         "padding-y": (
-                                responsive: true,
                                 property: padding-top padding-bottom,
                                 class: py,
                                 values: base.$spacers
                         ),
                         "padding-top": (
-                                responsive: true,
                                 property: padding-top,
                                 class: pt,
                                 values: base.$spacers
                         ),
                         "padding-right": (
-                                responsive: true,
                                 property: padding-right,
                                 class: pr,
                                 values: base.$spacers
                         ),
                         "padding-bottom": (
-                                responsive: true,
                                 property: padding-bottom,
                                 class: pb,
                                 values: base.$spacers
                         ),
                         "padding-left": (
-                                responsive: true,
                                 property: padding-left,
                                 class: pl,
                                 values: base.$spacers
                         ),
                         "padding-start": (
-                                responsive: true,
                                 property: (ltr: padding-left, rtl: padding-right),
                                 class: ps,
                                 values: base.$spacers
                         ),
                         "padding-end": (
-                                responsive: true,
                                 property: (ltr: padding-right, rtl: padding-left),
                                 class: pe,
                                 values: base.$spacers
-                        ),
-                        "position": (
-                                property: position,
-                                class: position,
-                                values: relative absolute fixed sticky
                         ),
                   // Text
                         "text-align": (
