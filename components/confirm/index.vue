@@ -20,16 +20,16 @@
         </r-col>
       </r-row>
       <r-row class="h-end no-gutters">
-        <r-btn :loading="this.loading"
+        <r-btn v-if="!loading"
                @click.stop="cancel"
                class="color-error-text mx-1"
                outlined
                rounded
-               v-if="!this.loading">
+               :loading="loading">
           {{ cancelText || $t('cancel', 'renusify') }}
         </r-btn>
         <r-btn :disabled="hard&&!valid"
-               :loading="this.loading"
+               :loading="loading"
                @click.stop="confirm"
                class="color-success-text"
                outlined

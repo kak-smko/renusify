@@ -54,7 +54,7 @@
                  :month="currentPeriod.month"
                  :year="currentPeriod.year"></month>
 
-          <div v-if="isRangeMode && rangeSelection.startDate && rangeSelection.endDate" class="range-info">
+          <div v-if="rangeMode && rangeSelection.startDate && rangeSelection.endDate" class="range-info">
             <div class="title-3">
               {{ $d(rangeSelection.startDate, withTime ? 'long' : 'medium', locale) }} -
               {{ $d(rangeSelection.endDate, withTime ? 'long' : 'medium', locale) }}
@@ -115,7 +115,7 @@
         </div>
       </div>
 
-      <div v-if="isRangeMode&&!showTime" class="date-picker-actions mb-3">
+      <div v-if="rangeMode&&!showTime" class="date-picker-actions mb-3">
         <r-btn class="color-one mx-5" @click.prevent="confirmRange">{{ $t('confirm', 'renusify') }}</r-btn>
         <r-btn class="mx-5" text @click.prevent="resetRange">{{ $t('reset', 'renusify') }}</r-btn>
       </div>
@@ -212,7 +212,7 @@ const firstDayOfWeek = computed(() =>
 )
 
 const modelValueDate = computed(() => {
-  if (props.isRangeMode && rangeSelection.value.startDate) {
+  if (props.rangeMode && rangeSelection.value.startDate) {
     return rangeSelection.value.startDate
   }
   if (!props.modelValue || !new Date(props.modelValue)) {
@@ -230,7 +230,7 @@ const lang_zone_offset = computed(() =>
 )
 
 const displayValue = computed(() => {
-  if (props.isRangeMode) {
+  if (props.rangeMode) {
     const {startDate, endDate} = rangeSelection.value
     if (startDate && endDate) {
       const format = props.withTime ? 'long' : 'medium'
@@ -326,7 +326,7 @@ const createDateCell = (date) => {
     inRange: false
   }
 
-  if (props.isRangeMode) {
+  if (props.rangeMode) {
     cell.isRangeStart = rangeSelection.value.startDate ? areSameDates(date, rangeSelection.value.startDate) : false
     cell.isRangeEnd = rangeSelection.value.endDate ? areSameDates(date, rangeSelection.value.endDate) : false
     cell.inRange = isDateInRange(date)
@@ -402,7 +402,7 @@ const setMonth = (monthIndex) => {
  * @param {Boolean} force - Force close even in range mode
  */
 const close = (force = false) => {
-  if (force || !props.isRangeMode) {
+  if (force || !props.rangeMode) {
     show.value = false
   }
   showTime.value = false
@@ -415,7 +415,7 @@ const selectTime = () => {
   const times = (time.value ? time.value : '00:00:00').split(':')
   const [hours, minutes, seconds] = times.map(t => parseInt(t))
 
-  if (props.isRangeMode) {
+  if (props.rangeMode) {
     handleRangeTimeSelection(hours, minutes, seconds)
   } else {
     handleSingleTimeSelection(hours, minutes, seconds)
@@ -478,7 +478,7 @@ const formatTime = (hours, minutes, seconds) => {
  */
 const selectDateItem = (item) => {
   if (!item.disabled) {
-    if (props.isRangeMode) {
+    if (props.rangeMode) {
       handleRangeSelection(item.date)
     } else {
       if (props.withTime) {
@@ -581,7 +581,7 @@ $dateTime.set_format({
   'ye': {year: 'numeric', numberingSystem: 'latn'}
 })
 
-if (props.isRangeMode && Array.isArray(props.modelValue) && props.modelValue.length === 2) {
+if (props.rangeMode && Array.isArray(props.modelValue) && props.modelValue.length === 2) {
   rangeSelection.value = {
     startDate: new Date(props.modelValue[0]),
     endDate: new Date(props.modelValue[1]),

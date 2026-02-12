@@ -99,7 +99,7 @@ const props = defineProps({
 
   /**
    * Additional metadata fields for files
-   * @type {Array}
+   * @type {Array[String]}
    */
   meta: Array,
 

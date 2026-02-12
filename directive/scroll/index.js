@@ -5,7 +5,7 @@
  *     <div class="scroll-areas">
  *       <div class="scroll-area">
  *         <h3>Window Scroll</h3>
- *         <div v-scroll.window="handleWindowScroll" class="scroll-content window-scroll">
+ *         <div v-scroll="{handler:handleWindowScroll,target:'window'}" class="scroll-content window-scroll">
  *           <div class="scroll-info">
  *             <div class="info-item">
  *               <span>Scroll Top:</span>
@@ -242,35 +242,39 @@
  * }
  * </style>
  * */
-function mounted (el, binding) {
-  const callback = binding.value
-  const options = binding.options || {
-    passive: true
-  }
-    let target = el
-    if (binding.modifiers.window) {
-        target = window
-    } else if (binding.arg) {
-        target = document.querySelector(binding.arg)
+function mounted(el, binding) {
+    let callback = binding.value
+    if (typeof binding.value === 'object') {
+        binding = binding.value
+        callback = binding.handler
     }
-  if (!target) return
-  target.addEventListener('scroll', callback, options)
-  el._onScroll = {
-    callback,
-    options,
-    target
-  }
+    const options = binding.options || {
+        passive: true
+    }
+    let target = el
+    if (binding.target === 'window') {
+        target = window
+    } else if (binding.target) {
+        target = document.querySelector(binding.target)
+    }
+    if (!target) return
+    target.addEventListener('scroll', callback, options)
+    el._onScroll = {
+        callback,
+        options,
+        target
+    }
 }
 
-function unmounted (el) {
-  if (!el._onScroll) return
-  const {
-    callback,
-    options,
-    target
-  } = el._onScroll
-  target.removeEventListener('scroll', callback, options)
-  delete el._onScroll
+function unmounted(el) {
+    if (!el._onScroll) return
+    const {
+        callback,
+        options,
+        target
+    } = el._onScroll
+    target.removeEventListener('scroll', callback, options)
+    delete el._onScroll
 }
 
 export default {

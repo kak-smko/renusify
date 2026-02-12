@@ -1,10 +1,10 @@
 <template>
   <r-input :class="{
         [`${$r.prefix}checkbox`]:true,
-        'checkbox-readonly': this.readonly,
+        'checkbox-readonly': readonly,
     }" :modelValue="lazyValue" hide>
     <template v-slot="{isRequired}">
-      <div class="d-flex v-end">
+      <div class="checkbox-holder">
             <span class="checkbox-input" :class="{
                 [size]:true,
                    'br-circle':rounded,
@@ -102,6 +102,10 @@ const toggle = () => {
   width: 100%;
   cursor: pointer;
 
+  .checkbox-holder {
+    display: flex;
+    align-items: center;
+  }
   .checkbox-label {
     color: var(--color-on-sheet);
   }

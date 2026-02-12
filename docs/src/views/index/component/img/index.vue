@@ -1,3 +1,4 @@
+
 <template>
   <section>
     <r-meta title="rImg Component | Renusify" description="Document with example for Renusify rImg component."></r-meta>

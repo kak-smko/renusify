@@ -2,13 +2,13 @@
   <div :class="`${$r.prefix}swiper`"
        ref="swiperRef"
   >
-    <!-- @slot Left navigation slot
-     @binding {Function} left - Function to navigate left/previous -->
-    <slot name="left" :left="left"></slot>
+    <!-- @slot Previous navigation slot
+     @binding {Function} previous - Function to navigate previous -->
+    <slot :previous="previous" name="previous"></slot>
 
-    <!-- @slot Right navigation slot
-     @binding {Function} right - Function to navigate right/next -->
-    <slot name="right" :right="right"></slot>
+    <!-- @slot Next navigation slot
+     @binding {Function} next - Function to navigate next -->
+    <slot :next="next" name="next"></slot>
 
     <div class="swiper-container"
          ref="containerRef"
@@ -138,18 +138,6 @@ const itemWidth = computed(() => {
 })
 
 
-const canGoNext = computed(() => {
-  const r = $r.rtl ? 1 : -1
-  const maxX = (containerRef.value?.scrollWidth - swiperRef.value?.offsetWidth) / r
-  return x.value * r < maxX
-})
-
-const canGoPrev = computed(() => {
-  const r = $r.rtl ? 1 : -1
-  return x.value * r > 0
-})
-
-
 /**
  * Navigates to a specific slide
  * @param {Number} n - Slide number (1-indexed)
@@ -165,41 +153,19 @@ const goToSlide = (n) => {
 }
 
 /**
- * Navigates to the next/right slide
- * @param {Number|null} customX - Custom distance to move in pixels
+ * Navigates to the next slide
  */
-const right = (customX = null) => {
-  if (!canGoNext.value) return
-
-  const moveX = customX || itemWidth.value || 200
-  clearTimeout(timer.value)
-
-  timer.value = nextTick(() => {
-    inMove.value = true
-    const direction = $r.rtl ? 1 : -1
-    x.value = prePosition.value - (moveX * direction)
-    end()
-    clearTimeout(timer.value)
-  })
+const next = () => {
+  if (currentSlide.value + 1 > slides.value) return
+  goToSlide(currentSlide.value + 1)
 }
 
 /**
- * Navigates to the previous/left slide
- * @param {Number|null} customX - Custom distance to move in pixels
+ * Navigates to the previous slide
  */
-const left = (customX = null) => {
-  if (!canGoPrev.value) return
-
-  const moveX = customX || itemWidth.value || 200
-  clearTimeout(timer.value)
-
-  timer.value = setTimeout(() => {
-    inMove.value = true
-    const direction = $r.rtl ? 1 : -1
-    x.value = prePosition.value + (moveX * direction)
-    end()
-    clearTimeout(timer.value)
-  }, 50)
+const previous = () => {
+  if (currentSlide.value === 1) return
+  goToSlide(currentSlide.value - 1)
 }
 
 /**
@@ -294,6 +260,21 @@ watch(() => props.items, () => {
 
   handleResize()
 }, {deep: true})
+
+defineExpose({
+  /**
+   * Navigates to the previous slide
+   */
+  previous,
+  /**
+   * Navigates to the next slide
+   */
+  next,
+  /**
+   * Return Current Slide
+   */
+  currentSlide
+})
 </script>
 
 <style lang="scss">

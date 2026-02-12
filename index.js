@@ -18,38 +18,28 @@ function breakpoint() {
     const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     const height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
     const points = {
-        'xs': 0,
-        'sm': 576,
+        'sm': 0,
         'md': 768,
-        'lg': 1024,
-        'xl': 1440
+        'lg': 1200
     }
     let data = {
         points: points,
-        xsOnly: width < points.sm,
-        smOnly: points.sm <= width && width < points.md,
-        smAndDown: width < points.md,
-        smAndUp: width >= points.sm,
+        smOnly: width < points.md,
         mdOnly: points.md <= width && width < points.lg,
         mdAndDown: width < points.lg,
         mdAndUp: width >= points.md,
         lgOnly: points.lg <= width && width < points.xl,
         lgAndDown: width < points.xl,
         lgAndUp: width >= points.lg,
-        xlOnly: points.xl <= width,
         width: width,
         height: height
     }
-    if (data.xsOnly) {
-        data.name = 'xs'
-    } else if (data.smOnly) {
+    if (data.smOnly) {
         data.name = 'sm'
     } else if (data.mdOnly) {
         data.name = 'md'
     } else if (data.lgOnly) {
         data.name = 'lg'
-    } else if (data.xlOnly) {
-        data.name = 'xl'
     }
     return data
 }

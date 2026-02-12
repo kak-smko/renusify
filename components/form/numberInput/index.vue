@@ -44,10 +44,10 @@ const autofocus = attr.autofocus
 
 const props = defineProps({
   /**
-   * The input's model value (number or string)
-   * @type {Number|String}
+   * The input's model value
+   * @type {String}
    */
-  modelValue: [Number, String],
+  modelValue: String,
   /**
    * Step value for increment/decrement buttons
    * @type {Number}
@@ -78,7 +78,12 @@ const props = defineProps({
    * Maximum allowed value
    * @type {Number}
    */
-  max: Number
+  max: Number,
+  /**
+   * allowe float number
+   * @type {Number}
+   */
+  isFloat: Boolean
 })
 
 const emit = defineEmits([
@@ -91,6 +96,9 @@ const emit = defineEmits([
 
 // Reactive data
 const number = ref(props.modelValue)
+if (!props.isFloat && number.value !== undefined && number.value !== null && number.value !== "") {
+  number.value = parseInt(number.value).toString()
+}
 const active = ref(false)
 
 // Methods
@@ -111,14 +119,16 @@ const emitValue = (e = false) => {
 
   let value = number.value
 
-  if (props.max !== undefined && value > props.max) {
+  if (props.max !== undefined && parseFloat(value) > props.max) {
     value = props.max
   }
-  if (props.min !== undefined && value < props.min) {
+  if (props.min !== undefined && parseFloat(value) < props.min) {
     emit('update:modelValue', undefined)
     return;
   }
-
+  if (!props.isFloat) {
+    value = parseInt(value).toString()
+  }
   number.value = value
   emit('update:modelValue', number.value)
 }
@@ -128,7 +138,7 @@ const emitValue = (e = false) => {
  */
 const plus = () => {
   const currentValue = parseFloat(props.modelValue || props.min || 0)
-  number.value = currentValue + props.step
+  number.value = (currentValue + props.step).toString()
   emitValue()
 }
 
@@ -137,7 +147,7 @@ const plus = () => {
  */
 const minus = () => {
   const currentValue = parseFloat(props.modelValue || 0)
-  number.value = currentValue - props.step
+  number.value = (currentValue - props.step).toString()
   emitValue()
 }
 

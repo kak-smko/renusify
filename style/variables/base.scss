@@ -25,10 +25,9 @@ $borders: (
 $cursor: ('pointer', 'auto', 'grab', 'grabbing') !default;
 
 $grid-breakpoints: (
-        'xs': 0,
-        'sm': 36rem, // Small devices (landscape phones, 576px)
-        'md': 48rem, // Medium devices (tablets, 768px)
-        'lg': 64rem, // Large devices (desktops, 1024px)
+        'sm': 0,
+        'md': 48rem, // Small devices (tablets, 768px)
+        'lg': 75rem, // Large devices (laptops, 1200px)
 ) !default;
 
 $base-font-size: 1rem;
@@ -39,10 +38,9 @@ $grid-columns: 12 !default;
 $container-padding-x: math.div($grid-gutter, 2) !default;
 
 $grid-gutters: (
-        'xs': math.div($grid-gutter, 12),
-        'sm': math.div($grid-gutter, 6),
+        'sm': math.div($grid-gutter, 12),
         'md': math.div($grid-gutter, 3),
-        'lg':$grid-gutter
+        'lg':$grid-gutter,
 ) !default;
 
 $box-shadows: (
@@ -56,8 +54,8 @@ $box-shadows: (
 ) !default;
 
 $container-max-widths: (
-        'md': map.get($grid-breakpoints, 'md')- 3rem,
-        'lg': map.get($grid-breakpoints, 'lg')- 4rem
+        'md': map.get($grid-breakpoints, 'md') - 3rem,
+        'lg': map.get($grid-breakpoints, 'lg') - 4rem
 ) !default;
 
 $font-weights: (

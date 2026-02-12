@@ -56,7 +56,7 @@
     <h3 class="display-4">Available Variables</h3>
     <p class="mt-5">The following are global variables for the breakpoint service:</p>
     <r-code-editor
-        :script="`this.$r.breakpoint=${JSON.stringify(
+        :script="`$r.breakpoint=${JSON.stringify(
         $r.breakpoint,
         undefined,
         2,

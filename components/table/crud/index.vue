@@ -142,6 +142,7 @@
     </template>
     <r-table v-else :headers="headerTable" :items="table.data" :key-item="itemId"
              :responsive="responsive"
+             :editable="editable"
              transition="table-row">
       <template v-slot:header="{header}">
         <th v-for="(item,key) in header"
@@ -310,6 +311,11 @@ const props = defineProps({
    * @type {Boolean}
    */
   responsive: Boolean,
+  /**
+   * Enables editable table behavior
+   * @type {Boolean}
+   */
+  editable: Boolean,
   /**
    * Displays data in cards view instead of table
    * @type {Boolean}

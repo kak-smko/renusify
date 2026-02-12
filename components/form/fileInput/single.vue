@@ -3,7 +3,8 @@
     <div class="file-holder text-center">
       <div v-if="file || modelValue" class="image-canvas">
         <r-btn class="image-close color-white" icon size="xs">
-          <r-icon @click.prevent="fileDelete()" class="color-error-text" v-html="$r.icons.delete"></r-icon>
+          <r-icon class="color-error-text" v-html="$r.icons.delete"
+                  @click.prevent="fileDelete()"></r-icon>
         </r-btn>
         <r-progress-circle
             :indeterminate="false"
@@ -106,6 +107,7 @@ const file = ref(null)
 const file_type = ref(null)
 const uploadPercentage = ref(0)
 const $axios = inject('axios')
+const $helper = inject('renusify').$helper
 let CancelTokenSource = null
 
 // Computed properties
@@ -329,7 +331,7 @@ const handleCropped = (croppedFile) => {
 
 const setValue = (value) => {
   if (value) {
-    const fixUrl = window.$helper?.fix_url || ((url) => url)
+    const fixUrl = $helper?.fix_url || ((url) => url)
     fileLink.value = props.meta ? fixUrl(value['url']) : fixUrl(value)
     metaList.value = props.meta ? value['meta'] : {}
     showAdd.value = false
@@ -358,8 +360,11 @@ const emitFileLink = () => {
 }
 
 // Watch for modelValue changes
-watch(() => props.modelValue, (newVal) => {
-  setValue(newVal)
+
+watch(() => props.modelValue, (newVal, oldVal) => {
+  if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+    setValue(newVal)
+  }
 }, {immediate: true})
 
 // Initialize

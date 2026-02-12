@@ -1,3 +1,4 @@
+
 <template>
   <section>
     <r-meta title="rMenu Component | Renusify"
@@ -94,6 +95,9 @@ const info = {
     }
   ],
   "slots": [
+    {
+      "name": "label"
+    },
     {
       "name": "default",
       "description": "Header Navigation Menu Icons",

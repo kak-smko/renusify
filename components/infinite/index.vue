@@ -1,20 +1,21 @@
 <template>
   <r-container :class="[$r.prefix+'infinite']">
     <div ref="chat"
-         v-scroll.[modifier]="onScroll"
+         v-scroll="{handler:onScroll,target:target}"
          :style="{'max-height': height,'height': height}"
-         class="infinite-page-container">
+         :class="{'overflow-div':height}" class="infinite-page-container">
       <transition-group :class="{'flex-column-reverse':isChat}"
                         :name="isChat?'slide-up':'slide-down'"
-                        class="row" tag="div">
+                        class="row"
+                        tag="div">
         <!-- Default slot for contents. Provide items, total props -->
         <slot :items="datacollection" :total="total">{{ datacollection }}</slot>
+        <r-col key="loading" class="col-12">
+          <r-progress-line v-show="loading"
+                           color="color-two"></r-progress-line>
+        </r-col>
       </transition-group>
     </div>
-    <r-progress-line v-show="loading"
-                     color="color-two"
-
-    ></r-progress-line>
     <div v-if="noItem"
          class="text-center title-2"
     >{{ noItemMsg }}
@@ -22,7 +23,16 @@
   </r-container>
 </template>
 <script setup>
-import {ref, computed, onMounted, onUnmounted, onActivated, onDeactivated, watch, inject} from 'vue'
+import {
+  ref,
+  computed,
+  onMounted,
+  onUnmounted,
+  onActivated,
+  onDeactivated,
+  watch,
+  inject, nextTick
+} from 'vue'
 
 const props = defineProps({
   /**
@@ -125,7 +135,7 @@ const loading = ref(false)
 const total = ref(0)
 const noItem = ref(false)
 
-const modifier = computed(() => props.height ? 'div' : 'window')
+const target = computed(() => props.height ? false : 'window')
 
 // Methods
 const onScroll = (e) => {
@@ -145,13 +155,13 @@ const onScroll = (e) => {
       }
     }
   } else {
-    if (active.value && document.body.offsetHeight < ((window.innerHeight + window.scrollY) + props.distanceLoad)) {
-      if (!loading.value) {
-        page.value++
-        if (datacollection.value.length < total.value) {
-          get()
-        }
-      }
+    if (active.value &&
+        (document.body.offsetHeight < ((window.innerHeight + window.scrollY) + props.distanceLoad)) &&
+        !loading.value &&
+        (datacollection.value.length < total.value)
+    ) {
+      page.value++
+      get()
     }
   }
 }
@@ -161,15 +171,21 @@ const get = () => {
   loading.value = true
   noItem.value = false
 
-  const params = {page: page.value}
+  let end = true
+  let params = {'page': page.value}
+
+  if (props.live === true) {
+    params = {'page': 1}
+    end = false
+  }
   if (typeof props.query === 'object') {
     Object.assign(params, props.query)
   }
 
   $axios.get(props.url, {params, headers: props.headers})
-      .then((res) => {
-        push(res.data.data)
-        total.value = res.data.total
+      .then(({data}) => {
+        push(data.data, end)
+        total.value = data.total
         if (total.value === 0) {
           noItem.value = true
         }
@@ -180,27 +196,48 @@ const get = () => {
       })
 }
 
-const push = (data) => {
-  const lng = data.length
-  for (let key = 0; key < lng; key++) {
-    datacollection.value.push(data[key])
-  }
-  let el = chat.value
-  let can = false
-  if (isChat.value) {
-    can = el.scrollHeight <= el.scrollTop + el.clientHeight
-  } else {
-    can = el.scrollTop === 0
-  }
-  if (props.isChat) {
-
-    if (first.value || can) {
-      el.scrollTop = el.scrollHeight;
-      first.value = false
+const push = (data, end = false) => {
+  if (!end) {
+    let d = data
+    const lng = datacollection.value.length
+    for (let key = 0; key < lng; key++) {
+      if (key <= data.length) {
+        if ($helper.searchArray(d, '_id', datacollection.value[key]['_id']) === false) {
+          d.push(datacollection.value[key])
+        }
+      } else {
+        d.push(datacollection.value[key])
+      }
     }
-  } else if (can) {
-    el.scrollTop = 0;
+    datacollection.value = d
+  } else {
+    let d = datacollection.value
+    const lng = data.length
+    for (let key = 0; key < lng; key++) {
+      if ($helper.searchArray(d, '_id', data[key]['_id']) === false) {
+        d.push(data[key])
+      }
+    }
+    datacollection.value = d
   }
+  nextTick(() => {
+    let el = chat.value
+    let can = false
+    if (props.isChat) {
+      can = el.scrollHeight <= el.scrollTop + el.clientHeight
+    } else {
+      can = el.scrollTop === 0
+    }
+
+    if (props.isChat) {
+      if (first.value || can) {
+        el.scrollTop = el.scrollHeight
+        first.value = false
+      }
+    } else if (can) {
+      el.scrollTop = 0
+    }
+  })
 }
 
 let liveInterval = null
@@ -231,6 +268,7 @@ onDeactivated(() => {
 
 watch(() => props.live, (newValue) => {
   if (newValue) {
+    get()
     setupLiveUpdates()
   } else {
     clearInterval(liveInterval)
@@ -248,7 +286,11 @@ onUnmounted(() => {
 @use "../../style" as *;
 
 .#{$prefix}infinite {
-  margin-bottom: 100px;
-  width: 100%
+  width: 100%;
+
+  .overflow-div {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 </style>

@@ -48,7 +48,7 @@
 </template>
 
 <script setup>
-import {ref, computed, onMounted, onUnmounted} from 'vue'
+import {ref, computed, onMounted, onUnmounted, watch} from 'vue'
 
 /**
  * @example // Slider usage
@@ -338,6 +338,9 @@ const goToSlide = (i) => {
   emit('index', currentIndex.value)
 }
 
+watch(() => props.slides, () => {
+  init()
+})
 onMounted(() => {
   init()
 })

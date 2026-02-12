@@ -1,3 +1,4 @@
+
 <template>
   <section>
     <r-meta title="rCol Component | Renusify" description="Document with example for Renusify rCol component."></r-meta>

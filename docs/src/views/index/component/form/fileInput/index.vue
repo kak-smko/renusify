@@ -1,3 +1,4 @@
+
 <template>
   <section>
     <r-meta title="rFileInput Component | Renusify"
@@ -74,7 +75,7 @@ const info = {
     },
     {
       "name": "meta",
-      "description": "Additional metadata fields for files @type {Array}",
+      "description": "Additional metadata fields for files @type {Array[String]}",
       "type": "Array",
       "default": "undefined"
     },

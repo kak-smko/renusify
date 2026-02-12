@@ -1,13 +1,15 @@
 <template>
   <div ref="menuRef" v-click-outside="close" :class="$r.prefix+'menu'">
     <div class="d-flex h-start flex-row v-center">
-      <span class="menu-label" v-if="label" @click.prevent="open">{{ label }}</span>
+      <slot name="label">
+        <span v-if="label" class="menu-label" @click.prevent="open">{{ label }}</span>
+      </slot>
       <transition name="fade" mode="out-in">
         <!-- Header Navigation Menu Icons -->
-        <r-btn icon text v-if="show" key="on" @click.prevent="close">
+        <r-btn v-if="show" key="on" icon size="sm" text @click.prevent="close">
           <r-icon v-html="$r.icons.chevron_up"></r-icon>
         </r-btn>
-        <r-btn icon text v-else key="off" @click.prevent="open">
+        <r-btn v-else key="off" icon size="sm" text @click.prevent="open">
           <r-icon v-html="icon||$r.icons.chevron_down"></r-icon>
         </r-btn>
 

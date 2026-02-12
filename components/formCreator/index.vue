@@ -18,7 +18,7 @@
         </r-row>
         <template v-for="(item,i) in errors"
                   :key="i">
-          <div class="mb-2 br-md color-error d-flex">
+          <div class="mb-2 br-md color-error d-flex pa-3">
             <span>{{ $t(i) }}:</span>
             <span class="flex-grow-1">
             <div v-for="(er,k) in item" :key="k+'-'+i">

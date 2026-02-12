@@ -256,13 +256,14 @@ const getSize = () => {
   return false
 }
 
-const activate = () => {
+const activate = (n = 0) => {
+  if (n > 10) return;
   getSize()
   if (size.value.width !== 0 || size.value.height) {
     load.value = true
   } else {
     nextTick(() => {
-      activate()
+      activate(n++)
     })
   }
 }

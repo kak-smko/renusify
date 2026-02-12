@@ -1,3 +1,4 @@
+
 <template>
   <section>
     <r-meta title="rTable Component | Renusify"
@@ -71,6 +72,12 @@ const info = {
       "name": "editable",
       "description": "Enables column configuration editing @type {Boolean}",
       "type": "Boolean",
+      "default": "undefined"
+    },
+    {
+      "name": "tableKey",
+      "description": "Table key for configuration editing @type {String}",
+      "type": "String",
       "default": "undefined"
     },
     {

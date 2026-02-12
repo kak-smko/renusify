@@ -33,7 +33,8 @@
                   class="text-start text-no-wrap"
                   @click.prevent="sorting(item.value)">
                 {{ translate ? $t(item.text, 'renusify') : item.text }}
-                <r-icon v-if="sortKey===item.value" :class="{'sort-desc':!sortAsc}" v-html="$r.icons.arrow_up"></r-icon>
+                <r-icon v-if="sortKey===item.value" :class="{'sort-desc':!sortAsc}"
+                        v-html="$r.icons.arrow_up"></r-icon>
               </th>
             </slot>
           </tr>
@@ -208,6 +209,11 @@ const props = defineProps({
    */
   editable: Boolean,
   /**
+   * Table key for configuration editing
+   * @type {String}
+   */
+  tableKey: String,
+  /**
    * Applies stripped row styling
    * @type {Boolean}
    */
@@ -293,11 +299,22 @@ const lists = computed(() => {
 
 const th = computed(() => {
   const res = []
-  const list = cols.value.length > 0 ? cols.value : th_all.value
+  const lng = cols.value.length
+  const list = lng > 0 ? cols.value : th_all.value
 
   list.forEach((item) => {
     if (item && !(item.value in hidden.value) && !(item.value in hidden_col.value)) {
-      res.push(item)
+      if (lng > 0) {
+        for (let i = 0; i < lng; i++) {
+          const t = th_all.value[i]
+          if (t.value === item.value) {
+            res.push(t)
+            break
+          }
+        }
+      } else {
+        res.push(item)
+      }
     }
   })
   return res
@@ -324,7 +341,10 @@ const th_all = computed(() => {
 })
 
 const hash_key = computed(() => {
-  let r = ''
+  let r = window.location
+  if (props.tableKey) {
+    r += props.tableKey
+  }
   th_all.value.forEach((item) => {
     if (item) {
       r += item.value

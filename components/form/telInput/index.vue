@@ -146,7 +146,7 @@ const emitValue = () => {
   nextTick(() => {
     tel.value.phone = tel.value.phone.replaceAll(' ', '')
     if (tel.value.phone.startsWith('0')) {
-      tel.value.phone = tel.value.phone.substring(1, this.tel.phone.length)
+      tel.value.phone = tel.value.phone.substring(1, tel.value.phone.length)
       emit('update:modelValue', tel.value.country_code + ' ' + tel.value.phone)
     } else {
       emit('update:modelValue', tel.value.country_code + ' ' + tel.value.phone)

@@ -1,3 +1,4 @@
+
 <template>
   <section>
     <r-meta title="rSwiper Component | Renusify"
@@ -65,14 +66,14 @@ const info = {
   "emits": [],
   "slots": [
     {
-      "name": "left",
-      "description": "@slot Left navigation slot\n@binding {Function} left - Function to navigate left/previous",
-      "props": "left: left"
+      "name": "previous",
+      "description": "@slot Previous navigation slot\n@binding {Function} previous - Function to navigate previous",
+      "props": "previous: previous"
     },
     {
-      "name": "right",
-      "description": "@slot Right navigation slot\n@binding {Function} right - Function to navigate right/next",
-      "props": "right: right"
+      "name": "next",
+      "description": "@slot Next navigation slot\n@binding {Function} next - Function to navigate next",
+      "props": "next: next"
     },
     {
       "name": "default",
@@ -85,7 +86,20 @@ const info = {
       "props": "go: goToSlide, index: n"
     }
   ],
-  "expose": [],
+  "expose": [
+    {
+      "name": "previous",
+      "description": "Navigates to the previous slide"
+    },
+    {
+      "name": "next",
+      "description": "Navigates to the next slide"
+    },
+    {
+      "name": "currentSlide",
+      "description": "Return Current Slide"
+    }
+  ],
   "provide": []
 }
 </script>

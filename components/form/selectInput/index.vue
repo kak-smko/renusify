@@ -13,7 +13,7 @@
             v-for="(item,key) in chips"
             :key="key"
             :class="{'px-0':!multiple,'chip body-3':multiple}"
-            class=" ms-0 d-flex v-center">
+            class="select-text ms-0 d-flex v-center">
           {{ item ? item[text] : '' }}
           <r-icon v-if="multiple" class="chip-icon cursor-pointer ms-1" height="16" width="16"
                   @click="handleChip(false,key)"
@@ -21,7 +21,7 @@
 
         </span>
         <span>
-        <input v-if="!disableSearch"
+        <input v-if="!disableSearch&&showMode!=='modal'"
                ref="inputRef"
                :autofocus="autofocus"
                :placeholder="modelValue?'':placeholder"

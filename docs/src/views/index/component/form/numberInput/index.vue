@@ -1,3 +1,4 @@
+
 <template>
   <section>
     <r-meta title="rNumberInput Component | Renusify"
@@ -31,15 +32,15 @@
 const info = {
   "example": {
     "basic usage": {
-      "template": "<rNumberInput \n v-model=\"modelValue\"\n :step=\"step\"\n :split=\"split\"\n :min=\"min\"\n :max=\"max\"\n@update:modelValue=\"log('update:modelValue',$event)\">\n</rNumberInput>",
-      "script": "import {ref} from 'vue';\n\nconst modelValue=ref(null)\nconst step=ref(1)\nconst split=ref(0)\nconst min=ref(null)\nconst max=ref(null)\nconst log=(name,e)=>{\n        console.log(name,e)\n        }"
+      "template": "<rNumberInput \n v-model=\"modelValue\"\n :step=\"step\"\n :split=\"split\"\n :min=\"min\"\n :max=\"max\"\n :isFloat=\"isFloat\"\n@update:modelValue=\"log('update:modelValue',$event)\">\n</rNumberInput>",
+      "script": "import {ref} from 'vue';\n\nconst modelValue=ref(null)\nconst step=ref(1)\nconst split=ref(0)\nconst min=ref(null)\nconst max=ref(null)\nconst isFloat=ref(null)\nconst log=(name,e)=>{\n        console.log(name,e)\n        }"
     }
   },
   "props": [
     {
       "name": "modelValue",
-      "description": "The input's model value (number or string) @type {Number|String}",
-      "type": "[Number, String]",
+      "description": "The input's model value @type {String}",
+      "type": "String",
       "default": "undefined"
     },
     {
@@ -64,6 +65,12 @@ const info = {
       "name": "max",
       "description": "Maximum allowed value @type {Number}",
       "type": "Number",
+      "default": "undefined"
+    },
+    {
+      "name": "isFloat",
+      "description": "allowe float number @type {Number}",
+      "type": "Boolean",
       "default": "undefined"
     }
   ],

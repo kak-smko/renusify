@@ -270,9 +270,9 @@ $btn-sizes: (
     'xs': 1.5rem, // 24px - 6 units
     'sm': 2rem, // 32px - 8 units
     'md': 2.5rem, // 40px - 10 units
-    'lg': 2.75rem, // 44px - 11 units
-    'xl': 3.25rem, // 52px - 13 units
-    'xxl': 3.75rem, // 60px - 15 units
+    'lg': 3rem, // 48px - 12 units
+    'xl': 3.5rem, // 56px - 14 units
+    'xxl': 4rem, // 64px - 16 units
 ) !default;
 
 $btn-font-sizes: (
@@ -313,7 +313,7 @@ $fab-icon-sizes: (
   }
 
   height: $height;
-  padding: 0 math.div($height, 2);
+  padding: 0 math.div($height, 3);
   font-size: $font-size;
   border-radius: math.div($height, 10);
 }
