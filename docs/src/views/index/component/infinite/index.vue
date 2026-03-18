@@ -102,6 +102,11 @@ const info = {
       "name": "default",
       "description": "Default slot for contents. Provide items, total props",
       "props": "items: datacollection, total: total"
+    },
+    {
+      "name": "noItem",
+      "description": "noItem slot for empty contents. Provide noItem, noItemMsg props",
+      "props": "noItem: noItem, noItemMsg: noItemMsg"
     }
   ],
   "expose": [],

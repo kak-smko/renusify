@@ -259,7 +259,7 @@
 </template>
 
 <script setup>
-import {ref, computed, watch, onMounted, inject} from 'vue'
+import {computed, inject, onMounted, ref, watch} from 'vue'
 import ManageFooter from "./footer.vue";
 import ManageHeader from "./header.vue";
 
@@ -543,8 +543,6 @@ const sortSetup = (item) => {
 const ok = () => {
   table.value.startTime = false
   page.value = 1
-  sortBy.value = null
-  sortType.value = 0
   autoSend.value = false
   showForm.value = false
   refresh()

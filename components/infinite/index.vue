@@ -4,7 +4,7 @@
          v-scroll="{handler:onScroll,target:target}"
          :style="{'max-height': height,'height': height}"
          :class="{'overflow-div':height}" class="infinite-page-container">
-      <transition-group :class="{'flex-column-reverse':isChat}"
+      <transition-group v-if="!noItem" :class="{'flex-column-reverse':isChat}"
                         :name="isChat?'slide-up':'slide-down'"
                         class="row"
                         tag="div">
@@ -16,23 +16,17 @@
         </r-col>
       </transition-group>
     </div>
-    <div v-if="noItem"
-         class="text-center title-2"
-    >{{ noItemMsg }}
-    </div>
+    <!-- noItem slot for empty contents. Provide noItem, noItemMsg props -->
+    <slot :noItem="noItem" :noItemMsg="noItemMsg" name="noItem">
+      <div v-if="noItem"
+           class="text-center title-2"
+      >{{ noItemMsg }}
+      </div>
+    </slot>
   </r-container>
 </template>
 <script setup>
-import {
-  ref,
-  computed,
-  onMounted,
-  onUnmounted,
-  onActivated,
-  onDeactivated,
-  watch,
-  inject, nextTick
-} from 'vue'
+import {computed, inject, nextTick, onActivated, onDeactivated, onMounted, onUnmounted, ref, watch} from 'vue'
 
 const props = defineProps({
   /**
