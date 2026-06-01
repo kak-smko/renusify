@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rFormCreator Component | Renusify"
-            description="Document with example for Renusify rFormCreator component."></r-meta>
+    <r-meta title="rFormCreator Component | Renusify" description="Document with example for Renusify rFormCreator component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rFormCreator Component
+       rFormCreator Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "Advanced usage with mixed fields": {
       "template": "<r-form-creator :url=\"url\"\n:title=\"title\"\n:auto-Send=\"autoSend\"\n:redirect=\"redirect\"\n:method=\"method\"\n:options=\"options\"\nv-model=\"modelValue\"\n:headers=\"headers\"\n@update:model-Value=\"log(`update:modelValue`,$event)\"\n@ok=\"log(`ok`,$event)\" ></r-form-creator>",

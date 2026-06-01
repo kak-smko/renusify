@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rAddressInput Component | Renusify"
-            description="Document with example for Renusify rAddressInput component."></r-meta>
+    <r-meta title="rAddressInput Component | Renusify" description="Document with example for Renusify rAddressInput component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rAddressInput Component
+       rAddressInput Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "basic usage": {
       "template": "<rAddressInput \n :required=\"required\"\n :stepShow=\"stepShow\"\n :allowCountries=\"allowCountries\"\n :hideCountry=\"hideCountry\"\n :hideState=\"hideState\"\n :hideCity=\"hideCity\"\n :hideZipCode=\"hideZipCode\"\n :hideStreet=\"hideStreet\"\n :readonly=\"readonly\"\n :baseUrl=\"baseUrl\"\n :defaultCountry=\"defaultCountry\"\n v-model=\"modelValue\"\n@update:modelValue=\"log('update:modelValue',$event)\">\n</rAddressInput>",

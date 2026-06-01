@@ -3,13 +3,13 @@
   <section>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light ps-4 pb-1 pt-1 br-lg">
-        clickOutside Directive
+       clickOutside Directive
       </h1>
     </div>
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -22,7 +22,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "v-click-outside usage": {
       "template": "<div>\n<div class=\"dropdown-container\">\n<button @click=\"toggleDropdown\">\n{{ selectedOption || 'Select an option' }}\n</button>\n<div v-if=\"isOpen\" v-click-outside=\"closeDropdown\" class=\"dropdown-menu\">\n<div\nv-for=\"option in options\"\n:key=\"option\"\n@click=\"selectOption(option)\"\nclass=\"dropdown-item\"\n>\n{{ option }}\n</div>\n</div>\n</div>\n</div>",

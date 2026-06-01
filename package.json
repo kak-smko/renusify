@@ -1,6 +1,6 @@
 {
   "name": "renusify",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "Vue3 Framework",
   "keywords": [
     "vuejs",
@@ -25,6 +25,13 @@
   "license": "BSD",
   "private": false,
   "scripts": {
-    "docs:generate": "node scripts/generate-docs.mjs"
+    "docs:generate": "node scripts/generate-docs.mjs",
+    "build:types": "node scripts/generate-types.mjs",
+    "build": "npm run docs:generate"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0",
+    "vue-router": "^4.5.0",
+    "sass": "^1.69.0"
   }
 }

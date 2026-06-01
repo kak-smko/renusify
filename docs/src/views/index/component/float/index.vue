@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rFloat Component | Renusify"
-            description="Document with example for Renusify rFloat component."></r-meta>
+    <r-meta title="rFloat Component | Renusify" description="Document with example for Renusify rFloat component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rFloat Component
+       rFloat Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "basic usage": {
       "template": "<rFloat \n :bordered=\"bordered\"\n :disableZoom=\"disableZoom\"\n :disableMove=\"disableMove\"\n :trnsfrmOrigin=\"trnsfrmOrigin\"\n :zoom=\"zoom\"\n :maxZoom=\"maxZoom\"\n :minZoom=\"minZoom\"\n@move=\"log('move',$event)\"\n@zoom=\"log('zoom',$event)\">\n<template #default>\n<div class=\"color-one\" style=\"height: 300px;width: 400px\">content</div>\n</template>\n</rFloat>",

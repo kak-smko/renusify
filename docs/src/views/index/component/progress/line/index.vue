@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rProgressLine Component | Renusify"
-            description="Document with example for Renusify rProgressLine component."></r-meta>
+    <r-meta title="rProgressLine Component | Renusify" description="Document with example for Renusify rProgressLine component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rProgressLine Component
+       rProgressLine Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "basic usage": {
       "template": "<rProgressLine \n v-model=\"modelValue\"\n :color=\"color\"\n :progressStyle=\"progressStyle\"\n :showPercent=\"showPercent\"\n :outlined=\"outlined\"\n :rounded=\"rounded\"\n :showBackground=\"showBackground\"\n :size=\"size\"\n@update:modelValue=\"log('update:modelValue',$event)\">\n</rProgressLine>",

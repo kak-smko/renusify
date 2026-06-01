@@ -3,13 +3,13 @@
   <section>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light ps-4 pb-1 pt-1 br-lg">
-        drag Directive
+       drag Directive
       </h1>
     </div>
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -22,7 +22,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "v-drag usage": {
       "template": "<div class=\"drag-container\">\n<h2>Draggable Elements</h2>\n<div\nv-drag=\"{\nstart: onDragStart,\nmove: onDragMove,\nend: onDragEnd\n}\"\nclass=\"draggable-box box1\"\n:style=\"{ top: box1Top + 'px', left: box1Left + 'px' }\"\n>\nBox 1<br>\nX: {{ box1Left }}<br>\nY: {{ box1Top }}\n</div>\n<div class=\"info-panel\">\n<div class=\"info-item\">\n<strong>Active Box:</strong> {{ activeBox }}\n</div>\n<div class=\"info-item\">\n<strong>Total Distance:</strong> {{ totalDistance }}px\n</div>\n<button @click=\"resetPositions\" class=\"reset-btn\">\nReset Positions\n</button>\n</div>\n</div>",

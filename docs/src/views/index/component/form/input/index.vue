@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rInput Component | Renusify"
-            description="Document with example for Renusify rInput component."></r-meta>
+    <r-meta title="rInput Component | Renusify" description="Document with example for Renusify rInput component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rInput Component
+       rInput Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "basic usage": {
       "template": "<rInput \n :id=\"id\"\n :icon=\"icon\"\n :preIcon=\"preIcon\"\n :msg=\"msg\"\n :label=\"label\"\n :placeholder=\"placeholder\"\n v-model=\"modelValue\"\n :active=\"active\"\n :labelActive=\"labelActive\"\n :hide=\"hide\"\n :disabled=\"disabled\"\n :readonly=\"readonly\"\n :error=\"error\"\n :autofocus=\"autofocus\"\n :ltr=\"ltr\"\n :rules=\"rules\"\n :validateOnBlur=\"validateOnBlur\"\n@pre-icon=\"log('pre-icon',$event)\"\n@icon=\"log('icon',$event)\"\n@update:modelValue=\"log('update:modelValue',$event)\">\n</rInput>",

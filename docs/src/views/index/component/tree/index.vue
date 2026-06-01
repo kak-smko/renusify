@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rTree Component | Renusify"
-            description="Document with example for Renusify rTree component."></r-meta>
+    <r-meta title="rTree Component | Renusify" description="Document with example for Renusify rTree component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rTree Component
+       rTree Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "Tree usage": {
       "template": "<r-tree style=\"height:600px\" v-model=\"treeData\" :link=\"link\" :searchLink=\"searchLink\" :gen=\"gen\" :selected=\"selected\" :rotate=\"rotate\" :childsName=\"childsName\" :openAll=\"openAll\" :headers=\"headers\" @update:model-Value=\"log(`update:modelValue`,$event)\" @select-node=\"log(`select-node`,$event)\">\n<template v-slot=\"{nodeKey,item}\">\n<r-card class=\"pa-5 title-1 mx-1\">{{nodeKey}}:{{item.name}}</r-card>\n</template>\n</r-tree>",

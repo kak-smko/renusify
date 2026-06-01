@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rAvatar Component | Renusify"
-            description="Document with example for Renusify rAvatar component."></r-meta>
+    <r-meta title="rAvatar Component | Renusify" description="Document with example for Renusify rAvatar component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rAvatar Component
+       rAvatar Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "basic usage": {
       "template": "<rAvatar \n :size=\"size\"\n :elevation=\"elevation\"\n :editable=\"editable\"\n :flat=\"flat\"\n :tile=\"tile\"\n :headers=\"headers\">\n<template #default>\n<r-img src=\"/storage/img/avatar.jpg\" width=\"80\" height=\"80\"></r-img>\n</template>\n</rAvatar>",

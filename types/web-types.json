@@ -1,0 +1,3611 @@
+{
+  "$schema": "https://raw.githubusercontent.com/AmadeusITGroup/WebTypes/master/schema/web-types.json",
+  "framework": "vue",
+  "name": "renusify",
+  "version": "3.1.1",
+  "contributions": {
+    "html": {
+      "vue-components": [
+        {
+          "name": "rApp",
+          "attributes": [
+            {
+              "name": "id",
+              "value": {
+                "type": "string | number"
+              },
+              "required": true
+            },
+            {
+              "name": "rtl",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": []
+        },
+        {
+          "name": "rAvatar",
+          "attributes": [
+            {
+              "name": "size",
+              "value": {
+                "type": "number | string"
+              },
+              "required": true
+            },
+            {
+              "name": "elevation",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "editable",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "flat",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "tile",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "headers",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            }
+          ],
+          "events": []
+        },
+        {
+          "name": "rBtn",
+          "attributes": [
+            {
+              "name": "tag",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "type",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "size",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "label",
+              "value": {
+                "type": "string | number"
+              },
+              "required": true
+            },
+            {
+              "name": "labelClass",
+              "value": {
+                "type": "string | unknown[] | Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "block",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "depressed",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "outlined",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "rounded",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "icon",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "fab",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "text",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "tile",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "disabled",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "loading",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "ariaLabel",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "activeClass",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "exactActiveClass",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "link",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "href",
+              "value": {
+                "type": "string | Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "to",
+              "value": {
+                "type": "string | Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "target",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "click"
+            }
+          ]
+        },
+        {
+          "name": "rBtnConfirm",
+          "attributes": [
+            {
+              "name": "hard",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "title",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "body",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "cancelText",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "confirmText",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "click"
+            }
+          ]
+        },
+        {
+          "name": "rBtnGroup",
+          "attributes": [
+            {
+              "name": "items",
+              "value": {
+                "type": "unknown[] | Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "icon",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "isSelect",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "exact",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "number | string"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "open"
+            },
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rCalendar",
+          "attributes": [
+            {
+              "name": "lang",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "showHeaders",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "isDateDisabled",
+              "value": {
+                "type": "((...args: any[]) => any)"
+              },
+              "required": true
+            },
+            {
+              "name": "year",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "month",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "change"
+            },
+            {
+              "name": "select"
+            }
+          ]
+        },
+        {
+          "name": "rCard",
+          "attributes": [
+            {
+              "name": "flat",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "outlined",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "isRipple",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "activeClass",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "disabled",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "exactActiveClass",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "link",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "href",
+              "value": {
+                "type": "string | Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "to",
+              "value": {
+                "type": "string | Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "tag",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "target",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            }
+          ],
+          "events": []
+        },
+        {
+          "name": "rCodeEditor",
+          "attributes": [
+            {
+              "name": "runnable",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "templateShow",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "scriptShow",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "cssShow",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "template",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "script",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "css",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "scriptSetup",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:template"
+            },
+            {
+              "name": "update:script"
+            },
+            {
+              "name": "update:css"
+            }
+          ]
+        },
+        {
+          "name": "rConfirm",
+          "attributes": [
+            {
+              "name": "title",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "text",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "cancelText",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "confirmText",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "hard",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "accept"
+            },
+            {
+              "name": "cancel"
+            },
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rContainer",
+          "attributes": [
+            {
+              "name": "fullWidth",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "fill",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": []
+        },
+        {
+          "name": "rRow",
+          "attributes": [
+            {
+              "name": "dense",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "grid",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "noGutters",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": []
+        },
+        {
+          "name": "rCol",
+          "attributes": [],
+          "events": []
+        },
+        {
+          "name": "rSpacer",
+          "attributes": [],
+          "events": []
+        },
+        {
+          "name": "rDivider",
+          "attributes": [
+            {
+              "name": "inset",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "vertical",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": []
+        },
+        {
+          "name": "rContent",
+          "attributes": [
+            {
+              "name": "belowHeader",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "flipped",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "moved",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": []
+        },
+        {
+          "name": "rCropper",
+          "attributes": [
+            {
+              "name": "wPH",
+              "value": {
+                "type": "number | string | unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "imgSrc",
+              "value": {
+                "type": "string | Blob"
+              },
+              "required": true
+            },
+            {
+              "name": "maxWidth",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "showCropped",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "getBlob",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "selectImg",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "cropped"
+            },
+            {
+              "name": "original"
+            }
+          ]
+        },
+        {
+          "name": "rFloat",
+          "attributes": [
+            {
+              "name": "bordered",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "disableZoom",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "disableMove",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "trnsfrmOrigin",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "zoom",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "maxZoom",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "minZoom",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "move"
+            },
+            {
+              "name": "zoom"
+            }
+          ]
+        },
+        {
+          "name": "rForm",
+          "attributes": [
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            },
+            {
+              "name": "submit"
+            }
+          ]
+        },
+        {
+          "name": "rInput",
+          "attributes": [
+            {
+              "name": "id",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "icon",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "preIcon",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "msg",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "label",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "placeholder",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "string | boolean | number | unknown[] | Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "active",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "labelActive",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "hide",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "disabled",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "error",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "autofocus",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "ltr",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "rules",
+              "value": {
+                "type": "unknown[] | ((...args: any[]) => any)"
+              },
+              "required": true
+            },
+            {
+              "name": "validateOnBlur",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "pre-icon"
+            },
+            {
+              "name": "icon"
+            },
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rColorInput",
+          "attributes": [
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "format",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            },
+            {
+              "name": "close"
+            }
+          ]
+        },
+        {
+          "name": "rDateInput",
+          "attributes": [
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "string | unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "lang",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "withTime",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "rangeMode",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "isDateDisabled",
+              "value": {
+                "type": "((...args: any[]) => any)"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rFileInput",
+          "attributes": [
+            {
+              "name": "uploadLink",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "accept",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "size",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "wPH",
+              "value": {
+                "type": "number | string | unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "maxFileSize",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "meta",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "metaRequired",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            },
+            {
+              "name": "add"
+            }
+          ]
+        },
+        {
+          "name": "rTelInput",
+          "attributes": [
+            {
+              "name": "type",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "string | number"
+              },
+              "required": true
+            },
+            {
+              "name": "defaultCountry",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "select",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rJsonInput",
+          "attributes": [
+            {
+              "name": "keyLabel",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "valueLabel",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "Record<string, unknown> | unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "valueType",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "template",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "baseArray",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "disableAdd",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "disableEditKey",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "disableDel",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "translate",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rTextEditor",
+          "attributes": [
+            {
+              "name": "uploadLink",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "any"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rTextEditorPreview",
+          "attributes": [],
+          "events": []
+        },
+        {
+          "name": "rTimeInput",
+          "attributes": [
+            {
+              "name": "disableTime",
+              "value": {
+                "type": "((...args: any[]) => any)"
+              },
+              "required": true
+            },
+            {
+              "name": "withSec",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "is24Hour",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "noOverlay",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rTimeRangeInput",
+          "attributes": [
+            {
+              "name": "withSec",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "noOverlay",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rUniqueInput",
+          "attributes": [
+            {
+              "name": "link",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "headers",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rAddressInput",
+          "attributes": [
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "stepShow",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "allowCountries",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "hideCountry",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "hideState",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "hideCity",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "hideZipCode",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "hideStreet",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "baseUrl",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "defaultCountry",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rCamInput",
+          "attributes": [
+            {
+              "name": "uploadLink",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "width",
+              "value": {
+                "type": "string | number"
+              },
+              "required": true
+            },
+            {
+              "name": "height",
+              "value": {
+                "type": "string | number"
+              },
+              "required": true
+            },
+            {
+              "name": "audio",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "video",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "size",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "headers",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            },
+            {
+              "name": "error"
+            }
+          ]
+        },
+        {
+          "name": "rCheckInput",
+          "attributes": [
+            {
+              "name": "type",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "name",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "link",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "string | number"
+              },
+              "required": true
+            },
+            {
+              "name": "headers",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            },
+            {
+              "name": "data"
+            }
+          ]
+        },
+        {
+          "name": "rCheckboxInput",
+          "attributes": [
+            {
+              "name": "label",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "rounded",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "size",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rGroupInput",
+          "attributes": [
+            {
+              "name": "itemKey",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "size",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "disableAdd",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "translate",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "template",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "addBtnClass",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            },
+            {
+              "name": "add"
+            },
+            {
+              "name": "delete"
+            }
+          ]
+        },
+        {
+          "name": "rMaskInput",
+          "attributes": [
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "mask",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "maskedVal",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            },
+            {
+              "name": "complete"
+            }
+          ]
+        },
+        {
+          "name": "rNumberInput",
+          "attributes": [
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "step",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "split",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "min",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "max",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "isFloat",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rPasswordInput",
+          "attributes": [
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "string | number"
+              },
+              "required": true
+            },
+            {
+              "name": "hideRequirements",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "lowerCase",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "upperCase",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "specialChar",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "number",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "minLength",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "autocomplete",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            },
+            {
+              "name": "strength-change"
+            }
+          ]
+        },
+        {
+          "name": "rRadioInput",
+          "attributes": [
+            {
+              "name": "items",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "text",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "rounded",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "justValue",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "translate",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "string | number | Record<string, unknown>"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rRangeInput",
+          "attributes": [
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "number | unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "min",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "max",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "color",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "step",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "tooltipAlways",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "disabled",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "isRange",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rRatingInput",
+          "attributes": [
+            {
+              "name": "count",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "size",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rSelectInput",
+          "attributes": [
+            {
+              "name": "searchLink",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "type",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "text",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "value",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "disableSearch",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "items",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "string | number | unknown[] | Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "tags",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "multiple",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "justValue",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "openToTop",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "translate",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "firstSelect",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "noFloat",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "modal",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "auto",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "headers",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            },
+            {
+              "name": "del"
+            }
+          ]
+        },
+        {
+          "name": "rSwitchInput",
+          "attributes": [
+            {
+              "name": "label",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "label2",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "boolean | string"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            },
+            {
+              "name": "change"
+            }
+          ]
+        },
+        {
+          "name": "rTextArea",
+          "attributes": [
+            {
+              "name": "noResize",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "string | number"
+              },
+              "required": true
+            },
+            {
+              "name": "rows",
+              "value": {
+                "type": "string | number"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rTextInput",
+          "attributes": [
+            {
+              "name": "type",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "string | number"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rUnitInput",
+          "attributes": [
+            {
+              "name": "type",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "units",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rFormCreator",
+          "attributes": [
+            {
+              "name": "url",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "title",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "autoSend",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "redirect",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "method",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "options",
+              "value": {
+                "type": "Record<string, unknown> | unknown[]"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            },
+            {
+              "name": "ok"
+            }
+          ]
+        },
+        {
+          "name": "rIcon",
+          "attributes": [
+            {
+              "name": "width",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "height",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "disabled",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "exact",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": []
+        },
+        {
+          "name": "rImg",
+          "attributes": [
+            {
+              "name": "src",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "preview",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "alt",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "lazy",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "width",
+              "value": {
+                "type": "string | number"
+              },
+              "required": true
+            },
+            {
+              "name": "height",
+              "value": {
+                "type": "string | number"
+              },
+              "required": true
+            },
+            {
+              "name": "query",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "autoSrcset",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "autoSize",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "hoverZoom",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "hoverDark",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "isSvg",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "svgCache",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "wPH",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            }
+          ],
+          "events": []
+        },
+        {
+          "name": "rInfinite",
+          "attributes": [
+            {
+              "name": "url",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "query",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "noItemMsg",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "distanceLoad",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "headers",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "isChat",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "height",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "live",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "liveTimer",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rMap",
+          "attributes": [
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "height",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "zoom",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "center",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "markers",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "searchBox",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "zoomControl",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "layerControl",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "meLocation",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "disableMove",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "darkMode",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "mapImageMarker",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "mapImageLayers",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            },
+            {
+              "name": "leaflet"
+            },
+            {
+              "name": "map"
+            }
+          ]
+        },
+        {
+          "name": "rMapSelect",
+          "attributes": [
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "height",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "zoom",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "mapImageMarker",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rMapRoute",
+          "attributes": [
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "by",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "height",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "marginTime",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "color",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "maxPoints",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "darkMode",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "editable",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rMenu",
+          "attributes": [
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "string | number | Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "label",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "icon",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "value",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "justValue",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "reverse",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "overlay",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "items",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rModal",
+          "attributes": [
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "position",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "noOverlay",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "fullWidth",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "fullHeight",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "maxWidth",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "maxHeight",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "minWidth",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "noClosable",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "noCloseBtn",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "routeHistory",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "animation",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rNotify",
+          "attributes": [
+            {
+              "name": "permanent",
+              "value": {
+                "type": "any"
+              },
+              "required": true
+            },
+            {
+              "name": "top",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "left",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "status",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "width",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "timeout",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            }
+          ],
+          "events": []
+        },
+        {
+          "name": "rProgressCircle",
+          "attributes": [
+            {
+              "name": "indeterminate",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "showPercent",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "rotate",
+              "value": {
+                "type": "number | string"
+              },
+              "required": true
+            },
+            {
+              "name": "size",
+              "value": {
+                "type": "number | string"
+              },
+              "required": true
+            },
+            {
+              "name": "width",
+              "value": {
+                "type": "number | string"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "number | string"
+              },
+              "required": true
+            }
+          ],
+          "events": []
+        },
+        {
+          "name": "rProgressLine",
+          "attributes": [
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "number | string"
+              },
+              "required": true
+            },
+            {
+              "name": "color",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "progressStyle",
+              "value": {
+                "type": "string | Record<string, unknown> | unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "showPercent",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "outlined",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "rounded",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "showBackground",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "size",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ]
+        },
+        {
+          "name": "rSearchBox",
+          "attributes": [
+            {
+              "name": "closable",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "notFoundMsg",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "label",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "url",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "btnAttr",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "query",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "string | number"
+              },
+              "required": true
+            },
+            {
+              "name": "noOverlay",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "openToTop",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "categories",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "headers",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            },
+            {
+              "name": "select"
+            }
+          ]
+        },
+        {
+          "name": "rSlider",
+          "attributes": [
+            {
+              "name": "slides",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "speed",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "wPH",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "startIndex",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "autoplay",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "progress",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "arrow",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "dots",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "appear",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "slidesClass",
+              "value": {
+                "type": "string | Record<string, unknown> | unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "mode",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "transitionRight",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "transitionLeft",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "index"
+            }
+          ]
+        },
+        {
+          "name": "rSwiper",
+          "attributes": [
+            {
+              "name": "items",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "widthItem",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "dots",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "numShow",
+              "value": {
+                "type": "number | Record<string, unknown>"
+              },
+              "required": true
+            }
+          ],
+          "events": []
+        },
+        {
+          "name": "rTable",
+          "attributes": [
+            {
+              "name": "transition",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "keyItem",
+              "value": {
+                "type": "string | ((...args: any[]) => any)"
+              },
+              "required": true
+            },
+            {
+              "name": "thin",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "responsive",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "translate",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "editable",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "tableKey",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "stripped",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "bordered",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "sortable",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "fixedHeader",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "fixedFirstColumn",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "headers",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "items",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "sort"
+            }
+          ]
+        },
+        {
+          "name": "rTableCrud",
+          "attributes": [
+            {
+              "name": "link",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "actions",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            }
+          ],
+          "events": []
+        },
+        {
+          "name": "rTimeAgo",
+          "attributes": [
+            {
+              "name": "time",
+              "value": {
+                "type": "any"
+              },
+              "required": true
+            },
+            {
+              "name": "noTrans",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "liveTime",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            },
+            {
+              "name": "live",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            }
+          ],
+          "events": []
+        },
+        {
+          "name": "rTour",
+          "attributes": [
+            {
+              "name": "steps",
+              "value": {
+                "type": "unknown[]"
+              },
+              "required": true
+            },
+            {
+              "name": "canFinish",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "abortOnNotFound",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "delay",
+              "value": {
+                "type": "number"
+              },
+              "required": true
+            }
+          ],
+          "events": []
+        },
+        {
+          "name": "rTree",
+          "attributes": [
+            {
+              "name": "modelValue",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            },
+            {
+              "name": "link",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "searchLink",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "sortBy",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "gen",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "selected",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "rotate",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "expand",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "childsName",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "headers",
+              "value": {
+                "type": "Record<string, unknown>"
+              },
+              "required": true
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            },
+            {
+              "name": "select-node"
+            }
+          ]
+        },
+        {
+          "name": "rHighlight",
+          "attributes": [
+            {
+              "name": "name",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "src",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            },
+            {
+              "name": "hideLineNumbers",
+              "value": {
+                "type": "boolean"
+              },
+              "required": true
+            },
+            {
+              "name": "lang",
+              "value": {
+                "type": "string"
+              },
+              "required": true
+            }
+          ],
+          "events": []
+        }
+      ]
+    }
+  }
+}

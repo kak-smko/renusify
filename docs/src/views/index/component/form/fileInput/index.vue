@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rFileInput Component | Renusify"
-            description="Document with example for Renusify rFileInput component."></r-meta>
+    <r-meta title="rFileInput Component | Renusify" description="Document with example for Renusify rFileInput component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rFileInput Component
+       rFileInput Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "basic usage": {
       "template": "<rFileInput \n :uploadLink=\"uploadLink\"\n :accept=\"accept\"\n :size=\"size\"\n :wPH=\"wPH\"\n :maxFileSize=\"maxFileSize\"\n v-model=\"modelValue\"\n :meta=\"meta\"\n :metaRequired=\"metaRequired\"\n@update:modelValue=\"log('update:modelValue',$event)\"\n@add=\"log('add',$event)\">\n</rFileInput>",

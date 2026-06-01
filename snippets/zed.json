@@ -1,0 +1,530 @@
+{
+  "renusify_rApp": {
+    "prefix": "rapp",
+    "body": [
+      "<rApp\n  id=\"${1:id}\"\n  rtl=\"${1:rtl}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rApp> component"
+  },
+  "renusify_rAvatar": {
+    "prefix": "ravatar",
+    "body": [
+      "<rAvatar\n  size=\"${1:size}\"\n  elevation=\"${1:elevation}\"\n  editable=\"${1:editable}\"\n  flat=\"${1:flat}\"\n  tile=\"${1:tile}\"\n  headers=\"${1:headers}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rAvatar> component"
+  },
+  "renusify_rBtn": {
+    "prefix": "rbtn",
+    "body": [
+      "<rBtn\n  tag=\"${1:tag}\"\n  type=\"${1:type}\"\n  size=\"${1:size}\"\n  label=\"${1:label}\"\n  labelClass=\"${1:labelClass}\"\n  block=\"${1:block}\"\n  depressed=\"${1:depressed}\"\n  outlined=\"${1:outlined}\"\n  rounded=\"${1:rounded}\"\n  icon=\"${1:icon}\"\n  fab=\"${1:fab}\"\n  text=\"${1:text}\"\n  tile=\"${1:tile}\"\n  disabled=\"${1:disabled}\"\n  readonly=\"${1:readonly}\"\n  loading=\"${1:loading}\"\n  ariaLabel=\"${1:ariaLabel}\"\n  activeClass=\"${1:activeClass}\"\n  exactActiveClass=\"${1:exactActiveClass}\"\n  link=\"${1:link}\"\n  href=\"${1:href}\"\n  to=\"${1:to}\"\n  target=\"${1:target}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rBtn> component"
+  },
+  "renusify_rBtnConfirm": {
+    "prefix": "rbtnconfirm",
+    "body": [
+      "<rBtnConfirm\n  hard=\"${1:hard}\"\n  title=\"${1:title}\"\n  body=\"${1:body}\"\n  cancelText=\"${1:cancelText}\"\n  confirmText=\"${1:confirmText}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rBtnConfirm> component"
+  },
+  "renusify_rBtnGroup": {
+    "prefix": "rbtngroup",
+    "body": [
+      "<rBtnGroup\n  items=\"${1:items}\"\n  icon=\"${1:icon}\"\n  isSelect=\"${1:isSelect}\"\n  exact=\"${1:exact}\"\n  modelValue=\"${1:modelValue}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rBtnGroup> component"
+  },
+  "renusify_rCalendar": {
+    "prefix": "rcalendar",
+    "body": [
+      "<rCalendar\n  lang=\"${1:lang}\"\n  readonly=\"${1:readonly}\"\n  showHeaders=\"${1:showHeaders}\"\n  isDateDisabled=\"${1:isDateDisabled}\"\n  year=\"${1:year}\"\n  month=\"${1:month}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rCalendar> component"
+  },
+  "renusify_rCard": {
+    "prefix": "rcard",
+    "body": [
+      "<rCard\n  flat=\"${1:flat}\"\n  outlined=\"${1:outlined}\"\n  isRipple=\"${1:isRipple}\"\n  activeClass=\"${1:activeClass}\"\n  disabled=\"${1:disabled}\"\n  exactActiveClass=\"${1:exactActiveClass}\"\n  link=\"${1:link}\"\n  href=\"${1:href}\"\n  to=\"${1:to}\"\n  tag=\"${1:tag}\"\n  target=\"${1:target}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rCard> component"
+  },
+  "renusify_rCodeEditor": {
+    "prefix": "rcodeeditor",
+    "body": [
+      "<rCodeEditor\n  runnable=\"${1:runnable}\"\n  templateShow=\"${1:templateShow}\"\n  scriptShow=\"${1:scriptShow}\"\n  cssShow=\"${1:cssShow}\"\n  template=\"${1:template}\"\n  script=\"${1:script}\"\n  css=\"${1:css}\"\n  scriptSetup=\"${1:scriptSetup}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rCodeEditor> component"
+  },
+  "renusify_rConfirm": {
+    "prefix": "rconfirm",
+    "body": [
+      "<rConfirm\n  title=\"${1:title}\"\n  text=\"${1:text}\"\n  cancelText=\"${1:cancelText}\"\n  confirmText=\"${1:confirmText}\"\n  modelValue=\"${1:modelValue}\"\n  hard=\"${1:hard}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rConfirm> component"
+  },
+  "renusify_rContainer": {
+    "prefix": "rcontainer",
+    "body": [
+      "<rContainer\n  fullWidth=\"${1:fullWidth}\"\n  fill=\"${1:fill}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rContainer> component"
+  },
+  "renusify_rRow": {
+    "prefix": "rrow",
+    "body": [
+      "<rRow\n  dense=\"${1:dense}\"\n  grid=\"${1:grid}\"\n  noGutters=\"${1:noGutters}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rRow> component"
+  },
+  "renusify_rCol": {
+    "prefix": "rcol",
+    "body": [
+      "<rCol/>",
+      "${0}"
+    ],
+    "description": "Renusify <rCol> component"
+  },
+  "renusify_rSpacer": {
+    "prefix": "rspacer",
+    "body": [
+      "<rSpacer/>",
+      "${0}"
+    ],
+    "description": "Renusify <rSpacer> component"
+  },
+  "renusify_rDivider": {
+    "prefix": "rdivider",
+    "body": [
+      "<rDivider\n  inset=\"${1:inset}\"\n  vertical=\"${1:vertical}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rDivider> component"
+  },
+  "renusify_rContent": {
+    "prefix": "rcontent",
+    "body": [
+      "<rContent\n  belowHeader=\"${1:belowHeader}\"\n  flipped=\"${1:flipped}\"\n  moved=\"${1:moved}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rContent> component"
+  },
+  "renusify_rCropper": {
+    "prefix": "rcropper",
+    "body": [
+      "<rCropper\n  wPH=\"${1:wPH}\"\n  imgSrc=\"${1:imgSrc}\"\n  maxWidth=\"${1:maxWidth}\"\n  showCropped=\"${1:showCropped}\"\n  getBlob=\"${1:getBlob}\"\n  selectImg=\"${1:selectImg}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rCropper> component"
+  },
+  "renusify_rFloat": {
+    "prefix": "rfloat",
+    "body": [
+      "<rFloat\n  bordered=\"${1:bordered}\"\n  disableZoom=\"${1:disableZoom}\"\n  disableMove=\"${1:disableMove}\"\n  trnsfrmOrigin=\"${1:trnsfrmOrigin}\"\n  zoom=\"${1:zoom}\"\n  maxZoom=\"${1:maxZoom}\"\n  minZoom=\"${1:minZoom}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rFloat> component"
+  },
+  "renusify_rForm": {
+    "prefix": "rform",
+    "body": [
+      "<rForm\n  modelValue=\"${1:modelValue}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rForm> component"
+  },
+  "renusify_rInput": {
+    "prefix": "rinput",
+    "body": [
+      "<rInput\n  id=\"${1:id}\"\n  icon=\"${1:icon}\"\n  preIcon=\"${1:preIcon}\"\n  msg=\"${1:msg}\"\n  label=\"${1:label}\"\n  placeholder=\"${1:placeholder}\"\n  modelValue=\"${1:modelValue}\"\n  active=\"${1:active}\"\n  labelActive=\"${1:labelActive}\"\n  hide=\"${1:hide}\"\n  disabled=\"${1:disabled}\"\n  readonly=\"${1:readonly}\"\n  error=\"${1:error}\"\n  autofocus=\"${1:autofocus}\"\n  ltr=\"${1:ltr}\"\n  rules=\"${1:rules}\"\n  validateOnBlur=\"${1:validateOnBlur}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rInput> component"
+  },
+  "renusify_rColorInput": {
+    "prefix": "rcolorinput",
+    "body": [
+      "<rColorInput\n  modelValue=\"${1:modelValue}\"\n  format=\"${1:format}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rColorInput> component"
+  },
+  "renusify_rDateInput": {
+    "prefix": "rdateinput",
+    "body": [
+      "<rDateInput\n  modelValue=\"${1:modelValue}\"\n  lang=\"${1:lang}\"\n  withTime=\"${1:withTime}\"\n  rangeMode=\"${1:rangeMode}\"\n  isDateDisabled=\"${1:isDateDisabled}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rDateInput> component"
+  },
+  "renusify_rFileInput": {
+    "prefix": "rfileinput",
+    "body": [
+      "<rFileInput\n  uploadLink=\"${1:uploadLink}\"\n  accept=\"${1:accept}\"\n  size=\"${1:size}\"\n  wPH=\"${1:wPH}\"\n  maxFileSize=\"${1:maxFileSize}\"\n  modelValue=\"${1:modelValue}\"\n  meta=\"${1:meta}\"\n  metaRequired=\"${1:metaRequired}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rFileInput> component"
+  },
+  "renusify_rTelInput": {
+    "prefix": "rtelinput",
+    "body": [
+      "<rTelInput\n  type=\"${1:type}\"\n  modelValue=\"${1:modelValue}\"\n  defaultCountry=\"${1:defaultCountry}\"\n  required=\"${1:required}\"\n  select=\"${1:select}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rTelInput> component"
+  },
+  "renusify_rJsonInput": {
+    "prefix": "rjsoninput",
+    "body": [
+      "<rJsonInput\n  keyLabel=\"${1:keyLabel}\"\n  valueLabel=\"${1:valueLabel}\"\n  modelValue=\"${1:modelValue}\"\n  valueType=\"${1:valueType}\"\n  template=\"${1:template}\"\n  baseArray=\"${1:baseArray}\"\n  disableAdd=\"${1:disableAdd}\"\n  disableEditKey=\"${1:disableEditKey}\"\n  disableDel=\"${1:disableDel}\"\n  translate=\"${1:translate}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rJsonInput> component"
+  },
+  "renusify_rTextEditor": {
+    "prefix": "rtexteditor",
+    "body": [
+      "<rTextEditor\n  uploadLink=\"${1:uploadLink}\"\n  modelValue=\"${1:modelValue}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rTextEditor> component"
+  },
+  "renusify_rTextEditorPreview": {
+    "prefix": "rtexteditorpreview",
+    "body": [
+      "<rTextEditorPreview/>",
+      "${0}"
+    ],
+    "description": "Renusify <rTextEditorPreview> component"
+  },
+  "renusify_rTimeInput": {
+    "prefix": "rtimeinput",
+    "body": [
+      "<rTimeInput\n  disableTime=\"${1:disableTime}\"\n  withSec=\"${1:withSec}\"\n  is24Hour=\"${1:is24Hour}\"\n  noOverlay=\"${1:noOverlay}\"\n  modelValue=\"${1:modelValue}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rTimeInput> component"
+  },
+  "renusify_rTimeRangeInput": {
+    "prefix": "rtimerangeinput",
+    "body": [
+      "<rTimeRangeInput\n  withSec=\"${1:withSec}\"\n  noOverlay=\"${1:noOverlay}\"\n  modelValue=\"${1:modelValue}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rTimeRangeInput> component"
+  },
+  "renusify_rUniqueInput": {
+    "prefix": "runiqueinput",
+    "body": [
+      "<rUniqueInput\n  link=\"${1:link}\"\n  modelValue=\"${1:modelValue}\"\n  headers=\"${1:headers}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rUniqueInput> component"
+  },
+  "renusify_rAddressInput": {
+    "prefix": "raddressinput",
+    "body": [
+      "<rAddressInput\n  required=\"${1:required}\"\n  stepShow=\"${1:stepShow}\"\n  allowCountries=\"${1:allowCountries}\"\n  hideCountry=\"${1:hideCountry}\"\n  hideState=\"${1:hideState}\"\n  hideCity=\"${1:hideCity}\"\n  hideZipCode=\"${1:hideZipCode}\"\n  hideStreet=\"${1:hideStreet}\"\n  readonly=\"${1:readonly}\"\n  baseUrl=\"${1:baseUrl}\"\n  defaultCountry=\"${1:defaultCountry}\"\n  modelValue=\"${1:modelValue}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rAddressInput> component"
+  },
+  "renusify_rCamInput": {
+    "prefix": "rcaminput",
+    "body": [
+      "<rCamInput\n  uploadLink=\"${1:uploadLink}\"\n  width=\"${1:width}\"\n  height=\"${1:height}\"\n  audio=\"${1:audio}\"\n  video=\"${1:video}\"\n  modelValue=\"${1:modelValue}\"\n  size=\"${1:size}\"\n  headers=\"${1:headers}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rCamInput> component"
+  },
+  "renusify_rCheckInput": {
+    "prefix": "rcheckinput",
+    "body": [
+      "<rCheckInput\n  type=\"${1:type}\"\n  name=\"${1:name}\"\n  link=\"${1:link}\"\n  modelValue=\"${1:modelValue}\"\n  headers=\"${1:headers}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rCheckInput> component"
+  },
+  "renusify_rCheckboxInput": {
+    "prefix": "rcheckboxinput",
+    "body": [
+      "<rCheckboxInput\n  label=\"${1:label}\"\n  readonly=\"${1:readonly}\"\n  rounded=\"${1:rounded}\"\n  modelValue=\"${1:modelValue}\"\n  size=\"${1:size}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rCheckboxInput> component"
+  },
+  "renusify_rGroupInput": {
+    "prefix": "rgroupinput",
+    "body": [
+      "<rGroupInput\n  itemKey=\"${1:itemKey}\"\n  modelValue=\"${1:modelValue}\"\n  size=\"${1:size}\"\n  disableAdd=\"${1:disableAdd}\"\n  translate=\"${1:translate}\"\n  template=\"${1:template}\"\n  addBtnClass=\"${1:addBtnClass}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rGroupInput> component"
+  },
+  "renusify_rMaskInput": {
+    "prefix": "rmaskinput",
+    "body": [
+      "<rMaskInput\n  modelValue=\"${1:modelValue}\"\n  mask=\"${1:mask}\"\n  required=\"${1:required}\"\n  maskedVal=\"${1:maskedVal}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rMaskInput> component"
+  },
+  "renusify_rNumberInput": {
+    "prefix": "rnumberinput",
+    "body": [
+      "<rNumberInput\n  modelValue=\"${1:modelValue}\"\n  step=\"${1:step}\"\n  split=\"${1:split}\"\n  min=\"${1:min}\"\n  max=\"${1:max}\"\n  isFloat=\"${1:isFloat}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rNumberInput> component"
+  },
+  "renusify_rPasswordInput": {
+    "prefix": "rpasswordinput",
+    "body": [
+      "<rPasswordInput\n  modelValue=\"${1:modelValue}\"\n  hideRequirements=\"${1:hideRequirements}\"\n  lowerCase=\"${1:lowerCase}\"\n  upperCase=\"${1:upperCase}\"\n  specialChar=\"${1:specialChar}\"\n  number=\"${1:number}\"\n  minLength=\"${1:minLength}\"\n  autocomplete=\"${1:autocomplete}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rPasswordInput> component"
+  },
+  "renusify_rRadioInput": {
+    "prefix": "rradioinput",
+    "body": [
+      "<rRadioInput\n  items=\"${1:items}\"\n  text=\"${1:text}\"\n  rounded=\"${1:rounded}\"\n  justValue=\"${1:justValue}\"\n  translate=\"${1:translate}\"\n  modelValue=\"${1:modelValue}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rRadioInput> component"
+  },
+  "renusify_rRangeInput": {
+    "prefix": "rrangeinput",
+    "body": [
+      "<rRangeInput\n  modelValue=\"${1:modelValue}\"\n  min=\"${1:min}\"\n  max=\"${1:max}\"\n  color=\"${1:color}\"\n  step=\"${1:step}\"\n  tooltipAlways=\"${1:tooltipAlways}\"\n  disabled=\"${1:disabled}\"\n  isRange=\"${1:isRange}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rRangeInput> component"
+  },
+  "renusify_rRatingInput": {
+    "prefix": "rratinginput",
+    "body": [
+      "<rRatingInput\n  count=\"${1:count}\"\n  size=\"${1:size}\"\n  modelValue=\"${1:modelValue}\"\n  readonly=\"${1:readonly}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rRatingInput> component"
+  },
+  "renusify_rSelectInput": {
+    "prefix": "rselectinput",
+    "body": [
+      "<rSelectInput\n  searchLink=\"${1:searchLink}\"\n  type=\"${1:type}\"\n  text=\"${1:text}\"\n  value=\"${1:value}\"\n  disableSearch=\"${1:disableSearch}\"\n  items=\"${1:items}\"\n  modelValue=\"${1:modelValue}\"\n  tags=\"${1:tags}\"\n  multiple=\"${1:multiple}\"\n  justValue=\"${1:justValue}\"\n  openToTop=\"${1:openToTop}\"\n  translate=\"${1:translate}\"\n  firstSelect=\"${1:firstSelect}\"\n  noFloat=\"${1:noFloat}\"\n  modal=\"${1:modal}\"\n  auto=\"${1:auto}\"\n  headers=\"${1:headers}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rSelectInput> component"
+  },
+  "renusify_rSwitchInput": {
+    "prefix": "rswitchinput",
+    "body": [
+      "<rSwitchInput\n  label=\"${1:label}\"\n  label2=\"${1:label2}\"\n  modelValue=\"${1:modelValue}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rSwitchInput> component"
+  },
+  "renusify_rTextArea": {
+    "prefix": "rtextarea",
+    "body": [
+      "<rTextArea\n  noResize=\"${1:noResize}\"\n  modelValue=\"${1:modelValue}\"\n  rows=\"${1:rows}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rTextArea> component"
+  },
+  "renusify_rTextInput": {
+    "prefix": "rtextinput",
+    "body": [
+      "<rTextInput\n  type=\"${1:type}\"\n  modelValue=\"${1:modelValue}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rTextInput> component"
+  },
+  "renusify_rUnitInput": {
+    "prefix": "runitinput",
+    "body": [
+      "<rUnitInput\n  type=\"${1:type}\"\n  units=\"${1:units}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rUnitInput> component"
+  },
+  "renusify_rFormCreator": {
+    "prefix": "rformcreator",
+    "body": [
+      "<rFormCreator\n  url=\"${1:url}\"\n  title=\"${1:title}\"\n  autoSend=\"${1:autoSend}\"\n  redirect=\"${1:redirect}\"\n  method=\"${1:method}\"\n  options=\"${1:options}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rFormCreator> component"
+  },
+  "renusify_rIcon": {
+    "prefix": "ricon",
+    "body": [
+      "<rIcon\n  width=\"${1:width}\"\n  height=\"${1:height}\"\n  disabled=\"${1:disabled}\"\n  exact=\"${1:exact}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rIcon> component"
+  },
+  "renusify_rImg": {
+    "prefix": "rimg",
+    "body": [
+      "<rImg\n  src=\"${1:src}\"\n  preview=\"${1:preview}\"\n  alt=\"${1:alt}\"\n  lazy=\"${1:lazy}\"\n  width=\"${1:width}\"\n  height=\"${1:height}\"\n  query=\"${1:query}\"\n  autoSrcset=\"${1:autoSrcset}\"\n  autoSize=\"${1:autoSize}\"\n  hoverZoom=\"${1:hoverZoom}\"\n  hoverDark=\"${1:hoverDark}\"\n  isSvg=\"${1:isSvg}\"\n  svgCache=\"${1:svgCache}\"\n  wPH=\"${1:wPH}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rImg> component"
+  },
+  "renusify_rInfinite": {
+    "prefix": "rinfinite",
+    "body": [
+      "<rInfinite\n  url=\"${1:url}\"\n  query=\"${1:query}\"\n  noItemMsg=\"${1:noItemMsg}\"\n  distanceLoad=\"${1:distanceLoad}\"\n  headers=\"${1:headers}\"\n  isChat=\"${1:isChat}\"\n  height=\"${1:height}\"\n  live=\"${1:live}\"\n  liveTimer=\"${1:liveTimer}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rInfinite> component"
+  },
+  "renusify_rMap": {
+    "prefix": "rmap",
+    "body": [
+      "<rMap\n  modelValue=\"${1:modelValue}\"\n  height=\"${1:height}\"\n  zoom=\"${1:zoom}\"\n  center=\"${1:center}\"\n  markers=\"${1:markers}\"\n  searchBox=\"${1:searchBox}\"\n  zoomControl=\"${1:zoomControl}\"\n  layerControl=\"${1:layerControl}\"\n  meLocation=\"${1:meLocation}\"\n  disableMove=\"${1:disableMove}\"\n  darkMode=\"${1:darkMode}\"\n  mapImageMarker=\"${1:mapImageMarker}\"\n  mapImageLayers=\"${1:mapImageLayers}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rMap> component"
+  },
+  "renusify_rMapSelect": {
+    "prefix": "rmapselect",
+    "body": [
+      "<rMapSelect\n  modelValue=\"${1:modelValue}\"\n  height=\"${1:height}\"\n  zoom=\"${1:zoom}\"\n  mapImageMarker=\"${1:mapImageMarker}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rMapSelect> component"
+  },
+  "renusify_rMapRoute": {
+    "prefix": "rmaproute",
+    "body": [
+      "<rMapRoute\n  modelValue=\"${1:modelValue}\"\n  by=\"${1:by}\"\n  height=\"${1:height}\"\n  marginTime=\"${1:marginTime}\"\n  color=\"${1:color}\"\n  maxPoints=\"${1:maxPoints}\"\n  darkMode=\"${1:darkMode}\"\n  editable=\"${1:editable}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rMapRoute> component"
+  },
+  "renusify_rMenu": {
+    "prefix": "rmenu",
+    "body": [
+      "<rMenu\n  modelValue=\"${1:modelValue}\"\n  label=\"${1:label}\"\n  icon=\"${1:icon}\"\n  value=\"${1:value}\"\n  justValue=\"${1:justValue}\"\n  reverse=\"${1:reverse}\"\n  overlay=\"${1:overlay}\"\n  items=\"${1:items}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rMenu> component"
+  },
+  "renusify_rModal": {
+    "prefix": "rmodal",
+    "body": [
+      "<rModal\n  modelValue=\"${1:modelValue}\"\n  position=\"${1:position}\"\n  noOverlay=\"${1:noOverlay}\"\n  fullWidth=\"${1:fullWidth}\"\n  fullHeight=\"${1:fullHeight}\"\n  maxWidth=\"${1:maxWidth}\"\n  maxHeight=\"${1:maxHeight}\"\n  minWidth=\"${1:minWidth}\"\n  noClosable=\"${1:noClosable}\"\n  noCloseBtn=\"${1:noCloseBtn}\"\n  routeHistory=\"${1:routeHistory}\"\n  animation=\"${1:animation}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rModal> component"
+  },
+  "renusify_rNotify": {
+    "prefix": "rnotify",
+    "body": [
+      "<rNotify\n  permanent=\"${1:permanent}\"\n  top=\"${1:top}\"\n  left=\"${1:left}\"\n  status=\"${1:status}\"\n  width=\"${1:width}\"\n  timeout=\"${1:timeout}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rNotify> component"
+  },
+  "renusify_rProgressCircle": {
+    "prefix": "rprogresscircle",
+    "body": [
+      "<rProgressCircle\n  indeterminate=\"${1:indeterminate}\"\n  showPercent=\"${1:showPercent}\"\n  rotate=\"${1:rotate}\"\n  size=\"${1:size}\"\n  width=\"${1:width}\"\n  modelValue=\"${1:modelValue}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rProgressCircle> component"
+  },
+  "renusify_rProgressLine": {
+    "prefix": "rprogressline",
+    "body": [
+      "<rProgressLine\n  modelValue=\"${1:modelValue}\"\n  color=\"${1:color}\"\n  progressStyle=\"${1:progressStyle}\"\n  showPercent=\"${1:showPercent}\"\n  outlined=\"${1:outlined}\"\n  rounded=\"${1:rounded}\"\n  showBackground=\"${1:showBackground}\"\n  size=\"${1:size}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rProgressLine> component"
+  },
+  "renusify_rSearchBox": {
+    "prefix": "rsearchbox",
+    "body": [
+      "<rSearchBox\n  closable=\"${1:closable}\"\n  notFoundMsg=\"${1:notFoundMsg}\"\n  label=\"${1:label}\"\n  url=\"${1:url}\"\n  btnAttr=\"${1:btnAttr}\"\n  query=\"${1:query}\"\n  modelValue=\"${1:modelValue}\"\n  noOverlay=\"${1:noOverlay}\"\n  openToTop=\"${1:openToTop}\"\n  categories=\"${1:categories}\"\n  headers=\"${1:headers}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rSearchBox> component"
+  },
+  "renusify_rSlider": {
+    "prefix": "rslider",
+    "body": [
+      "<rSlider\n  slides=\"${1:slides}\"\n  speed=\"${1:speed}\"\n  wPH=\"${1:wPH}\"\n  startIndex=\"${1:startIndex}\"\n  autoplay=\"${1:autoplay}\"\n  progress=\"${1:progress}\"\n  arrow=\"${1:arrow}\"\n  dots=\"${1:dots}\"\n  appear=\"${1:appear}\"\n  slidesClass=\"${1:slidesClass}\"\n  mode=\"${1:mode}\"\n  transitionRight=\"${1:transitionRight}\"\n  transitionLeft=\"${1:transitionLeft}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rSlider> component"
+  },
+  "renusify_rSwiper": {
+    "prefix": "rswiper",
+    "body": [
+      "<rSwiper\n  items=\"${1:items}\"\n  widthItem=\"${1:widthItem}\"\n  dots=\"${1:dots}\"\n  numShow=\"${1:numShow}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rSwiper> component"
+  },
+  "renusify_rTable": {
+    "prefix": "rtable",
+    "body": [
+      "<rTable\n  transition=\"${1:transition}\"\n  keyItem=\"${1:keyItem}\"\n  thin=\"${1:thin}\"\n  responsive=\"${1:responsive}\"\n  translate=\"${1:translate}\"\n  editable=\"${1:editable}\"\n  tableKey=\"${1:tableKey}\"\n  stripped=\"${1:stripped}\"\n  bordered=\"${1:bordered}\"\n  sortable=\"${1:sortable}\"\n  fixedHeader=\"${1:fixedHeader}\"\n  fixedFirstColumn=\"${1:fixedFirstColumn}\"\n  headers=\"${1:headers}\"\n  items=\"${1:items}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rTable> component"
+  },
+  "renusify_rTableCrud": {
+    "prefix": "rtablecrud",
+    "body": [
+      "<rTableCrud\n  link=\"${1:link}\"\n  actions=\"${1:actions}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rTableCrud> component"
+  },
+  "renusify_rTimeAgo": {
+    "prefix": "rtimeago",
+    "body": [
+      "<rTimeAgo\n  time=\"${1:time}\"\n  noTrans=\"${1:noTrans}\"\n  liveTime=\"${1:liveTime}\"\n  live=\"${1:live}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rTimeAgo> component"
+  },
+  "renusify_rTour": {
+    "prefix": "rtour",
+    "body": [
+      "<rTour\n  steps=\"${1:steps}\"\n  canFinish=\"${1:canFinish}\"\n  abortOnNotFound=\"${1:abortOnNotFound}\"\n  delay=\"${1:delay}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rTour> component"
+  },
+  "renusify_rTree": {
+    "prefix": "rtree",
+    "body": [
+      "<rTree\n  modelValue=\"${1:modelValue}\"\n  link=\"${1:link}\"\n  searchLink=\"${1:searchLink}\"\n  sortBy=\"${1:sortBy}\"\n  gen=\"${1:gen}\"\n  selected=\"${1:selected}\"\n  rotate=\"${1:rotate}\"\n  expand=\"${1:expand}\"\n  childsName=\"${1:childsName}\"\n  headers=\"${1:headers}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rTree> component"
+  },
+  "renusify_rHighlight": {
+    "prefix": "rhighlight",
+    "body": [
+      "<rHighlight\n  name=\"${1:name}\"\n  src=\"${1:src}\"\n  hideLineNumbers=\"${1:hideLineNumbers}\"\n  lang=\"${1:lang}\"\n/>",
+      "${0}"
+    ],
+    "description": "Renusify <rHighlight> component"
+  }
+}

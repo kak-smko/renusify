@@ -4,7 +4,7 @@
     <r-meta title="rBtn Component | Renusify" description="Document with example for Renusify rBtn component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rBtn Component
+       rBtn Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -15,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -28,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "basic usage": {
       "template": "<rBtn \n :tag=\"tag\"\n :type=\"type\"\n :size=\"size\"\n :label=\"label\"\n :labelClass=\"labelClass\"\n :block=\"block\"\n :depressed=\"depressed\"\n :outlined=\"outlined\"\n :rounded=\"rounded\"\n :icon=\"icon\"\n :fab=\"fab\"\n :text=\"text\"\n :tile=\"tile\"\n :disabled=\"disabled\"\n :readonly=\"readonly\"\n :loading=\"loading\"\n :ariaLabel=\"ariaLabel\"\n :activeClass=\"activeClass\"\n :exactActiveClass=\"exactActiveClass\"\n :link=\"link\"\n :href=\"href\"\n :to=\"to\"\n :target=\"target\"\n@click=\"log('click',$event)\">\n<template #default>\nClick Me\n</template>\n</rBtn>",

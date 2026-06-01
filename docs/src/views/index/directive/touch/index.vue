@@ -3,13 +3,13 @@
   <section>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light ps-4 pb-1 pt-1 br-lg">
-        touch Directive
+       touch Directive
       </h1>
     </div>
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -22,7 +22,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "v-touch usage": {
       "template": "<div class=\"touch-container\">\n<h1>Touch Gesture Directive</h1>\n<div class=\"gesture-areas\">\n<div class=\"gesture-area\">\n<h2>Swipe Detection</h2>\n<div\nv-touch=\"swipeHandlers\"\nclass=\"swipe-box\"\n>\n<div class=\"gesture-info\">\n<div class=\"info-item\">\n<span>Direction:</span>\n<span class=\"value direction\" :class=\"swipeDirection\">\n{{ swipeDirection }}\n</span>\n</div>\n<div class=\"info-item\">\n<span>Distance X:</span>\n<span class=\"value\">{{ swipeDistanceX }}px</span>\n</div>\n<div class=\"info-item\">\n<span>Distance Y:</span>\n<span class=\"value\">{{ swipeDistanceY }}px</span>\n</div>\n<div class=\"info-item\">\n<span>Swipe Count:</span>\n<span class=\"value counter\">{{ swipeCount }}</span>\n</div>\n</div>\n<div class=\"instruction\">\nSwipe in any direction\n</div>\n</div>\n</div>\n<div class=\"gesture-area\">\n<h2>Touch Position</h2>\n<div\nv-touch=\"touchHandlers\"\nclass=\"position-box\"\n>\n<div class=\"gesture-info\">\n<div class=\"info-item\">\n<span>Current X:</span>\n<span class=\"value\">{{ currentX }}px</span>\n</div>\n<div class=\"info-item\">\n<span>Current Y:</span>\n<span class=\"value\">{{ currentY }}px</span>\n</div>\n<div class=\"info-item\">\n<span>Move Count:</span>\n<span class=\"value counter\">{{ moveCount }}</span>\n</div>\n</div>\n<div class=\"touch-indicator\" :style=\"{ left: indicatorX + 'px', top: indicatorY + 'px' }\"></div>\n<div class=\"instruction\">\nTouch and move\n</div>\n</div>\n</div>\n</div>\n</div>",

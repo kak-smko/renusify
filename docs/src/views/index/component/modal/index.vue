@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rModal Component | Renusify"
-            description="Document with example for Renusify rModal component."></r-meta>
+    <r-meta title="rModal Component | Renusify" description="Document with example for Renusify rModal component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rModal Component
+       rModal Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "basic usage": {
       "template": "<rModal \n v-model=\"modelValue\"\n :position=\"position\"\n :noOverlay=\"noOverlay\"\n :fullWidth=\"fullWidth\"\n :fullHeight=\"fullHeight\"\n :maxWidth=\"maxWidth\"\n :maxHeight=\"maxHeight\"\n :minWidth=\"minWidth\"\n :noClosable=\"noClosable\"\n :noCloseBtn=\"noCloseBtn\"\n :routeHistory=\"routeHistory\"\n :animation=\"animation\"\n@update:modelValue=\"log('update:modelValue',$event)\">\n<template #default>\n<div class=\"display-3 pa-12\">Title</div>\n</template>\n</rModal>",

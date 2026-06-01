@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rNotify Component | Renusify"
-            description="Document with example for Renusify rNotify component."></r-meta>
+    <r-meta title="rNotify Component | Renusify" description="Document with example for Renusify rNotify component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rNotify Component
+       rNotify Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "Notify usage": {
       "template": "<r-notify>\n<template v-slot=\"{data}\">\n<div>\n<div class=\"title\">{{data.content.head}}</div>\n<div>{{data.content.body}}</div>\n</div>\n</template>\n</r-notify>\n<r-btn @click=\"notify(`info`)\">show info</r-btn>\n<r-btn @click=\"notify(`error`)\">show error</r-btn>\n<r-btn @click=\"notify(`success`)\">show success</r-btn>\n<r-btn @click=\"notify(`warning`)\">show warning</r-btn>",

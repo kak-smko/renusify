@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rIcon Component | Renusify"
-            description="Document with example for Renusify rIcon component."></r-meta>
+    <r-meta title="rIcon Component | Renusify" description="Document with example for Renusify rIcon component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rIcon Component
+       rIcon Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "basic usage": {
       "template": "<rIcon \n :width=\"width\"\n :height=\"height\"\n :disabled=\"disabled\"\n :exact=\"exact\">\n</rIcon>",

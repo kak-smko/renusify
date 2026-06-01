@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rCodeEditor Component | Renusify"
-            description="Document with example for Renusify rCodeEditor component."></r-meta>
+    <r-meta title="rCodeEditor Component | Renusify" description="Document with example for Renusify rCodeEditor component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rCodeEditor Component
+       rCodeEditor Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "basic usage": {
       "template": "<rCodeEditor \n :runnable=\"runnable\"\n :templateShow=\"templateShow\"\n :scriptShow=\"scriptShow\"\n :cssShow=\"cssShow\"\n :template=\"template\"\n :script=\"script\"\n :css=\"css\"\n :scriptSetup=\"scriptSetup\"\n@update:template=\"log('update:template',$event)\"\n@update:script=\"log('update:script',$event)\"\n@update:css=\"log('update:css',$event)\">\n</rCodeEditor>",

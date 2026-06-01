@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rMenu Component | Renusify"
-            description="Document with example for Renusify rMenu component."></r-meta>
+    <r-meta title="rMenu Component | Renusify" description="Document with example for Renusify rMenu component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rMenu Component
+       rMenu Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "Menu usage": {
       "template": "<r-menu\nv-model=\"modelValue\"\n:label=\"modelValue?modelValue.name:label\"\n:icon=\"icon\"\n:value=\"value\"\n:just-Value=\"justValue\"\n:reverse=\"reverse\"\n:overlay=\"overlay\"\n:items=\"items\"\n@update:model-Value=\"log(`update:modelValue`,$event)\" ></r-menu>",

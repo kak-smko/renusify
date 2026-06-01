@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rSlider Component | Renusify"
-            description="Document with example for Renusify rSlider component."></r-meta>
+    <r-meta title="rSlider Component | Renusify" description="Document with example for Renusify rSlider component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rSlider Component
+       rSlider Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "Slider usage": {
       "template": "<r-slider\n:slides=\"slides\"\n:startIndex=\"startIndex\"\n:appear=\"appear\"\n:speed=\"speed\"\n:w-p-h=\"wPH\"\n:slidesClass=\"slidesClass\"\n:mode=\"mode\"\n:transitionRight=\"transitionRight\"\n:transitionLeft=\"transitionLeft\"\n:autoplay=\"autoplay\"\n:progress=\"progress\"\n:arrow=\"arrow\"\n:dots=\"dots\"\n@index=\"log('index', $event)\"\n>\n<template v-slot=\"{ item }\">\n<div\nclass=\"d-flex w-full h-full v-center h-center display-4 color-white-text\"\n:style=\"{ backgroundColor: item.color }\"\n>\n{{ item.name }}\n</div>\n</template>\n</r-slider>",

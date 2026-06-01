@@ -4,7 +4,7 @@
     <r-meta title="rApp Component | Renusify" description="Document with example for Renusify rApp component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rApp Component
+       rApp Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -15,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -28,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "basic usage": {
       "template": "<rApp \n :id=\"id\"\n :rtl=\"rtl\">\n<template #default>\n<div class=\"color-one pa-12\">\n<r-btn>test</r-btn>\n</div>\n</template>\n</rApp>",

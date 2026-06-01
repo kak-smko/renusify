@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rSwiper Component | Renusify"
-            description="Document with example for Renusify rSwiper component."></r-meta>
+    <r-meta title="rSwiper Component | Renusify" description="Document with example for Renusify rSwiper component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rSwiper Component
+       rSwiper Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "Swiper usage": {
       "template": "<r-swiper\n:items=\"items\"\n:width-Item=\"widthItem\"\n:dots=\"dots\"\n:num-Show=\"numShow\"\n>\n<template v-slot=\"{ item }\">\n<r-card class=\"d-flex h-center v-center ma-2\" style=\"height: 200px\">\n{{ item.name }}\n</r-card>\n</template>\n</r-swiper>",

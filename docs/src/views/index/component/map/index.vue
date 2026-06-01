@@ -4,7 +4,7 @@
     <r-meta title="rMap Component | Renusify" description="Document with example for Renusify rMap component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rMap Component
+       rMap Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -15,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -28,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "basic usage": {
       "template": "<rMap \n v-model=\"modelValue\"\n :height=\"height\"\n :zoom=\"zoom\"\n :center=\"center\"\n :markers=\"markers\"\n :searchBox=\"searchBox\"\n :zoomControl=\"zoomControl\"\n :layerControl=\"layerControl\"\n :meLocation=\"meLocation\"\n :disableMove=\"disableMove\"\n :darkMode=\"darkMode\"\n :mapImageMarker=\"mapImageMarker\"\n :mapImageLayers=\"mapImageLayers\"\n@update:modelValue=\"log('update:modelValue',$event)\"\n@leaflet=\"log('leaflet',$event)\"\n@map=\"log('map',$event)\">\n</rMap>",

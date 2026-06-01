@@ -4,7 +4,7 @@
     <r-meta title="rRow Component | Renusify" description="Document with example for Renusify rRow component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rRow Component
+       rRow Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -15,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -28,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "basic usage": {
       "template": "<rRow \n :dense=\"dense\"\n :grid=\"grid\"\n :noGutters=\"noGutters\">\n<template #default>\n<r-col class=\"col-4\"> col-1</r-col>\n<r-col class=\"col-4\"> col-2</r-col>\n<r-col class=\"col-4\"> col-3</r-col>\n</template>\n</rRow>",

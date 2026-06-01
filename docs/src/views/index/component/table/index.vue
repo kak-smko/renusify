@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rTable Component | Renusify"
-            description="Document with example for Renusify rTable component."></r-meta>
+    <r-meta title="rTable Component | Renusify" description="Document with example for Renusify rTable component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rTable Component
+       rTable Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "Table usage": {
       "template": "<r-table\n:transition=\"transition\"\n:key-Item=\"keyItem\"\n:thin=\"thin\"\n:responsive=\"responsive\"\n:translate=\"translate\"\n:editable=\"editable\"\n:stripped=\"stripped\"\n:bordered=\"bordered\"\n:sortable=\"sortable\"\n:fixed-Header=\"fixedHeader\"\n:fixed-First-Column=\"fixedFirstColumn\"\n:headers=\"headers\"\n:items=\"items\"\n></r-table>",

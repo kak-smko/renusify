@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rGroupInput Component | Renusify"
-            description="Document with example for Renusify rGroupInput component."></r-meta>
+    <r-meta title="rGroupInput Component | Renusify" description="Document with example for Renusify rGroupInput component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rGroupInput Component
+       rGroupInput Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "basic usage": {
       "template": "<rGroupInput \n :itemKey=\"itemKey\"\n v-model=\"modelValue\"\n :size=\"size\"\n :disableAdd=\"disableAdd\"\n :translate=\"translate\"\n :template=\"template\"\n :addBtnClass=\"addBtnClass\"\n@update:modelValue=\"log('update:modelValue',$event)\"\n@add=\"log('add',$event)\"\n@delete=\"log('delete',$event)\">\n</rGroupInput>",

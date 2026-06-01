@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rTour Component | Renusify"
-            description="Document with example for Renusify rTour component."></r-meta>
+    <r-meta title="rTour Component | Renusify" description="Document with example for Renusify rTour component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rTour Component
+       rTour Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "Tour usage": {
       "template": "<div>\n<div class=\"header1 py-4\">header1</div>\n<div class=\"header2 py-4\">header2</div>\n<div>\n<r-btn id=\"one\" @click=\"checkCode('click btn')\">Click</r-btn>\n</div>\n<r-tour\nabort-on-not-found\nref=\"tour\"\n:steps=\"[\n{ msg: 'Item One is on', key: '.header1' },\n{\nmsg: 'this is Btn',\nkey: '#one',\noptions: {\nclickable: true,\ndisable_next: true,\n},\n},\n{ msg: 'Item Two', key: '.header2' },\n]\"\n></r-tour>\n</div>",

@@ -4,7 +4,7 @@
     <r-meta title="rImg Component | Renusify" description="Document with example for Renusify rImg component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rImg Component
+       rImg Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -15,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -28,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "basic usage": {
       "template": "<rImg \n :src=\"src\"\n :preview=\"preview\"\n :alt=\"alt\"\n :lazy=\"lazy\"\n :width=\"width\"\n :height=\"height\"\n :query=\"query\"\n :autoSrcset=\"autoSrcset\"\n :autoSize=\"autoSize\"\n :hoverZoom=\"hoverZoom\"\n :hoverDark=\"hoverDark\"\n :isSvg=\"isSvg\"\n :svgCache=\"svgCache\"\n :wPH=\"wPH\">\n</rImg>",

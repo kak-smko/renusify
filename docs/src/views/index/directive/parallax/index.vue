@@ -3,13 +3,13 @@
   <section>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light ps-4 pb-1 pt-1 br-lg">
-        parallax Directive
+       parallax Directive
       </h1>
     </div>
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -22,7 +22,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "v-parallax usage": {
       "template": "<div class=\"parallax-container\">\n<div class=\"scroll-content\">\n<div class=\"placeholder\" style=\"height: 100vh\"></div>\n<div\nv-parallax=\"{ speed: 0.3 }\"\nclass=\"parallax-box box1\"\n>\n<h2>Default Parallax</h2>\n<p>Speed: 0.3, Direction: Y</p>\n</div>\n</div>\n</div>",

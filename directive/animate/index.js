@@ -1,4 +1,4 @@
-import 'renusify/directive/animate/style.scss'
+import './style.scss'
 
 /**
  * @example // v-animate usage

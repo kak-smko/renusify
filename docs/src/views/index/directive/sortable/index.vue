@@ -3,13 +3,13 @@
   <section>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light ps-4 pb-1 pt-1 br-lg">
-        sortable Directive
+       sortable Directive
       </h1>
     </div>
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -22,7 +22,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "v-sortable usage": {
       "template": "<div class=\"sortable-container\">\n<div class=\"sortable-lists\">\n<div class=\"sortable-list\">\n<h3>Task List</h3>\n<div v-sortable=\"{ items: tasks, end: onTaskReorder }\" class=\"sortable-area\">\n<div v-for=\"task in tasks\" :key=\"task.id\" class=\"sortable-item\">\n<div class=\"task-content\">\n<div class=\"task-icon\">📋</div>\n<div class=\"task-info\">\n<div class=\"task-title\">{{ task.title }}</div>\n<div class=\"task-desc\">{{ task.description }}</div>\n</div>\n</div>\n<div class=\"task-drag-handle\">\n⋮⋮\n</div>\n</div>\n</div>\n</div>\n<div class=\"sortable-info\">\n<div class=\"info-item\">\n<span>Task Order:</span>\n<span class=\"order-value\">{{ taskOrder }}</span>\n</div>\n</div>\n</div>",

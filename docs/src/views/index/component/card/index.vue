@@ -1,11 +1,10 @@
 
 <template>
   <section>
-    <r-meta title="rCard Component | Renusify"
-            description="Document with example for Renusify rCard component."></r-meta>
+    <r-meta title="rCard Component | Renusify" description="Document with example for Renusify rCard component."></r-meta>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light py-1 br-lg">
-        rCard Component
+       rCard Component
       </h1>
     </div>
     <table-props :items="info.props"></table-props>
@@ -16,7 +15,7 @@
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -29,7 +28,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "basic usage": {
       "template": "<rCard \n :flat=\"flat\"\n :outlined=\"outlined\"\n :isRipple=\"isRipple\"\n :activeClass=\"activeClass\"\n :disabled=\"disabled\"\n :exactActiveClass=\"exactActiveClass\"\n :link=\"link\"\n :href=\"href\"\n :to=\"to\"\n :tag=\"tag\"\n :target=\"target\">\n<template #default>\n<div class=pa-5>\n<div class=\"title-1 color-one\">title</div>\n<div class=\"mt-5\">body description</div>\n</div>\n</template>\n</rCard>",

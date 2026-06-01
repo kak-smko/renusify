@@ -3,13 +3,13 @@
   <section>
     <div class="mb-2">
       <h1 class="display-3 font-weight-light ps-4 pb-1 pt-1 br-lg">
-        scroll Directive
+       scroll Directive
       </h1>
     </div>
   </section>
   <br/>
   <section v-for="(item,i) in info.example" :key="i">
-    <div class="title-1">{{ i }}</div>
+    <div class="title-1">{{i}}</div>
     <p class="caption">Press run Button</p>
     <r-code-editor
         runnable
@@ -22,7 +22,7 @@
   </section>
 </template>
 <script setup>
-const info = {
+const info={
   "example": {
     "v-scroll usage": {
       "template": "<div class=\"scroll-container\">\n<div class=\"scroll-areas\">\n<div class=\"scroll-area\">\n<h3>Window Scroll</h3>\n<div v-scroll=\"{handler:handleWindowScroll,target:'window'}\" class=\"scroll-content window-scroll\">\n<div class=\"scroll-info\">\n<div class=\"info-item\">\n<span>Scroll Top:</span>\n<span class=\"value\">{{ windowScrollTop }}px</span>\n</div>\n<div class=\"info-item\">\n<span>Scroll %:</span>\n<span class=\"value\">{{ windowScrollPercent }}%</span>\n</div>\n<div class=\"info-item\">\n<span>Events:</span>\n<span class=\"value counter\">{{ windowScrollCount }}</span>\n</div>\n</div>\n<div class=\"scroll-indicator\">\n<div class=\"indicator-bar\" :style=\"{ height: windowScrollPercent + '%' }\"></div>\n</div>\n</div>\n</div>\n<div class=\"scroll-area\">\n<h3>Element Scroll</h3>\n<div ref=\"elementScroll\" v-scroll=\"handleElementScroll\" class=\"scroll-content element-scroll\">\n<div class=\"scroll-info\">\n<div class=\"info-item\">\n<span>Scroll Top:</span>\n<span class=\"value\">{{ elementScrollTop }}px</span>\n</div>\n<div class=\"info-item\">\n<span>Direction:</span>\n<span class=\"value direction\" :class=\"elementScrollDirection\">\n{{ elementScrollDirection }}\n</span>\n</div>\n<div class=\"info-item\">\n<span>Events:</span>\n<span class=\"value counter\">{{ elementScrollCount }}</span>\n</div>\n</div>\n<div class=\"scroll-content-placeholder\">\n<div v-for=\"n in 10\" :key=\"n\" class=\"content-item\">\nItem {{ n }}\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>",
