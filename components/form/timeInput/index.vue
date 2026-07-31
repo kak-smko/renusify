@@ -9,7 +9,7 @@
         ref="inputRef"
         v-model="lazyValue"
         :placeholder="$attrs.placeholder"
-        autocomplete="no"
+        autocomplete="off"
         readonly
         type="text"
         @focusin="active = true"

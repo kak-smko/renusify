@@ -9,7 +9,7 @@
              @focusin="active=true"
              @focusout="active=false"
              :placeholder="$attrs.placeholder"
-             autocomplete="no"
+             autocomplete="off"
              @input="emitValue"
              v-model="lazyValue"
              :readonly="disableInput"

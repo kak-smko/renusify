@@ -9,7 +9,7 @@
            @focusin="active=true"
            @focusout="active=false"
            @input="emitValue"
-           autocomplete="no"
+           autocomplete="off"
            ref="input"
            v-model="lazyValue"
     />

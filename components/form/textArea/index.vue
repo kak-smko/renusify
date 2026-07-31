@@ -12,7 +12,7 @@
                 :autofocus="autofocus"
                 :class="{'no-resize':noResize}"
                 :rows="rows"
-                autocomplete="no"
+                autocomplete="off"
                 v-model="lazyValue"
                 :placeholder="placeholder"
                 @input="emitValue"

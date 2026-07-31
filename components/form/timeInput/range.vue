@@ -10,7 +10,7 @@
           :placeholder="$attrs.placeholder"
           @focusin="active = true"
           @focusout="active = false"
-          autocomplete="no"
+          autocomplete="off"
           ref="input"
           :value="strVal"
       />

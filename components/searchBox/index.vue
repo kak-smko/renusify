@@ -23,7 +23,7 @@
           <input
               :placeholder="label"
               :value="lazyValue"
-              autocomplete="no"
+              autocomplete="off"
               class="flex-grow-1"
               type="text"
               @focusin="active = true"

@@ -18,7 +18,7 @@
              :autofocus="autofocus"
              :placeholder="placeholder"
              :type="type"
-             autocomplete="no"
+             autocomplete="off"
              @focusin="active=true"
              @focusout="active=false"
              @input="emitValue"

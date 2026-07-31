@@ -13,7 +13,7 @@
              @focusout="active=false"
              :placeholder="placeholder"
              :value="lazyValue"
-             autocomplete="no"
+             autocomplete="off"
              @input="emitValue"
       />
       <r-btn :class="{'color-success-text pe-1':pass!==null && pass!==false,'color-error-text pe-1':pass===false}"

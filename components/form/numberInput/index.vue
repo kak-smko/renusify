@@ -18,7 +18,7 @@
           :autofocus="autofocus"
           :step="step"
           :value="number"
-          autocomplete="no"
+          autocomplete="off"
           class="text-center"
           type="number"
           @focusin="active=true"

@@ -8,7 +8,7 @@
         @complete="onComplete"
         @accept="onAccept"
         @backspace="onBackspace"
-        autocomplete="no"
+        autocomplete="off"
         @paste.prevent="onPaste"
         @focusin="active=true"
         @focusout="active=false"
