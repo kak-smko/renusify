@@ -350,9 +350,9 @@ const props = defineProps({
   /**
    * Property name that serves as unique item identifier
    * @type {String}
-   * @default '_id'
+   * @default 'id'
    */
-  itemId: {type: String, default: '_id'},
+  itemId: {type: String, default: 'id'},
   /**
    * Additional HTTP headers for API requests
    * @type {Object}
