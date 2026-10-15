@@ -158,6 +158,39 @@ const show = ref(false)
 const code = ref('')
 const info = ref({})
 
+const normalizeValue = (value, template) => {
+  if (Array.isArray(value)) {
+    return value.map(item => normalizeValue(item, template))
+  }
+
+  if (!value || typeof value !== 'object' || !template || typeof template !== 'object') {
+    return value
+  }
+
+  const normalized = {}
+
+  for (const [key, templateValue] of Object.entries(template)) {
+    normalized[key] = Object.prototype.hasOwnProperty.call(value, key)
+      ? normalizeValue(value[key], templateValue)
+      : templateValue
+  }
+
+  for (const [key, currentValue] of Object.entries(value)) {
+    if (!Object.prototype.hasOwnProperty.call(template, key)) {
+      normalized[key] = currentValue
+    }
+  }
+
+  return normalized
+}
+
+const formatLazyValue = (value) => {
+  const normalized = props.template && value != null
+    ? normalizeValue(value, props.template)
+    : value
+  return JSON.stringify(normalized || {}, null, 4)
+}
+
 // Computed properties
 /**
  * Determines if the model value is an array
@@ -256,20 +289,21 @@ const add = () => {
 
 // Watchers
 watch(modeForm, () => {
-  lazyValue.value = JSON.stringify(props.modelValue || {}, null, 4)
+  lazyValue.value = formatLazyValue(props.modelValue)
 })
 
-watch(() => props.modelValue, (newValue) => {
+watch(() => [props.modelValue, props.template], ([newValue]) => {
   try {
     error.value = false
+    const formattedValue = formatLazyValue(newValue)
 
     if (lazyValue.value) {
       const currentParsed = JSON.parse(lazyValue.value)
-      if (JSON.stringify(currentParsed) !== JSON.stringify(newValue)) {
-        lazyValue.value = JSON.stringify(newValue || {}, null, 4)
+      if (JSON.stringify(currentParsed) !== JSON.stringify(JSON.parse(formattedValue))) {
+        lazyValue.value = formattedValue
       }
     } else {
-      lazyValue.value = JSON.stringify(newValue || {}, null, 4)
+      lazyValue.value = formattedValue
     }
   } catch (er) {
     error.value = true
@@ -293,7 +327,7 @@ watch(lazyValue, async (newValue) => {
 onMounted(async () => {
   if (props.modelValue) {
     try {
-      lazyValue.value = JSON.stringify(props.modelValue, null, 4)
+      lazyValue.value = formatLazyValue(props.modelValue)
       await build_code()
     } catch (err) {
       console.error('Error initializing component:', err)

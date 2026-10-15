@@ -23,7 +23,7 @@
         ></single>
       </template>
       <single
-          v-if="filesLinks.length < size"
+          v-if="filesLinks.length < (isSingle ? 1 : size)"
           :key="'add-' + keyAdd"
           :accept="accept"
           :max-file-size="maxFileSize"
@@ -88,13 +88,13 @@ const props = defineProps({
   maxFileSize: Number,
 
   /**
-   * The model value for uploaded files (v-model)
-   * @type {Array}
+   * The model value for uploaded files (v-model). In single mode, this may be a single link.
+   * @type {Array|String|Object}
    * @default () => []
    */
   modelValue: {
     default: () => [],
-    type: Array
+    type: [Array, String, Object]
   },
 
   /**
@@ -111,6 +111,16 @@ const props = defineProps({
   metaRequired: {
     type: Boolean,
     default: true
+  },
+
+  /**
+   * return one link instead of array of links
+   * @type {Boolean}
+   * @default false
+   */
+  isSingle: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -151,11 +161,17 @@ const labelFile = computed(() => {
 })
 
 /**
- * Initializes filesLinks from modelValue
+ * Initializes the internal files array from either the multi-file array or a single link.
  */
 const setValue = () => {
-  if (props.modelValue && Array.isArray(props.modelValue)) {
-    filesLinks.value = props.modelValue
+  const value = props.modelValue
+
+  if (Array.isArray(value)) {
+    filesLinks.value = props.isSingle ? value.slice(0, 1) : value
+  } else if (props.isSingle && value != null) {
+    filesLinks.value = [value]
+  } else {
+    filesLinks.value = []
   }
 }
 
@@ -165,7 +181,9 @@ const setValue = () => {
  * @param {Object} event - File link/object
  */
 const setLink = (index, event) => {
-  if (index >= filesLinks.value.length) {
+  if (props.isSingle) {
+    filesLinks.value = event == null ? [] : [event]
+  } else if (index >= filesLinks.value.length) {
     filesLinks.value.push(event)
   } else {
     filesLinks.value[index] = event
@@ -174,11 +192,11 @@ const setLink = (index, event) => {
   const cleaned = $helper.cleanArray(filesLinks.value)
 
   filesLinks.value = cleaned
-  emit('update:modelValue', cleaned)
+  emit('update:modelValue', props.isSingle ? (cleaned[0] ?? null) : cleaned)
   keyAdd.value++
 }
 
-watch(() => props.modelValue, () => {
+watch([() => props.modelValue, () => props.isSingle], () => {
   setValue()
 }, {immediate: true, deep: true})
 </script>

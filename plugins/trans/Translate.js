@@ -76,7 +76,6 @@ export default class Translate {
         key = key.toLowerCase()
 
         const local = lang !== null ? lang : this._local
-        const pack = package_name !== null ? package_name : this._package
         if (!local) {
             this._failed_messages[key] = true
             return key;
@@ -97,21 +96,6 @@ export default class Translate {
                 return key;
             }
             return val;
-        } else if (this.$r && this.$r.autoAddTranslate && pack && this._count < 100 && /^([0-9a-z_.])*$/.test(key)) {
-            if (!this._store.includes(key)) {
-                let url = '/api/translate/' + pack + '/' + key + '?v=';
-                const lng = variable.length
-                for (let i = 0; i < lng; i++) {
-                    url += '{' + i + '}';
-                }
-                fetch(url, {
-                    method: 'POST'
-                });
-                this._count++;
-                this._store.push(key)
-            }
-            this._failed_messages[key] = true
-            return key;
         } else {
             this._failed_messages[key] = true
             return key;

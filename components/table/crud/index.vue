@@ -66,8 +66,14 @@
                    @copy="copyHandle('copy')"
                    @delete="deleteAll()"
                    @edit="copyHandle('edit')"
-                   @update:modelValue="searching()"
-                   @a-search="(a_search=$event),(searching())"></manage-header>
+                   @update:modelValue="updateSearch"
+                   @a-search="applyAdvancedSearch"></manage-header>
+    <div v-if="softDelete && canSeeDeleted" class="d-flex h-end px-2">
+      <r-btn icon text :class="showDeleted ? 'color-warning-text' : ''" :title="$t('see_deleted', 'renusify')"
+             @click.prevent="toggleDeleted">
+        <r-icon v-html="showDeleted ? $r.icons.eye : $r.icons.eye_off"></r-icon>
+      </r-btn>
+    </div>
     <template v-if="card">
       <!-- @slot Slot for custom cards view rendering
       @binding {Function} deleteItem - Function to delete an item
@@ -120,14 +126,22 @@
                 </slot>
                 <div v-if="h['option']['type']==='action'" class="w-full text-end">
                   <r-divider class="mt-3"></r-divider>
-                  <r-btn v-if="!disableUpdate" class="mx-0 color-success-text"
+                  <r-btn v-if="!disableUpdate && !showDeleted" class="mx-0 color-success-text"
                          icon text @click.prevent="editItem(item)">
                     <r-icon exact v-html="$r.icons.edit"></r-icon>
                   </r-btn>
-                  <r-btn v-if="!disableDelete" class="mx-0 color-error-text"
+                  <r-btn v-if="!disableDelete && !showDeleted" class="mx-0 color-error-text"
                          icon text @click.prevent="deleteItem(item)">
                     <r-icon v-html="$r.icons.delete"></r-icon>
                   </r-btn>
+                  <template v-if="showDeleted">
+                    <r-btn class="mx-0 color-success-text" icon text @click.prevent="restoreItem(item)">
+                      <r-icon v-html="restoreIcon"></r-icon>
+                    </r-btn>
+                    <r-btn class="mx-0 color-error-text" icon text @click.prevent="removeItem(item)">
+                      <r-icon v-html="$r.icons.delete"></r-icon>
+                    </r-btn>
+                  </template>
                   <r-btn v-for="(val,index) in actions" :key="index" :class="`color-${val.color}-text`"
                          class="mx-0" icon
                          text @click.prevent="$emit(val.name,item)">
@@ -227,14 +241,22 @@
               </div>
             </slot>
             <div v-if="value['option']['type']==='action'">
-              <r-btn v-if="!disableUpdate" class="mx-0 color-success-text"
+              <r-btn v-if="!disableUpdate && !showDeleted" class="mx-0 color-success-text"
                      icon text @click.prevent="editItem(props.item)">
                 <r-icon exact v-html="$r.icons.edit"></r-icon>
               </r-btn>
-              <r-btn v-if="!disableDelete" class="mx-0 color-error-text"
+              <r-btn v-if="!disableDelete && !showDeleted" class="mx-0 color-error-text"
                      icon text @click.prevent="deleteItem(props.item)">
                 <r-icon v-html="$r.icons.delete"></r-icon>
               </r-btn>
+              <template v-if="showDeleted">
+                <r-btn class="mx-0 color-success-text" icon text @click.prevent="restoreItem(props.item)">
+                  <r-icon v-html="restoreIcon"></r-icon>
+                </r-btn>
+                <r-btn class="mx-0 color-error-text" icon text @click.prevent="removeItem(props.item)">
+                  <r-icon v-html="$r.icons.delete"></r-icon>
+                </r-btn>
+              </template>
               <r-btn v-for="(val,index) in actions" :key="index" :class="`color-${val.color}-text`"
                      class="mx-0" icon
                      text @click.prevent="$emit(val.name,props.item)">
@@ -252,6 +274,8 @@
     <r-confirm
         v-model="showConfirm"
         hard
+        :title="confirmTitle"
+        :text="confirmText"
         v-on:accept="accept"
         v-on:cancel="showConfirm = false"
     />
@@ -350,14 +374,19 @@ const props = defineProps({
   /**
    * Property name that serves as unique item identifier
    * @type {String}
-   * @default 'id'
+   * @default '_id'
    */
   itemId: {type: String, default: 'id'},
   /**
    * Additional HTTP headers for API requests
    * @type {Object}
    */
-  headers: Object
+  headers: Object,
+  /**
+   * Enables soft-delete views: deleted-row toggle, restore and hard delete
+   * @type {Boolean}
+   */
+  softDelete: Boolean
 })
 
 const {$helper, $t} = inject('renusify')
@@ -390,6 +419,10 @@ const table = ref({
 })
 const check_all = ref(false)
 const checked = ref({})
+const showDeleted = ref(false)
+const canSeeDeleted = ref(false)
+const confirmAction = ref('delete')
+const restoreIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89l.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7s-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18m-1 5v5l4.25 2.52l.77-1.28l-3.52-2.09V8Z"/></svg>'
 
 
 const showMCUD = computed(() => {
@@ -416,6 +449,14 @@ const headerTable = computed(() => {
   return res
 })
 
+
+const confirmTitle = computed(() => confirmAction.value === 'remove'
+    ? $t('hard_delete', 'renusify')
+    : $t('confirm_title', 'renusify'))
+
+const confirmText = computed(() => confirmAction.value === 'remove'
+    ? $t('hard_delete_warning', 'renusify')
+    : $t('confirm_body', 'renusify'))
 
 const getAttr = (data, typ) => {
   const res = {}
@@ -552,6 +593,20 @@ const ok = () => {
  * Refreshes table data
  * @param {Object} e - Event object with perPage value
  */
+const updateSearch = (value) => {
+  search.value = value
+  a_search.value = {}
+  searching()
+}
+
+const applyAdvancedSearch = (filters) => {
+  clearTimeout(time_out_id.value)
+  search.value = ''
+  a_search.value = filters && typeof filters === 'object' ? filters : {}
+  page.value = 1
+  refresh()
+}
+
 const refresh = (e) => {
   loading.value = true
   check_all.value = false
@@ -567,13 +622,17 @@ const refresh = (e) => {
     params.t = table.value.startTime
   }
 
+  if (props.softDelete && showDeleted.value) {
+    params.deleted = 1
+  }
+
   if (sortType.value !== 0) {
     const sort = (sortType.value === 2) ? 'desc' : 'asc'
     params[sort] = sortBy.value
   }
 
-  if (search.value.length >= 1) {
-    params.search = search.value
+  if (search.value.trim().length >= 1) {
+    params.search = search.value.trim()
   }
 
   if (Object.keys(a_search.value).length > 0) {
@@ -662,8 +721,45 @@ const editItem = (item, autoSendFlag = false, key = null) => {
  * @param {Object} item - Item to delete
  */
 const deleteItem = (item) => {
+  confirmAction.value = 'delete'
   showConfirm.value = true
   deleted.value = item[props.itemId]
+}
+
+/**
+ * Opens the hard delete confirmation for a soft-deleted item
+ * @param {Object} item - Item to permanently remove
+ */
+const removeItem = (item) => {
+  confirmAction.value = 'remove'
+  showConfirm.value = true
+  deleted.value = item[props.itemId]
+}
+
+const removeItemById = (_id) => {
+  $axios.delete(`${props.link}/remove/${_id}`, {headers: props.headers})
+      .then(() => {
+        refresh()
+      })
+      .catch(error => {
+        console.error('Hard delete item error:', error)
+      })
+}
+
+const restoreItem = (item) => {
+  $axios.put(`${props.link}/restore/${item[props.itemId]}`, {}, {headers: props.headers})
+      .then(() => {
+        refresh()
+      })
+      .catch(error => {
+        console.error('Restore item error:', error)
+      })
+}
+
+const toggleDeleted = () => {
+  showDeleted.value = !showDeleted.value
+  page.value = 1
+  refresh()
 }
 
 /**
@@ -685,7 +781,11 @@ const deleteItemById = (_id) => {
  */
 const accept = () => {
   showConfirm.value = false
-  deleteItemById(deleted.value)
+  if (confirmAction.value === 'remove') {
+    removeItemById(deleted.value)
+  } else {
+    deleteItemById(deleted.value)
+  }
   deleted.value = ''
   refresh()
 }
@@ -721,6 +821,7 @@ const setup = (url, params = null) => {
         table.value.data = data.data
         table.value.total = data.total
         table.value.startTime = $helper.ifHas(data, false, 't')
+        canSeeDeleted.value = Boolean(data.can_see_deleted)
         loading.value = false
       })
       .catch(error => {

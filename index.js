@@ -70,7 +70,6 @@ export default {
                         rtl: true
                     },
                 },
-            autoAddTranslate: true,
             useNotify: false,
             package: null,
             store: {},
