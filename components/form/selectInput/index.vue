@@ -402,14 +402,18 @@ const getValue = () => {
         [props.text]: props.modelValue.toString(),
         [props.value]: props.modelValue
       }]
-    } else if (Array.isArray(props.modelValue) && (typeof props.modelValue[0] === 'string' || typeof props.modelValue[0] === 'number')) {
+    } else if (Array.isArray(props.modelValue)) {
       return props.modelValue.map(item => {
+        if (item && typeof item === 'object') {
+          return item
+        }
+
         const index = $helper?.searchArray(genItems.value, props.value, item)
         if (index !== false) {
           return genItems.value[index]
         }
         return {
-          [props.text]: item.toString(),
+          [props.text]: item == null ? '' : item.toString(),
           [props.value]: item
         }
       })
@@ -489,7 +493,9 @@ const emitVal = () => {
 
   let val = chips.value
   if (props.justValue) {
-    val = chips.value.map(chip => chip[props.value])
+    val = chips.value.map(chip => (
+      chip && typeof chip === 'object' ? chip[props.value] : chip
+    ))
   }
 
   if (!props.multiple) {
@@ -553,6 +559,30 @@ const closeList = () => {
   openList.value = false
 }
 
+const syncChipsFromModel = () => {
+  chips.value = getValue()
+
+  if (!props.justValue || props.modelValue === undefined || props.modelValue === null) {
+    return
+  }
+
+  const values = chips.value.map(chip => chip[props.value])
+  if (props.multiple) {
+    const isNormalized = Array.isArray(props.modelValue)
+      && props.modelValue.length === values.length
+      && values.every((value, index) => props.modelValue[index] === value)
+
+    if (!isNormalized) {
+      emit('update:modelValue', values)
+    }
+  } else {
+    const value = values[0] ?? null
+    if (props.modelValue !== value) {
+      emit('update:modelValue', value)
+    }
+  }
+}
+
 // Watchers
 watch(inputVal, (newVal) => {
   if (props.searchLink && newVal && newVal.length > 0) {
@@ -560,13 +590,11 @@ watch(inputVal, (newVal) => {
   }
 })
 
-watch(() => props.modelValue, (n) => {
-  chips.value = getValue()
-})
+watch(() => props.modelValue, syncChipsFromModel, {deep: true})
 
 // Lifecycle hooks
 onMounted(() => {
-  chips.value = getValue()
+  syncChipsFromModel()
 
   if (props.firstSelect && chips.value.length === 0 && genItems.value.length > 0) {
     chips.value.push(genItems.value[0])

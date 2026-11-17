@@ -32,7 +32,7 @@ const info={
   "example": {
     "basic usage": {
       "template": "<rPasswordInput \n v-model=\"modelValue\"\n :hideRequirements=\"hideRequirements\"\n :lowerCase=\"lowerCase\"\n :upperCase=\"upperCase\"\n :specialChar=\"specialChar\"\n :number=\"number\"\n :minLength=\"minLength\"\n :autocomplete=\"autocomplete\"\n@update:modelValue=\"log('update:modelValue',$event)\"\n@strength-change=\"log('strength-change',$event)\">\n</rPasswordInput>",
-      "script": "import {ref} from 'vue';\n\nconst modelValue=ref(null)\nconst hideRequirements=ref(null)\nconst lowerCase=ref(null)\nconst upperCase=ref(null)\nconst specialChar=ref(null)\nconst number=ref(null)\nconst minLength=ref(8)\nconst autocomplete=ref(null)\nconst log=(name,e)=>{\n        console.log(name,e)\n        }"
+      "script": "import {ref} from 'vue';\n\nconst modelValue=ref(null)\nconst hideRequirements=ref(null)\nconst lowerCase=ref(null)\nconst upperCase=ref(null)\nconst specialChar=ref(null)\nconst number=ref(null)\nconst minLength=ref(8)\nconst autocomplete=ref('off')\nconst log=(name,e)=>{\n        console.log(name,e)\n        }"
     }
   },
   "props": [
@@ -80,9 +80,9 @@ const info={
     },
     {
       "name": "autocomplete",
-      "description": "HTML autocomplete attribute value @type {String}",
+      "description": "HTML autocomplete attribute value @type {String} @default off",
       "type": "String",
-      "default": "undefined"
+      "default": "off"
     }
   ],
   "emits": [

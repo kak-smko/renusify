@@ -9,7 +9,7 @@
            @focusin="active=true"
            @focusout="active=false"
            @input="emitValue"
-           autocomplete="off"
+           :autocomplete="autocomplete"
            ref="input"
            v-model="lazyValue"
     />
@@ -32,7 +32,13 @@ const props = defineProps({
    * The model value of the input
    * @type {String|Number}
    */
-  modelValue: [String, Number]
+  modelValue: [String, Number],
+  /**
+   * HTML autocomplete attribute value
+   * @type {String}
+   * @default off
+   */
+  autocomplete: {type:String,default:"off"}
 })
 
 const emit = defineEmits([

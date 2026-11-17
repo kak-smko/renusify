@@ -100,8 +100,9 @@ const props = defineProps({
   /**
    * HTML autocomplete attribute value
    * @type {String}
+   * @default off
    */
-  autocomplete: String
+  autocomplete: {type:String,default:"off"}
 })
 
 const emit = defineEmits([
@@ -230,6 +231,7 @@ const strengthLevel = computed(() => {
  * @returns {Boolean} True if password is valid according to all requirements
  */
 const isValid = computed(() => {
+  if (!lazyValue.value) return true
   let valid = true
   if (!hasLength.value) valid = false
   if (props.lowerCase && !hasLowerCase.value) valid = false

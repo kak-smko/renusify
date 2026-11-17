@@ -5,14 +5,14 @@
         <div class="d-flex h-center mb-1 node-info" @click.prevent="$emit('select',{key:nodeKey,item:node[nodeKey]})">
           <slot :item="node[nodeKey]" :nodeKey="nodeKey"></slot>
         </div>
-        <span v-if="size>0||(link &&(node[nodeKey]['childs_total']>0))"
+        <span v-if="size>0||(link &&(node[nodeKey][totalName]>0))"
               class="btn-extend"
               :class="{'btn-open':open,'single-child':size===1}">
                 <r-btn class="tree-btn-expand"
                        icon
                        :loading="loading"
                        labelClass="color-one"
-                       :label="node[nodeKey]['childs_total']"
+                       :label="node[nodeKey][totalName]"
                        @click.prevent="handleExpand(nodeKey,true)">
                     <r-icon v-if="!open" v-html="$r.icons.plus"></r-icon>
                     <r-icon v-else v-html="$r.icons.minus"></r-icon>
@@ -57,6 +57,10 @@ const props = defineProps({
     childsName: {
       type: String,
       default: 'childs'
+    },
+    totalName: {
+      type: String,
+      default: 'childs_total'
     },
     headers: Object
 })

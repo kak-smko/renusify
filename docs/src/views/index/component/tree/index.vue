@@ -92,6 +92,12 @@ const info={
       "default": "childs"
     },
     {
+      "name": "totalName",
+      "description": "Property name for total children in tree data @type {String} @default 'childs_total'",
+      "type": "String",
+      "default": "childs_total"
+    },
+    {
       "name": "headers",
       "description": "Additional headers for API requests @type {Object}",
       "type": "Object",

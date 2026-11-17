@@ -19,6 +19,8 @@
                           :link="link"
                           :model-value="node"
                           :sortBy="sortBy"
+                          :childsName="childsName"
+                          :totalName="totalName"
                           @expand="handleExpand(ease,move,transform,$event)"
                           @select="handleSelect"
                           @update:model-value="$emit('update:modelValue',$event)"
@@ -169,6 +171,15 @@ const props = defineProps({
     default: 'childs'
   },
   /**
+   * Property name for total children in tree data
+   * @type {String}
+   * @default 'childs_total'
+   */
+   totalName: {
+     type: String,
+     default: 'childs_total'
+   },
+  /**
    * Additional headers for API requests
    * @type {Object}
    */
@@ -210,6 +221,7 @@ const classes = computed(() => {
  */
 const change = (e) => {
   if (e && "value" in e) {
+    search.value = e.value
     nodeParent.value = e.value
     show.value = false
     get()

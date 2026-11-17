@@ -31,8 +31,8 @@
 const info={
   "example": {
     "basic usage": {
-      "template": "<rTextInput \n :type=\"type\"\n v-model=\"modelValue\"\n@update:modelValue=\"log('update:modelValue',$event)\">\n</rTextInput>",
-      "script": "import {ref} from 'vue';\n\nconst type=ref('text')\nconst modelValue=ref(null)\nconst log=(name,e)=>{\n        console.log(name,e)\n        }"
+      "template": "<rTextInput \n :type=\"type\"\n v-model=\"modelValue\"\n :autocomplete=\"autocomplete\"\n@update:modelValue=\"log('update:modelValue',$event)\">\n</rTextInput>",
+      "script": "import {ref} from 'vue';\n\nconst type=ref('text')\nconst modelValue=ref(null)\nconst autocomplete=ref('off')\nconst log=(name,e)=>{\n        console.log(name,e)\n        }"
     }
   },
   "props": [
@@ -47,6 +47,12 @@ const info={
       "description": "The model value of the input @type {String|Number}",
       "type": "[String, Number]",
       "default": "undefined"
+    },
+    {
+      "name": "autocomplete",
+      "description": "HTML autocomplete attribute value @type {String} @default off",
+      "type": "String",
+      "default": "off"
     }
   ],
   "emits": [

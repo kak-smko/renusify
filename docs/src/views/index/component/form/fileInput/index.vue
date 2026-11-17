@@ -31,8 +31,8 @@
 const info={
   "example": {
     "basic usage": {
-      "template": "<rFileInput \n :uploadLink=\"uploadLink\"\n :accept=\"accept\"\n :size=\"size\"\n :wPH=\"wPH\"\n :maxFileSize=\"maxFileSize\"\n v-model=\"modelValue\"\n :meta=\"meta\"\n :metaRequired=\"metaRequired\"\n@update:modelValue=\"log('update:modelValue',$event)\"\n@add=\"log('add',$event)\">\n</rFileInput>",
-      "script": "import {ref} from 'vue';\n\nconst uploadLink=ref(null)\nconst accept=ref('*')\nconst size=ref(3)\nconst wPH=ref(null)\nconst maxFileSize=ref(null)\nconst modelValue=ref(() => [])\nconst meta=ref(null)\nconst metaRequired=ref(true)\nconst log=(name,e)=>{\n        console.log(name,e)\n        }"
+      "template": "<rFileInput \n :uploadLink=\"uploadLink\"\n :accept=\"accept\"\n :size=\"size\"\n :wPH=\"wPH\"\n :maxFileSize=\"maxFileSize\"\n v-model=\"modelValue\"\n :meta=\"meta\"\n :metaRequired=\"metaRequired\"\n :isSingle=\"isSingle\"\n@update:modelValue=\"log('update:modelValue',$event)\"\n@add=\"log('add',$event)\">\n</rFileInput>",
+      "script": "import {ref} from 'vue';\n\nconst uploadLink=ref(null)\nconst accept=ref('*')\nconst size=ref(3)\nconst wPH=ref(null)\nconst maxFileSize=ref(null)\nconst modelValue=ref(() => [])\nconst meta=ref(null)\nconst metaRequired=ref(true)\nconst isSingle=ref(false)\nconst log=(name,e)=>{\n        console.log(name,e)\n        }"
     }
   },
   "props": [
@@ -68,8 +68,8 @@ const info={
     },
     {
       "name": "modelValue",
-      "description": "The model value for uploaded files (v-model) @type {Array} @default () => []",
-      "type": "Array",
+      "description": "The model value for uploaded files (v-model). In single mode, this may be a single link. @type {Array|String|Object} @default () => []",
+      "type": "Array | String | Object",
       "default": "() => []"
     },
     {
@@ -83,6 +83,12 @@ const info={
       "description": "Whether metadata is required for each file @type {Boolean} @default true",
       "type": "Boolean",
       "default": "true"
+    },
+    {
+      "name": "isSingle",
+      "description": "return one link instead of array of links @type {Boolean} @default false",
+      "type": "Boolean",
+      "default": "false"
     }
   ],
   "emits": [
