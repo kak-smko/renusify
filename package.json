@@ -1,6 +1,6 @@
 {
   "name": "renusify",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "Vue3 Framework",
   "keywords": [
     "vuejs",
@@ -12,12 +12,12 @@
     "material components",
     "renusify"
   ],
-  "homepage": "https://github.com/smkoBa/renusify",
+  "homepage": "https://github.com/kak-smko/renusify",
   "main": "index.js",
   "types": "index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/smkoBa/renusify.git"
+    "url": "https://github.com/kak-smko/renusify.git"
   },
   "author": {
     "name": "Smko Bayazidi",
