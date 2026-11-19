@@ -38,8 +38,8 @@ const info={
   "props": [
     {
       "name": "modelValue",
-      "description": "The input's model value @type {String}",
-      "type": "String",
+      "description": "The input's model value @type {String|Number}",
+      "type": "String|Number",
       "default": "undefined"
     },
     {
@@ -68,7 +68,7 @@ const info={
     },
     {
       "name": "isFloat",
-      "description": "allowe float number @type {Number}",
+      "description": "Whether decimal values are allowed @type {Boolean}",
       "type": "Boolean",
       "default": "undefined"
     }

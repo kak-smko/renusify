@@ -8,7 +8,7 @@
            @pre-icon="minus"
   >
     <template v-slot:preIcon>
-        <span :class="{'btn-disabled':min!==undefined&&number<=min}" class="btn">
+        <span :class="{'btn-disabled':$attrs.disabled||$attrs.readonly||(min!==undefined&&number<=min)}" class="btn">
         <r-icon v-html="$r.icons.minus"></r-icon>
       </span>
     </template>
@@ -17,7 +17,11 @@
           ref="input"
           :autofocus="autofocus"
           :step="step"
+          :min="min"
+          :max="max"
           :value="number"
+          :disabled="$attrs.disabled"
+          :readonly="$attrs.readonly"
           autocomplete="off"
           class="text-center"
           type="number"
@@ -25,10 +29,10 @@
           @focusout="active=false"
           @input="emitValue"
       />
-      <div class="number-view" v-html="formatNumber"></div>
+      <div class="number-view">{{ formatNumber }}</div>
     </div>
     <template v-slot:icon>
-        <span :class="{'btn-disabled':max!==undefined&&number>=max}" class="btn">
+        <span :class="{'btn-disabled':$attrs.disabled||$attrs.readonly||(max!==undefined&&number>=max)}" class="btn">
         <r-icon v-html="$r.icons.plus"></r-icon>
       </span>
     </template>
@@ -45,9 +49,9 @@ const autofocus = attr.autofocus
 const props = defineProps({
   /**
    * The input's model value
-   * @type {String}
+   * @type {String|Number}
    */
-  modelValue: String,
+  modelValue: [String, Number],
   /**
    * Step value for increment/decrement buttons
    * @type {Number}
@@ -80,8 +84,8 @@ const props = defineProps({
    */
   max: Number,
   /**
-   * allowe float number
-   * @type {Number}
+   * Whether decimal values are allowed
+   * @type {Boolean}
    */
   isFloat: Boolean
 })
@@ -95,60 +99,78 @@ const emit = defineEmits([
 ])
 
 // Reactive data
-const number = ref(props.modelValue)
-if (!props.isFloat && number.value !== undefined && number.value !== null && number.value !== "") {
-  number.value = parseInt(number.value).toString()
+const normalizeValue = (value) => {
+  if (value === undefined || value === null || value === '') return ''
+  const numericValue = Number(value)
+  if (!Number.isFinite(numericValue)) return ''
+  return String(props.isFloat ? numericValue : Math.trunc(numericValue))
 }
+
+const number = ref(normalizeValue(props.modelValue))
 const active = ref(false)
 
-// Methods
 /**
- * Emits the updated value to parent component
- * @param {Event} [e=false] - Optional event object from input
+ * Emits a valid numeric value, keeping the input's editable value as a string.
+ * @param {Event} [e] - Optional input event
  */
-const emitValue = (e = false) => {
-  if (e) {
-    number.value = e.target.value
-  }
+const emitValue = (e) => {
+  if (e) number.value = e.target.value
 
-  if (number.value === '' || number.value === null) {
-    number.value = undefined
-    emit('update:modelValue', number.value)
+  if (number.value === '' || number.value === null || number.value === undefined) {
+    number.value = ''
+    emit('update:modelValue', undefined)
     return
   }
 
-  let value = number.value
+  const parsedValue = Number(number.value)
+  if (!Number.isFinite(parsedValue)) return
 
-  if (props.max !== undefined && parseFloat(value) > props.max) {
-    value = props.max
-  }
-  if (props.min !== undefined && parseFloat(value) < props.min) {
-    emit('update:modelValue', undefined)
-    return;
-  }
-  if (!props.isFloat) {
-    value = parseInt(value).toString()
-  }
-  number.value = value
-  emit('update:modelValue', number.value)
+  let value = props.isFloat ? parsedValue : Math.trunc(parsedValue)
+  if (props.max !== undefined && value > props.max) value = props.max
+  if (props.min !== undefined && value < props.min) value = props.min
+
+  if (!props.isFloat || value !== parsedValue) number.value = String(value)
+  emit('update:modelValue', value)
 }
 
-/**
- * Increments the number by the step value
- */
+const decimalPlaces = (value) => {
+  const [coefficient, exponent = '0'] = String(value).toLowerCase().split('e')
+  const fractionLength = coefficient.split('.')[1]?.length || 0
+  return Math.max(0, fractionLength - Number(exponent))
+}
+
+const roundToStepPrecision = (value, currentValue) => {
+  const precision = Math.min(100, Math.max(decimalPlaces(props.step), decimalPlaces(currentValue)))
+  return Number(value.toFixed(precision))
+}
+
+const setButtonValue = (value) => {
+  if (!props.isFloat) value = Math.trunc(value)
+  if (props.min !== undefined) value = Math.max(props.min, value)
+  if (props.max !== undefined) value = Math.min(props.max, value)
+  number.value = String(value)
+  emit('update:modelValue', value)
+}
+
+/** Increments the number by the step value without crossing the maximum. */
 const plus = () => {
-  const currentValue = parseFloat(props.modelValue || props.min || 0)
-  number.value = (currentValue + props.step).toString()
-  emitValue()
+  if (attr.disabled || attr.readonly) return
+  const parsedCurrent = Number(number.value)
+  const hasCurrentValue = number.value !== '' && Number.isFinite(parsedCurrent)
+  const currentValue = hasCurrentValue
+    ? parsedCurrent
+    : (props.min !== undefined ? props.min : 0)
+  if (props.max !== undefined && currentValue >= props.max) return
+  setButtonValue(roundToStepPrecision(currentValue + props.step, currentValue))
 }
 
-/**
- * Decrements the number by the step value
- */
+/** Decrements the number by the step value without crossing the minimum. */
 const minus = () => {
-  const currentValue = parseFloat(props.modelValue || 0)
-  number.value = (currentValue - props.step).toString()
-  emitValue()
+  if (attr.disabled || attr.readonly) return
+  const parsedCurrent = Number(number.value)
+  const currentValue = Number.isFinite(parsedCurrent) ? parsedCurrent : 0
+  if (props.min !== undefined && currentValue <= props.min) return
+  setButtonValue(roundToStepPrecision(currentValue - props.step, currentValue))
 }
 
 // Computed properties
@@ -165,7 +187,7 @@ const formatNumber = computed(() => {
   const [integerPart, decimalPart = ''] = txt.split('.')
 
   if (props.split > 0) {
-    const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '<span class="sep">,</span>')
+    const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     return decimalPart ? `${formattedInteger}.${decimalPart}` : formattedInteger
   }
 
@@ -174,9 +196,7 @@ const formatNumber = computed(() => {
 
 // Watchers
 watch(() => props.modelValue, (newVal) => {
-  if (newVal !== undefined) {
-    number.value = newVal
-  }
+  number.value = normalizeValue(newVal)
 })
 </script>
 
@@ -208,10 +228,6 @@ watch(() => props.modelValue, (newVal) => {
       letter-spacing: 1px;
     }
 
-    .sep {
-      width: 0px;
-      transform: translateX(-2.5px);
-    }
 
     .number-view {
       z-index: 0;
@@ -225,6 +241,7 @@ watch(() => props.modelValue, (newVal) => {
       z-index: 1;
       -webkit-font-smoothing: antialiased;
       -webkit-text-fill-color: transparent;
+      background: transparent;
 
       &::selection {
         background-color: var(--color-one);

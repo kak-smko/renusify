@@ -111,6 +111,14 @@ const props = defineProps({
   liveTimer: {
     default: 10000,
     type: Number
+  },
+  /**
+   * data id key name
+   * @example 'id'
+   */
+  dataId: {
+    default: "id",
+    type: String
   }
 })
 
@@ -196,7 +204,7 @@ const push = (data, end = false) => {
     const lng = datacollection.value.length
     for (let key = 0; key < lng; key++) {
       if (key <= data.length) {
-        if ($helper.searchArray(d, '_id', datacollection.value[key]['_id']) === false) {
+        if ($helper.searchArray(d, this.dataId, datacollection.value[key][this.dataId]) === false) {
           d.push(datacollection.value[key])
         }
       } else {
@@ -208,7 +216,7 @@ const push = (data, end = false) => {
     let d = datacollection.value
     const lng = data.length
     for (let key = 0; key < lng; key++) {
-      if ($helper.searchArray(d, '_id', data[key]['_id']) === false) {
+      if ($helper.searchArray(d, this.dataId, data[key][this.dataId]) === false) {
         d.push(data[key])
       }
     }
